@@ -1,3 +1,5 @@
+require "logger"
+
 class ZTK::Logger < ::Logger
   SEVERITIES = Severity.constants.inject([]) {|arr,c| arr[Severity.const_get(c)] = c; arr}
 
@@ -32,7 +34,7 @@ class ZTK::Logger < ::Logger
   end
 
   def set_log_level(level=nil)
-    default = (Rails.env.production? ? "INFO" : "DEBUG")
+    defined?(Rails) and (default = (Rails.env.production? ? "INFO" : "DEBUG")) or (default = "INFO")
     log_level = (ENV['LOG_LEVEL'] || level || default)
     self.level = ZTK::Logger.const_get(log_level.to_s.upcase)
   end
