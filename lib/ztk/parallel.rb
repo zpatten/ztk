@@ -17,36 +17,42 @@
 #   limitations under the License.
 #
 ################################################################################
+require "base64"
+require "ostruct"
 
 module ZTK
   class Parallel
 
 ################################################################################
 
-    attr_accessor :results
+    attr_accessor :config, :results
 
 ################################################################################
 
-    def initialize(options={})
-      GC.respond_to?(:copy_on_write_friendly=) and GC.copy_on_write_friendly = true
-
-      options.reverse_merge!(
-        :max_forks => `grep -c processor /proc/cpuinfo`.strip.to_i,
+    def initialize(config={})
+      @config = OpenStruct.new({
+        :stdout => $stdout,
+        :stderr => $stderr,
+        :stdin => $stdin,
+        :logger => $logger,
+        :max_forks => `grep -c processor /proc/cpuinfo`.chomp.to_i,
         :one_shot => false
-      )
-
-      @max_forks = options[:max_forks]
-      @one_shot = options[:one_shot]
+      }.merge(config))
+      @config.stdout.sync = true if @config.stdout.respond_to?(:sync=)
+      @config.stderr.sync = true if @config.stderr.respond_to?(:sync=)
+      @config.stdin.sync = true if @config.stdin.respond_to?(:sync=)
+      @config.logger.sync = true if @config.logger.respond_to?(:sync=)
 
       @forks = Array.new
       @results = Array.new
+      GC.respond_to?(:copy_on_write_friendly=) and GC.copy_on_write_friendly = true
     end
 
 ################################################################################
 
     def process
       pid = nil
-      return pid if (@forks.count >= @max_forks)
+      return pid if (@forks.count >= @config.max_forks)
 
       child_reader, parent_writer = IO.pipe
       parent_reader, child_writer = IO.pipe
@@ -58,8 +64,8 @@ module ZTK
         parent_writer.close
         parent_reader.close
 
-        if (data = yield).present?
-          child_writer.write(Base64.encode64(Marshal.dump(data)))
+        if !(data = yield).nil?
+          child_writer.write(::Base64.encode64(::Marshal.dump(data)))
         end
 
         child_reader.close
@@ -81,10 +87,10 @@ module ZTK
 
     def wait
       pid, status = (Process.wait2(-1, Process::WNOHANG) rescue nil)
-      if pid.present? && status.present?
-        if (fork = @forks.select{ |f| f[:pid] == pid }.first).present?
-          data = (Marshal.load(Base64.decode64(fork[:reader].read.to_s)) rescue nil)
-          @results.push(data) if (data.present? && !@one_shot)
+      if !pid.nil? && !status.nil?
+        if !(fork = @forks.select{ |f| f[:pid] == pid }.first).nil?
+          data = (::Marshal.load(::Base64.decode64(fork[:reader].read.to_s)) rescue nil)
+          @results.push(data) if (!data.nil? && !@config.one_shot)
 
           fork[:reader].close
           fork[:writer].close
@@ -99,11 +105,11 @@ module ZTK
 ################################################################################
 
     def waitall
-      results = Array.new
+      _waitall = Array.new
       while @forks.count > 0
-        results << wait
+        _waitall << wait
       end
-      results
+      _waitall
     end
 
 ################################################################################
