@@ -41,7 +41,7 @@ describe ZTK::Parallel do
     puts subject.results.inspect
     subject.results.all?{ |r| r.should be_kind_of Integer }
     subject.results.all?{ |r| r.should > 0 }
-    subject.results.uniq.count.should == 3
+    subject.results.count.should == 3
     subject.results.include?(Process.pid).should be false
   end
 
