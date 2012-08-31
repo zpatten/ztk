@@ -87,17 +87,14 @@ module ZTK
 
     def wait
       pid, status = (Process.wait2(-1, Process::WNOHANG) rescue nil)
-      if !pid.nil? && !status.nil?
-        if !(fork = @forks.select{ |f| f[:pid] == pid }.first).nil?
-          data = (::Marshal.load(::Base64.decode64(fork[:reader].read.to_s)) rescue nil)
-          @results.push(data) if (!data.nil? && !@config.one_shot)
+      if !pid.nil? && !status.nil? && !(fork = @forks.select{ |f| f[:pid] == pid }.first).nil?
+        data = (::Marshal.load(::Base64.decode64(fork[:reader].read.to_s)) rescue nil)
+        @results.push(data) if (!data.nil? && !@config.one_shot)
+        fork[:reader].close
+        fork[:writer].close
 
-          fork[:reader].close
-          fork[:writer].close
-
-          @forks -= [fork]
-          return [pid, status, data]
-        end
+        @forks -= [fork]
+        return [pid, status, data]
       end
       nil
     end
@@ -107,7 +104,7 @@ module ZTK
     def waitall
       _waitall = Array.new
       while @forks.count > 0
-        _waitall << wait
+        _waitall << self.wait
       end
       _waitall
     end
