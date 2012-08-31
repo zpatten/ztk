@@ -4,8 +4,8 @@ require File.expand_path('../lib/ztk/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Zachary Patten"]
   gem.email         = ["zachary@jovelabs.com"]
-  gem.description   = %q{Zachary's Toolkit}
-  gem.summary       = %q{Contains various helper classes and utility methods I find I regularly need.}
+  gem.description   = %q{Zachary's Tool Kit}
+  gem.summary       = %q{Contains various classes and utilities I find I regularly need.}
   gem.homepage      = "https://github.com/jovelabs/ztk"
 
   gem.files         = `git ls-files`.split($\)

@@ -1,2 +1,1 @@
-rvm ruby-1.9.3@ztk --create
-#[[ $(gem -v) != "1.4.2" ]] && rvm rubygems 1.4.2
+rvm use ruby-1.9.3@ztk --create
