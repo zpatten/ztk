@@ -43,3 +43,14 @@ Example:
 Logging Class
 
 This is a logging class based off the ruby core Logger class; but with very verbose logging information, adding PID, micro second timing to log messages.  It favors passing messages via blocks in order to speed up execution when log messages do not need to be yielded.
+
+Example:
+
+    $logger = ZTK::Logger.new(@logfile)
+
+    $logger.debug { "This is a debug message!" }
+    $logger.info { "This is a info message!" }
+    $logger.warn { "This is a warn message!" }
+    $logger.error { "This is a error message!" }
+    $logger.fatal { "This is a fatal message!" }
+
