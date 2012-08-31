@@ -17,6 +17,7 @@
 #   limitations under the License.
 #
 ################################################################################
+require "ostruct"
 
 module ZTK
   class SSHError < Error; end
@@ -28,21 +29,24 @@ module ZTK
 
 ################################################################################
 
-    def initialize(logger=$logger, stdout=$stdout, stderr=$stderr, stdin=$stdin)
-      @logger, @stdout, @stderr, @stdin = logger, stdout, stderr, stdin
-
-      @logger.sync = true if @logger.respond_to?(:sync=)
-      @stdout.sync = true if @stdout.respond_to?(:sync=)
-      @stderr.sync = true if @stderr.respond_to?(:sync=)
-      @stdin.sync = true if @stdin.respond_to?(:sync=)
-
-      @config = Hash.new(nil)
+    def initialize(config={})
+      @config = OpenStruct.new({
+        :stdout => $stdout,
+        :stderr => $stderr,
+        :stdin => $stdin,
+        :logger => $logger,
+        :ssh => Hash.new(nil)
+      }.merge(config))
+      @config.stdout.sync = true if @config.stdout.respond_to?(:sync=)
+      @config.stderr.sync = true if @config.stderr.respond_to?(:sync=)
+      @config.stdin.sync = true if @config.stdin.respond_to?(:sync=)
+      @config.logger.sync = true if @config.logger.respond_to?(:sync=)
     end
 
 ################################################################################
 
     def console
-      @logger and @logger.debug { "config(#{@config.inspect})" }
+      @config.logger and @config.logger.debug { "config(#{@config.ssh.inspect})" }
 
       command = [ "ssh" ]
       command << [ "-q" ]
@@ -50,47 +54,47 @@ module ZTK
       command << [ "-o", "StrictHostKeyChecking=no" ]
       command << [ "-o", "KeepAlive=yes" ]
       command << [ "-o", "ServerAliveInterval=60" ]
-      command << [ "-i", @config[:identity_file] ] if @config[:identity_file]
-      command << [ "-o", "ProxyCommand=\"#{proxy_command}\"" ] if @config[:proxy]
-      command << "#{@config[:ssh_user]}@#{@config[:host]}"
+      command << [ "-i", @config.ssh[:identity_file] ] if @config.ssh[:identity_file]
+      command << [ "-o", "ProxyCommand=\"#{proxy_command}\"" ] if @config.ssh[:proxy]
+      command << "#{@config.ssh[:ssh_user]}@#{@config.ssh[:host]}"
       command = command.flatten.compact.join(" ")
-      @logger and @logger.info { "command(#{command})" }
+      @config.logger and @config.logger.info { "command(#{command})" }
       Kernel.exec(command)
     end
 
 ################################################################################
 
     def exec(command, options={})
-      @ssh ||= Net::SSH.start(@config[:host], @config[:ssh_user], ssh_options)
+      @ssh ||= Net::SSH.start(@config.ssh[:host], @config.ssh[:ssh_user], ssh_options)
 
       options = { :silence => false }.merge(options)
       silence = options[:silence]
       output = ""
 
-      @logger and @logger.debug { "config(#{@config.inspect})" }
-      @logger and @logger.debug { "options(#{options.inspect})" }
-      @logger and @logger.info { "command(#{command})" }
+      @config.logger and @config.logger.debug { "config(#{@config.ssh.inspect})" }
+      @config.logger and @config.logger.debug { "options(#{options.inspect})" }
+      @config.logger and @config.logger.info { "command(#{command})" }
       channel = @ssh.open_channel do |chan|
-        @logger and @logger.debug { "channel opened" }
+        @config.logger and @config.logger.debug { "channel opened" }
         chan.exec(command) do |ch, success|
           raise SSHError, "Could not execute '#{command}'." unless success
 
           ch.on_data do |c, data|
             output += data
-            @logger and @logger.debug { data.chomp.strip }
-            @stdout.print(data) if !silence
+            @config.logger and @config.logger.debug { data.chomp.strip }
+            @config.stdout.print(data) if !silence
           end
 
           ch.on_extended_data do |c, type, data|
             output += data
-            @logger and @logger.debug { data.chomp.strip }
-            @stderr.print(data) if !silence
+            @config.logger and @config.logger.debug { data.chomp.strip }
+            @config.stderr.print(data) if !silence
           end
 
         end
       end
       channel.wait
-      @logger and @logger.debug { "channel closed" }
+      @config.logger and @config.logger.debug { "channel closed" }
 
       output
     end
@@ -98,22 +102,22 @@ module ZTK
 ################################################################################
 
     def upload(local, remote)
-      @sftp ||= Net::SFTP.start(@config[:host], @config[:ssh_user], ssh_options)
+      @sftp ||= Net::SFTP.start(@config.ssh[:host], @config.ssh[:ssh_user], ssh_options)
 
-      @logger and @logger.debug { "config(#{@config.inspect})" }
-      @logger and @logger.info { "parameters(#{local},#{remote})" }
+      @config.logger and @config.logger.debug { "config(#{@config.ssh.inspect})" }
+      @config.logger and @config.logger.info { "parameters(#{local},#{remote})" }
       @sftp.upload!(local.to_s, remote.to_s) do |event, uploader, *args|
         case event
         when :open
-          @logger and @logger.info { "upload(#{args[0].local} -> #{args[0].remote})" }
+          @config.logger and @config.logger.info { "upload(#{args[0].local} -> #{args[0].remote})" }
         when :close
-          @logger and @logger.debug { "close(#{args[0].remote})" }
+          @config.logger and @config.logger.debug { "close(#{args[0].remote})" }
         when :mkdir
-          @logger and @logger.debug { "mkdir(#{args[0]})" }
+          @config.logger and @config.logger.debug { "mkdir(#{args[0]})" }
         when :put
-          @logger and @logger.debug { "put(#{args[0].remote}, size #{args[2].size} bytes, offset #{args[1]})" }
+          @config.logger and @config.logger.debug { "put(#{args[0].remote}, size #{args[2].size} bytes, offset #{args[1]})" }
         when :finish
-          @logger and @logger.info { "finish" }
+          @config.logger and @config.logger.info { "finish" }
         end
       end
     end
@@ -121,22 +125,22 @@ module ZTK
 ################################################################################
 
     def download(remote, local)
-      @sftp ||= Net::SFTP.start(@config[:host], @config[:ssh_user], ssh_options)
+      @sftp ||= Net::SFTP.start(@config.ssh[:host], @config.ssh[:ssh_user], ssh_options)
 
-      @logger and @logger.debug { "config(#{@config.inspect})" }
-      @logger and @logger.info { "parameters(#{remote},#{local})" }
+      @config.logger and @config.logger.debug { "config(#{@config.ssh.inspect})" }
+      @config.logger and @config.logger.info { "parameters(#{remote},#{local})" }
       @sftp.download!(remote.to_s, local.to_s) do |event, downloader, *args|
         case event
         when :open
-          @logger and @logger.info { "download(#{args[0].remote} -> #{args[0].local})" }
+          @config.logger and @config.logger.info { "download(#{args[0].remote} -> #{args[0].local})" }
         when :close
-          @logger and @logger.debug { "close(#{args[0].local})" }
+          @config.logger and @config.logger.debug { "close(#{args[0].local})" }
         when :mkdir
-          @logger and @logger.debug { "mkdir(#{args[0]})" }
+          @config.logger and @config.logger.debug { "mkdir(#{args[0]})" }
         when :get
-          @logger and @logger.debug { "get(#{args[0].remote}, size #{args[2].size} bytes, offset #{args[1]})" }
+          @config.logger and @config.logger.debug { "get(#{args[0].remote}, size #{args[2].size} bytes, offset #{args[1]})" }
         when :finish
-          @logger and @logger.info { "finish" }
+          @config.logger and @config.logger.info { "finish" }
         end
       end
     end
@@ -147,11 +151,11 @@ module ZTK
 ################################################################################
 
     def proxy_command
-      @logger and @logger.debug { "config(#{@config.inspect})" }
+      @config.logger and @config.logger.debug { "config(#{@config.ssh.inspect})" }
 
-      if !@config[:identity_file]
+      if !@config.ssh[:identity_file]
         message = "You must specify an identity file in order to SSH proxy."
-        @logger and @logger.fatal { message }
+        @config.logger and @config.logger.fatal { message }
         raise SSHError, message
       end
 
@@ -161,25 +165,25 @@ module ZTK
       command << [ "-o", "StrictHostKeyChecking=no" ]
       command << [ "-o", "KeepAlive=yes" ]
       command << [ "-o", "ServerAliveInterval=60" ]
-      command << [ "-i", @config[:proxy_identity_file] ] if @config[:proxy_identity_file]
-      command << "#{@config[:proxy_ssh_user]}@#{@config[:proxy_host]}"
+      command << [ "-i", @config.ssh[:proxy_identity_file] ] if @config.ssh[:proxy_identity_file]
+      command << "#{@config.ssh[:proxy_ssh_user]}@#{@config.ssh[:proxy_host]}"
       command << "nc %h %p"
       command = command.flatten.compact.join(" ")
-      @logger and @logger.debug { "command(#{command})" }
+      @config.logger and @config.logger.debug { "command(#{command})" }
       command
     end
 
 ################################################################################
 
     def ssh_options
-      @logger and @logger.debug { "config(#{@config.inspect})" }
+      @config.logger and @config.logger.debug { "config(#{@config.ssh.inspect})" }
       options = {}
-      options.merge!(:password => @config[:ssh_password]) if @config[:ssh_password]
-      options.merge!(:keys => @config[:identity_file]) if @config[:identity_file]
-      options.merge!(:timeout => @config[:timeout]) if @config[:timeout]
-      options.merge!(:user_known_hosts_file  => '/dev/null') if !@config[:host_key_verify]
-      options.merge!(:proxy => Net::SSH::Proxy::Command.new(proxy_command)) if @config[:proxy]
-      @logger and @logger.debug { "options(#{options.inspect})" }
+      options.merge!(:password => @config.ssh[:ssh_password]) if @config.ssh[:ssh_password]
+      options.merge!(:keys => @config.ssh[:identity_file]) if @config.ssh[:identity_file]
+      options.merge!(:timeout => @config.ssh[:timeout]) if @config.ssh[:timeout]
+      options.merge!(:user_known_hosts_file  => '/dev/null') if !@config.ssh[:host_key_verify]
+      options.merge!(:proxy => Net::SSH::Proxy::Command.new(proxy_command)) if @config.ssh[:proxy]
+      @config.logger and @config.logger.debug { "options(#{options.inspect})" }
       options
     end
 
