@@ -1,81 +1,120 @@
-class ZTK::Parallel
-  attr_accessor :results
+################################################################################
+#
+#      Author: Zachary Patten <zachary@jovelabs.com>
+#   Copyright: Copyright (c) Jove Labs
+#     License: Apache License, Version 2.0
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#
+################################################################################
 
-  def initialize(options={})
-    GC.copy_on_write_friendly = true if GC.respond_to?(:copy_on_write_friendly=)
+module ZTK
+  class Parallel
 
-    options.reverse_merge!(
-      :max_forks => `grep -c processor /proc/cpuinfo`.strip.to_i,
-      :one_shot => false
-    )
+################################################################################
 
-    @max_forks = options[:max_forks]
-    @one_shot = options[:one_shot]
+    attr_accessor :results
 
-    @forks = Array.new
-    @results = Array.new
-  end
+################################################################################
 
-  def process
-    pid = nil
-    return pid if (@forks.count >= @max_forks)
+    def initialize(options={})
+      GC.copy_on_write_friendly = true if GC.respond_to?(:copy_on_write_friendly=)
 
-    child_reader, parent_writer = IO.pipe
-    parent_reader, child_writer = IO.pipe
+      options.reverse_merge!(
+        :max_forks => `grep -c processor /proc/cpuinfo`.strip.to_i,
+        :one_shot => false
+      )
 
-    ActiveRecord::Base.connection.disconnect!
-    pid = Process.fork do
-      ActiveRecord::Base.establish_connection
+      @max_forks = options[:max_forks]
+      @one_shot = options[:one_shot]
 
-      parent_writer.close
-      parent_reader.close
+      @forks = Array.new
+      @results = Array.new
+    end
 
-      if (data = yield).present?
-        child_writer.write(Base64.encode64(Marshal.dump(data)))
+################################################################################
+
+    def process
+      pid = nil
+      return pid if (@forks.count >= @max_forks)
+
+      child_reader, parent_writer = IO.pipe
+      parent_reader, child_writer = IO.pipe
+
+      ActiveRecord::Base.connection.disconnect!
+      pid = Process.fork do
+        ActiveRecord::Base.establish_connection
+
+        parent_writer.close
+        parent_reader.close
+
+        if (data = yield).present?
+          child_writer.write(Base64.encode64(Marshal.dump(data)))
+        end
+
+        child_reader.close
+        child_writer.close
+        Process.exit!(0)
       end
+      ActiveRecord::Base.establish_connection
 
       child_reader.close
       child_writer.close
-      Process.exit!(0)
+
+      fork = {:reader => parent_reader, :writer => parent_writer, :pid => pid}
+      @forks << fork
+
+      pid
     end
-    ActiveRecord::Base.establish_connection
 
-    child_reader.close
-    child_writer.close
+################################################################################
 
-    fork = {:reader => parent_reader, :writer => parent_writer, :pid => pid}
-    @forks << fork
+    def wait
+      pid, status = (Process.wait2(-1, Process::WNOHANG) rescue nil)
+      if pid.present? && status.present?
+        if (fork = @forks.select{ |f| f[:pid] == pid }.first).present?
+          data = (Marshal.load(Base64.decode64(fork[:reader].read.to_s)) rescue nil)
+          @results.push(data) if (data.present? && !@one_shot)
 
-    pid
-  end
+          fork[:reader].close
+          fork[:writer].close
 
-  def wait
-    pid, status = (Process.wait2(-1, Process::WNOHANG) rescue nil)
-    if pid.present? && status.present?
-      if (fork = @forks.select{ |f| f[:pid] == pid }.first).present?
-        data = (Marshal.load(Base64.decode64(fork[:reader].read.to_s)) rescue nil)
-        @results.push(data) if (data.present? && !@one_shot)
-
-        fork[:reader].close
-        fork[:writer].close
-
-        @forks -= [fork]
-        return [pid, status, data]
+          @forks -= [fork]
+          return [pid, status, data]
+        end
       end
+      nil
     end
-    nil
-  end
 
-  def waitall
-    results = Array.new
-    while @forks.count > 0
-      results << wait
+################################################################################
+
+    def waitall
+      results = Array.new
+      while @forks.count > 0
+        results << wait
+      end
+      results
     end
-    results
-  end
 
-  def count
-    @forks.count
-  end
+################################################################################
 
+    def count
+      @forks.count
+    end
+
+################################################################################
+
+  end
 end
+
+################################################################################
