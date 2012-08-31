@@ -51,9 +51,9 @@ module ZTK
       child_reader, parent_writer = IO.pipe
       parent_reader, child_writer = IO.pipe
 
-      ActiveRecord::Base.connection.disconnect!
+      defined?(ActiveRecord::Base) and ActiveRecord::Base.connection.disconnect!
       pid = Process.fork do
-        ActiveRecord::Base.establish_connection
+        defined?(ActiveRecord::Base) and ActiveRecord::Base.establish_connection
 
         parent_writer.close
         parent_reader.close
@@ -66,7 +66,7 @@ module ZTK
         child_writer.close
         Process.exit!(0)
       end
-      ActiveRecord::Base.establish_connection
+      defined?(ActiveRecord::Base) and ActiveRecord::Base.establish_connection
 
       child_reader.close
       child_writer.close
