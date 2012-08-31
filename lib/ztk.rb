@@ -20,9 +20,10 @@
 
 require "ztk/version"
 
-require "ztk/logger"
-require "ztk/parallel"
-
 module ZTK
-  # Your code goes here...
+  class Error < StandardError; end
+
+  autoload :Logger, "ztk/logger"
+  autoload :Parallel, "ztk/parallel"
+  autoload :SSH, "ztk/ssh"
 end
