@@ -29,8 +29,8 @@ module ZTK
 
 ################################################################################
 
-    def initialize(filename)
-      super(filename)
+    def initialize(*args)
+      super(*args)
       set_log_level
     end
 
