@@ -28,7 +28,7 @@ module ZTK
 ################################################################################
 
     def initialize(options={})
-      GC.copy_on_write_friendly = true if GC.respond_to?(:copy_on_write_friendly=)
+      GC.respond_to?(:copy_on_write_friendly=) and GC.copy_on_write_friendly = true
 
       options.reverse_merge!(
         :max_forks => `grep -c processor /proc/cpuinfo`.strip.to_i,
