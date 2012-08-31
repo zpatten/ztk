@@ -22,4 +22,27 @@ require "spec_helper"
 
 describe ZTK::Parallel do
 
+  before(:all) do
+  end
+
+  subject { ZTK::Parallel.new }
+
+  it "should be of kind ZTK::Parallel class" do
+    subject.should be_an_instance_of ZTK::Parallel
+  end
+
+  it "should spawn multiple processes to handle each iteration" do
+    3.times do |x|
+      subject.process do
+        Process.pid
+      end
+    end
+    subject.waitall
+    puts subject.results.inspect
+    subject.results.all?{ |r| r.should be_kind_of Integer }
+    subject.results.all?{ |r| r.should > 0 }
+    subject.results.uniq.count.should == 3
+    subject.results.include?(Process.pid).should be false
+  end
+
 end
