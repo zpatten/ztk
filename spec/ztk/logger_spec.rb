@@ -24,7 +24,6 @@ describe ZTK::Logger do
 
   before(:all) do
     ENV["LOG_LEVEL"] = "DEBUG"
-    @logfile = "/tmp/test.log"
     @messages = {
       :debug => "This is a test debug message",
       :info => "This is a test info message",
@@ -32,6 +31,7 @@ describe ZTK::Logger do
       :error => "This is a test error message",
       :fatal => "This is a test fatal message"
     }
+    @logfile = "/tmp/test.log"
     File.exists?(@logfile) && File.delete(@logfile)
   end
 
@@ -41,7 +41,7 @@ describe ZTK::Logger do
     subject.should be_an_instance_of ZTK::Logger
   end
 
-  describe "logging" do
+  describe "general logging functionality" do
 
     it "should accept debug log messages" do
       subject.debug { @messages[:debug] }
@@ -70,118 +70,64 @@ describe ZTK::Logger do
 
   end
 
-  describe "log_level" do
+  describe "log message" do
 
-    it "should allow setting log level to DEBUG via ENV[\"LOG_LEVEL\"]" do
-      ENV["LOG_LEVEL"] = "DEBUG"
-
-      File.exists?(@logfile) && File.delete(@logfile)
-      subject = ZTK::Logger.new(@logfile)
-
+    before(:all) do
       subject.debug { @messages[:debug] }
+    end
+
+    it "should contain the date (YYYY-MM-DD)" do
+      IO.read(@logfile).match(Time.now.utc.strftime("%Y-%m-%d")).should_not be nil
+    end
+
+    it "should contain the time (HH:MM)" do
+      IO.read(@logfile).match(Time.now.utc.strftime("%H:%M")).should_not be nil
+    end
+
+    it "should contain the current process ID" do
+      IO.read(@logfile).match(Process.pid.to_s).should_not be nil
+    end
+
+    it "should contain the current log level" do
+      IO.read(@logfile).match("DEBUG").should_not be nil
+    end
+
+    it "should contain the basename of the file containing the method call" do
+      IO.read(@logfile).match(File.basename(__FILE__)).should_not be nil
+    end
+
+    it "should contain the log message itself" do
       IO.read(@logfile).match(@messages[:debug]).should_not be nil
-
-      subject.info { @messages[:info] }
-      IO.read(@logfile).match(@messages[:info]).should_not be nil
-
-      subject.warn { @messages[:warn] }
-      IO.read(@logfile).match(@messages[:warn]).should_not be nil
-
-      subject.error { @messages[:error] }
-      IO.read(@logfile).match(@messages[:error]).should_not be nil
-
-      subject.fatal { @messages[:fatal] }
-      IO.read(@logfile).match(@messages[:fatal]).should_not be nil
     end
 
-    it "should allow setting log level to INFO via ENV[\"LOG_LEVEL\"]" do
-      ENV["LOG_LEVEL"] = "INFO"
+  end
 
-      File.exists?(@logfile) && File.delete(@logfile)
-      subject = ZTK::Logger.new(@logfile)
+  describe "log level" do
 
-      subject.debug { @messages[:debug] }
-      IO.read(@logfile).match(@messages[:debug]).should be nil
+    LOG_LEVEL_STEPS = [:debug, :info, :warn, :error, :fatal]
 
-      subject.info { @messages[:info] }
-      IO.read(@logfile).match(@messages[:info]).should_not be nil
+    LOG_LEVEL_STEPS.each do |current_log_level_step|
 
-      subject.warn { @messages[:warn] }
-      IO.read(@logfile).match(@messages[:warn]).should_not be nil
+      it "should allow setting log level to #{current_log_level_step.to_s.upcase} via ENV[\"#{current_log_level_step.to_s.upcase}\"]" do
 
-      subject.error { @messages[:error] }
-      IO.read(@logfile).match(@messages[:error]).should_not be nil
+        ENV["LOG_LEVEL"] = current_log_level_step.to_s.upcase
+        File.exists?(@logfile) && File.delete(@logfile)
+        subject = ZTK::Logger.new(@logfile)
 
-      subject.fatal { @messages[:fatal] }
-      IO.read(@logfile).match(@messages[:fatal]).should_not be nil
+        LOG_LEVEL_STEPS.each do |log_level_step|
+          subject.send(log_level_step) { @messages[log_level_step] }
+          if LOG_LEVEL_STEPS.index(log_level_step) >= LOG_LEVEL_STEPS.index(current_log_level_step)
+            IO.read(@logfile).match(@messages[log_level_step]).should_not be nil
+            IO.read(@logfile).match(log_level_step.to_s.upcase).should_not be nil
+          else
+            IO.read(@logfile).match(@messages[log_level_step]).should be nil
+            IO.read(@logfile).match(log_level_step.to_s.upcase).should be nil
+          end
+        end
+
+      end
+
     end
-
-    it "should allow setting log level to WARN via ENV[\"LOG_LEVEL\"]" do
-      ENV["LOG_LEVEL"] = "WARN"
-
-      File.exists?(@logfile) && File.delete(@logfile)
-      subject = ZTK::Logger.new(@logfile)
-
-      subject.debug { @messages[:debug] }
-      IO.read(@logfile).match(@messages[:debug]).should be nil
-
-      subject.info { @messages[:info] }
-      IO.read(@logfile).match(@messages[:info]).should be nil
-
-      subject.warn { @messages[:warn] }
-      IO.read(@logfile).match(@messages[:warn]).should_not be nil
-
-      subject.error { @messages[:error] }
-      IO.read(@logfile).match(@messages[:error]).should_not be nil
-
-      subject.fatal { @messages[:fatal] }
-      IO.read(@logfile).match(@messages[:fatal]).should_not be nil
-    end
-
-    it "should allow setting log level to ERROR via ENV[\"LOG_LEVEL\"]" do
-      ENV["LOG_LEVEL"] = "ERROR"
-
-      File.exists?(@logfile) && File.delete(@logfile)
-      subject = ZTK::Logger.new(@logfile)
-
-      subject.debug { @messages[:debug] }
-      IO.read(@logfile).match(@messages[:debug]).should be nil
-
-      subject.info { @messages[:info] }
-      IO.read(@logfile).match(@messages[:info]).should be nil
-
-      subject.warn { @messages[:warn] }
-      IO.read(@logfile).match(@messages[:warn]).should be nil
-
-      subject.error { @messages[:error] }
-      IO.read(@logfile).match(@messages[:error]).should_not be nil
-
-      subject.fatal { @messages[:fatal] }
-      IO.read(@logfile).match(@messages[:fatal]).should_not be nil
-    end
-
-    it "should allow setting log level to FATAL via ENV[\"LOG_LEVEL\"]" do
-      ENV["LOG_LEVEL"] = "FATAL"
-
-      File.exists?(@logfile) && File.delete(@logfile)
-      subject = ZTK::Logger.new(@logfile)
-
-      subject.debug { @messages[:debug] }
-      IO.read(@logfile).match(@messages[:debug]).should be nil
-
-      subject.info { @messages[:info] }
-      IO.read(@logfile).match(@messages[:info]).should be nil
-
-      subject.warn { @messages[:warn] }
-      IO.read(@logfile).match(@messages[:warn]).should be nil
-
-      subject.error { @messages[:error] }
-      IO.read(@logfile).match(@messages[:error]).should be nil
-
-      subject.fatal { @messages[:fatal] }
-      IO.read(@logfile).match(@messages[:fatal]).should_not be nil
-    end
-
   end
 
 end
