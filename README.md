@@ -1,3 +1,5 @@
+[![Build Status](https://secure.travis-ci.org/jovelabs/ztk.png)](http://travis-ci.org/jovelabs/ztk)
+
 # ZTK
 
 Zachary's Toolkit
