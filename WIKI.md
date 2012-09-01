@@ -8,7 +8,7 @@ Zachary's Tool Kit is a general purpose utility gem, featuring a collection of c
 
 Add this line to your application's Gemfile:
 
-    gem 'ztk'
+    gem "ztk"
 
 And then execute:
 
