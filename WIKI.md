@@ -20,6 +20,11 @@ Or install it yourself as:
 
 ## Usage
 
+### Console
+
+    bundle install
+    bundle exec ztk
+
 ### ZTK::Parallel
 
 Parallel Processing Class
