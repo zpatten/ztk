@@ -134,7 +134,6 @@ Default Config Values for ZTK::Parallel:
     :before_fork => nil,
     :after_fork => nil
 
-
 ### ZTK::Logger
 
 Logging Class
@@ -150,6 +149,68 @@ Example:
     $logger.warn { "This is a warn message!" }
     $logger.error { "This is a error message!" }
     $logger.fatal { "This is a fatal message!" }
+
+### ZTK::SSH
+
+SSH Class
+
+This is a simplified SSH class.  It provides for remote execute of commands and returning of command output.  Additionally it allows for uploading and downloading of files.
+
+Example Ruby Code:
+
+    $logger = ZTK::Logger.new(STDOUT)
+    ssh = ZTK::SSH.new
+    ssh.config do |config|
+      config.ssh.user = ENV["USER"]
+      config.ssh.host = "127.0.0.1"
+    end
+    puts ssh.exec("hostname -f")
+    local = File.expand_path(File.join("/tmp", "id_rsa.pub"))
+    remote = File.expand_path(File.join(ENV["HOME"], ".ssh", "id_rsa.pub"))
+    ssh.download(remote, local)
+
+Example Code Pry Run:
+
+    [1] pry(main)> $logger = ZTK::Logger.new(STDOUT)
+    => #<ZTK::Logger:0x000000025f2c18
+     @default_formatter=#<Logger::Formatter:0x000000025f2ab0 @datetime_format=nil>,
+     @formatter=nil,
+     @level=1,
+     @logdev=
+      #<Logger::LogDevice:0x000000025fcc18
+       @dev=#<IO:<STDOUT>>,
+       @filename=nil,
+       @mutex=
+        #<Logger::LogDevice::LogDeviceMutex:0x000000025fcbf0
+         @mon_count=0,
+         @mon_mutex=#<Mutex:0x000000025fc9e8>,
+         @mon_owner=nil>,
+       @shift_age=nil,
+       @shift_size=nil>,
+     @progname=nil>
+    [2] pry(main)> ssh = ZTK::SSH.new
+    => #<ZTK::SSH:0x00000002c317c8
+     @config=
+      #<OpenStruct stdout=#<IO:<STDOUT>>, stderr=#<IO:<STDERR>>, stdin=#<IO:<STDIN>>, logger=#<ZTK::Logger:0x000000025f2c18 @progname=nil, @level=1, @default_formatter=#<Logger::Formatter:0x000000025f2ab0 @datetime_format=nil>, @formatter=nil, @logdev=#<Logger::LogDevice:0x000000025fcc18 @shift_size=nil, @shift_age=nil, @filename=nil, @dev=#<IO:<STDOUT>>, @mutex=#<Logger::LogDevice::LogDeviceMutex:0x000000025fcbf0 @mon_owner=nil, @mon_count=0, @mon_mutex=#<Mutex:0x000000025fc9e8>>>>, ssh=#<OpenStruct>>>
+    [3] pry(main)> ssh.config do |config|
+    [3] pry(main)*   config.ssh.user = ENV["USER"]
+    [3] pry(main)*   config.ssh.host = "127.0.0.1"
+    [3] pry(main)* end
+    => "127.0.0.1"
+    [4] pry(main)> puts ssh.exec("hostname -f")
+    2012-09-01|04:49:47.723411|25709| INFO|ssh.rb:76:exec|command(hostname -f)
+    staging.jovelabs.net
+    staging.jovelabs.net
+    => nil
+    [5] pry(main)> local = File.expand_path(File.join("/tmp", "id_rsa.pub"))
+    => "/tmp/id_rsa.pub"
+    [6] pry(main)> remote = File.expand_path(File.join(ENV["HOME"], ".ssh", "id_rsa.pub"))
+    => "/home/zpatten/.ssh/id_rsa.pub"
+    [7] pry(main)> ssh.download(remote, local)
+    2012-09-01|04:49:48.153389|25709| INFO|ssh.rb:133:download|parameters(/home/zpatten/.ssh/id_rsa.pub,/tmp/id_rsa.pub)
+    2012-09-01|04:49:48.153536|25709| INFO|ssh.rb:137:block in download|download(/home/zpatten/.ssh/id_rsa.pub -> /tmp/id_rsa.pub)
+    2012-09-01|04:49:48.156243|25709| INFO|ssh.rb:145:block in download|finish
+    => true
 
 # RESOURCES
 
