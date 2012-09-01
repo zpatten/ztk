@@ -26,7 +26,7 @@ describe ZTK::SSH do
 
   describe "class" do
 
-    it "should be of kind ZTK::SSH class" do
+    it "should be an instance of ZTK::SSH" do
       subject.should be_an_instance_of ZTK::SSH
     end
 

@@ -26,7 +26,7 @@ describe ZTK::Template do
 
   describe "class" do
 
-    it "should be ZTK::Template class" do
+    it "should be ZTK::Template" do
       subject.should be ZTK::Template
     end
 

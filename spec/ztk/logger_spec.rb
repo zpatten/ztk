@@ -39,7 +39,7 @@ describe ZTK::Logger do
 
   describe "class" do
 
-    it "should be of kind ZTK::Logger class" do
+    it "should be an instance of ZTK::Logger" do
       subject.should be_an_instance_of ZTK::Logger
     end
 
