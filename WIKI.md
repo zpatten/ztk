@@ -31,7 +31,7 @@ Parallel Processing Class
 
 This class can be used to easily run iterative and linear processes in a parallel manner.
 
-Example Ruby Code:
+### ZTK::Parallel Example Ruby Code
 
     $logger = ZTK::Logger.new(STDOUT)
     a_callback = Proc.new do |pid|
@@ -53,7 +53,7 @@ Example Ruby Code:
     parallel.waitall
     parallel.results
 
-Example Code Pry Run:
+### ZTK::Parallel Example Code Pry Run
 
     [1] pry(main)> $logger = ZTK::Logger.new(STDOUT)
     => #<ZTK::Logger:0x0000000204d498
@@ -154,7 +154,7 @@ Example:
 
 SSH Class
 
-This is a simplified SSH class.  It provides for remote execute of commands and returning of command output.  Additionally it allows for uploading and downloading of files.
+Simplified SSH class; it provides for remote execute of commands and returning of command output.  Additionally it allows for uploading and downloading of files.
 
 ### ZTK::SSH Example Ruby Code
 
@@ -272,16 +272,14 @@ Where `remote` is the remote file/path you wish to download on the remote host t
 
 Erubis Template Class
 
-This is a simplified Erubis template class.
-
-### ZTK::SSH Example Ruby Code
+### ZTK::Template Example Ruby Code
 
     template_file = File.expand_path(File.join(File.dirname(__FILE__), "spec", "support", "test-template.txt.erb"))
     IO.read(template_file)
     context = { :test_variable => "Hello World" }
     ZTK::Template.render(template_file, context)
 
-### ZTK::SSH Example Code Pry Run
+### ZTK::Template Example Code Pry Run
 
     [1] pry(main)> template_file = File.expand_path(File.join(File.dirname(__FILE__), "spec", "support", "test-template.txt.erb"))
     => "/home/zpatten/Dropbox/code/ztk/spec/support/test-template.txt.erb"
