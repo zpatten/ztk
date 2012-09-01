@@ -43,9 +43,9 @@ describe ZTK::Parallel do
     subject.results.all?{ |r| r.should > 0 }
     if ENV['CI'] && ENV['TRAVIS']
       # for some odd reason this is always -1 on travis-ci
-      subject.results.count.should == 2
+      subject.results.uniq.count.should == 2
     else
-      subject.results.count.should == 3
+      subject.results.uniq.count.should == 3
     end
     subject.results.include?(Process.pid).should be false
   end
