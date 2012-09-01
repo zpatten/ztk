@@ -47,7 +47,7 @@ module ZTK
       @config.stdin.respond_to?(:sync=) and @config.stdin.sync = true
       @config.logger.respond_to?(:sync=) and @config.logger.sync = true
 
-      @config.logger and @config.logger.debug{ "CONFIG: #{@config.inspect}" }
+      @config.logger and @config.logger.debug{ "config(#{@config.inspect})" }
     end
 
 ################################################################################

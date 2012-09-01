@@ -49,9 +49,11 @@ module ZTK
 ################################################################################
 
     def process(*args)
-      @config.logger and @config.logger.debug{ "FORKS: #{@forks.inspect}" }
+      @config.logger and @config.logger.debug{ "forks(#{@forks.inspect})" }
 
-      while (@forks.count >= @config.max_forks){ wait }
+      while (@forks.count >= @config.max_forks) do
+        wait
+      end
 
       child_reader, parent_writer = ::IO.pipe
       parent_reader, child_writer = ::IO.pipe
@@ -64,7 +66,7 @@ module ZTK
         parent_reader.close
 
         if !(data = yield).nil?
-          @config.logger and @config.logger.debug{ "WRITE: #{data.inspect}" }
+          @config.logger and @config.logger.debug{ "write(#{data.inspect})" }
           child_writer.write(::Base64.encode64(::Marshal.dump(data)))
         end
 
@@ -86,11 +88,11 @@ module ZTK
 ################################################################################
 
     def wait
-      @config.logger and @config.logger.debug{ "FORKS: #{@forks.inspect}" }
+      @config.logger and @config.logger.debug{ "forks(#{@forks.inspect})" }
       pid, status = (::Process.wait2(-1, ::Process::WNOHANG) rescue nil)
       if !pid.nil? && !status.nil? && !(fork = @forks.select{ |f| f[:pid] == pid }.first).nil?
         data = (::Marshal.load(::Base64.decode64(fork[:reader].read.to_s)) rescue nil)
-        @config.logger and @config.logger.debug{ "READ: #{data.inspect}" }
+        @config.logger and @config.logger.debug{ "read(#{data.inspect})" }
         !data.nil? and @results.push(data)
         fork[:reader].close
         fork[:writer].close
@@ -98,6 +100,7 @@ module ZTK
         @forks -= [fork]
         return [pid, status, data]
       end
+      sleep(1)
       nil
     end
 
@@ -114,7 +117,7 @@ module ZTK
 ################################################################################
 
     def count
-      @config.logger and @config.logger.debug{ "COUNT: #{@forks.count}" }
+      @config.logger and @config.logger.debug{ "count(#{@forks.count})" }
       @forks.count
     end
 
