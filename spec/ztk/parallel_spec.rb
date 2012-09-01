@@ -56,18 +56,26 @@ describe ZTK::Parallel do
 
   end
 
-  it "should spawn multiple processes to handle each iteration" do
-    3.times do |x|
-      subject.process do
-        Process.pid
-      end
+  describe "behaviour" do
+
+    it "should throw an exception if the process method is called without a block" do
+      lambda{ subject.process }.should raise_error ZTK::ParallelError, "You must supply a block to the process method!"
     end
-    subject.waitall
-    puts subject.results.inspect
-    subject.results.all?{ |r| r.should be_kind_of Integer }
-    subject.results.all?{ |r| r.should > 0 }
-    subject.results.uniq.count.should == 3
-    subject.results.include?(Process.pid).should be false
+
+    it "should spawn multiple processes to handle each iteration" do
+      3.times do |x|
+        subject.process do
+          Process.pid
+        end
+      end
+      subject.waitall
+      puts subject.results.inspect
+      subject.results.all?{ |r| r.should be_kind_of Integer }
+      subject.results.all?{ |r| r.should > 0 }
+      subject.results.uniq.count.should == 3
+      subject.results.include?(Process.pid).should be false
+    end
+
   end
 
 end

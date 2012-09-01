@@ -58,7 +58,7 @@ module ZTK
       command << [ "-o", "ProxyCommand=\"#{proxy_command}\"" ] if @config.ssh.proxy
       command << "#{@config.ssh.user}@#{@config.ssh.host}"
       command = command.flatten.compact.join(" ")
-      @config.logger and @config.logger.info { "command(#{command})" }
+      @config.logger and @config.logger.info { "command(#{command.inspect})" }
       ::Kernel.exec(command)
     end
 
@@ -73,7 +73,7 @@ module ZTK
 
       @config.logger and @config.logger.debug { "config(#{@config.ssh.inspect})" }
       @config.logger and @config.logger.debug { "options(#{options.inspect})" }
-      @config.logger and @config.logger.info { "command(#{command})" }
+      @config.logger and @config.logger.info { "command(#{command.inspect})" }
       channel = @ssh.open_channel do |chan|
         @config.logger and @config.logger.debug { "channel opened" }
         chan.exec(command) do |ch, success|
@@ -173,7 +173,7 @@ module ZTK
       command << "#{@config.ssh.proxy_user}@#{@config.ssh.proxy_host}"
       command << "nc %h %p"
       command = command.flatten.compact.join(" ")
-      @config.logger and @config.logger.debug { "command(#{command})" }
+      @config.logger and @config.logger.debug { "command(#{command.inspect})" }
       command
     end
 

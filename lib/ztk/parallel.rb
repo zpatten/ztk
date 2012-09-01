@@ -26,6 +26,10 @@ module ZTK
 
 ################################################################################
 
+  class ParallelError < Error; end
+
+################################################################################
+
   class Parallel < ::ZTK::Base
 
 ################################################################################
@@ -48,7 +52,9 @@ module ZTK
 
 ################################################################################
 
-    def process(*args)
+    def process(&block)
+      raise ParallelError, "You must supply a block to the process method!" if !block_given?
+
       @config.logger and @config.logger.debug{ "forks(#{@forks.inspect})" }
 
       while (@forks.count >= @config.max_forks) do
@@ -65,7 +71,7 @@ module ZTK
         parent_writer.close
         parent_reader.close
 
-        if !(data = yield).nil?
+        if !(data = block.call).nil?
           @config.logger and @config.logger.debug{ "write(#{data.inspect})" }
           child_writer.write(::Base64.encode64(::Marshal.dump(data)))
         end
