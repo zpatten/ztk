@@ -27,4 +27,5 @@ module ZTK
   autoload :Logger, "ztk/logger"
   autoload :Parallel, "ztk/parallel"
   autoload :SSH, "ztk/ssh"
+  autoload :Template, "ztk/template"
 end
