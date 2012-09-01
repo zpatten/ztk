@@ -382,7 +382,7 @@ We can use the `ready?` method to test if the socket is ready in a one off manne
 
 #### Socket Wait
 
-We can use the `wait` method to block on the socket's ready? state.  The method will return only if the socket becomes ready or a timeout occurs.  This operations runtime is bound by the `wait` configuration value.
+We can use the `wait` method to block on the socket's `ready?` state.  The method will return only if the socket becomes ready or a timeout occurs.  This operations runtime is bound by the `wait` configuration value.
 
     tcp_check = ZTK::TCPSocketCheck.new
     tcp_check.config do |config|
