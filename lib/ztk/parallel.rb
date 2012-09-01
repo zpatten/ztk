@@ -17,47 +17,35 @@
 #   limitat::IOns under the License.
 #
 ################################################################################
+
 require "ostruct"
 require "base64"
 
+################################################################################
+
 module ZTK
-  class Parallel
 
 ################################################################################
 
-    attr_accessor :config, :results
+  class Parallel < ::ZTK::Base
+
+################################################################################
+
+    attr_accessor :results
 
 ################################################################################
 
     def initialize(config={})
-      @config = OpenStruct.new({
-        :stdout => $stdout,
-        :stderr => $stderr,
-        :stdin => $stdin,
-        :logger => $logger,
-        :max_forks => `grep -c processor /proc/cpuinfo`.chomp.to_i,
+      super({
+        :max_forks => %x( grep -c processor /proc/cpuinfo ).chomp.to_i,
         :one_shot => false,
         :before_fork => nil,
         :after_fork => nil
       }.merge(config))
-      @config.stdout.sync = true if @config.stdout.respond_to?(:sync=)
-      @config.stderr.sync = true if @config.stderr.respond_to?(:sync=)
-      @config.stdin.sync = true if @config.stdin.respond_to?(:sync=)
-      @config.logger.sync = true if @config.logger.respond_to?(:sync=)
 
       @forks = ::Array.new
       @results = ::Array.new
       ::GC.respond_to?(:copy_on_write_friendly=) and ::GC.copy_on_write_friendly = true
-    end
-
-################################################################################
-
-    def config(&block)
-      if block_given?
-        yield(@config)
-      else
-        @config
-      end
     end
 
 ################################################################################
@@ -134,6 +122,9 @@ module ZTK
 ################################################################################
 
   end
+
+################################################################################
+
 end
 
 ################################################################################

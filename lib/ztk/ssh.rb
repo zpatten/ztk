@@ -17,43 +17,30 @@
 #   limitations under the License.
 #
 ################################################################################
+
 require "ostruct"
 require "net/ssh"
 require "net/ssh/proxy/command"
 require "net/sftp"
 
+################################################################################
+
 module ZTK
-  class SSHError < Error; end
-  class SSH
 
 ################################################################################
 
-    attr_accessor :config
+  class SSHError < Error; end
+
+################################################################################
+
+  class SSH < ::ZTK::Base
 
 ################################################################################
 
     def initialize(config={})
-      @config = OpenStruct.new({
-        :stdout => $stdout,
-        :stderr => $stderr,
-        :stdin => $stdin,
-        :logger => $logger,
-        :ssh => OpenStruct.new
+      super({
+        :ssh => ::OpenStruct.new(nil)
       }.merge(config))
-      @config.stdout.sync = true if @config.stdout.respond_to?(:sync=)
-      @config.stderr.sync = true if @config.stderr.respond_to?(:sync=)
-      @config.stdin.sync = true if @config.stdin.respond_to?(:sync=)
-      @config.logger.sync = true if @config.logger.respond_to?(:sync=)
-    end
-
-################################################################################
-
-    def config(&block)
-      if block_given?
-        yield(@config)
-      else
-        @config
-      end
     end
 
 ################################################################################
@@ -203,6 +190,9 @@ module ZTK
 ################################################################################
 
   end
+
+################################################################################
+
 end
 
 ################################################################################
