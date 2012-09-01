@@ -39,7 +39,7 @@ module ZTK
 
     def initialize(config={})
       super({
-        :ssh => ::OpenStruct.new(nil)
+        :ssh => ::OpenStruct.new
       }.merge(config))
     end
 
@@ -120,6 +120,8 @@ module ZTK
           @config.logger and @config.logger.info { "finish" }
         end
       end
+
+      true
     end
 
 ################################################################################
@@ -143,6 +145,8 @@ module ZTK
           @config.logger and @config.logger.info { "finish" }
         end
       end
+
+      true
     end
 
 
