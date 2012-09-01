@@ -290,6 +290,10 @@ Erubis Template Class
     [4] pry(main)> ZTK::Template.render(template_file, context)
     => "Hello World"
 
+## ZTK::Command
+
+A class to execute commands locally.
+
 # RESOURCES
 
 Source:
