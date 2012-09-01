@@ -37,8 +37,12 @@ describe ZTK::Logger do
 
   subject { ZTK::Logger.new(@logfile) }
 
-  it "should be of kind ZTK::Logger class" do
-    subject.should be_an_instance_of ZTK::Logger
+  describe "class" do
+
+    it "should be of kind ZTK::Logger class" do
+      subject.should be_an_instance_of ZTK::Logger
+    end
+
   end
 
   describe "general logging functionality" do

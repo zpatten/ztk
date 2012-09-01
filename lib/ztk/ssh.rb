@@ -178,8 +178,8 @@ module ZTK
       command << [ "-o", "StrictHostKeyChecking=no" ]
       command << [ "-o", "KeepAlive=yes" ]
       command << [ "-o", "ServerAliveInterval=60" ]
-      command << [ "-i", @config.ssh[:proxy_identity_file] ] if @config.ssh[:proxy_identity_file]
-      command << "#{@config.ssh[:proxy_ssh_user]}@#{@config.ssh[:proxy_host]}"
+      command << [ "-i", @config.ssh.proxy_identity_file ] if @config.ssh.proxy_identity_file
+      command << "#{@config.ssh.proxy_user}@#{@config.ssh.proxy_host}"
       command << "nc %h %p"
       command = command.flatten.compact.join(" ")
       @config.logger and @config.logger.debug { "command(#{command})" }
