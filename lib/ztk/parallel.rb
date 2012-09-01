@@ -52,6 +52,16 @@ module ZTK
 
 ################################################################################
 
+    def config(&block)
+      if block_given?
+        yield(@config)
+      else
+        @config
+      end
+    end
+
+################################################################################
+
     def process(*args)
       @config.logger.debug{ "FORKS #{@forks.inspect}" }
       pid = nil
