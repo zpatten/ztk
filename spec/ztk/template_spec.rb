@@ -32,11 +32,15 @@ describe ZTK::Template do
 
   end
 
-  it "should render the template with the supplied context" do
-    template_file = File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "test-template.txt.erb"))
-    context = { :test_variable => "Hello World" }
-    output = subject.render(template_file, context)
-    output.should == "Hello World"
+  describe "behaviour" do
+
+    it "should render the template with the supplied context" do
+      template_file = File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "test-template.txt.erb"))
+      context = { :test_variable => "Hello World" }
+      output = subject.render(template_file, context)
+      output.should == "Hello World"
+    end
+
   end
 
 end
