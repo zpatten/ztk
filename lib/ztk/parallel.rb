@@ -51,7 +51,7 @@ module ZTK
 ################################################################################
 
     def process
-      puts "FORKS #{@forks.inspect}"
+      @config.logger.debug{ "FORKS #{@forks.inspect}" }
       pid = nil
       return pid if (@forks.count >= @config.max_forks)
 
@@ -66,7 +66,7 @@ module ZTK
         parent_reader.close
 
         if !(data = yield).nil?
-          puts "WRITE #{data.inspect}"
+          @config.logger.debug{ "WRITE #{data.inspect}" }
           child_writer.write(::Base64.encode64(::Marshal.dump(data)))
         end
 
@@ -88,11 +88,11 @@ module ZTK
 ################################################################################
 
     def wait
-      puts "FORKS #{@forks.inspect}"
+      @config.logger.debug{ "FORKS #{@forks.inspect}" }
       pid, status = (Process.wait2(-1, Process::WNOHANG) rescue nil)
       if !pid.nil? && !status.nil? && !(fork = @forks.select{ |f| f[:pid] == pid }.first).nil?
         data = (::Marshal.load(::Base64.decode64(fork[:reader].read.to_s)) rescue nil)
-        puts "READ #{data.inspect}"
+        @config.logger.debug{ "READ #{data.inspect}" }
         @results.push(data) if (!data.nil? && !@config.one_shot)
         fork[:reader].close
         fork[:writer].close
