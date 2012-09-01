@@ -59,7 +59,6 @@ describe ZTK::SSH do
 
   end
 
-
   # this stuff doesn't work as is under travis-ci
   if !ENV['CI'] && !ENV['TRAVIS']
 
