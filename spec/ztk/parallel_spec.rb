@@ -22,9 +22,6 @@ require "spec_helper"
 
 describe ZTK::Parallel do
 
-  before(:all) do
-  end
-
   subject { ZTK::Parallel.new }
 
   describe "class" do

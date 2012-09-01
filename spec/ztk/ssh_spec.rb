@@ -22,9 +22,6 @@ require "spec_helper"
 
 describe ZTK::SSH do
 
-  before(:all) do
-  end
-
   subject { ZTK::SSH.new }
 
   describe "class" do

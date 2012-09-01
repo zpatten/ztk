@@ -52,8 +52,8 @@ module ZTK
 
 ################################################################################
 
-      def render_template(template, context)
-        Erubis::Eruby.new(template).evaluate(:config => context)
+      def render_template(template, context={})
+        Erubis::Eruby.new(template).evaluate(context)
       end
 
 ################################################################################
