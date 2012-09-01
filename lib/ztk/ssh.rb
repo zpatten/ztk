@@ -56,7 +56,7 @@ module ZTK
       command << [ "-o", "ServerAliveInterval=60" ]
       command << [ "-i", @config.ssh[:identity_file] ] if @config.ssh[:identity_file]
       command << [ "-o", "ProxyCommand=\"#{proxy_command}\"" ] if @config.ssh[:proxy]
-      command << "#{@config.ssh[:ssh_user]}@#{@config.ssh[:host]}"
+      command << "#{@config.ssh[:user]}@#{@config.ssh[:host]}"
       command = command.flatten.compact.join(" ")
       @config.logger and @config.logger.info { "command(#{command})" }
       Kernel.exec(command)
@@ -65,7 +65,7 @@ module ZTK
 ################################################################################
 
     def exec(command, options={})
-      @ssh ||= Net::SSH.start(@config.ssh[:host], @config.ssh[:ssh_user], ssh_options)
+      @ssh ||= Net::SSH.start(@config.ssh[:host], @config.ssh[:user], ssh_options)
 
       options = { :silence => false }.merge(options)
       silence = options[:silence]
@@ -102,7 +102,7 @@ module ZTK
 ################################################################################
 
     def upload(local, remote)
-      @sftp ||= Net::SFTP.start(@config.ssh[:host], @config.ssh[:ssh_user], ssh_options)
+      @sftp ||= Net::SFTP.start(@config.ssh[:host], @config.ssh[:user], ssh_options)
 
       @config.logger and @config.logger.debug { "config(#{@config.ssh.inspect})" }
       @config.logger and @config.logger.info { "parameters(#{local},#{remote})" }
@@ -125,7 +125,7 @@ module ZTK
 ################################################################################
 
     def download(remote, local)
-      @sftp ||= Net::SFTP.start(@config.ssh[:host], @config.ssh[:ssh_user], ssh_options)
+      @sftp ||= Net::SFTP.start(@config.ssh[:host], @config.ssh[:user], ssh_options)
 
       @config.logger and @config.logger.debug { "config(#{@config.ssh.inspect})" }
       @config.logger and @config.logger.info { "parameters(#{remote},#{local})" }
@@ -178,7 +178,7 @@ module ZTK
     def ssh_options
       @config.logger and @config.logger.debug { "config(#{@config.ssh.inspect})" }
       options = {}
-      options.merge!(:password => @config.ssh[:ssh_password]) if @config.ssh[:ssh_password]
+      options.merge!(:password => @config.ssh[:password]) if @config.ssh[:password]
       options.merge!(:keys => @config.ssh[:identity_file]) if @config.ssh[:identity_file]
       options.merge!(:timeout => @config.ssh[:timeout]) if @config.ssh[:timeout]
       options.merge!(:user_known_hosts_file  => '/dev/null') if !@config.ssh[:host_key_verify]
