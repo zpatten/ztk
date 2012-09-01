@@ -212,7 +212,7 @@ Simplified SSH class; it provides for remote execute of commands and returning o
     2012-09-01|04:49:48.156243|25709| INFO|ssh.rb:145:block in download|finish
     => true
 
-### ZTK::SSH Configuration
+### ZTK::SSH Config
 
 To proxy through another host, for example SSH to 192.168.1.1 through 192.168.0.1:
 
@@ -270,7 +270,7 @@ Where `remote` is the remote file/path you wish to download on the remote host t
 
 ## ZTK::Template
 
-Erubis Template Class
+Erubis Templating
 
 ### ZTK::Template Example Ruby Code
 
@@ -289,6 +289,112 @@ Erubis Template Class
     => {:test_variable=>"Hello World"}
     [4] pry(main)> ZTK::Template.render(template_file, context)
     => "Hello World"
+
+## ZTK::TCPSocketCheck
+
+Check TCP Sockets
+
+This class has two basic modes of operation:
+
+* Read Test
+
+By default we will perform a read test against the host and port specified.  In this mode we will attempt to connect to the host and port supplied and if we can read any amount of data, regardless of the content we view this as success.
+
+* Write Test
+
+If `data` is supplied via the configuration, this will change the mode of operation to a write test.  Certain services, such as HTTP don't send any data unless you send something first.  In this mode we will attempt to connect to the host and port supplied, once connected we will write the supplied `data` to the socket and then attempt to read from the socket.  If we can read any amount of data, reagardless of the conent we view this as success.
+
+### ZTK::TCPSocketCheck Example Ruby Code
+
+    tcp_check = ZTK::TCPSocketCheck.new(:host => "github.com", :port => 22)
+    tcp_check.wait
+    tcp_check.ready?
+
+### ZTK::TCPSocketCheck Example Code Pry Run
+
+    [1] pry(main)> tcp_check = ZTK::TCPSocketCheck.new(:host => "github.com", :port => 22)
+    => #<ZTK::TCPSocketCheck:0x00000001890d18
+     @config=
+      #<OpenStruct stdout=#<IO:<STDOUT>>, stderr=#<IO:<STDERR>>, stdin=#<IO:<STDIN>>, logger=nil, host="github.com", port=22, data=nil, timeout=5>>
+    [2] pry(main)> tcp_check.wait
+    => nil
+    [3] pry(main)> tcp_check.ready?
+    => true
+
+### ZTK::TCPSocketCheck Config
+
+Here is an example TCPSocketCheck configuration.  The `timeout` and `wait` values shown are the defaults if omitted.
+
+    tcp_check = ZTK::TCPSocketCheck.new
+    tcp_check.config do |config|
+      config.host = "www.google.com"
+      config.port = 80
+      config.data = "GET"
+      config.timeout = 5
+      config.wait = 60
+    end
+
+Specify the host and port (required):
+
+    tcp_check = ZTK::TCPSocketCheck.new
+    tcp_check.config do |config|
+      config.host = "www.google.com"
+      config.port = 80
+    end
+
+Specify data to write (switches to a write mode test if this is supplied):
+
+    tcp_check = ZTK::TCPSocketCheck.new
+    tcp_check.config do |config|
+      config.host = "www.google.com"
+      config.port = 80
+      config.data = "GET"
+    end
+
+Override the `timeout` and `wait` values:
+
+    tcp_check = ZTK::TCPSocketCheck.new
+    tcp_check.config do |config|
+      config.host = "www.google.com"
+      config.port = 80
+      config.data = "GET"
+      config.timeout = 3
+      config.wait = 5
+    end
+
+### ZTK::TCPSocketCheck Core Methods
+
+#### Socket Ready?
+
+We can use the `ready?` method to test if the socket is ready in a one off manner.  This operations runtime is bound by the `timeout` configuration value.
+
+    tcp_check = ZTK::TCPSocketCheck.new
+    tcp_check.config do |config|
+      config.host = "www.google.com"
+      config.port = 80
+      config.data = "GET"
+    end
+    if tcp_check.ready? == true
+      puts "The Socket Is Ready!"
+    else
+      puts "Looks like no one is home!"
+    end
+
+#### Socket Wait
+
+We can use the `wait` method to block on the socket's ready? state.  The method will return only if the socket becomes ready or a timeout occurs.  This operations runtime is bound by the `wait` configuration value.
+
+    tcp_check = ZTK::TCPSocketCheck.new
+    tcp_check.config do |config|
+      config.host = "www.google.com"
+      config.port = 80
+      config.data = "GET"
+    end
+    if tcp_check.wait == true
+      puts "The Socket Is Ready!"
+    else
+      puts "We timed out or got no answer!"
+    end
 
 ## ZTK::Command
 
