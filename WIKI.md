@@ -268,6 +268,30 @@ Where `local` is the local file/path you wish to upload on the local host to the
 
 Where `remote` is the remote file/path you wish to download on the remote host to the `local` file/path on the local host.
 
+### ZTK::Template
+
+Erubis Template Class
+
+This is a simplified Erubis template class.
+
+#### ZTK::SSH Example Ruby Code
+
+    template_file = File.expand_path(File.join(File.dirname(__FILE__), "spec", "support", "test-template.txt.erb"))
+    IO.read(template_file)
+    context = { :test_variable => "Hello World" }
+    ZTK::Template.render(template_file, context)
+
+#### ZTK::SSH Example Code Pry Run
+
+    [1] pry(main)> template_file = File.expand_path(File.join(File.dirname(__FILE__), "spec", "support", "test-template.txt.erb"))
+    => "/home/zpatten/Dropbox/code/ztk/spec/support/test-template.txt.erb"
+    [2] pry(main)> IO.read(template_file)
+    => "<%= @test_variable %>\n"
+    [3] pry(main)> context = { :test_variable => "Hello World" }
+    => {:test_variable=>"Hello World"}
+    [4] pry(main)> ZTK::Template.render(template_file, context)
+    => "Hello World"
+
 # RESOURCES
 
 Source:
