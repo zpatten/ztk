@@ -41,10 +41,13 @@ module ZTK
         :stdin => $stdin,
         :logger => $logger
       }.merge(config))
-      @config.stdout.sync = true if @config.stdout.respond_to?(:sync=)
-      @config.stderr.sync = true if @config.stderr.respond_to?(:sync=)
-      @config.stdin.sync = true if @config.stdin.respond_to?(:sync=)
-      @config.logger.sync = true if @config.logger.respond_to?(:sync=)
+
+      @config.stdout.respond_to?(:sync=) and @config.stdout.sync = true
+      @config.stderr.respond_to?(:sync=) and @config.stderr.sync = true
+      @config.stdin.respond_to?(:sync=) and @config.stdin.sync = true
+      @config.logger.respond_to?(:sync=) and @config.logger.sync = true
+
+      @config.logger and @config.logger.debug{ "CONFIG: #{@config.inspect}" }
     end
 
 ################################################################################
