@@ -31,4 +31,13 @@ describe ZTK::SSH do
     subject.should be_an_instance_of ZTK::SSH
   end
 
+  it "should be able to connect to 127.0.0.1 as the current user" do
+    subject.config do |config|
+      config.ssh.user = ENV["USER"]
+      config.ssh.host = "127.0.0.1"
+    end
+    hostname = %x( hostname -f ).chomp
+    subject.exec("hostname -f").chomp.should == hostname
+  end
+
 end
