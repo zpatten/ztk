@@ -15,6 +15,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = ZTK::VERSION
 
+  gem.add_dependency("erubis")
   gem.add_dependency("net-ssh")
   gem.add_dependency("net-sftp")
 
