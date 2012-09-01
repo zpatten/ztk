@@ -24,6 +24,7 @@ module ZTK
   class Error < StandardError; end
 
   autoload :Base, "ztk/base"
+  autoload :Command, "ztk/command"
   autoload :Logger, "ztk/logger"
   autoload :Parallel, "ztk/parallel"
   autoload :SSH, "ztk/ssh"

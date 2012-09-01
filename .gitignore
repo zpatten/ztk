@@ -1,4 +1,5 @@
 *.log
+*.txt
 *.gem
 *.rbc
 .rvmrc
