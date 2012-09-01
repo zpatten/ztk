@@ -66,12 +66,7 @@ describe ZTK::Parallel do
     puts subject.results.inspect
     subject.results.all?{ |r| r.should be_kind_of Integer }
     subject.results.all?{ |r| r.should > 0 }
-    if ENV['CI'] && ENV['TRAVIS']
-      # for some odd reason this is always -1 on travis-ci
-      subject.results.uniq.count.should == 2
-    else
-      subject.results.uniq.count.should == 3
-    end
+    subject.results.uniq.count.should == 3
     subject.results.include?(Process.pid).should be false
   end
 
