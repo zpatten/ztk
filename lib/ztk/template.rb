@@ -47,13 +47,13 @@ module ZTK
 ################################################################################
 
       def load_template(template)
-        IO.read(template).chomp
+        ::IO.read(template).chomp
       end
 
 ################################################################################
 
       def render_template(template, context={})
-        Erubis::Eruby.new(template).evaluate(context)
+        ::Erubis::Eruby.new(template).evaluate(context)
       end
 
 ################################################################################

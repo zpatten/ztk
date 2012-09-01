@@ -59,7 +59,7 @@ module ZTK
       command << "#{@config.ssh.user}@#{@config.ssh.host}"
       command = command.flatten.compact.join(" ")
       @config.logger and @config.logger.info { "command(#{command})" }
-      Kernel.exec(command)
+      ::Kernel.exec(command)
     end
 
 ################################################################################
