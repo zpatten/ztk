@@ -31,13 +31,18 @@ describe ZTK::SSH do
     subject.should be_an_instance_of ZTK::SSH
   end
 
-  it "should be able to connect to 127.0.0.1 as the current user" do
-    subject.config do |config|
-      config.ssh.user = ENV["USER"]
-      config.ssh.host = "127.0.0.1"
+  # this stuff doesn't work as is under travis-ci
+  if !ENV['CI'] && !ENV['TRAVIS']
+
+    it "should be able to connect to 127.0.0.1 as the current user" do
+      subject.config do |config|
+        config.ssh.user = ENV["USER"]
+        config.ssh.host = "127.0.0.1"
+      end
+      hostname = %x( hostname -f ).chomp
+      subject.exec("hostname -f").chomp.should == hostname
     end
-    hostname = %x( hostname -f ).chomp
-    subject.exec("hostname -f").chomp.should == hostname
+
   end
 
 end
