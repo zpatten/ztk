@@ -37,7 +37,6 @@ module ZTK
     def initialize(config={})
       super({
         :max_forks => %x( grep -c processor /proc/cpuinfo ).chomp.to_i,
-        :one_shot => false,
         :before_fork => nil,
         :after_fork => nil
       }.merge(config))
@@ -50,9 +49,9 @@ module ZTK
 ################################################################################
 
     def process(*args)
-      @config.logger.debug{ "FORKS #{@forks.inspect}" }
-      pid = nil
-      return pid if (@forks.count >= @config.max_forks)
+      @config.logger and @config.logger.debug{ "FORKS: #{@forks.inspect}" }
+
+      while (@forks.count >= @config.max_forks){ wait }
 
       child_reader, parent_writer = ::IO.pipe
       parent_reader, child_writer = ::IO.pipe
@@ -65,7 +64,7 @@ module ZTK
         parent_reader.close
 
         if !(data = yield).nil?
-          @config.logger.debug{ "WRITE #{data.inspect}" }
+          @config.logger and @config.logger.debug{ "WRITE: #{data.inspect}" }
           child_writer.write(::Base64.encode64(::Marshal.dump(data)))
         end
 
@@ -87,12 +86,12 @@ module ZTK
 ################################################################################
 
     def wait
-      @config.logger.debug{ "FORKS #{@forks.inspect}" }
+      @config.logger and @config.logger.debug{ "FORKS: #{@forks.inspect}" }
       pid, status = (::Process.wait2(-1, ::Process::WNOHANG) rescue nil)
       if !pid.nil? && !status.nil? && !(fork = @forks.select{ |f| f[:pid] == pid }.first).nil?
         data = (::Marshal.load(::Base64.decode64(fork[:reader].read.to_s)) rescue nil)
-        @config.logger.debug{ "READ #{data.inspect}" }
-        @results.push(data) if (!data.nil? && !@config.one_shot)
+        @config.logger and @config.logger.debug{ "READ: #{data.inspect}" }
+        !data.nil? and @results.push(data)
         fork[:reader].close
         fork[:writer].close
 
@@ -115,6 +114,7 @@ module ZTK
 ################################################################################
 
     def count
+      @config.logger and @config.logger.debug{ "COUNT: #{@forks.count}" }
       @forks.count
     end
 
