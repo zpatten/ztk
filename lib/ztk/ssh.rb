@@ -18,6 +18,9 @@
 #
 ################################################################################
 require "ostruct"
+require "net/ssh"
+require "net/ssh/proxy/command"
+require "net/sftp"
 
 module ZTK
   class SSHError < Error; end
@@ -25,7 +28,7 @@ module ZTK
 
 ################################################################################
 
-    attr_accessor :stdout, :stderr, :stdin, :config
+    attr_accessor :config
 
 ################################################################################
 
@@ -35,12 +38,22 @@ module ZTK
         :stderr => $stderr,
         :stdin => $stdin,
         :logger => $logger,
-        :ssh => Hash.new(nil)
+        :ssh => OpenStruct.new
       }.merge(config))
       @config.stdout.sync = true if @config.stdout.respond_to?(:sync=)
       @config.stderr.sync = true if @config.stderr.respond_to?(:sync=)
       @config.stdin.sync = true if @config.stdin.respond_to?(:sync=)
       @config.logger.sync = true if @config.logger.respond_to?(:sync=)
+    end
+
+################################################################################
+
+    def config(&block)
+      if block_given?
+        yield(@config)
+      else
+        @config
+      end
     end
 
 ################################################################################
@@ -54,9 +67,9 @@ module ZTK
       command << [ "-o", "StrictHostKeyChecking=no" ]
       command << [ "-o", "KeepAlive=yes" ]
       command << [ "-o", "ServerAliveInterval=60" ]
-      command << [ "-i", @config.ssh[:identity_file] ] if @config.ssh[:identity_file]
-      command << [ "-o", "ProxyCommand=\"#{proxy_command}\"" ] if @config.ssh[:proxy]
-      command << "#{@config.ssh[:user]}@#{@config.ssh[:host]}"
+      command << [ "-i", @config.ssh.identity_file ] if @config.ssh.identity_file
+      command << [ "-o", "ProxyCommand=\"#{proxy_command}\"" ] if @config.ssh.proxy
+      command << "#{@config.ssh.user}@#{@config.ssh.host}"
       command = command.flatten.compact.join(" ")
       @config.logger and @config.logger.info { "command(#{command})" }
       Kernel.exec(command)
@@ -65,7 +78,7 @@ module ZTK
 ################################################################################
 
     def exec(command, options={})
-      @ssh ||= Net::SSH.start(@config.ssh[:host], @config.ssh[:user], ssh_options)
+      @ssh ||= ::Net::SSH.start(@config.ssh.host, @config.ssh.user, ssh_options)
 
       options = { :silence => false }.merge(options)
       silence = options[:silence]
@@ -102,7 +115,7 @@ module ZTK
 ################################################################################
 
     def upload(local, remote)
-      @sftp ||= Net::SFTP.start(@config.ssh[:host], @config.ssh[:user], ssh_options)
+      @sftp ||= ::Net::SFTP.start(@config.ssh.host, @config.ssh.user, ssh_options)
 
       @config.logger and @config.logger.debug { "config(#{@config.ssh.inspect})" }
       @config.logger and @config.logger.info { "parameters(#{local},#{remote})" }
@@ -125,7 +138,7 @@ module ZTK
 ################################################################################
 
     def download(remote, local)
-      @sftp ||= Net::SFTP.start(@config.ssh[:host], @config.ssh[:user], ssh_options)
+      @sftp ||= ::Net::SFTP.start(@config.ssh.host, @config.ssh.user, ssh_options)
 
       @config.logger and @config.logger.debug { "config(#{@config.ssh.inspect})" }
       @config.logger and @config.logger.info { "parameters(#{remote},#{local})" }
@@ -153,7 +166,7 @@ module ZTK
     def proxy_command
       @config.logger and @config.logger.debug { "config(#{@config.ssh.inspect})" }
 
-      if !@config.ssh[:identity_file]
+      if !@config.ssh.identity_file
         message = "You must specify an identity file in order to SSH proxy."
         @config.logger and @config.logger.fatal { message }
         raise SSHError, message
@@ -178,11 +191,11 @@ module ZTK
     def ssh_options
       @config.logger and @config.logger.debug { "config(#{@config.ssh.inspect})" }
       options = {}
-      options.merge!(:password => @config.ssh[:password]) if @config.ssh[:password]
-      options.merge!(:keys => @config.ssh[:identity_file]) if @config.ssh[:identity_file]
-      options.merge!(:timeout => @config.ssh[:timeout]) if @config.ssh[:timeout]
-      options.merge!(:user_known_hosts_file  => '/dev/null') if !@config.ssh[:host_key_verify]
-      options.merge!(:proxy => Net::SSH::Proxy::Command.new(proxy_command)) if @config.ssh[:proxy]
+      options.merge!(:password => @config.ssh.password) if @config.ssh.password
+      options.merge!(:keys => @config.ssh.identity_file) if @config.ssh.identity_file
+      options.merge!(:timeout => @config.ssh.timeout) if @config.ssh.timeout
+      options.merge!(:user_known_hosts_file  => '/dev/null') if !@config.ssh.host_key_verify
+      options.merge!(:proxy => ::Net::SSH::Proxy::Command.new(proxy_command)) if @config.ssh.proxy
       @config.logger and @config.logger.debug { "options(#{options.inspect})" }
       options
     end
