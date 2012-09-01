@@ -156,7 +156,7 @@ SSH Class
 
 This is a simplified SSH class.  It provides for remote execute of commands and returning of command output.  Additionally it allows for uploading and downloading of files.
 
-Example Ruby Code:
+#### ZTK::SSH Example Ruby Code
 
     $logger = ZTK::Logger.new(STDOUT)
     ssh = ZTK::SSH.new
@@ -169,7 +169,7 @@ Example Ruby Code:
     remote = File.expand_path(File.join(ENV["HOME"], ".ssh", "id_rsa.pub"))
     ssh.download(remote, local)
 
-Example Code Pry Run:
+#### ZTK::SSH Example Code Pry Run
 
     [1] pry(main)> $logger = ZTK::Logger.new(STDOUT)
     => #<ZTK::Logger:0x000000025f2c18
@@ -212,6 +212,8 @@ Example Code Pry Run:
     2012-09-01|04:49:48.156243|25709| INFO|ssh.rb:145:block in download|finish
     => true
 
+#### ZTK::SSH Configuration
+
 To proxy through another host, for example SSH to 192.168.1.1 through 192.168.0.1:
 
     ssh.config do |config|
@@ -245,6 +247,26 @@ Check host keys, the default is false (off):
     ssh.config do |config|
       config.ssh.host_key_verify = true
     end
+
+#### ZTK::SSH Core Methods
+
+##### Execute A Command
+
+    ssh.exec(command, options={})
+
+Where `command` is a command (i.e. `String`) to execute on the remote host (i.e. "hostname -f").  You can optionally pass `:silence => true` into `options` to suppress session output from going to STDOUT and STDERR.
+
+##### Upload A File
+
+    ssh.upload(local, remote)
+
+Where `local` is the local file/path you wish to upload on the local host to the `remote` file/path on the remote host.
+
+##### Download A File
+
+    ssh.download(remote, local)
+
+Where `remote` is the remote file/path you wish to download on the remote host to the `local` file/path on the local host.
 
 # RESOURCES
 
