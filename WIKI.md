@@ -212,6 +212,40 @@ Example Code Pry Run:
     2012-09-01|04:49:48.156243|25709| INFO|ssh.rb:145:block in download|finish
     => true
 
+To proxy through another host, for example SSH to 192.168.1.1 through 192.168.0.1:
+
+    ssh.config do |config|
+      config.ssh.user = ENV["USER"]
+      config.ssh.host = "192.168.1.1"
+      config.ssh.proxy_user = ENV["USER"]
+      config.ssh.proxy_host = "192.168.0.1"
+    end
+
+Specify an identity file:
+
+    ssh.config do |config|
+      config.ssh.identify_file = File.expand_path(File.join(ENV["HOME"], ".ssh", "id_rsa"))
+      config.ssh.proxy_identify_file = File.expand_path(File.join(ENV["HOME"], ".ssh", "id_rsa"))
+    end
+
+Specify a timeout:
+
+    ssh.config do |config|
+      config.ssh.timeout = 30
+    end
+
+Specify a password:
+
+    ssh.config do |config|
+      config.ssh.password = "p@$$w0rd"
+    end
+
+Check host keys, the default is false (off):
+
+    ssh.config do |config|
+      config.ssh.host_key_verify = true
+    end
+
 # RESOURCES
 
 Source:
