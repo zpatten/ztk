@@ -35,11 +35,12 @@ module ZTK
 ################################################################################
 
     def initialize(config={})
+      defined?(Rails) and rails_logger = Rails.logger
       @config = OpenStruct.new({
         :stdout => $stdout,
         :stderr => $stderr,
         :stdin => $stdin,
-        :logger => $logger
+        :logger => (rails_logger || $logger)
       }.merge(config))
 
       @config.stdout.respond_to?(:sync=) and @config.stdout.sync = true
