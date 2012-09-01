@@ -2,9 +2,9 @@
 #
 #      Author: Zachary Patten <zachary@jovelabs.com>
 #   Copyright: Copyright (c) Jove Labs
-#     License: Apache License, Version 2.0
+#     License: Apache License, Vers::IOn 2.0
 #
-#   Licensed under the Apache License, Version 2.0 (the "License");
+#   Licensed under the Apache License, Vers::IOn 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
 #   You may obtain a copy of the License at
 #
@@ -12,9 +12,9 @@
 #
 #   Unless required by applicable law or agreed to in writing, software
 #   distributed under the License is distributed on an "AS IS" BASIS,
-#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#   See the License for the specific language governing permissions and
-#   limitations under the License.
+#   WITHOUT WARRANTIES OR CONDIT::IONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permiss::IOns and
+#   limitat::IOns under the License.
 #
 ################################################################################
 require "base64"
@@ -36,31 +36,33 @@ module ZTK
         :stdin => $stdin,
         :logger => $logger,
         :max_forks => `grep -c processor /proc/cpuinfo`.chomp.to_i,
-        :one_shot => false
+        :one_shot => false,
+        :before_fork => nil,
+        :after_fork => nil
       }.merge(config))
       @config.stdout.sync = true if @config.stdout.respond_to?(:sync=)
       @config.stderr.sync = true if @config.stderr.respond_to?(:sync=)
       @config.stdin.sync = true if @config.stdin.respond_to?(:sync=)
       @config.logger.sync = true if @config.logger.respond_to?(:sync=)
 
-      @forks = Array.new
-      @results = Array.new
-      GC.respond_to?(:copy_on_write_friendly=) and GC.copy_on_write_friendly = true
+      @forks = ::Array.new
+      @results = ::Array.new
+      ::GC.respond_to?(:copy_on_write_friendly=) and ::GC.copy_on_write_friendly = true
     end
 
 ################################################################################
 
-    def process
+    def process(*args)
       @config.logger.debug{ "FORKS #{@forks.inspect}" }
       pid = nil
       return pid if (@forks.count >= @config.max_forks)
 
-      child_reader, parent_writer = IO.pipe
-      parent_reader, child_writer = IO.pipe
+      child_reader, parent_writer = ::IO.pipe
+      parent_reader, child_writer = ::IO.pipe
 
-      defined?(ActiveRecord::Base) and ActiveRecord::Base.connection.disconnect!
-      pid = Process.fork do
-        defined?(ActiveRecord::Base) and ActiveRecord::Base.establish_connection
+      @config.before_fork and @config.before_fork.call(::Process.pid)
+      pid = ::Process.fork do
+        @config.after_fork and @config.after_fork.call(::Process.pid)
 
         parent_writer.close
         parent_reader.close
@@ -72,9 +74,9 @@ module ZTK
 
         child_reader.close
         child_writer.close
-        Process.exit!(0)
+        ::Process.exit!(0)
       end
-      defined?(ActiveRecord::Base) and ActiveRecord::Base.establish_connection
+      @config.after_fork and @config.after_fork.call(::Process.pid)
 
       child_reader.close
       child_writer.close
@@ -89,7 +91,7 @@ module ZTK
 
     def wait
       @config.logger.debug{ "FORKS #{@forks.inspect}" }
-      pid, status = (Process.wait2(-1, Process::WNOHANG) rescue nil)
+      pid, status = (::Process.wait2(-1, ::Process::WNOHANG) rescue nil)
       if !pid.nil? && !status.nil? && !(fork = @forks.select{ |f| f[:pid] == pid }.first).nil?
         data = (::Marshal.load(::Base64.decode64(fork[:reader].read.to_s)) rescue nil)
         @config.logger.debug{ "READ #{data.inspect}" }
@@ -106,11 +108,11 @@ module ZTK
 ################################################################################
 
     def waitall
-      _waitall = Array.new
+      data = ::Array.new
       while @forks.count > 0
-        _waitall << self.wait
+        data << self.wait
       end
-      _waitall
+      data
     end
 
 ################################################################################
