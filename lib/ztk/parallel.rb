@@ -17,8 +17,8 @@
 #   limitat::IOns under the License.
 #
 ################################################################################
-require "base64"
 require "ostruct"
+require "base64"
 
 module ZTK
   class Parallel
