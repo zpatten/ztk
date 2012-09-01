@@ -150,6 +150,10 @@ Example:
     $logger.error { "This is a error message!" }
     $logger.fatal { "This is a fatal message!" }
 
+Example Output:
+
+    2012-09-01|21:34:45.216262|23603|FATAL|logger_spec.rb:122:block (5 levels) in <top (required)>|This is a test fatal message
+
 ## ZTK::SSH
 
 SSH Class
