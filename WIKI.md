@@ -20,12 +20,12 @@ Or install it yourself as:
 
 ## Usage
 
-### Console
+## Console
 
     bundle install
     bundle exec ztk
 
-### ZTK::Parallel
+## ZTK::Parallel
 
 Parallel Processing Class
 
@@ -134,7 +134,7 @@ Default Config Values for ZTK::Parallel:
     :before_fork => nil,
     :after_fork => nil
 
-### ZTK::Logger
+## ZTK::Logger
 
 Logging Class
 
@@ -150,13 +150,13 @@ Example:
     $logger.error { "This is a error message!" }
     $logger.fatal { "This is a fatal message!" }
 
-### ZTK::SSH
+## ZTK::SSH
 
 SSH Class
 
 This is a simplified SSH class.  It provides for remote execute of commands and returning of command output.  Additionally it allows for uploading and downloading of files.
 
-#### ZTK::SSH Example Ruby Code
+### ZTK::SSH Example Ruby Code
 
     $logger = ZTK::Logger.new(STDOUT)
     ssh = ZTK::SSH.new
@@ -169,7 +169,7 @@ This is a simplified SSH class.  It provides for remote execute of commands and 
     remote = File.expand_path(File.join(ENV["HOME"], ".ssh", "id_rsa.pub"))
     ssh.download(remote, local)
 
-#### ZTK::SSH Example Code Pry Run
+### ZTK::SSH Example Code Pry Run
 
     [1] pry(main)> $logger = ZTK::Logger.new(STDOUT)
     => #<ZTK::Logger:0x000000025f2c18
@@ -212,7 +212,7 @@ This is a simplified SSH class.  It provides for remote execute of commands and 
     2012-09-01|04:49:48.156243|25709| INFO|ssh.rb:145:block in download|finish
     => true
 
-#### ZTK::SSH Configuration
+### ZTK::SSH Configuration
 
 To proxy through another host, for example SSH to 192.168.1.1 through 192.168.0.1:
 
@@ -248,40 +248,40 @@ Check host keys, the default is false (off):
       config.ssh.host_key_verify = true
     end
 
-#### ZTK::SSH Core Methods
+### ZTK::SSH Core Methods
 
-##### Execute A Command
+#### Execute A Command
 
     ssh.exec(command, options={})
 
 Where `command` is a command (i.e. `String`) to execute on the remote host (i.e. "hostname -f").  You can optionally pass `:silence => true` into `options` to suppress session output from going to STDOUT and STDERR.
 
-##### Upload A File
+#### Upload A File
 
     ssh.upload(local, remote)
 
 Where `local` is the local file/path you wish to upload on the local host to the `remote` file/path on the remote host.
 
-##### Download A File
+#### Download A File
 
     ssh.download(remote, local)
 
 Where `remote` is the remote file/path you wish to download on the remote host to the `local` file/path on the local host.
 
-### ZTK::Template
+## ZTK::Template
 
 Erubis Template Class
 
 This is a simplified Erubis template class.
 
-#### ZTK::SSH Example Ruby Code
+### ZTK::SSH Example Ruby Code
 
     template_file = File.expand_path(File.join(File.dirname(__FILE__), "spec", "support", "test-template.txt.erb"))
     IO.read(template_file)
     context = { :test_variable => "Hello World" }
     ZTK::Template.render(template_file, context)
 
-#### ZTK::SSH Example Code Pry Run
+### ZTK::SSH Example Code Pry Run
 
     [1] pry(main)> template_file = File.expand_path(File.join(File.dirname(__FILE__), "spec", "support", "test-template.txt.erb"))
     => "/home/zpatten/Dropbox/code/ztk/spec/support/test-template.txt.erb"
