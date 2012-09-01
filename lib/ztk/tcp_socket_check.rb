@@ -18,6 +18,10 @@
 #
 ################################################################################
 
+require "socket"
+
+################################################################################
+
 module ZTK
 
 ################################################################################
@@ -34,9 +38,15 @@ module ZTK
       super({
         :host => nil,
         :port => nil,
-        :data => nil
+        :data => nil,
+        :timeout => 5,
+        :wait => 60
       }.merge(config))
+    end
 
+################################################################################
+
+    def ready?
       if @config.host.nil?
         message = "You must supply a host!"
         @config.logger and @config.logger.fatal { message }
@@ -48,19 +58,15 @@ module ZTK
         @config.logger and @config.logger.fatal { message }
         raise TCPSocketCheckError, message
       end
-    end
 
-################################################################################
-
-    def ready?
       socket = ::TCPSocket.new(@config.host, @config.port)
 
       if @config.data.nil?
         @config.logger and @config.logger.debug { "read(#{@config.host}:#{@config.port})" }
-        ((::IO.select([socket], nil, nil, 5) && socket.gets) ? true : false)
+        ((::IO.select([socket], nil, nil, @config.timeout) && socket.gets) ? true : false)
       else
         @config.logger and @config.logger.debug { "write(#{@config.host}:#{@config.port}, '#{@config.data}')" }
-        ((::IO.select(nil, [socket], nil, 5) && socket.write(@config.data)) ? true : false)
+        ((::IO.select(nil, [socket], nil, @config.timeout) && socket.write(@config.data)) ? true : false)
       end
 
     rescue Errno::ETIMEDOUT, Errno::ECONNREFUSED, Errno::EHOSTUNREACH => e
@@ -73,10 +79,17 @@ module ZTK
 ################################################################################
 
     def wait
-      begin
-        success = ready?
-        sleep(1)
-      end until success
+      @config.logger and @config.logger.debug{ "waiting for socket to become available; timeout after #{@config.wait} seconds" }
+      Timeout.timeout(@config.wait) do
+        until ready?
+          @config.logger and @config.logger.debug{ "sleeping 1 second" }
+          sleep(1)
+        end
+      end
+      true
+    rescue Timeout::Error => e
+      @config.logger and @config.logger.warn{ "socket(#{@config.host}:#{@config.port}) timeout!" }
+      false
     end
 
 ################################################################################
