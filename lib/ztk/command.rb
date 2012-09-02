@@ -30,7 +30,7 @@ module ZTK
 
 ################################################################################
 
-  class Command < Base
+  class Command < ZTK::Base
 
 ################################################################################
 
@@ -49,7 +49,7 @@ module ZTK
       parent_stdout_reader, child_stdout_writer = IO.pipe
       parent_stderr_reader, child_stderr_writer = IO.pipe
 
-      pid = ::Process.fork do
+      pid = Process.fork do
         parent_stdout_reader.close
         parent_stderr_reader.close
 
@@ -60,12 +60,12 @@ module ZTK
         child_stdout_writer.close
         child_stderr_writer.close
 
-        ::Kernel.exec(command)
+        Kernel.exec(command)
       end
       child_stdout_writer.close
       child_stderr_writer.close
 
-      ::Process.waitpid(pid)
+      Process.waitpid(pid)
 
       @config.stdout.write(parent_stdout_reader.read) unless options.silence
       @config.stderr.write(parent_stderr_reader.read) unless options.silence

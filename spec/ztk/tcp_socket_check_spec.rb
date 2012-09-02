@@ -22,22 +22,55 @@ require "spec_helper"
 
 describe ZTK::TCPSocketCheck do
 
-  subject { ZTK::TCPSocketCheck }
+  subject { ZTK::TCPSocketCheck.new }
+
+  before(:all) do
+    $logger = ZTK::Logger.new("/dev/null")
+    $stdout = File.open("/dev/null", "w")
+    $stderr = File.open("/dev/null", "w")
+    $stdin = File.open("/dev/null", "r")
+  end
 
   describe "class" do
 
-    it "should be ZTK::TCPSocketCheck" do
-      subject.should be ZTK::TCPSocketCheck
+    it "should be an instance of ZTK::TCPSocketCheck" do
+      subject.should be_an_instance_of ZTK::TCPSocketCheck
+    end
+
+    describe "default config" do
+
+      it "should use $stdout as the default" do
+        subject.config.stdout.should be_a_kind_of $stdout.class
+        subject.config.stdout.should == $stdout
+      end
+
+      it "should use $stderr as the default" do
+        subject.config.stderr.should be_a_kind_of $stderr.class
+        subject.config.stderr.should == $stderr
+      end
+
+      it "should use $stdin as the default" do
+        subject.config.stdin.should be_a_kind_of $stdin.class
+        subject.config.stdin.should == $stdin
+      end
+
+      it "should use $logger as the default" do
+        subject.config.logger.should be_a_kind_of ZTK::Logger
+        subject.config.logger.should == $logger
+      end
+
     end
 
     describe "config" do
 
       it "should throw an exception if the host is not specified" do
-        lambda{ subject.new(:port => 22).ready? }.should raise_error ZTK::TCPSocketCheckError, "You must supply a host!"
+        subject.config.port = 22
+        lambda{ subject.ready? }.should raise_error ZTK::TCPSocketCheckError, "You must supply a host!"
       end
 
       it "should throw an exception if the port is not specified" do
-        lambda{ subject.new(:host => "127.0.0.1").ready? }.should raise_error ZTK::TCPSocketCheckError, "You must supply a port!"
+        subject.config.host = "127.0.0.1"
+        lambda{ subject.ready? }.should raise_error ZTK::TCPSocketCheckError, "You must supply a port!"
       end
 
     end
@@ -51,13 +84,19 @@ describe ZTK::TCPSocketCheck do
       describe "read check" do
 
         it "should return true on a remote read check to github.com:22" do
-          tcp_check = subject.new(:host => "github.com", :port => 22)
-          tcp_check.ready?.should == true
+          subject.config do |config|
+            config.host = "github.com"
+            config.port = 22
+          end
+          subject.ready?.should == true
         end
 
         it "should return false on a remote read check to 127.0.0.1:1" do
-          tcp_check = subject.new(:host => "127.0.0.1", :port => 1, :timeout => 3)
-          tcp_check.ready?.should == false
+          subject.config do |config|
+            config.host = "127.0.0.1"
+            config.port = 1
+          end
+          subject.ready?.should == false
         end
 
       end
@@ -65,13 +104,21 @@ describe ZTK::TCPSocketCheck do
       describe "write check" do
 
         it "should return true on a remote write check to www.google.com:80" do
-          tcp_check = subject.new(:host => "www.google.com", :port => 80, :data => "GET")
-          tcp_check.ready?.should == true
+          subject.config do |config|
+            config.host = "www.google.com"
+            config.port = 80
+            config.data = "GET"
+          end
+          subject.ready?.should == true
         end
 
         it "should return false on a remote write check to 127.0.0.1:1" do
-          tcp_check = subject.new(:host => "127.0.0.1", :port => 1, :data => "GET", :timeout => 3)
-          tcp_check.ready?.should == false
+          subject.config do |config|
+            config.host = "127.0.0.1"
+            config.port = 1
+            config.data = "GET"
+          end
+          subject.ready?.should == false
         end
 
       end
@@ -82,28 +129,46 @@ describe ZTK::TCPSocketCheck do
 
       describe "read check" do
 
-        it "should timeout and should return false on a read check to 127.0.0.1:1" do
-          tcp_check = subject.new(:host => "127.0.0.1", :port => 1, :wait => 3)
-          tcp_check.wait.should == false
+        it "should return false on a read check to 127.0.0.1:1" do
+          subject.config do |config|
+            config.host = "127.0.0.1"
+            config.port = 1
+            config.wait = 5
+          end
+          subject.wait.should == false
         end
 
-        it "should not timeout and should return true on a read check to github.com:22" do
-          tcp_check = subject.new(:host => "github.com", :port => 22, :wait => 3)
-          tcp_check.wait.should == true
+        it "should return true on a read check to github.com:22" do
+          subject.config do |config|
+            config.host = "github.com"
+            config.port = 22
+            config.wait = 5
+          end
+          subject.wait.should == true
         end
 
       end
 
       describe "write check" do
 
-        it "should timeout and should return false on a write check to 127.0.0.1:1" do
-          tcp_check = subject.new(:host => "127.0.0.1", :port => 1, :data => "GET", :wait => 3)
-          tcp_check.wait.should == false
+        it "should return false on a write check to 127.0.0.1:1" do
+          subject.config do |config|
+            config.host = "127.0.0.1"
+            config.port = 1
+            config.data = "GET"
+            config.wait = 5
+          end
+          subject.wait.should == false
         end
 
-        it "should not timeout and should return true on a write check to www.google.com:80" do
-          tcp_check = subject.new(:host => "www.google.com", :port => 80, :data => "GET", :wait => 3)
-          tcp_check.wait.should == true
+        it "should return true on a write check to www.google.com:80" do
+          subject.config do |config|
+            config.host = "www.google.com"
+            config.port = 80
+            config.data = "GET"
+            config.wait = 5
+          end
+          subject.wait.should == true
         end
 
       end

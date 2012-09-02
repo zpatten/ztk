@@ -33,13 +33,13 @@ module ZTK
 
 ################################################################################
 
-  class SSH < ::ZTK::Base
+  class SSH < ZTK::Base
 
 ################################################################################
 
     def initialize(config={})
       super({
-        :ssh => ::OpenStruct.new
+        :ssh => OpenStruct.new
       }.merge(config))
     end
 
@@ -59,13 +59,13 @@ module ZTK
       command << "#{@config.ssh.user}@#{@config.ssh.host}"
       command = command.flatten.compact.join(" ")
       @config.logger and @config.logger.info { "command(#{command.inspect})" }
-      ::Kernel.exec(command)
+      Kernel.exec(command)
     end
 
 ################################################################################
 
     def exec(command, options={})
-      @ssh ||= ::Net::SSH.start(@config.ssh.host, @config.ssh.user, ssh_options)
+      @ssh ||= Net::SSH.start(@config.ssh.host, @config.ssh.user, ssh_options)
 
       options = { :silence => false }.merge(options)
       silence = options[:silence]
@@ -102,7 +102,7 @@ module ZTK
 ################################################################################
 
     def upload(local, remote)
-      @sftp ||= ::Net::SFTP.start(@config.ssh.host, @config.ssh.user, ssh_options)
+      @sftp ||= Net::SFTP.start(@config.ssh.host, @config.ssh.user, ssh_options)
 
       @config.logger and @config.logger.debug { "config(#{@config.ssh.inspect})" }
       @config.logger and @config.logger.info { "parameters(#{local},#{remote})" }
@@ -127,7 +127,7 @@ module ZTK
 ################################################################################
 
     def download(remote, local)
-      @sftp ||= ::Net::SFTP.start(@config.ssh.host, @config.ssh.user, ssh_options)
+      @sftp ||= Net::SFTP.start(@config.ssh.host, @config.ssh.user, ssh_options)
 
       @config.logger and @config.logger.debug { "config(#{@config.ssh.inspect})" }
       @config.logger and @config.logger.info { "parameters(#{remote},#{local})" }
@@ -186,7 +186,7 @@ module ZTK
       options.merge!(:keys => @config.ssh.identity_file) if @config.ssh.identity_file
       options.merge!(:timeout => @config.ssh.timeout) if @config.ssh.timeout
       options.merge!(:user_known_hosts_file  => '/dev/null') if !@config.ssh.host_key_verify
-      options.merge!(:proxy => ::Net::SSH::Proxy::Command.new(proxy_command)) if @config.ssh.proxy
+      options.merge!(:proxy => Net::SSH::Proxy::Command.new(proxy_command)) if @config.ssh.proxy
       @config.logger and @config.logger.debug { "options(#{options.inspect})" }
       options
     end

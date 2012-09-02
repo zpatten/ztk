@@ -24,6 +24,13 @@ describe ZTK::Parallel do
 
   subject { ZTK::Parallel.new }
 
+  before(:all) do
+    $logger = ZTK::Logger.new("/dev/null")
+    $stdout = File.open("/dev/null", "w")
+    $stderr = File.open("/dev/null", "w")
+    $stdin = File.open("/dev/null", "r")
+  end
+
   describe "class" do
 
     it "should be an instance of ZTK::Parallel" do
@@ -32,22 +39,22 @@ describe ZTK::Parallel do
 
     describe "default config" do
 
-      it "should use $stdout as the default STDOUT" do
+      it "should use $stdout as the default" do
         subject.config.stdout.should be_a_kind_of $stdout.class
         subject.config.stdout.should == $stdout
       end
 
-      it "should use $stderr as the default STDERR" do
+      it "should use $stderr as the default" do
         subject.config.stderr.should be_a_kind_of $stderr.class
         subject.config.stderr.should == $stderr
       end
 
-      it "should use $stdin as the default STDIN" do
+      it "should use $stdin as the default" do
         subject.config.stdin.should be_a_kind_of $stdin.class
         subject.config.stdin.should == $stdin
       end
 
-      it "should use $logger as the default logger" do
+      it "should use $logger as the default" do
         subject.config.logger.should be_a_kind_of ZTK::Logger
         subject.config.logger.should == $logger
       end

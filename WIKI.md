@@ -294,7 +294,7 @@ Erubis Templating
     [4] pry(main)> ZTK::Template.render(template_file, context)
     => "Hello World"
 
-## ZTK::TCPSocketCheck
+## ZTKTCPSocketCheck
 
 Check TCP Sockets
 
@@ -308,16 +308,16 @@ By default we will perform a read test against the host and port specified.  In 
 
 If `data` is supplied via the configuration, this will change the mode of operation to a write test.  Certain services, such as HTTP don't send any data unless you send something first.  In this mode we will attempt to connect to the host and port supplied, once connected we will write the supplied `data` to the socket and then attempt to read from the socket.  If we can read any amount of data, reagardless of the conent we view this as success.
 
-### ZTK::TCPSocketCheck Example Ruby Code
+### ZTKTCPSocketCheck Example Ruby Code
 
-    tcp_check = ZTK::TCPSocketCheck.new(:host => "github.com", :port => 22)
+    tcp_check = ZTKTCPSocketCheck.new(:host => "github.com", :port => 22)
     tcp_check.wait
     tcp_check.ready?
 
-### ZTK::TCPSocketCheck Example Code Pry Run
+### ZTKTCPSocketCheck Example Code Pry Run
 
-    [1] pry(main)> tcp_check = ZTK::TCPSocketCheck.new(:host => "github.com", :port => 22)
-    => #<ZTK::TCPSocketCheck:0x00000001890d18
+    [1] pry(main)> tcp_check = ZTKTCPSocketCheck.new(:host => "github.com", :port => 22)
+    => #<ZTKTCPSocketCheck:0x00000001890d18
      @config=
       #<OpenStruct stdout=#<IO:<STDOUT>>, stderr=#<IO:<STDERR>>, stdin=#<IO:<STDIN>>, logger=nil, host="github.com", port=22, data=nil, timeout=5>>
     [2] pry(main)> tcp_check.wait
@@ -325,11 +325,11 @@ If `data` is supplied via the configuration, this will change the mode of operat
     [3] pry(main)> tcp_check.ready?
     => true
 
-### ZTK::TCPSocketCheck Config
+### ZTKTCPSocketCheck Config
 
 Here is an example TCPSocketCheck configuration.  The `timeout` and `wait` values shown are the defaults if omitted.
 
-    tcp_check = ZTK::TCPSocketCheck.new
+    tcp_check = ZTKTCPSocketCheck.new
     tcp_check.config do |config|
       config.host = "www.google.com"
       config.port = 80
@@ -340,7 +340,7 @@ Here is an example TCPSocketCheck configuration.  The `timeout` and `wait` value
 
 Specify the host and port (required):
 
-    tcp_check = ZTK::TCPSocketCheck.new
+    tcp_check = ZTKTCPSocketCheck.new
     tcp_check.config do |config|
       config.host = "www.google.com"
       config.port = 80
@@ -348,7 +348,7 @@ Specify the host and port (required):
 
 Specify data to write (switches to a write mode test if this is supplied):
 
-    tcp_check = ZTK::TCPSocketCheck.new
+    tcp_check = ZTKTCPSocketCheck.new
     tcp_check.config do |config|
       config.host = "www.google.com"
       config.port = 80
@@ -357,7 +357,7 @@ Specify data to write (switches to a write mode test if this is supplied):
 
 Override the `timeout` and `wait` values:
 
-    tcp_check = ZTK::TCPSocketCheck.new
+    tcp_check = ZTKTCPSocketCheck.new
     tcp_check.config do |config|
       config.host = "www.google.com"
       config.port = 80
@@ -366,13 +366,13 @@ Override the `timeout` and `wait` values:
       config.wait = 5
     end
 
-### ZTK::TCPSocketCheck Core Methods
+### ZTKTCPSocketCheck Core Methods
 
 #### Socket Ready?
 
 We can use the `ready?` method to test if the socket is ready in a one off manner.  This operations runtime is bound by the `timeout` configuration value.
 
-    tcp_check = ZTK::TCPSocketCheck.new
+    tcp_check = ZTKTCPSocketCheck.new
     tcp_check.config do |config|
       config.host = "www.google.com"
       config.port = 80
@@ -388,7 +388,7 @@ We can use the `ready?` method to test if the socket is ready in a one off manne
 
 We can use the `wait` method to block on the socket's `ready?` state.  The method will return only if the socket becomes ready or a timeout occurs.  This operations runtime is bound by the `wait` configuration value.
 
-    tcp_check = ZTK::TCPSocketCheck.new
+    tcp_check = ZTKTCPSocketCheck.new
     tcp_check.config do |config|
       config.host = "www.google.com"
       config.port = 80

@@ -20,9 +20,9 @@
 
 require "spec_helper"
 
-describe ZTK::SSH do
+describe ZTK::Command do
 
-  subject { ZTK::SSH.new }
+  subject { ZTK::Command.new }
 
   before(:all) do
     $logger = ZTK::Logger.new("/dev/null")
@@ -33,8 +33,8 @@ describe ZTK::SSH do
 
   describe "class" do
 
-    it "should be an instance of ZTK::SSH" do
-      subject.should be_an_instance_of ZTK::SSH
+    it "should be an instance of ZTK::Command" do
+      subject.should be_an_instance_of ZTK::Command
     end
 
     describe "default config" do
@@ -63,39 +63,16 @@ describe ZTK::SSH do
 
   end
 
-  # this stuff doesn't work as is under travis-ci
-  if !ENV['CI'] && !ENV['TRAVIS']
-
-    it "should be able to connect to 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
-      stdout = StringIO.new
-      subject.config do |config|
-        config.stdout = stdout
-        config.ssh.user = ENV["USER"]
-        config.ssh.host = "127.0.0.1"
-      end
-      hostname = %x( hostname -f ).chomp
-      status = subject.exec("hostname -f")
-      status.exitstatus.should == 0
-      stdout.rewind
-      stdout.read.chomp.should == hostname
+  it "should be able to execute the command \"hostname -f\"" do
+    stdout = StringIO.new
+    subject.config do |config|
+      config.stdout = stdout
     end
-
-    it "should be able to proxy through 127.0.0.1, connecting to 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
-      stdout = StringIO.new
-      subject.config do |config|
-        config.stdout = stdout
-        config.ssh.user = ENV["USER"]
-        config.ssh.host = "127.0.0.1"
-        config.ssh.proxy_user = ENV["USER"]
-        config.ssh.proxy_host = "127.0.0.1"
-      end
-      hostname = %x( hostname -f ).chomp
-      status = subject.exec("hostname -f")
-      status.exitstatus.should == 0
-      stdout.rewind
-      stdout.read.chomp.should == hostname
-    end
-
+    hostname = %x( hostname -f ).chomp
+    status = subject.exec("hostname -f")
+    status.exitstatus.should == 0
+    stdout.rewind
+    stdout.read.chomp.should == hostname
   end
 
 end

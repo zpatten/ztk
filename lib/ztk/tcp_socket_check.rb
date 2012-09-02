@@ -30,7 +30,7 @@ module ZTK
 
 ################################################################################
 
-  class TCPSocketCheck < Base
+  class TCPSocketCheck < ZTK::Base
 
 ################################################################################
 
@@ -59,14 +59,14 @@ module ZTK
         raise TCPSocketCheckError, message
       end
 
-      socket = ::TCPSocket.new(@config.host, @config.port)
+      socket = TCPSocket.new(@config.host, @config.port)
 
       if @config.data.nil?
         @config.logger and @config.logger.debug { "read(#{@config.host}:#{@config.port})" }
-        ((::IO.select([socket], nil, nil, @config.timeout) && socket.gets) ? true : false)
+        ((IO.select([socket], nil, nil, @config.timeout) && socket.gets) ? true : false)
       else
         @config.logger and @config.logger.debug { "write(#{@config.host}:#{@config.port}, '#{@config.data}')" }
-        ((::IO.select(nil, [socket], nil, @config.timeout) && socket.write(@config.data)) ? true : false)
+        ((IO.select(nil, [socket], nil, @config.timeout) && socket.write(@config.data)) ? true : false)
       end
 
     rescue Errno::ETIMEDOUT, Errno::ECONNREFUSED, Errno::EHOSTUNREACH => e

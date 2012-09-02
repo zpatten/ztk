@@ -22,14 +22,6 @@ require "ztk"
 
 ################################################################################
 
-$logger = ZTK::Logger.new("/dev/null")
-
-dev_null = File.open("/dev/null", "w")
-$stdout = dev_null
-$stderr = dev_null
-
-################################################################################
-
 require 'simplecov'
 SimpleCov.start do
   add_filter '/spec/'
