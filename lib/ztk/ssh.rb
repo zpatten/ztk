@@ -63,30 +63,28 @@ module ZTK
 ################################################################################
 
     def exec(command, options={})
-      @ssh ||= Net::SSH.start(@config.host, @config.user, ssh_options)
-
-      options = { :silence => false }.merge(options)
-      silence = options[:silence]
-      output = ""
-
+      log(:debug) { "exec(#{command.inspect}, #{options.inspect})" }
       log(:debug) { "config(#{@config.inspect})" }
+
+      @ssh ||= Net::SSH.start(@config.host, @config.user, ssh_options)
+      log(:debug) { "ssh(#{@ssh.inspect})" }
+
+      options = OpenStruct.new({ :silence => false }.merge(options))
       log(:debug) { "options(#{options.inspect})" }
-      log(:info) { "command(#{command.inspect})" }
+
       channel = @ssh.open_channel do |chan|
         log(:debug) { "channel opened" }
         chan.exec(command) do |ch, success|
           raise SSHError, "Could not execute '#{command}'." unless success
 
           ch.on_data do |c, data|
-            output += data
             log(:debug) { data.chomp.strip }
-            @config.stdout.print(data) if !silence
+            @config.stdout.print(data) unless options.silence
           end
 
           ch.on_extended_data do |c, type, data|
-            output += data
             log(:debug) { data.chomp.strip }
-            @config.stderr.print(data) if !silence
+            @config.stderr.print(data) unless options.silence
           end
 
         end

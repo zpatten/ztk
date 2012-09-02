@@ -64,11 +64,7 @@ module ZTK
 ################################################################################
 
     def log(method_name, &block)
-      if block_given?
-        @config.logger and @config.logger.method(method_name.to_sym).call{ yield }
-      else
-        raise Error, "You must supply a block to the log method!"
-      end
+      (block_given? or raise(Error, "You must supply a block to the log method!")) and @config.logger and @config.logger.method(method_name.to_sym).call { yield }
     end
 
 ################################################################################
