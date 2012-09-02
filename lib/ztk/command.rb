@@ -42,9 +42,9 @@ module ZTK
 
     def exec(command, options={})
       options = OpenStruct.new({ :exit_code => 0, :silence => false }.merge(options))
-      @config.logger and @config.logger.debug{ "config(#{@config.inspect})" }
-      @config.logger and @config.logger.debug{ "options(#{options.inspect})" }
-      @config.logger and @config.logger.debug{ "command(#{command.inspect})" }
+      log(:debug) { "config(#{@config.inspect})" }
+      log(:debug) { "options(#{options.inspect})" }
+      log(:debug) { "command(#{command.inspect})" }
 
       parent_stdout_reader, child_stdout_writer = IO.pipe
       parent_stderr_reader, child_stderr_writer = IO.pipe
@@ -73,9 +73,13 @@ module ZTK
       parent_stdout_reader.close
       parent_stderr_reader.close
 
-      @config.logger and @config.logger.debug{ "exit_code(#{$?.inspect})" }
+      log(:debug) { "exit_code(#{$?.inspect})" }
 
-      raise CommandError, "run(#{command.inspect}) failed! [#{$?.inspect}]" if ($? != options.exit_code)
+      if ($? != options.exit_code)
+        message = "exec(#{command.inspect}, #{options.inspect}) failed! [#{$?.inspect}]"
+        log(:fatal) { message }
+        raise CommandError, message
+      end
 
       $?
     end

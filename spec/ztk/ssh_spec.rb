@@ -70,8 +70,8 @@ describe ZTK::SSH do
       stdout = StringIO.new
       subject.config do |config|
         config.stdout = stdout
-        config.ssh.user = ENV["USER"]
-        config.ssh.host = "127.0.0.1"
+        config.user = ENV["USER"]
+        config.host = "127.0.0.1"
       end
       hostname = %x( hostname -f ).chomp
       status = subject.exec("hostname -f")
@@ -84,10 +84,10 @@ describe ZTK::SSH do
       stdout = StringIO.new
       subject.config do |config|
         config.stdout = stdout
-        config.ssh.user = ENV["USER"]
-        config.ssh.host = "127.0.0.1"
-        config.ssh.proxy_user = ENV["USER"]
-        config.ssh.proxy_host = "127.0.0.1"
+        config.user = ENV["USER"]
+        config.host = "127.0.0.1"
+        config.proxy_user = ENV["USER"]
+        config.proxy_host = "127.0.0.1"
       end
       hostname = %x( hostname -f ).chomp
       status = subject.exec("hostname -f")

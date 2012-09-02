@@ -48,7 +48,7 @@ module ZTK
       @config.stdin.respond_to?(:sync=) and @config.stdin.sync = true
       @config.logger.respond_to?(:sync=) and @config.logger.sync = true
 
-      @config.logger and @config.logger.debug{ "config(#{@config.inspect})" }
+      log(:debug) { "config(#{@config.inspect})" }
     end
 
 ################################################################################
@@ -58,6 +58,16 @@ module ZTK
         block.call(@config)
       else
         @config
+      end
+    end
+
+################################################################################
+
+    def log(method_name, &block)
+      if block_given?
+        @config.logger and @config.logger.method(method_name.to_sym).call{ yield }
+      else
+        raise Error, "You must supply a block to the log method!"
       end
     end
 

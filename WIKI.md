@@ -165,8 +165,8 @@ Simplified SSH class; it provides for remote execute of commands and returning o
     $logger = ZTK::Logger.new(STDOUT)
     ssh = ZTK::SSH.new
     ssh.config do |config|
-      config.ssh.user = ENV["USER"]
-      config.ssh.host = "127.0.0.1"
+      config.user = ENV["USER"]
+      config.host = "127.0.0.1"
     end
     puts ssh.exec("hostname -f")
     local = File.expand_path(File.join("/tmp", "id_rsa.pub"))
@@ -197,8 +197,8 @@ Simplified SSH class; it provides for remote execute of commands and returning o
      @config=
       #<OpenStruct stdout=#<IO:<STDOUT>>, stderr=#<IO:<STDERR>>, stdin=#<IO:<STDIN>>, logger=#<ZTK::Logger:0x000000025f2c18 @progname=nil, @level=1, @default_formatter=#<Logger::Formatter:0x000000025f2ab0 @datetime_format=nil>, @formatter=nil, @logdev=#<Logger::LogDevice:0x000000025fcc18 @shift_size=nil, @shift_age=nil, @filename=nil, @dev=#<IO:<STDOUT>>, @mutex=#<Logger::LogDevice::LogDeviceMutex:0x000000025fcbf0 @mon_owner=nil, @mon_count=0, @mon_mutex=#<Mutex:0x000000025fc9e8>>>>, ssh=#<OpenStruct>>>
     [3] pry(main)> ssh.config do |config|
-    [3] pry(main)*   config.ssh.user = ENV["USER"]
-    [3] pry(main)*   config.ssh.host = "127.0.0.1"
+    [3] pry(main)*   config.user = ENV["USER"]
+    [3] pry(main)*   config.host = "127.0.0.1"
     [3] pry(main)* end
     => "127.0.0.1"
     [4] pry(main)> puts ssh.exec("hostname -f")
@@ -221,35 +221,35 @@ Simplified SSH class; it provides for remote execute of commands and returning o
 To proxy through another host, for example SSH to 192.168.1.1 through 192.168.0.1:
 
     ssh.config do |config|
-      config.ssh.user = ENV["USER"]
-      config.ssh.host = "192.168.1.1"
-      config.ssh.proxy_user = ENV["USER"]
-      config.ssh.proxy_host = "192.168.0.1"
+      config.user = ENV["USER"]
+      config.host = "192.168.1.1"
+      config.proxy_user = ENV["USER"]
+      config.proxy_host = "192.168.0.1"
     end
 
 Specify an identity file:
 
     ssh.config do |config|
-      config.ssh.identify_file = File.expand_path(File.join(ENV["HOME"], ".ssh", "id_rsa"))
-      config.ssh.proxy_identify_file = File.expand_path(File.join(ENV["HOME"], ".ssh", "id_rsa"))
+      config.identify_file = File.expand_path(File.join(ENV["HOME"], ".ssh", "id_rsa"))
+      config.proxy_identify_file = File.expand_path(File.join(ENV["HOME"], ".ssh", "id_rsa"))
     end
 
 Specify a timeout:
 
     ssh.config do |config|
-      config.ssh.timeout = 30
+      config.timeout = 30
     end
 
 Specify a password:
 
     ssh.config do |config|
-      config.ssh.password = "p@$$w0rd"
+      config.password = "p@$$w0rd"
     end
 
 Check host keys, the default is false (off):
 
     ssh.config do |config|
-      config.ssh.host_key_verify = true
+      config.host_key_verify = true
     end
 
 ### ZTK::SSH Core Methods

@@ -55,7 +55,7 @@ module ZTK
     def process(&block)
       raise ParallelError, "You must supply a block to the process method!" if !block_given?
 
-      @config.logger and @config.logger.debug{ "forks(#{@forks.inspect})" }
+      log(:debug) { "forks(#{@forks.inspect})" }
 
       while (@forks.count >= @config.max_forks) do
         wait
@@ -72,7 +72,7 @@ module ZTK
         parent_reader.close
 
         if !(data = block.call).nil?
-          @config.logger and @config.logger.debug{ "write(#{data.inspect})" }
+          log(:debug) { "write(#{data.inspect})" }
           child_writer.write(Base64.encode64(Marshal.dump(data)))
         end
 
@@ -94,11 +94,11 @@ module ZTK
 ################################################################################
 
     def wait
-      @config.logger and @config.logger.debug{ "forks(#{@forks.inspect})" }
+      log(:debug) { "forks(#{@forks.inspect})" }
       pid, status = (Process.wait2(-1) rescue nil)
       if !pid.nil? && !status.nil? && !(fork = @forks.select{ |f| f[:pid] == pid }.first).nil?
         data = (Marshal.load(Base64.decode64(fork[:reader].read.to_s)) rescue nil)
-        @config.logger and @config.logger.debug{ "read(#{data.inspect})" }
+        log(:debug) { "read(#{data.inspect})" }
         !data.nil? and @results.push(data)
         fork[:reader].close
         fork[:writer].close
@@ -123,7 +123,7 @@ module ZTK
 ################################################################################
 
     def count
-      @config.logger and @config.logger.debug{ "count(#{@forks.count})" }
+      log(:debug) { "count(#{@forks.count})" }
       @forks.count
     end
 

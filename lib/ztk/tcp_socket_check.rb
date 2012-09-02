@@ -49,28 +49,28 @@ module ZTK
     def ready?
       if @config.host.nil?
         message = "You must supply a host!"
-        @config.logger and @config.logger.fatal { message }
+        log(:fatal) { message }
         raise TCPSocketCheckError, message
       end
 
       if @config.port.nil?
         message = "You must supply a port!"
-        @config.logger and @config.logger.fatal { message }
+        log(:fatal) { message }
         raise TCPSocketCheckError, message
       end
 
       socket = TCPSocket.new(@config.host, @config.port)
 
       if @config.data.nil?
-        @config.logger and @config.logger.debug { "read(#{@config.host}:#{@config.port})" }
+        log(:debug) { "read(#{@config.host}:#{@config.port})" }
         ((IO.select([socket], nil, nil, @config.timeout) && socket.gets) ? true : false)
       else
-        @config.logger and @config.logger.debug { "write(#{@config.host}:#{@config.port}, '#{@config.data}')" }
+        log(:debug) { "write(#{@config.host}:#{@config.port}, '#{@config.data}')" }
         ((IO.select(nil, [socket], nil, @config.timeout) && socket.write(@config.data)) ? true : false)
       end
 
     rescue Errno::ETIMEDOUT, Errno::ECONNREFUSED, Errno::EHOSTUNREACH => e
-      @config.logger and @config.logger.debug { "#{@config.host}:#{@config.port} - #{e.message}" }
+      log(:debug) { "#{@config.host}:#{@config.port} - #{e.message}" }
       false
     ensure
       (socket && socket.close)
@@ -79,16 +79,16 @@ module ZTK
 ################################################################################
 
     def wait
-      @config.logger and @config.logger.debug{ "waiting for socket to become available; timeout after #{@config.wait} seconds" }
+      log(:debug) { "waiting for socket to become available; timeout after #{@config.wait} seconds" }
       Timeout.timeout(@config.wait) do
         until ready?
-          @config.logger and @config.logger.debug{ "sleeping 1 second" }
+          log(:debug) { "sleeping 1 second" }
           sleep(1)
         end
       end
       true
     rescue Timeout::Error => e
-      @config.logger and @config.logger.warn{ "socket(#{@config.host}:#{@config.port}) timeout!" }
+      log(:warn) { "socket(#{@config.host}:#{@config.port}) timeout!" }
       false
     end
 
