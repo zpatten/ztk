@@ -60,23 +60,33 @@ describe ZTK::SSH do
   if !ENV['CI'] && !ENV['TRAVIS']
 
     it "should be able to connect to 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
+      stdout = StringIO.new
       subject.config do |config|
+        config.stdout = stdout
         config.ssh.user = ENV["USER"]
         config.ssh.host = "127.0.0.1"
       end
       hostname = %x( hostname -f ).chomp
-      subject.exec("hostname -f").chomp.should == hostname
+      status = subject.exec("hostname -f")
+      status.exitstatus.should == 0
+      stdout.rewind
+      stdout.read.chomp.should == hostname
     end
 
     it "should be able to proxy through 127.0.0.1, connecting to 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
+      stdout = StringIO.new
       subject.config do |config|
+        config.stdout = stdout
         config.ssh.user = ENV["USER"]
         config.ssh.host = "127.0.0.1"
         config.ssh.proxy_user = ENV["USER"]
         config.ssh.proxy_host = "127.0.0.1"
       end
       hostname = %x( hostname -f ).chomp
-      subject.exec("hostname -f").chomp.should == hostname
+      status = subject.exec("hostname -f")
+      status.exitstatus.should == 0
+      stdout.rewind
+      stdout.read.chomp.should == hostname
     end
 
   end

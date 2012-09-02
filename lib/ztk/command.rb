@@ -80,6 +80,14 @@ module ZTK
       $?
     end
 
+    def upload(*args)
+      raise CommandError, "Not Implemented"
+    end
+
+    def download(*args)
+      raise CommandError, "Not Implemented"
+    end
+
 ################################################################################
 
   end

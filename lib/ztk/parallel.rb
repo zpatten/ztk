@@ -95,7 +95,7 @@ module ZTK
 
     def wait
       @config.logger and @config.logger.debug{ "forks(#{@forks.inspect})" }
-      pid, status = (::Process.wait2(-1, ::Process::WNOHANG) rescue nil)
+      pid, status = (::Process.wait2(-1) rescue nil)
       if !pid.nil? && !status.nil? && !(fork = @forks.select{ |f| f[:pid] == pid }.first).nil?
         data = (::Marshal.load(::Base64.decode64(fork[:reader].read.to_s)) rescue nil)
         @config.logger and @config.logger.debug{ "read(#{data.inspect})" }
@@ -106,7 +106,6 @@ module ZTK
         @forks -= [fork]
         return [pid, status, data]
       end
-      sleep(1)
       nil
     end
 
@@ -115,7 +114,8 @@ module ZTK
     def waitall
       data = ::Array.new
       while @forks.count > 0
-        data << self.wait
+        result = self.wait
+        result and data << result
       end
       data
     end

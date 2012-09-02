@@ -96,7 +96,7 @@ module ZTK
       channel.wait
       @config.logger and @config.logger.debug { "channel closed" }
 
-      output
+      $?
     end
 
 ################################################################################
