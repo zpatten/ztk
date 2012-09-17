@@ -1,6 +1,6 @@
 ################################################################################
 #
-#      Author: Zachary Patten <zachary@jovelabs.com>
+#      Author: Zachary Patten <zachary@jovelabs.net>
 #   Copyright: Copyright (c) Jove Labs
 #     License: Apache License, VersIOn 2.0
 #
@@ -20,29 +20,58 @@
 
 require "base64"
 
-################################################################################
-
 module ZTK
 
-################################################################################
-
+  # ZTK::Parallel error class
+  #
+  # @author Zachary Patten <zachary@jovelabs.net>
   class ParallelError < Error; end
 
-################################################################################
-
+  # Parallel Processing Class
+  #
+  # This class can be used to easily run iterative and linear processes in a parallel manner.
+  #
+  #     a_callback = Proc.new do |pid|
+  #       puts "Hello from After Callback - PID #{pid}"
+  #     end
+  #
+  #     b_callback = Proc.new do |pid|
+  #       puts "Hello from Before Callback - PID #{pid}"
+  #     end
+  #
+  #     parallel = ZTK::Parallel.new
+  #     parallel.config do |config|
+  #       config.before_fork = b_callback
+  #       config.after_fork = a_callback
+  #     end
+  #
+  #     3.times do |x|
+  #       parallel.process do
+  #         x
+  #       end
+  #     end
+  #
+  #     parallel.waitall
+  #     parallel.results
+  #
+  # The before fork callback is called once in the parent process.
+  #
+  # The after fork callback is called twice, once in the parent process and once
+  # in the child process.
+  #
+  # @author Zachary Patten <zachary@jovelabs.net>
   class Parallel < ZTK::Base
 
-################################################################################
-
+    # Result Set
     attr_accessor :results
 
-################################################################################
-
+    # @param [Hash] config Configuration options hash.
+    # @option config [Integer] :max_forks Maximum number of forks to use.
+    # @option config [Proc] :before_fork (nil) Proc to call before forking.
+    # @option config [Proc] :after_fork (nil) Proc to call after forking.
     def initialize(config={})
       super({
         :max_forks => %x( grep -c processor /proc/cpuinfo ).chomp.to_i,
-        :before_fork => nil,
-        :after_fork => nil
       }.merge(config))
 
       @forks = Array.new
@@ -50,8 +79,12 @@ module ZTK
       GC.respond_to?(:copy_on_write_friendly=) and GC.copy_on_write_friendly = true
     end
 
-################################################################################
-
+    # Process in parallel.
+    #
+    # @yield Block should execute tasks to be performed in parallel.
+    # @yieldreturn [Object] Block can return any object to be marshalled back to
+    #   the parent processes result set.
+    # @return [Integer] Returns the pid of the child process forked.
     def process(&block)
       raise ParallelError, "You must supply a block to the process method!" if !block_given?
 
@@ -91,8 +124,6 @@ module ZTK
       pid
     end
 
-################################################################################
-
     def wait
       log(:debug) { "forks(#{@forks.inspect})" }
       pid, status = (Process.wait2(-1) rescue nil)
@@ -109,8 +140,6 @@ module ZTK
       nil
     end
 
-################################################################################
-
     def waitall
       data = Array.new
       while @forks.count > 0
@@ -120,19 +149,14 @@ module ZTK
       data
     end
 
-################################################################################
-
+    # Count of active forks.
+    #
+    # @return [Integer] Current number of active forks.
     def count
       log(:debug) { "count(#{@forks.count})" }
       @forks.count
     end
 
-################################################################################
-
   end
 
-################################################################################
-
 end
-
-################################################################################

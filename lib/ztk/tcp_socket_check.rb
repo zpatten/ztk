@@ -1,6 +1,6 @@
 ################################################################################
 #
-#      Author: Zachary Patten <zachary@jovelabs.com>
+#      Author: Zachary Patten <zachary@jovelabs.net>
 #   Copyright: Copyright (c) Jove Labs
 #     License: Apache License, Version 2.0
 #
@@ -25,15 +25,38 @@ module ZTK
 
   # ZTK::TCPSocketCheck error class
   #
-  # @author Zachary Patten <zachary@jovelabs.com>
+  # @author Zachary Patten <zachary@jovelabs.net>
   class TCPSocketCheckError < Error; end
 
   # TCP Socket Checking Class
   #
+  # This class has two basic modes of operation:
+  #
+  # * Read Test
+  #
+  # By default we will perform a read test against the host and port specified.
+  # In this mode we will attempt to connect to the host and port supplied and if
+  # we can read any amount of data, regardless of the content we view this as
+  # success.
+  #
+  # * Write Test
+  #
+  # If data is supplied via the configuration, this will change the mode of
+  # operation to a write test. Certain services, such as HTTP don't send any
+  # data unless you send something first. In this mode we will attempt to
+  # connect to the host and port supplied, once connected we will write the
+  # supplied data to the socket and then attempt to read from the socket. If we
+  # can read any amount of data, reagardless of the conent we view this as
+  # success.
+  #
+  # = Typical usage:
+  #
   # Given a host and port we want to check, we can do something like this:
+  #
   #     sc = ZTK::TCPSocketCheck.new(:host => "www.github.com", :port => 22)
   #
   # Then if we want to check if this host is responding on the specified port:
+  #
   #     sc.ready? and puts("They are there!")
   #
   # This works well for protocols that spew forth some data right away for use
@@ -42,17 +65,22 @@ module ZTK
   #
   # Given we want to check a host and port that requires some giving before we
   # can take:
+  #
   #     sc = ZTK::TCPSocketCheck.new(:host => "www.google.com", :port => 80, :data => "GET")
   #
   # Then if we want to check if this host is responding on the specified port:
+  #
   #     sc.ready? and puts("They are there!")
+  #
   # The ready? methods timeout is bound to the configuration option *timeout*.
   #
   # If we are waiting for a service to come online, we can do this:
+  #
   #     sc.wait and puts("They are there!")
+  #
   # The wait methods timeout is bound to the configuration option *wait*.
   #
-  # @author Zachary Patten <zachary@jovelabs.com>
+  # @author Zachary Patten <zachary@jovelabs.net>
   class TCPSocketCheck < ZTK::Base
 
     # @param [Hash] config Configuration options hash.

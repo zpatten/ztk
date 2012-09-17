@@ -1,6 +1,6 @@
 ################################################################################
 #
-#      Author: Zachary Patten <zachary@jovelabs.com>
+#      Author: Zachary Patten <zachary@jovelabs.net>
 #   Copyright: Copyright (c) Jove Labs
 #     License: Apache License, Version 2.0
 #

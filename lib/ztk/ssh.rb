@@ -1,6 +1,6 @@
 ################################################################################
 #
-#      Author: Zachary Patten <zachary@jovelabs.com>
+#      Author: Zachary Patten <zachary@jovelabs.net>
 #   Copyright: Copyright (c) Jove Labs
 #     License: Apache License, Version 2.0
 #
@@ -27,23 +27,27 @@ module ZTK
 
   # ZTK::SSH error class
   #
-  # @author Zachary Patten <zachary@jovelabs.com>
+  # @author Zachary Patten <zachary@jovelabs.net>
   class SSHError < Error; end
 
   # We can get a new instance of SSH like so:
+  #
   #     ssh = ZTK::SSH.new
   #
   # If we wanted to redirect STDOUT and STDERR to a StringIO we can do this:
+  #
   #     std_combo = StringIO.new
   #     ssh = ZTK::SSH.new(:stdout => std_combo, :stderr => std_combo)
   #
   # If you want to specify SSH options you can:
+  #
   #     keys = File.expand_path(File.join(ENV['HOME'], '.ssh', 'id_rsa'))
   #     ssh = ZTK::SSH.new(:host_name => '127.0.0.1', :user => ENV['USER'], :keys => keys)
   #
   # = Configuration Examples:
   #
   # To proxy through another host, for example SSH to 192.168.1.1 through 192.168.0.1:
+  #
   #     ssh.config do |config|
   #       config.user = ENV['USER']
   #       config.host_name = '192.168.1.1'
@@ -52,27 +56,31 @@ module ZTK
   #     end
   #
   # Specify an identity file:
+  #
   #     ssh.config do |config|
   #       config.keys = File.expand_path(File.join(ENV['HOME'], '.ssh', 'id_rsa'))
   #       config.proxy_keys = File.expand_path(File.join(ENV['HOME'], '.ssh', 'id_rsa'))
   #     end
   #
   # Specify a timeout:
+  #
   #     ssh.config do |config|
   #       config.timeout = 30
   #     end
   #
   # Specify a password:
+  #
   #     ssh.config do |config|
   #       config.password = 'p@$$w0rd'
   #     end
   #
   # Check host keys, the default is false (off):
+  #
   #     ssh.config do |config|
   #       config.host_key_verify = true
   #     end
   #
-  # @author Zachary Patten <zachary@jovelabs.com>
+  # @author Zachary Patten <zachary@jovelabs.net>
   class SSH < ZTK::Base
 
     # @param [Hash] config Configuration options hash.

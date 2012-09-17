@@ -1,6 +1,6 @@
 ################################################################################
 #
-#      Author: Zachary Patten <zachary@jovelabs.com>
+#      Author: Zachary Patten <zachary@jovelabs.net>
 #   Copyright: Copyright (c) Jove Labs
 #     License: Apache License, Version 2.0
 #
@@ -23,7 +23,7 @@ require "ostruct"
 module ZTK
 
   # ZTK::Command error class
-  # @author Zachary Patten <zachary@jovelabs.com>
+  # @author Zachary Patten <zachary@jovelabs.net>
   class CommandError < Error; end
 
 ################################################################################

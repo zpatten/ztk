@@ -1,6 +1,6 @@
 ################################################################################
 #
-#      Author: Zachary Patten <zachary@jovelabs.com>
+#      Author: Zachary Patten <zachary@jovelabs.net>
 #   Copyright: Copyright (c) Jove Labs
 #     License: Apache License, Version 2.0
 #
@@ -22,7 +22,27 @@ require "logger"
 
 module ZTK
 
-  # @author Zachary Patten <zachary@jovelabs.com>
+  # Standard Logging Class
+  #
+  # Supplies loggers the same as the base ruby logger class, except adds some
+  # extra spice to your log messages.  This includes uSec timestamping, PIDs and
+  # caller tree details.
+  #
+  # One can override the logging level on the command line with programs that
+  # use this library like so:
+  #     LOG_LEVEL=DEBUG bin/cucumber-chef ssh
+  #
+  # = Typical usage:
+  #
+  #     $logger = ZTK::Logger.new("/dev/null")
+  #
+  #     $logger.debug { "This is a debug message!" }
+  #     $logger.info { "This is a info message!" }
+  #     $logger.warn { "This is a warn message!" }
+  #     $logger.error { "This is a error message!" }
+  #     $logger.fatal { "This is a fatal message!" }
+  #
+  # @author Zachary Patten <zachary@jovelabs.net>
   class Logger < ::Logger
 
     SEVERITIES = Severity.constants.inject([]) {|arr,c| arr[Severity.const_get(c)] = c; arr}

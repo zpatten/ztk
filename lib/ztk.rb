@@ -1,6 +1,6 @@
 ################################################################################
 #
-#      Author: Zachary Patten <zachary@jovelabs.com>
+#      Author: Zachary Patten <zachary@jovelabs.net>
 #   Copyright: Copyright (c) Jove Labs
 #     License: Apache License, Version 2.0
 #
@@ -22,12 +22,12 @@ require "ztk/version"
 
 # Main ZTK module
 #
-# @author Zachary Patten <zachary@jovelabs.com>
+# @author Zachary Patten <zachary@jovelabs.net>
 module ZTK
 
   # ZTK error class
   #
-  # @author Zachary Patten <zachary@jovelabs.com>
+  # @author Zachary Patten <zachary@jovelabs.net>
   class Error < StandardError; end
 
   autoload :Base, "ztk/base"

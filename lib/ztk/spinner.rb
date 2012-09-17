@@ -1,6 +1,6 @@
 ################################################################################
 #
-#      Author: Zachary Patten <zachary@jovelabs.com>
+#      Author: Zachary Patten <zachary@jovelabs.net>
 #   Copyright: Copyright (c) Jove Labs
 #     License: Apache License, Version 2.0
 #
@@ -24,10 +24,10 @@ module ZTK
 
   # ZTK::Spinner error class
   #
-  # @author Zachary Patten <zachary@jovelabs.com>
+  # @author Zachary Patten <zachary@jovelabs.net>
   class SpinnerError < Error; end
 
-  # @author Zachary Patten <zachary@jovelabs.com>
+  # @author Zachary Patten <zachary@jovelabs.net>
   class Spinner
 
     class << self

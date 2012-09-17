@@ -1,6 +1,6 @@
 ################################################################################
 #
-#      Author: Zachary Patten <zachary@jovelabs.com>
+#      Author: Zachary Patten <zachary@jovelabs.net>
 #   Copyright: Copyright (c) Jove Labs
 #     License: Apache License, Version 2.0
 #
@@ -24,23 +24,26 @@ module ZTK
 
   # ZTK::Template error class
   #
-  # @author Zachary Patten <zachary@jovelabs.com>
+  # @author Zachary Patten <zachary@jovelabs.net>
   class TemplateError < Error; end
 
   # Erubis Templating Class
   #
   # Given a template like this (i.e. "template.erb"):
+  #
   #     This is a test template!
   #     <%= @variable %>
   #
   # We can do this:
+  #
   #   ZTK::Template.render("template.erb", { :variable => "Hello World" })
   #
   # And get:
+  #
   #     This is a test template!
   #     Hello World
   #
-  # @author Zachary Patten <zachary@jovelabs.com>
+  # @author Zachary Patten <zachary@jovelabs.net>
   class Template
 
     class << self
