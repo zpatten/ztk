@@ -69,7 +69,7 @@ describe ZTK::Command do
     end
     hostname = %x( hostname -f ).chomp
     status = subject.exec("hostname -f")
-    status.exitstatus.should == 0
+    status.exit.exitstatus.should == 0
     stdout.rewind
     stdout.read.chomp.should == hostname
   end
