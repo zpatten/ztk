@@ -20,52 +20,53 @@
 
 require "erubis"
 
-################################################################################
-
 module ZTK
 
-################################################################################
-
+  # ZTK::Template error class
   class TemplateError < Error; end
 
-################################################################################
-
+  # Erubis Templating Class
+  #
+  # Given a template like this (i.e. "template.erb"):
+  #     This is a test template!
+  #     <%= @variable %>
+  #
+  # We can do this:
+  #   ZTK::Template.render("template.erb", { :variable => "Hello World" })
+  #
+  # And get:
+  #     This is a test template!
+  #     Hello World
   class Template
-
-################################################################################
 
     class << self
 
-################################################################################
-
+      # Renders a template to a string.
+      #
+      # @param [String] template The ERB template to process.
+      # @param [Hash] context A hash containing key-pairs, for which the keys are turned into global variables with their respective values.
+      #
+      # @return [String] The evaulated template content.
+      #
       def render(template, context=nil)
         render_template(load_template(template), context)
       end
 
-################################################################################
-    private
-################################################################################
 
+    private
+
+      # Loads the template files contents.
       def load_template(template)
         IO.read(template).chomp
       end
 
-################################################################################
-
+      # Renders the template through Erubis.
       def render_template(template, context={})
         Erubis::Eruby.new(template).evaluate(context)
       end
 
-################################################################################
-
     end
-
-################################################################################
 
   end
 
-################################################################################
-
 end
-
-################################################################################
