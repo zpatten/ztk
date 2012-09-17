@@ -62,6 +62,13 @@ module ZTK
   # @author Zachary Patten <zachary@jovelabs.net>
   class Parallel < ZTK::Base
 
+    MAX_FORKS = case RUBY_PLATFORM
+    when /darwin/ then
+      %x( sysctl hw.ncpu ).chomp.split(':').last.strip.to_i
+    when /linux/ then
+      %x( grep -c processor /proc/cpuinfo ).chomp.strip.to_i
+    end
+
     # Result Set
     attr_accessor :results
 
@@ -71,8 +78,10 @@ module ZTK
     # @option config [Proc] :after_fork (nil) Proc to call after forking.
     def initialize(config={})
       super({
-        :max_forks => %x( grep -c processor /proc/cpuinfo ).chomp.to_i,
+        :max_forks => MAX_FORKS
       }.merge(config))
+
+      raise ParallelError, "max_forks must be equal to or greater than one!" if @config.max_forks < 1
 
       @forks = Array.new
       @results = Array.new
