@@ -80,6 +80,8 @@ module ZTK
     # @option config [String] :proxy_host server hostname to proxy through
     # @option config [String] :proxy_user username to use for proxy authentication
     # @option config [String] :proxy_identity_file a single identity file to use for authentication with the proxy
+    # @option config [Boolean] :compression Weither or not to use compression for this session.
+    # @option config [Integer] :compression_level What level of compression  to use.
     def initialize(config={})
       super(config)
     end
@@ -99,6 +101,7 @@ module ZTK
 
       command = [ "ssh" ]
       command << [ "-q" ]
+      command << [ "-A" ]
       command << [ "-o", "UserKnownHostsFile=/dev/null" ]
       command << [ "-o", "StrictHostKeyChecking=no" ]
       command << [ "-o", "KeepAlive=yes" ]
@@ -247,40 +250,72 @@ module ZTK
 
   private
 
+    # Builds our SSH proxy command.
     def proxy_command
       log(:debug) { "proxy_command" }
       log(:debug) { "config(#{@config.inspect})" }
 
-      if !@config.identity_file
-        message = "You must specify an identity file in order to SSH proxy."
+      if !@config.proxy_user
+        message = "You must specify an proxy user in order to SSH proxy."
+        log(:fatal) { message }
+        raise SSHError, message
+      end
+
+      if !@config.proxy_host_name
+        message = "You must specify an proxy host name in order to SSH proxy."
         log(:fatal) { message }
         raise SSHError, message
       end
 
       command = ["ssh"]
       command << [ "-q" ]
+      command << [ "-A" ]
       command << [ "-o", "UserKnownHostsFile=/dev/null" ]
       command << [ "-o", "StrictHostKeyChecking=no" ]
       command << [ "-o", "KeepAlive=yes" ]
       command << [ "-o", "ServerAliveInterval=60" ]
       command << [ "-i", @config.proxy_identity_file ] if @config.proxy_identity_file
-      command << "#{@config.proxy_user}@#{@config.proxy_host}"
+      command << "#{@config.proxy_user}@#{@config.proxy_host_name}"
       command << "nc %h %p"
       command = command.flatten.compact.join(" ")
       log(:debug) { "proxy_command(#{command.inspect})" }
       command
     end
 
+    # Builds our SSH options hash.
     def ssh_options
       log(:debug) { "ssh_options" }
       log(:debug) { "config(#{@config.inspect})" }
 
-      options = {}
-      options.merge!(:password => @config.password) if @config.password
-      options.merge!(:keys => @config.identity_file) if @config.identity_file
+      options = {
+        :forward_agent => true,
+        :compression => false,
+        :user_known_hosts_file => '/dev/null'
+      }
+
+      # These are plainly documented on the Net::SSH config class.
+      options.merge!(:encryption => @config.encryption) if @config.encryption
+      options.merge!(:compression => @config.compression) if @config.compression
+      options.merge!(:compression_level => @config.compression_level) if @config.compression_level
       options.merge!(:timeout => @config.timeout) if @config.timeout
-      options.merge!(:user_known_hosts_file  => '/dev/null') if !@config.host_key_verify
+      options.merge!(:forward_agent => @config.forward_agent) if @config.forward_agent
+      options.merge!(:global_known_hosts_file => @config.global_known_hosts_file) if @config.global_known_hosts_file
+      options.merge!(:auth_methods => @config.auth_methods) if @config.auth_methods
+      options.merge!(:host_key => @config.host_key) if @config.host_key
+      options.merge!(:host_key_alias => @config.host_key_alias) if @config.host_key_alias
+      options.merge!(:host_name => @config.host_name) if @config.host_name
+      options.merge!(:keys => @config.keys) if @config.keys
+      options.merge!(:keys_only => @config.keys_only) if @config.keys_only
+      options.merge!(:hmac => @config.hmac) if @config.hmac
+      options.merge!(:port => @config.port) if @config.port
       options.merge!(:proxy => Net::SSH::Proxy::Command.new(proxy_command)) if @config.proxy_host
+      options.merge!(:rekey_limit => @config.rekey_limit) if @config.rekey_limit
+      options.merge!(:user => @config.user) if @config.user
+      options.merge!(:user_known_hosts_file => @config.user_known_hosts_file) if @config.user_known_hosts_file
+
+      # This is not plainly documented on the Net::SSH config class.
+      options.merge!(:password => @config.password) if @config.password
+
       log(:debug) { "ssh_options(#{options.inspect})" }
       options
     end

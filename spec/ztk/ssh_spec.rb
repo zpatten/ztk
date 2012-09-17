@@ -25,7 +25,7 @@ describe ZTK::SSH do
   subject { ZTK::SSH.new }
 
   before(:all) do
-    $logger = ZTK::Logger.new("/dev/null")
+    $logger = ZTK::Logger.new("test.log")
     $stdout = File.open("/dev/null", "w")
     $stderr = File.open("/dev/null", "w")
     $stdin = File.open("/dev/null", "r")
@@ -71,11 +71,11 @@ describe ZTK::SSH do
       subject.config do |config|
         config.stdout = stdout
         config.user = ENV["USER"]
-        config.host = "127.0.0.1"
+        config.host_name = "127.0.0.1"
       end
       hostname = %x( hostname -f ).chomp
       status = subject.exec("hostname -f")
-      status.exitstatus.should == 0
+      status.exit.exitstatus.should == 0
       stdout.rewind
       stdout.read.chomp.should == hostname
     end
@@ -85,13 +85,13 @@ describe ZTK::SSH do
       subject.config do |config|
         config.stdout = stdout
         config.user = ENV["USER"]
-        config.host = "127.0.0.1"
+        config.host_name = "127.0.0.1"
         config.proxy_user = ENV["USER"]
-        config.proxy_host = "127.0.0.1"
+        config.proxy_host_name = "127.0.0.1"
       end
       hostname = %x( hostname -f ).chomp
       status = subject.exec("hostname -f")
-      status.exitstatus.should == 0
+      status.exit.exitstatus.should == 0
       stdout.rewind
       stdout.read.chomp.should == hostname
     end
