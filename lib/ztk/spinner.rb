@@ -25,9 +25,12 @@ module ZTK
   # ZTK::Spinner error class
   #
   # @author Zachary Patten <zachary@jovelabs.net>
+  # @author Stephen Nelson-Smith <stephen@atalanta-systems.com>
   class SpinnerError < Error; end
 
+  # Spinner Class
   # @author Zachary Patten <zachary@jovelabs.net>
+  # @author Stephen Nelson-Smith <stephen@atalanta-systems.com>
   class Spinner
 
     class << self
