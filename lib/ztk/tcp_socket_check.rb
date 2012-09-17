@@ -22,26 +22,32 @@ require "socket"
 
 module ZTK
 
+  # ZTK::TCPSocketCheck error class
   # @author Zachary Patten <zachary@jovelabs.com>
   class TCPSocketCheckError < Error; end
 
   # @author Zachary Patten <zachary@jovelabs.com>
   class TCPSocketCheck < ZTK::Base
 
-################################################################################
-
+    # @param [Hash] config Configuration options hash.
+    # @option config [String] :host Host to connect to.
+    # @option config [Integer, String] :port Port to connect to.
+    # @option config [String] :data Data to send to host to provoke a response.
+    # @option config [Integer] :timeout (5) Set the IO select timeout.
+    # @option config [Integer] :wait (60) Set the amount of time before the wait method call will timeout.
     def initialize(config={})
       super({
-        :host => nil,
-        :port => nil,
-        :data => nil,
         :timeout => 5,
         :wait => 60
       }.merge(config))
     end
 
-################################################################################
-
+    # Check to see if socket on the host and port specified is ready.  This
+    # method will timeout and return false after the amount of seconds specified
+    # in *config.timeout* has passed if the socket has not become ready.
+    #
+    # @return [Boolean] Returns true or false depending on weither the socket
+    #   is ready or not.
     def ready?
       if @config.host.nil?
         message = "You must supply a host!"
@@ -72,8 +78,12 @@ module ZTK
       (socket && socket.close)
     end
 
-################################################################################
-
+    # Wait for the socket on the host and port specified to become ready.  This
+    # method will timeout and return false after the amount of seconds specified
+    # in *config.wait* has passed if the socket has not become ready.
+    #
+    # @return [Boolean] Returns true or false depending on weither the socket
+    #   became ready or not.
     def wait
       log(:debug) { "waiting for socket to become available; timeout after #{@config.wait} seconds" }
       Timeout.timeout(@config.wait) do
@@ -88,12 +98,6 @@ module ZTK
       false
     end
 
-################################################################################
-
   end
 
-################################################################################
-
 end
-
-################################################################################
