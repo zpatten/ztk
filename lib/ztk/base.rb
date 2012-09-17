@@ -25,6 +25,8 @@ module ZTK
   # ZTK::Base error class
   class BaseError < Error; end
 
+  # ZTK Base Class
+  #
   # This is the base class inherited by most of the other classes in this
   # library.  It provides a standard set of features to control STDOUT, STDERR
   # and STDIN, a configuration mechanism and logging mechanism.

@@ -30,6 +30,8 @@ module ZTK
   # @author Zachary Patten <zachary@jovelabs.net>
   class SSHError < Error; end
 
+  # SSH Multi-function Class
+  #
   # We can get a new instance of SSH like so:
   #
   #     ssh = ZTK::SSH.new
