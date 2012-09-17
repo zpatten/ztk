@@ -36,23 +36,23 @@ module ZTK
   #     ssh = ZTK::SSH.new(:stdout => std_combo, :stderr => std_combo)
   #
   # If you want to specify SSH options you can:
-  #     identify_file = File.expand_path(File.join(ENV['HOME'], '.ssh', 'id_rsa'))
-  #     ssh = ZTK::SSH.new(:host => '127.0.0.1', :user => ENV['USER'], :identify_file => identify_file)
+  #     keys = File.expand_path(File.join(ENV['HOME'], '.ssh', 'id_rsa'))
+  #     ssh = ZTK::SSH.new(:host_name => '127.0.0.1', :user => ENV['USER'], :keys => keys)
   #
   # = Configuration Examples:
   #
   # To proxy through another host, for example SSH to 192.168.1.1 through 192.168.0.1:
   #     ssh.config do |config|
   #       config.user = ENV['USER']
-  #       config.host = '192.168.1.1'
+  #       config.host_name = '192.168.1.1'
   #       config.proxy_user = ENV['USER']
-  #       config.proxy_host = '192.168.0.1'
+  #       config.proxy_host_name = '192.168.0.1'
   #     end
   #
   # Specify an identity file:
   #     ssh.config do |config|
-  #       config.identify_file = File.expand_path(File.join(ENV['HOME'], '.ssh', 'id_rsa'))
-  #       config.proxy_identify_file = File.expand_path(File.join(ENV['HOME'], '.ssh', 'id_rsa'))
+  #       config.keys = File.expand_path(File.join(ENV['HOME'], '.ssh', 'id_rsa'))
+  #       config.proxy_keys = File.expand_path(File.join(ENV['HOME'], '.ssh', 'id_rsa'))
   #     end
   #
   # Specify a timeout:
@@ -71,29 +71,29 @@ module ZTK
   #     end
   class SSH < ZTK::Base
 
-    # @param [Hash] config configuration options hash
-    # @option config [String] :host server hostname to connect to
-    # @option config [String] :user username to use for authentication
-    # @option config [String] :password password to use for authentication
-    # @option config [Integer] :timeout SSH connection timeout to use
-    # @option config [String, Array<String>] :identity_file a single or series of identity files to use for authentication
-    # @option config [String] :proxy_host server hostname to proxy through
-    # @option config [String] :proxy_user username to use for proxy authentication
-    # @option config [String] :proxy_identity_file a single identity file to use for authentication with the proxy
+    # @param [Hash] config Configuration options hash.
+    # @option config [String] :host_name Server hostname to connect to.
+    # @option config [String] :user Username to use for authentication.
+    # @option config [String] :password Password to use for authentication.
+    # @option config [Integer] :timeout SSH connection timeout to use.
+    # @option config [String, Array<String>] :keys A single or series of identity files to use for authentication.
+    # @option config [String] :proxy_host_name Server hostname to proxy through.
+    # @option config [String] :proxy_user Username to use for proxy authentication.
+    # @option config [String] :proxy_keys A single identity file to use for authentication with the proxy.
     # @option config [Boolean] :compression Weither or not to use compression for this session.
     # @option config [Integer] :compression_level What level of compression  to use.
     def initialize(config={})
       super(config)
     end
 
-    # Launches an SSH console.
+    # Launches an SSH console, replacing the current process with the console process.
     #
-    # @example Upload A File:
+    # @example Launch a console:
     #   $logger = ZTK::Logger.new(STDOUT)
     #   ssh = ZTK::SSH.new
     #   ssh.config do |config|
     #     config.user = ENV["USER"]
-    #     config.host = "127.0.0.1"
+    #     config.host_name = "127.0.0.1"
     #   end
     #   ssh.console
     def console
@@ -106,9 +106,9 @@ module ZTK
       command << [ "-o", "StrictHostKeyChecking=no" ]
       command << [ "-o", "KeepAlive=yes" ]
       command << [ "-o", "ServerAliveInterval=60" ]
-      command << [ "-i", @config.identity_file ] if @config.identity_file
-      command << [ "-o", "ProxyCommand=\"#{proxy_command}\"" ] if @config.proxy_host
-      command << "#{@config.user}@#{@config.host}"
+      command << [ "-i", @config.keys ] if @config.keys
+      command << [ "-o", "ProxyCommand=\"#{proxy_command}\"" ] if @config.proxy_host_name
+      command << "#{@config.user}@#{@config.host_name}"
       command = command.flatten.compact.join(" ")
       log(:info) { "command(#{command.inspect})" }
       Kernel.exec(command)
@@ -128,14 +128,14 @@ module ZTK
     #   ssh = ZTK::SSH.new
     #   ssh.config do |config|
     #     config.user = ENV["USER"]
-    #     config.host = "127.0.0.1"
+    #     config.host_name = "127.0.0.1"
     #   end
     #   puts ssh.exec("hostname -f").output
     def exec(command, options={})
       log(:debug) { "exec(#{command.inspect}, #{options.inspect})" }
       log(:debug) { "config(#{@config.inspect})" }
 
-      @ssh ||= Net::SSH.start(@config.host, @config.user, ssh_options)
+      @ssh ||= Net::SSH.start(@config.host_name, @config.user, ssh_options)
       log(:debug) { "ssh(#{@ssh.inspect})" }
 
       options = OpenStruct.new({ :silence => false }.merge(options))
@@ -177,7 +177,7 @@ module ZTK
     #   ssh = ZTK::SSH.new
     #   ssh.config do |config|
     #     config.user = ENV["USER"]
-    #     config.host = "127.0.0.1"
+    #     config.host_name = "127.0.0.1"
     #   end
     #   local = File.expand_path(File.join(ENV["HOME"], ".ssh", "id_rsa.pub"))
     #   remote = File.expand_path(File.join("/tmp", "id_rsa.pub"))
@@ -186,7 +186,7 @@ module ZTK
       log(:debug) { "upload(#{local.inspect}, #{remote.inspect})" }
       log(:debug) { "config(#{@config.inspect})" }
 
-      @sftp ||= Net::SFTP.start(@config.host, @config.user, ssh_options)
+      @sftp ||= Net::SFTP.start(@config.host_name, @config.user, ssh_options)
       log(:debug) { "sftp(#{@sftp.inspect})" }
 
       @sftp.upload!(local.to_s, remote.to_s) do |event, uploader, *args|
@@ -217,7 +217,7 @@ module ZTK
     #   ssh = ZTK::SSH.new
     #   ssh.config do |config|
     #     config.user = ENV["USER"]
-    #     config.host = "127.0.0.1"
+    #     config.host_name = "127.0.0.1"
     #   end
     #   local = File.expand_path(File.join("/tmp", "id_rsa.pub"))
     #   remote = File.expand_path(File.join(ENV["HOME"], ".ssh", "id_rsa.pub"))
@@ -226,7 +226,7 @@ module ZTK
       log(:debug) { "download(#{remote.inspect}, #{local.inspect})" }
       log(:debug) { "config(#{@config.inspect})" }
 
-      @sftp ||= Net::SFTP.start(@config.host, @config.user, ssh_options)
+      @sftp ||= Net::SFTP.start(@config.host_name, @config.user, ssh_options)
       log(:debug) { "sftp(#{@sftp.inspect})" }
 
       @sftp.download!(remote.to_s, local.to_s) do |event, downloader, *args|
@@ -262,7 +262,7 @@ module ZTK
       end
 
       if !@config.proxy_host_name
-        message = "You must specify an proxy host name in order to SSH proxy."
+        message = "You must specify an proxy host_name in order to SSH proxy."
         log(:fatal) { message }
         raise SSHError, message
       end
@@ -274,7 +274,7 @@ module ZTK
       command << [ "-o", "StrictHostKeyChecking=no" ]
       command << [ "-o", "KeepAlive=yes" ]
       command << [ "-o", "ServerAliveInterval=60" ]
-      command << [ "-i", @config.proxy_identity_file ] if @config.proxy_identity_file
+      command << [ "-i", @config.proxy_keys ] if @config.proxy_keys
       command << "#{@config.proxy_user}@#{@config.proxy_host_name}"
       command << "nc %h %p"
       command = command.flatten.compact.join(" ")
@@ -308,7 +308,7 @@ module ZTK
       options.merge!(:keys_only => @config.keys_only) if @config.keys_only
       options.merge!(:hmac => @config.hmac) if @config.hmac
       options.merge!(:port => @config.port) if @config.port
-      options.merge!(:proxy => Net::SSH::Proxy::Command.new(proxy_command)) if @config.proxy_host
+      options.merge!(:proxy => Net::SSH::Proxy::Command.new(proxy_command)) if @config.proxy_host_name
       options.merge!(:rekey_limit => @config.rekey_limit) if @config.rekey_limit
       options.merge!(:user => @config.user) if @config.user
       options.merge!(:user_known_hosts_file => @config.user_known_hosts_file) if @config.user_known_hosts_file
