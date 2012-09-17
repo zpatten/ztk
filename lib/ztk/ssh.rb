@@ -26,6 +26,7 @@ require "net/sftp"
 module ZTK
 
   # ZTK::SSH error class
+  #
   # @author Zachary Patten <zachary@jovelabs.com>
   class SSHError < Error; end
 
@@ -70,6 +71,7 @@ module ZTK
   #     ssh.config do |config|
   #       config.host_key_verify = true
   #     end
+  #
   # @author Zachary Patten <zachary@jovelabs.com>
   class SSH < ZTK::Base
 

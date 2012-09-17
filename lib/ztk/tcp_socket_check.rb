@@ -18,14 +18,40 @@
 #
 ################################################################################
 
-require "socket"
+require 'socket'
+require 'timeout'
 
 module ZTK
 
   # ZTK::TCPSocketCheck error class
+  #
   # @author Zachary Patten <zachary@jovelabs.com>
   class TCPSocketCheckError < Error; end
 
+  # TCP Socket Checking Class
+  #
+  # Given a host and port we want to check, we can do something like this:
+  #     sc = ZTK::TCPSocketCheck.new(:host => "www.github.com", :port => 22)
+  #
+  # Then if we want to check if this host is responding on the specified port:
+  #     sc.ready? and puts("They are there!")
+  #
+  # This works well for protocols that spew forth some data right away for use
+  # to read.  However, with certain protocols, such as HTTP, we need to send
+  # some data first before we get a response.
+  #
+  # Given we want to check a host and port that requires some giving before we
+  # can take:
+  #     sc = ZTK::TCPSocketCheck.new(:host => "www.google.com", :port => 80, :data => "GET")
+  #
+  # Then if we want to check if this host is responding on the specified port:
+  #     sc.ready? and puts("They are there!")
+  # The ready? methods timeout is bound to the configuration option *timeout*.
+  #
+  # If we are waiting for a service to come online, we can do this:
+  #     sc.wait and puts("They are there!")
+  # The wait methods timeout is bound to the configuration option *wait*.
+  #
   # @author Zachary Patten <zachary@jovelabs.com>
   class TCPSocketCheck < ZTK::Base
 
@@ -34,7 +60,8 @@ module ZTK
     # @option config [Integer, String] :port Port to connect to.
     # @option config [String] :data Data to send to host to provoke a response.
     # @option config [Integer] :timeout (5) Set the IO select timeout.
-    # @option config [Integer] :wait (60) Set the amount of time before the wait method call will timeout.
+    # @option config [Integer] :wait (60) Set the amount of time before the wait
+    #   method call will timeout.
     def initialize(config={})
       super({
         :timeout => 5,

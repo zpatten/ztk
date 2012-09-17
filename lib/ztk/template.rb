@@ -23,6 +23,7 @@ require "erubis"
 module ZTK
 
   # ZTK::Template error class
+  #
   # @author Zachary Patten <zachary@jovelabs.com>
   class TemplateError < Error; end
 
@@ -38,6 +39,7 @@ module ZTK
   # And get:
   #     This is a test template!
   #     Hello World
+  #
   # @author Zachary Patten <zachary@jovelabs.com>
   class Template
 
@@ -49,7 +51,6 @@ module ZTK
       # @param [Hash] context A hash containing key-pairs, for which the keys are turned into global variables with their respective values.
       #
       # @return [String] The evaulated template content.
-      #
       def render(template, context=nil)
         render_template(load_template(template), context)
       end

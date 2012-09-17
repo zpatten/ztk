@@ -54,7 +54,8 @@ module ZTK
     #
     # @param [Constant] severity Log level severity.
     # @param [String] message Optional message to prefix the log entry with.
-    # @param [String] progname Optional name of the program to prefix the log entry with.
+    # @param [String] progname Optional name of the program to prefix the log
+    #   entry with.
     # @yieldreturn [String] The block should return the desired log message.
     def add(severity, message = nil, progname = nil, &block)
       return if (@level > severity)

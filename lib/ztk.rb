@@ -20,9 +20,13 @@
 
 require "ztk/version"
 
+# Main ZTK module
+#
 # @author Zachary Patten <zachary@jovelabs.com>
 module ZTK
 
+  # ZTK error class
+  #
   # @author Zachary Patten <zachary@jovelabs.com>
   class Error < StandardError; end
 

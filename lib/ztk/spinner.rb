@@ -22,6 +22,8 @@ require "ostruct"
 
 module ZTK
 
+  # ZTK::Spinner error class
+  #
   # @author Zachary Patten <zachary@jovelabs.com>
   class SpinnerError < Error; end
 
