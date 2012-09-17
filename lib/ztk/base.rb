@@ -32,8 +32,11 @@ module ZTK
 
   class Base
 
-################################################################################
-
+    # @param [Hash] config configuration options hash
+    # @option config [IO] :stdout instance of IO to be used for STDOUT
+    # @option config [IO] :stderr instance of IO to be used for STDERR
+    # @option config [IO] :stdin instance of IO to be used for STDIN
+    # @option config [Logger] :logger instance of Logger to be used for logging
     def initialize(config={})
       defined?(Rails) and rails_logger = Rails.logger
       @config = OpenStruct.new({
@@ -51,8 +54,13 @@ module ZTK
       log(:debug) { "config(#{@config.inspect})" }
     end
 
-################################################################################
-
+    #
+    # If no block is given, the method will return the configuration OpenStruct
+    # object.  If a block is given, the block is yielded with the configuration
+    # OpenStruct object.
+    #
+    # @yieldparam [OpenStruct] config the configuration OpenStruct
+    # @return [OpenStruct] the configuration OpenStruct
     def config(&block)
       if block_given?
         block.call(@config)
@@ -63,6 +71,7 @@ module ZTK
 
 ################################################################################
 
+    #
     def log(method_name, &block)
       if block_given?
         @config.logger and @config.logger.method(method_name.to_sym).call { yield }
