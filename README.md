@@ -14,6 +14,10 @@ Issues:
 
 * https://github.com/jovelabs/ztk/issues
 
+Documentation:
+
+* http://rubydoc.info/gems/ztk
+
 Wiki:
 
 * https://github.com/jovelabs/ztk/wiki
