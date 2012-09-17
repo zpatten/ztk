@@ -20,16 +20,17 @@
 
 require "ostruct"
 
-################################################################################
-
 module ZTK
 
-################################################################################
-
+  # ZTK::Base error class
   class BaseError < Error; end
 
-################################################################################
-
+  # This is the base class inherited by most of the other classes in this
+  # library.  It provides a standard set of features to control STDOUT, STDERR
+  # and STDIN, a configuration mechanism and logging mechanism.
+  #
+  # You should never interact with this class directly; you should inherit it
+  # and extend functionality as appropriate.
   class Base
 
     # @param [Hash] config configuration options hash
@@ -54,13 +55,14 @@ module ZTK
       log(:debug) { "config(#{@config.inspect})" }
     end
 
+    # Configuration OpenStruct accessor method.
     #
     # If no block is given, the method will return the configuration OpenStruct
     # object.  If a block is given, the block is yielded with the configuration
     # OpenStruct object.
     #
-    # @yieldparam [OpenStruct] config the configuration OpenStruct
-    # @return [OpenStruct] the configuration OpenStruct
+    # @yieldparam [OpenStruct] config The configuration OpenStruct object.
+    # @return [OpenStruct] The configuration OpenStruct object.
     def config(&block)
       if block_given?
         block.call(@config)
@@ -69,9 +71,14 @@ module ZTK
       end
     end
 
-################################################################################
-
+    # Base logging method.
     #
+    # The value returned in the block is passed down to the logger specified in
+    # the classes configuration.
+    #
+    # @param [Symbol] method_name This should be any one of [:debug, :info, :warn, :error, :fatal].
+    # @yield No value is passed to the block.
+    # @yieldreturn [String] The message to log.
     def log(method_name, &block)
       if block_given?
         @config.logger and @config.logger.method(method_name.to_sym).call { yield }
@@ -80,12 +87,6 @@ module ZTK
       end
     end
 
-################################################################################
-
   end
 
-################################################################################
-
 end
-
-################################################################################

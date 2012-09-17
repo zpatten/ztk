@@ -25,7 +25,7 @@ require "net/sftp"
 
 module ZTK
 
-  # ZTK::SSH base error class
+  # ZTK::SSH error class
   class SSHError < Error; end
 
   # We can get a new instance of SSH like so:
