@@ -25,7 +25,6 @@ describe ZTK::Parallel do
   subject { ZTK::Parallel.new }
 
   before(:all) do
-    $logger = ZTK::Logger.new("/dev/null")
     $stdout = File.open("/dev/null", "w")
     $stderr = File.open("/dev/null", "w")
     $stdin = File.open("/dev/null", "r")
@@ -76,6 +75,22 @@ describe ZTK::Parallel do
         end
       end
       subject.waitall
+      puts subject.results.inspect
+      subject.results.all?{ |r| r.should be_kind_of Integer }
+      subject.results.all?{ |r| r.should > 0 }
+      subject.results.uniq.count.should == 3
+      subject.results.include?(Process.pid).should be false
+    end
+
+    it "should be able to incrementally wait the forks" do
+      3.times do |x|
+        subject.process do
+          Process.pid
+        end
+      end
+      3.times do
+        subject.wait
+      end
       puts subject.results.inspect
       subject.results.all?{ |r| r.should be_kind_of Integer }
       subject.results.all?{ |r| r.should > 0 }

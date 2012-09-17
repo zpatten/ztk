@@ -124,7 +124,16 @@ module ZTK
       pid
     end
 
+    # Wait for a single fork to finish.
+    #
+    # If a fork successfully finishes, it's return value from the *process*
+    # block is stored into the main result set.
+    #
+    # @return [Array<pid, status, data>] An array containing the pid,
+    #   status and data returned from the process block.  If wait2() fails nil
+    #   is returned.
     def wait
+      log(:debug) { "wait" }
       log(:debug) { "forks(#{@forks.inspect})" }
       pid, status = (Process.wait2(-1) rescue nil)
       if !pid.nil? && !status.nil? && !(fork = @forks.select{ |f| f[:pid] == pid }.first).nil?
@@ -140,13 +149,15 @@ module ZTK
       nil
     end
 
+    # Waits for all forks to finish.
+    #
+    # @return [Array<Object>] The results from all of the *process* blocks.
     def waitall
-      data = Array.new
+      log(:debug) { "waitall" }
       while @forks.count > 0
-        result = self.wait
-        result and data << result
+        self.wait
       end
-      data
+      @results
     end
 
     # Count of active forks.

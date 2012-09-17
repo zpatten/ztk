@@ -25,7 +25,6 @@ describe ZTK::SSH do
   subject { ZTK::SSH.new }
 
   before(:all) do
-    $logger = ZTK::Logger.new("test.log")
     $stdout = File.open("/dev/null", "w")
     $stderr = File.open("/dev/null", "w")
     $stdin = File.open("/dev/null", "r")

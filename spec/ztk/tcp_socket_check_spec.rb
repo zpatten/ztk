@@ -25,7 +25,6 @@ describe ZTK::TCPSocketCheck do
   subject { ZTK::TCPSocketCheck.new }
 
   before(:all) do
-    $logger = ZTK::Logger.new("/dev/null")
     $stdout = File.open("/dev/null", "w")
     $stderr = File.open("/dev/null", "w")
     $stdin = File.open("/dev/null", "r")
