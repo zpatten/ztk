@@ -141,13 +141,13 @@ module ZTK
     # @return [OpenStruct#exit] The exit status (i.e. $?).
     #
     # @example Execute a command:
-    #   $logger = ZTK::Logger.new(STDOUT)
+    #
     #   ssh = ZTK::SSH.new
     #   ssh.config do |config|
     #     config.user = ENV["USER"]
     #     config.host_name = "127.0.0.1"
     #   end
-    #   puts ssh.exec("hostname -f").output
+    #   puts ssh.exec("hostname -f").inspect
     def exec(command, options={})
       log(:debug) { "exec(#{command.inspect}, #{options.inspect})" }
       log(:debug) { "config(#{@config.inspect})" }

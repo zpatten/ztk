@@ -23,21 +23,41 @@ require "ostruct"
 module ZTK
 
   # ZTK::Command error class
+  #
   # @author Zachary Patten <zachary@jovelabs.net>
   class CommandError < Error; end
 
-################################################################################
-
+  # Command Execution Class
+  #
+  # We can get a new instance of Command like so:
+  #
+  #     cmd = ZTK::Command.new
+  #
+  # If we wanted to redirect STDOUT and STDERR to a StringIO we can do this:
+  #
+  #     std_combo = StringIO.new
+  #     cmd = ZTK::Command.new(:stdout => std_combo, :stderr => std_combo)
+  #
+  # @author Zachary Patten <zachary@jovelabs.net>
   class Command < ZTK::Base
-
-################################################################################
 
     def initialize(config={})
       super(config)
     end
 
-################################################################################
-
+    # Executes a local command.
+    #
+    # @param [String] command The command to execute.
+    # @param [Hash] options The options hash for executing the command.
+    #
+    # @return [OpenStruct#output] The output of the command, both STDOUT and
+    #   STDERR.
+    # @return [OpenStruct#exit] The exit status (i.e. $?).
+    #
+    # @example Execute a command:
+    #
+    #   cmd = ZTK::Command.new
+    #   puts cmd.exec("hostname -f").inspect
     def exec(command, options={})
       options = OpenStruct.new({ :exit_code => 0, :silence => false }.merge(options))
       log(:debug) { "config(#{@config.inspect})" }
@@ -65,8 +85,12 @@ module ZTK
 
       Process.waitpid(pid)
 
-      @config.stdout.write(parent_stdout_reader.read) unless options.silence
-      @config.stderr.write(parent_stderr_reader.read) unless options.silence
+      stdout = parent_stdout_reader.read
+      stderr = parent_stderr_reader.read
+      output = (stdout || '') + (stderr || '')
+
+      @config.stdout.write(stdout) unless options.silence
+      @config.stderr.write(stderr) unless options.silence
 
       parent_stdout_reader.close
       parent_stderr_reader.close
@@ -79,7 +103,7 @@ module ZTK
         raise CommandError, message
       end
 
-      $?
+      OpenStruct.new(:output => output, :exit => $?)
     end
 
     def upload(*args)
@@ -90,12 +114,6 @@ module ZTK
       raise CommandError, "Not Implemented"
     end
 
-################################################################################
-
   end
 
-################################################################################
-
 end
-
-################################################################################
