@@ -90,7 +90,11 @@ module ZTK
     # @option config [String, Array<String>] :proxy_keys A single or series of
     #   identity files to use for authentication with the proxy.
     def initialize(config={})
-      super(config)
+      super({
+        :forward_agent => true,
+        :compression => false,
+        :user_known_hosts_file => '/dev/null'
+      }.merge(config))
     end
 
     # Launches an SSH console, replacing the current process with the console
@@ -308,11 +312,7 @@ module ZTK
       log(:debug) { "ssh_options" }
       log(:debug) { "config(#{@config.inspect})" }
 
-      options = {
-        :forward_agent => true,
-        :compression => false,
-        :user_known_hosts_file => '/dev/null'
-      }
+      options = {}
 
       # These are plainly documented on the Net::SSH config class.
       options.merge!(:encryption => @config.encryption) if @config.encryption
