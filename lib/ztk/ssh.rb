@@ -74,14 +74,14 @@ module ZTK
     # @param [Hash] config Configuration options hash.
     # @option config [String] :host_name Server hostname to connect to.
     # @option config [String] :user Username to use for authentication.
+    # @option config [String, Array<String>] :keys A single or series of identity files to use for authentication.
     # @option config [String] :password Password to use for authentication.
     # @option config [Integer] :timeout SSH connection timeout to use.
-    # @option config [String, Array<String>] :keys A single or series of identity files to use for authentication.
-    # @option config [String] :proxy_host_name Server hostname to proxy through.
-    # @option config [String] :proxy_user Username to use for proxy authentication.
-    # @option config [String] :proxy_keys A single identity file to use for authentication with the proxy.
     # @option config [Boolean] :compression Weither or not to use compression for this session.
     # @option config [Integer] :compression_level What level of compression  to use.
+    # @option config [String] :proxy_host_name Server hostname to proxy through.
+    # @option config [String] :proxy_user Username to use for proxy authentication.
+    # @option config [String, Array<String>] :proxy_keys A single or series of identity files to use for authentication with the proxy.
     def initialize(config={})
       super(config)
     end
@@ -97,21 +97,10 @@ module ZTK
     #   end
     #   ssh.console
     def console
+      log(:debug) { "console" }
       log(:debug) { "config(#{@config.inspect})" }
 
-      command = [ "ssh" ]
-      command << [ "-q" ]
-      command << [ "-A" ]
-      command << [ "-o", "UserKnownHostsFile=/dev/null" ]
-      command << [ "-o", "StrictHostKeyChecking=no" ]
-      command << [ "-o", "KeepAlive=yes" ]
-      command << [ "-o", "ServerAliveInterval=60" ]
-      command << [ "-i", @config.keys ] if @config.keys
-      command << [ "-o", "ProxyCommand=\"#{proxy_command}\"" ] if @config.proxy_host_name
-      command << "#{@config.user}@#{@config.host_name}"
-      command = command.flatten.compact.join(" ")
-      log(:info) { "command(#{command.inspect})" }
-      Kernel.exec(command)
+      Kernel.exec(console_command)
     end
 
     # Executes a command on the remote host.
@@ -249,6 +238,26 @@ module ZTK
 
 
   private
+
+    # Builds our SSH console command.
+    def console_command
+      log(:debug) { "console_command" }
+      log(:debug) { "config(#{@config.inspect})" }
+
+      command = [ "ssh" ]
+      command << [ "-q" ]
+      command << [ "-A" ]
+      command << [ "-o", "UserKnownHostsFile=/dev/null" ]
+      command << [ "-o", "StrictHostKeyChecking=no" ]
+      command << [ "-o", "KeepAlive=yes" ]
+      command << [ "-o", "ServerAliveInterval=60" ]
+      command << [ "-i", @config.keys ] if @config.keys
+      command << [ "-o", "ProxyCommand=\"#{proxy_command}\"" ] if @config.proxy_host_name
+      command << "#{@config.user}@#{@config.host_name}"
+      command = command.flatten.compact.join(" ")
+      log(:debug) { "console_command(#{command.inspect})" }
+      command
+    end
 
     # Builds our SSH proxy command.
     def proxy_command
