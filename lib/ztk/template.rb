@@ -23,6 +23,7 @@ require "erubis"
 module ZTK
 
   # ZTK::Template error class
+  # @author Zachary Patten <zachary@jovelabs.com>
   class TemplateError < Error; end
 
   # Erubis Templating Class
@@ -37,6 +38,7 @@ module ZTK
   # And get:
   #     This is a test template!
   #     Hello World
+  # @author Zachary Patten <zachary@jovelabs.com>
   class Template
 
     class << self

@@ -20,7 +20,10 @@
 
 require "ztk/version"
 
+# @author Zachary Patten <zachary@jovelabs.com>
 module ZTK
+
+  # @author Zachary Patten <zachary@jovelabs.com>
   class Error < StandardError; end
 
   autoload :Base, "ztk/base"
@@ -31,4 +34,5 @@ module ZTK
   autoload :SSH, "ztk/ssh"
   autoload :TCPSocketCheck, "ztk/tcp_socket_check"
   autoload :Template, "ztk/template"
+
 end

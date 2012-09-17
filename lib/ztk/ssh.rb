@@ -26,6 +26,7 @@ require "net/sftp"
 module ZTK
 
   # ZTK::SSH error class
+  # @author Zachary Patten <zachary@jovelabs.com>
   class SSHError < Error; end
 
   # We can get a new instance of SSH like so:
@@ -69,24 +70,31 @@ module ZTK
   #     ssh.config do |config|
   #       config.host_key_verify = true
   #     end
+  # @author Zachary Patten <zachary@jovelabs.com>
   class SSH < ZTK::Base
 
     # @param [Hash] config Configuration options hash.
     # @option config [String] :host_name Server hostname to connect to.
     # @option config [String] :user Username to use for authentication.
-    # @option config [String, Array<String>] :keys A single or series of identity files to use for authentication.
+    # @option config [String, Array<String>] :keys A single or series of
+    #   identity files to use for authentication.
     # @option config [String] :password Password to use for authentication.
     # @option config [Integer] :timeout SSH connection timeout to use.
-    # @option config [Boolean] :compression Weither or not to use compression for this session.
-    # @option config [Integer] :compression_level What level of compression  to use.
+    # @option config [Boolean] :compression Weither or not to use compression
+    #   for this session.
+    # @option config [Integer] :compression_level What level of compression to
+    #   use.
     # @option config [String] :proxy_host_name Server hostname to proxy through.
-    # @option config [String] :proxy_user Username to use for proxy authentication.
-    # @option config [String, Array<String>] :proxy_keys A single or series of identity files to use for authentication with the proxy.
+    # @option config [String] :proxy_user Username to use for proxy
+    #   authentication.
+    # @option config [String, Array<String>] :proxy_keys A single or series of
+    #   identity files to use for authentication with the proxy.
     def initialize(config={})
       super(config)
     end
 
-    # Launches an SSH console, replacing the current process with the console process.
+    # Launches an SSH console, replacing the current process with the console
+    # process.
     #
     # @example Launch a console:
     #   $logger = ZTK::Logger.new(STDOUT)
@@ -107,9 +115,13 @@ module ZTK
     #
     # @param [String] command The command to execute.
     # @param [Hash] options The options hash for executing the command.
-    # @option options [Boolean] :silence Squelch output to STDOUT and STDERR.  If the log level is :debug, STDOUT and STDERR will go to the log file regardless of this setting.  STDOUT and STDERR are always returned in the output return value regardless of this setting.
+    # @option options [Boolean] :silence Squelch output to STDOUT and STDERR.
+    #   If the log level is :debug, STDOUT and STDERR will go to the log file
+    #   regardless of this setting.  STDOUT and STDERR are always returned in
+    #   the output return value regardless of this setting.
     #
-    # @return [OpenStruct#output] The output of the command, both STDOUT and STDERR.
+    # @return [OpenStruct#output] The output of the command, both STDOUT and
+    #   STDERR.
     # @return [OpenStruct#exit] The exit status (i.e. $?).
     #
     # @example Execute a command:

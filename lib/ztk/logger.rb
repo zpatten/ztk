@@ -20,27 +20,24 @@
 
 require "logger"
 
-################################################################################
-
 module ZTK
 
-################################################################################
-
+  # @author Zachary Patten <zachary@jovelabs.com>
   class Logger < ::Logger
 
-################################################################################
-
     SEVERITIES = Severity.constants.inject([]) {|arr,c| arr[Severity.const_get(c)] = c; arr}
-
-################################################################################
 
     def initialize(*args)
       super(*args)
       set_log_level
     end
 
-################################################################################
 
+  private
+
+    # Parses caller entries, extracting the file, line number and method.
+    #
+    # @param [String] at Entry from the caller Array.
     def parse_caller(at)
       if /^(.+?):(\d+)(?::in `(.*)')?/ =~ at
         file = Regexp.last_match[1]
@@ -52,8 +49,13 @@ module ZTK
       end
     end
 
-################################################################################
-
+    # Writes a log message if the current log level is at or below the supplied
+    # severity.
+    #
+    # @param [Constant] severity Log level severity.
+    # @param [String] message Optional message to prefix the log entry with.
+    # @param [String] progname Optional name of the program to prefix the log entry with.
+    # @yieldreturn [String] The block should return the desired log message.
     def add(severity, message = nil, progname = nil, &block)
       return if (@level > severity)
 
@@ -68,20 +70,15 @@ module ZTK
       true
     end
 
-################################################################################
-
+    # Sets the log level.
+    #
+    # @param [String] level Log level to use.
     def set_log_level(level=nil)
       defined?(Rails) and (default = (Rails.env.production? ? "INFO" : "DEBUG")) or (default = "INFO")
       log_level = (ENV['LOG_LEVEL'] || level || default)
       self.level = ZTK::Logger.const_get(log_level.to_s.upcase)
     end
 
-################################################################################
-
   end
 
-################################################################################
-
 end
-
-################################################################################
