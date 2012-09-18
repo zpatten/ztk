@@ -57,26 +57,26 @@ module ZTK
       block and block.call(self.configuration)
     end
 
-    # Get the value of a configuration option.
+    # Get the value of a configuration key.
     #
-    # @param [Symbol, String] option A symbol or string of the configuration
-    #   option to return.
+    # @param [Symbol, String] key A symbol or string of the configuration
+    #   key to return.
     #
-    # @return The value currently assigned to the configuration option.
-    def [](option)
-      _get(option)
+    # @return The value currently assigned to the configuration key.
+    def [](key)
+      _get(key)
     end
 
-    # Set the value of a configuration option.
+    # Set the value of a configuration key.
     #
-    # @param [Symbol, String] option A symbol or string of the configuration
-    #   option to set.
+    # @param [Symbol, String] key A symbol or string of the configuration
+    #   key to set.
     # @param value The value which you want to assign to the configuration
-    #   option.
+    #   key.
     #
-    # @return The value assigned to the configuration option.
-    def []=(option, value)
-      _set(option, value)
+    # @return The value assigned to the configuration key.
+    def []=(key, value)
+      _set(key, value)
     end
 
     # @see Hash#keys
@@ -99,7 +99,7 @@ module ZTK
       self.configuration.send(:table).merge!(hash)
     end
 
-    # Handles method calls for our configuration options.
+    # Handles method calls for our configuration keys.
     def method_missing(method_symbol, *method_args)
       if method_args.length > 0
         _set(method_symbol, method_args.first)
@@ -111,18 +111,18 @@ module ZTK
 
   private
 
-    def _set(option, value)
-      option = option.to_s
-      (option =~ /=/) or option += '='
+    def _set(key, value)
+      key = key.to_s
+      (key =~ /=/) or key += '='
 
-      self.configuration.send(option.to_sym, value)
+      self.configuration.send(key.to_sym, value)
     end
 
-    def _get(option)
-      option = option.to_s
-      (option !~ /=/) or option = option[0..-2]
+    def _get(key)
+      key = key.to_s
+      (key !~ /=/) or key = key[0..-2]
 
-      self.configuration.send(option.to_sym)
+      self.configuration.send(key.to_sym)
     end
 
   end
