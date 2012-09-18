@@ -22,7 +22,7 @@ require "base64"
 
 module ZTK
 
-  # ZTK::Parallel error class
+  # ZTK::Parallel Error Class
   #
   # @author Zachary Patten <zachary@jovelabs.net>
   class ParallelError < Error; end

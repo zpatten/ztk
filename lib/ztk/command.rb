@@ -22,7 +22,7 @@ require "ostruct"
 
 module ZTK
 
-  # ZTK::Command error class
+  # ZTK::Command Error Class
   #
   # @author Zachary Patten <zachary@jovelabs.net>
   class CommandError < Error; end

@@ -22,7 +22,7 @@ require "ostruct"
 
 module ZTK
 
-  # ZTK::Base error class
+  # ZTK::Base Error Class
   class BaseError < Error; end
 
   # ZTK Base Class
@@ -35,18 +35,18 @@ module ZTK
   # and extend functionality as appropriate.
   class Base
 
-    # @param [Hash] config configuration options hash
-    # @option config [IO] :stdout instance of IO to be used for STDOUT
-    # @option config [IO] :stderr instance of IO to be used for STDERR
-    # @option config [IO] :stdin instance of IO to be used for STDIN
-    # @option config [Logger] :logger instance of Logger to be used for logging
+    # @param [Hash] config Configuration options hash.
+    # @option config [IO] :stdout Instance of IO to be used for STDOUT.
+    # @option config [IO] :stderr Instance of IO to be used for STDERR.
+    # @option config [IO] :stdin Instance of IO to be used for STDIN.
+    # @option config [Logger] :logger Instance of Logger to be used for logging.
     def initialize(config={})
-      defined?(Rails) and rails_logger = Rails.logger
+      # defined?(Rails) and rails_logger = Rails.logger
       @config = OpenStruct.new({
         :stdout => $stdout,
         :stderr => $stderr,
         :stdin => $stdin,
-        :logger => (rails_logger || $logger)
+        :logger => $logger
       }.merge(config))
 
       @config.stdout.respond_to?(:sync=) and @config.stdout.sync = true
@@ -85,7 +85,7 @@ module ZTK
       if block_given?
         @config.logger and @config.logger.method(method_name.to_sym).call { yield }
       else
-        raise(Error, "You must supply a block to the log method!")
+        raise BaseError, "You must supply a block to the log method!"
       end
     end
 

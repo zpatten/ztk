@@ -23,7 +23,7 @@ require 'timeout'
 
 module ZTK
 
-  # ZTK::TCPSocketCheck error class
+  # ZTK::TCPSocketCheck Error Class
   #
   # @author Zachary Patten <zachary@jovelabs.net>
   class TCPSocketCheckError < Error; end
