@@ -18,7 +18,7 @@
 #
 ################################################################################
 
-require "ztk/version"
+require 'ztk/version'
 
 # Main ZTK module
 #
@@ -30,13 +30,14 @@ module ZTK
   # @author Zachary Patten <zachary@jovelabs.net>
   class Error < StandardError; end
 
-  autoload :Base, "ztk/base"
-  autoload :Command, "ztk/command"
-  autoload :Logger, "ztk/logger"
-  autoload :Parallel, "ztk/parallel"
-  autoload :Spinner, "ztk/spinner"
-  autoload :SSH, "ztk/ssh"
-  autoload :TCPSocketCheck, "ztk/tcp_socket_check"
-  autoload :Template, "ztk/template"
+  autoload :Base, 'ztk/base'
+  autoload :Command, 'ztk/command'
+  autoload :Config, 'ztk/config'
+  autoload :Logger, 'ztk/logger'
+  autoload :Parallel, 'ztk/parallel'
+  autoload :Spinner, 'ztk/spinner'
+  autoload :SSH, 'ztk/ssh'
+  autoload :TCPSocketCheck, 'ztk/tcp_socket_check'
+  autoload :Template, 'ztk/template'
 
 end
