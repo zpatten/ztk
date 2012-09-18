@@ -29,6 +29,40 @@ module ZTK
 
   # Configuration Module
   #
+  # Extend an existing class with this module to turn it into a singleton
+  # configuration class.
+  #
+  # Given we have some code like:
+  #
+  #     class C
+  #       extend(ZTK::Config)
+  #     end
+  #
+  # We can then do things like:
+  #
+  #     C.thing = "something"
+  #
+  # or we can reference keys this way:
+  #
+  #     C[:thing] = "something"
+  #
+  # Accessing the value is just as simple:
+  #
+  #     puts C.thing
+  #
+  # We can also load configurations from disk.  Assuming we have a file (i.e. config.rb) like:
+  #
+  #     message  "Hello World"
+  #     thing    (1+1)
+  #
+  # We can load it like so:
+  #
+  #     C.from_file("config.rb")
+  #
+  # Then we can reference the configuration defined in the file as easily as:
+  #
+  #     puts C.message
+  #
   # @author Zachary Patten <zachary@jovelabs.net>
   module Config
 
