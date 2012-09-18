@@ -44,6 +44,7 @@ module ZTK
       base.configuration = OpenStruct.new
     end
 
+    # Loads a configuration from a file.
     def from_file(filename)
       self.instance_eval(IO.read(filename), filename, 1)
     end
@@ -63,7 +64,6 @@ module ZTK
     #
     # @return The value currently assigned to the configuration option.
     def [](option)
-      puts("[](#{option})")
       _get(option)
     end
 
@@ -76,17 +76,7 @@ module ZTK
     #
     # @return The value assigned to the configuration option.
     def []=(option, value)
-      puts("[]=(#{option}, #{value})")
       _set(option, value)
-    end
-
-    def method_missing(method_symbol, *method_args)
-      puts("method_missing(#{method_symbol}, #{method_args})")
-      if method_args.length > 0
-        _set(method_symbol, method_args.first)
-      end
-
-      _get(method_symbol)
     end
 
     # @see Hash#keys
@@ -109,6 +99,15 @@ module ZTK
       self.configuration.send(:table).merge!(hash)
     end
 
+    # Handles method calls for our configuration options.
+    def method_missing(method_symbol, *method_args)
+      if method_args.length > 0
+        _set(method_symbol, method_args.first)
+      end
+
+      _get(method_symbol)
+    end
+
 
   private
 
@@ -116,7 +115,6 @@ module ZTK
       option = option.to_s
       (option =~ /=/) or option += '='
 
-      puts("_set(#{option}, #{value})")
       self.configuration.send(option.to_sym, value)
     end
 
@@ -124,7 +122,6 @@ module ZTK
       option = option.to_s
       (option !~ /=/) or option = option[0..-2]
 
-      puts("_get(#{option})")
       self.configuration.send(option.to_sym)
     end
 
