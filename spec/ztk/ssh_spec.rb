@@ -60,39 +60,43 @@ describe ZTK::SSH do
 
     end
 
-  end
+    # this stuff doesn't work as is under travis-ci
+    if !ENV['CI'] && !ENV['TRAVIS']
 
-  # this stuff doesn't work as is under travis-ci
-  if !ENV['CI'] && !ENV['TRAVIS']
+      describe "behaviour" do
 
-    it "should be able to connect to 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
-      stdout = StringIO.new
-      subject.config do |config|
-        config.stdout = stdout
-        config.user = ENV["USER"]
-        config.host_name = "127.0.0.1"
+        it "should be able to connect to 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
+          stdout = StringIO.new
+          subject.config do |config|
+            config.stdout = stdout
+            config.user = ENV["USER"]
+            config.host_name = "127.0.0.1"
+          end
+          hostname = %x( hostname -f ).chomp
+          status = subject.exec("hostname -f")
+          status.exit.exitstatus.should == 0
+          stdout.rewind
+          stdout.read.chomp.should == hostname
+        end
+
+        it "should be able to proxy through 127.0.0.1, connecting to 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
+          stdout = StringIO.new
+          subject.config do |config|
+            config.stdout = stdout
+            config.user = ENV["USER"]
+            config.host_name = "127.0.0.1"
+            config.proxy_user = ENV["USER"]
+            config.proxy_host_name = "127.0.0.1"
+          end
+          hostname = %x( hostname -f ).chomp
+          status = subject.exec("hostname -f")
+          status.exit.exitstatus.should == 0
+          stdout.rewind
+          stdout.read.chomp.should == hostname
+        end
+
       end
-      hostname = %x( hostname -f ).chomp
-      status = subject.exec("hostname -f")
-      status.exit.exitstatus.should == 0
-      stdout.rewind
-      stdout.read.chomp.should == hostname
-    end
 
-    it "should be able to proxy through 127.0.0.1, connecting to 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
-      stdout = StringIO.new
-      subject.config do |config|
-        config.stdout = stdout
-        config.user = ENV["USER"]
-        config.host_name = "127.0.0.1"
-        config.proxy_user = ENV["USER"]
-        config.proxy_host_name = "127.0.0.1"
-      end
-      hostname = %x( hostname -f ).chomp
-      status = subject.exec("hostname -f")
-      status.exit.exitstatus.should == 0
-      stdout.rewind
-      stdout.read.chomp.should == hostname
     end
 
   end
