@@ -1,4 +1,4 @@
-[![Build Status](https://secure.travis-ci.org/jovelabs/ztk.png)](http://travis-ci.org/jovelabs/ztk)
+[![Build Status](https://secure.travis-ci.org/jovelabs/ztk.png)](http://travis-ci.org/jovelabs/ztk) [![Dependency Status](https://gemnasium.com/jovelabs/ztk.png)](https://gemnasium.com/jovelabs/ztk)
 
 # ZTK
 
