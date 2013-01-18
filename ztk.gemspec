@@ -4,7 +4,7 @@ require File.expand_path('../lib/ztk/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Zachary Patten"]
   gem.email         = ["zachary@jovelabs.net"]
-  gem.description   = %q{Zachary's Tool Kit}
+  gem.description   = %q{Zachary's (DevOp) Tool Kit}
   gem.summary       = %q{Contains various classes and utilities I find I regularly need.}
   gem.homepage      = "https://github.com/jovelabs/ztk"
 
@@ -15,14 +15,14 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = ZTK::VERSION
 
-  gem.add_dependency("erubis")
-  gem.add_dependency("net-ssh")
-  gem.add_dependency("net-sftp")
+  gem.add_dependency("erubis", ">= 0")
+  gem.add_dependency("net-ssh", ">= 0")
+  gem.add_dependency("net-sftp", ">= 0")
 
-  gem.add_development_dependency("pry")
-  gem.add_development_dependency("rake")
-  gem.add_development_dependency("rspec")
-  gem.add_development_dependency("simplecov")
-  gem.add_development_dependency("yard")
-  gem.add_development_dependency("redcarpet")
+  gem.add_development_dependency("pry", ">= 0")
+  gem.add_development_dependency("rake", ">= 0")
+  gem.add_development_dependency("rspec", ">= 0")
+  gem.add_development_dependency("simplecov", ">= 0")
+  gem.add_development_dependency("yard", ">= 0")
+  gem.add_development_dependency("redcarpet", ">= 0")
 end
