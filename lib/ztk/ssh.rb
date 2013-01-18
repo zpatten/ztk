@@ -121,7 +121,7 @@ module ZTK
     #   end
     #   ssh.console
     def console
-      log(:debug) { "console" }
+      log(:info) { "console(#{console_command.inspect})" }
       log(:debug) { "config(#{@config.inspect})" }
 
       Kernel.exec(console_command)
@@ -149,11 +149,10 @@ module ZTK
     #   end
     #   puts ssh.exec("hostname -f").inspect
     def exec(command, options={})
-      log(:debug) { "exec(#{command.inspect}, #{options.inspect})" }
+      log(:info) { "exec(#{command.inspect}, #{options.inspect})" }
       log(:debug) { "config(#{@config.inspect})" }
 
       @ssh ||= Net::SSH.start(@config.host_name, @config.user, ssh_options)
-      log(:debug) { "ssh(#{@ssh.inspect})" }
 
       options = OpenStruct.new({ :silence => false }.merge(options))
       log(:debug) { "options(#{options.inspect})" }
@@ -204,7 +203,6 @@ module ZTK
       log(:debug) { "config(#{@config.inspect})" }
 
       @sftp ||= Net::SFTP.start(@config.host_name, @config.user, ssh_options)
-      log(:debug) { "sftp(#{@sftp.inspect})" }
 
       @sftp.upload!(local.to_s, remote.to_s) do |event, uploader, *args|
         case event
@@ -244,7 +242,6 @@ module ZTK
       log(:debug) { "config(#{@config.inspect})" }
 
       @sftp ||= Net::SFTP.start(@config.host_name, @config.user, ssh_options)
-      log(:debug) { "sftp(#{@sftp.inspect})" }
 
       @sftp.download!(remote.to_s, local.to_s) do |event, downloader, *args|
         case event
