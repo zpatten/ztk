@@ -109,6 +109,27 @@ module ZTK
       }.merge(config))
     end
 
+    # Starts an SSH session.  Can also be used to get the Net::SSH object.
+    #
+    # Primarily used internally.
+    def ssh
+      @ssh ||= Net::SSH.start(@config.host_name, @config.user, ssh_options)
+    end
+
+    # Starts an SFTP session.  Can also be used to get the Net::SSH object.
+    #
+    # Primarily used internally.
+    def sftp
+      @sftp ||= Net::SFTP.start(@config.host_name, @config.user, ssh_options)
+    end
+
+    # Close our sessions gracefully.
+    def close
+      log(:debug) { "close" }
+      ssh and ssh.close
+      sftp and sftp.close
+    end
+
     # Launches an SSH console, replacing the current process with the console
     # process.
     #
@@ -152,13 +173,11 @@ module ZTK
       log(:info) { "exec(#{command.inspect}, #{options.inspect})" }
       log(:debug) { "config(#{@config.inspect})" }
 
-      @ssh ||= Net::SSH.start(@config.host_name, @config.user, ssh_options)
-
       options = OpenStruct.new({ :silence => false }.merge(options))
       log(:debug) { "options(#{options.inspect})" }
 
       output = ""
-      channel = @ssh.open_channel do |chan|
+      channel = ssh.open_channel do |chan|
         log(:debug) { "channel opened" }
         chan.exec(command) do |ch, success|
           raise SSHError, "Could not execute '#{command}'." unless success
@@ -199,15 +218,13 @@ module ZTK
     #   remote = File.expand_path(File.join("/tmp", "id_rsa.pub"))
     #   ssh.upload(local, remote)
     def upload(local, remote)
-      log(:debug) { "upload(#{local.inspect}, #{remote.inspect})" }
+      log(:info) { "upload(#{local.inspect}, #{remote.inspect})" }
       log(:debug) { "config(#{@config.inspect})" }
 
-      @sftp ||= Net::SFTP.start(@config.host_name, @config.user, ssh_options)
-
-      @sftp.upload!(local.to_s, remote.to_s) do |event, uploader, *args|
+      sftp.upload!(local.to_s, remote.to_s) do |event, uploader, *args|
         case event
         when :open
-          log(:info) { "upload(#{args[0].local} -> #{args[0].remote})" }
+          log(:debug) { "upload(#{args[0].local} -> #{args[0].remote})" }
         when :close
           log(:debug) { "close(#{args[0].remote})" }
         when :mkdir
@@ -215,7 +232,7 @@ module ZTK
         when :put
           log(:debug) { "put(#{args[0].remote}, size #{args[2].size} bytes, offset #{args[1]})" }
         when :finish
-          log(:info) { "finish" }
+          log(:debug) { "finish" }
         end
       end
 
@@ -238,15 +255,13 @@ module ZTK
     #   remote = File.expand_path(File.join(ENV["HOME"], ".ssh", "id_rsa.pub"))
     #   ssh.download(remote, local)
     def download(remote, local)
-      log(:debug) { "download(#{remote.inspect}, #{local.inspect})" }
+      log(:info) { "download(#{remote.inspect}, #{local.inspect})" }
       log(:debug) { "config(#{@config.inspect})" }
 
-      @sftp ||= Net::SFTP.start(@config.host_name, @config.user, ssh_options)
-
-      @sftp.download!(remote.to_s, local.to_s) do |event, downloader, *args|
+      sftp.download!(remote.to_s, local.to_s) do |event, downloader, *args|
         case event
         when :open
-          log(:info) { "download(#{args[0].remote} -> #{args[0].local})" }
+          log(:debug) { "download(#{args[0].remote} -> #{args[0].local})" }
         when :close
           log(:debug) { "close(#{args[0].local})" }
         when :mkdir
@@ -254,7 +269,7 @@ module ZTK
         when :get
           log(:debug) { "get(#{args[0].remote}, size #{args[2].size} bytes, offset #{args[1]})" }
         when :finish
-          log(:info) { "finish" }
+          log(:debug) { "finish" }
         end
       end
 
