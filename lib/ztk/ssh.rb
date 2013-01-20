@@ -127,7 +127,7 @@ module ZTK
     def close
       log(:debug) { "close" }
       ssh and ssh.close
-      sftp and sftp.close
+      sftp and sftp.close_channel
     end
 
     # Launches an SSH console, replacing the current process with the console
