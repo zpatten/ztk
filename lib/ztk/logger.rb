@@ -83,9 +83,9 @@ module ZTK
       msg = (block && block.call)
       (msg.nil? || msg.strip.empty?) and return
       @hostname ||= %x(hostname -s).chomp.strip
-      called_by = parse_caller(caller[1])
+      called_by = "#{@hostname}:#{parse_caller(caller[1])}"
       message = [message, progname, msg].flatten.compact.join(": ")
-      message = "%19s.%06d|%05d|%5s|%s|%40s%s\n" % [Time.now.utc.strftime("%Y-%m-%d|%H:%M:%S"), Time.now.utc.usec, Process.pid, SEVERITIES[severity], @hostname, called_by, message]
+      message = "%19s.%06d|%05d|%5s|%60s%s\n" % [Time.now.utc.strftime("%Y-%m-%d|%H:%M:%S"), Time.now.utc.usec, Process.pid, SEVERITIES[severity], called_by, message]
 
       @logdev.write(message)
 
