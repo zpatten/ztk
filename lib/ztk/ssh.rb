@@ -123,11 +123,10 @@ module ZTK
       @sftp ||= Net::SFTP.start(@config.host_name, @config.user, ssh_options)
     end
 
-    # Close our sessions gracefully.
+    # Close our session gracefully.
     def close
       log(:debug) { "close" }
-      ssh and ssh.close
-      sftp and sftp.close_channel
+      ssh and !ssh.closed? and ssh.close
     end
 
     # Launches an SSH console, replacing the current process with the console
