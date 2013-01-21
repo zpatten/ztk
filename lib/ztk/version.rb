@@ -19,5 +19,5 @@
 ################################################################################
 
 module ZTK
-  VERSION = "0.0.14" unless const_defined?(:VERSION)
+  VERSION = "0.0.15" unless const_defined?(:VERSION)
 end
