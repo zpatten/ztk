@@ -109,6 +109,12 @@ module ZTK
       }.merge(config))
     end
 
+    def inspect
+      user_host = "#{@config.user}@#{@config.host_name}"
+      port = (@config.port ? ":#{@config.port}" : nil)
+      [user_host, port].compact.join
+    end
+
     # Starts an SSH session.  Can also be used to get the Net::SSH object.
     #
     # Primarily used internally.
@@ -182,13 +188,13 @@ module ZTK
           raise SSHError, "Could not execute '#{command}'." unless success
 
           ch.on_data do |c, data|
-            log(:debug) { data.chomp.strip }
+            direct_log(:debug) { "[#{self.inspect}] #{data}" }
             @config.stdout.print(data) unless options.silence
             output += data.chomp.strip
           end
 
           ch.on_extended_data do |c, type, data|
-            log(:debug) { data.chomp.strip }
+            direct_log(:debug) { "[#{self.inspect}] #{data}" }
             @config.stderr.print(data) unless options.silence
             output += data.chomp.strip
           end

@@ -89,6 +89,16 @@ module ZTK
       end
     end
 
+    def direct_log(log_level, &blocK)
+      @config.logger.nil? and raise BaseError, "You must supply a logger for direct logging support!"
+
+      if block_given? && (@config.logger.level == ZTK::Logger.const_get(log_level.to_s.upcase))
+        @config.logger and @config.logger.instance_variable_get(:@logdev).instance_variable_get(:@dev).write(yield)
+      else
+        raise BaseError, "You must supply a block to the log method!"
+      end
+    end
+
   end
 
 end
