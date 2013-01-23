@@ -36,7 +36,7 @@ module ZTK
 
     class << self
 
-      def spin(stdout=$stdout)
+      def spin(stdout=STDOUT)
         charset = %w( | / - \\ )
         count = 0
         spinner = Thread.new do
@@ -44,7 +44,7 @@ module ZTK
             stdout.print(charset[(count += 1) % charset.length])
             stdout.print("\b")
             stdout.respond_to?(:flush) and stdout.flush
-            sleep(0.25)
+            sleep(0.1)
           end
         end
         yield.tap do
