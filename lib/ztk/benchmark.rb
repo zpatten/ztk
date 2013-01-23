@@ -17,28 +17,40 @@
 #   limitations under the License.
 #
 ################################################################################
+require 'benchmark'
 
-require 'ztk/version'
-
-# Main ZTK module
-#
-# @author Zachary Patten <zachary@jovelabs.net>
 module ZTK
 
-  # ZTK error class
+  # ZTK::Benchmark Error Class
   #
   # @author Zachary Patten <zachary@jovelabs.net>
-  class Error < StandardError; end
+  class BenchmarkError < Error; end
 
-  autoload :Base, 'ztk/base'
-  autoload :Benchmark, 'ztk/benchmark'
-  autoload :Command, 'ztk/command'
-  autoload :Config, 'ztk/config'
-  autoload :Logger, 'ztk/logger'
-  autoload :Parallel, 'ztk/parallel'
-  autoload :Spinner, 'ztk/spinner'
-  autoload :SSH, 'ztk/ssh'
-  autoload :TCPSocketCheck, 'ztk/tcp_socket_check'
-  autoload :Template, 'ztk/template'
+  # Benchmark Class
+  #
+  # @author Zachary Patten <zachary@jovelabs.net>
+  class Benchmark
+
+    class << self
+
+      def bench(message=nil, stdout=STDOUT)
+        !message.nil? and print("#{message} ")
+        mark = ::Benchmark.realtime do
+          if message.nil?
+            yield
+          else
+            ZTK::Spinner.spin do
+              yield
+            end
+          end
+        end
+        !message.nil? and puts("completed in %0.4f seconds.\n" % mark)
+
+        mark
+      end
+
+    end
+
+  end
 
 end
