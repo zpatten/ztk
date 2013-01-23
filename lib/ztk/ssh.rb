@@ -169,8 +169,8 @@ module ZTK
     #   end
     #   puts ssh.exec("hostname -f").inspect
     def exec(command, options={})
-      log(:info) { "exec(#{command.inspect}, #{options.inspect})" }
       log(:debug) { "config(#{@config.inspect})" }
+      log(:info) { "exec(#{command.inspect}, #{options.inspect})" }
 
       options = OpenStruct.new({ :silence => false }.merge(options))
       log(:debug) { "options(#{options.inspect})" }
@@ -217,8 +217,8 @@ module ZTK
     #   remote = File.expand_path(File.join("/tmp", "id_rsa.pub"))
     #   ssh.upload(local, remote)
     def upload(local, remote)
-      log(:info) { "upload(#{local.inspect}, #{remote.inspect})" }
       log(:debug) { "config(#{@config.inspect})" }
+      log(:info) { "upload(#{local.inspect}, #{remote.inspect})" }
 
       sftp.upload!(local.to_s, remote.to_s) do |event, uploader, *args|
         case event
@@ -254,8 +254,8 @@ module ZTK
     #   remote = File.expand_path(File.join(ENV["HOME"], ".ssh", "id_rsa.pub"))
     #   ssh.download(remote, local)
     def download(remote, local)
-      log(:info) { "download(#{remote.inspect}, #{local.inspect})" }
       log(:debug) { "config(#{@config.inspect})" }
+      log(:info) { "download(#{remote.inspect}, #{local.inspect})" }
 
       sftp.download!(remote.to_s, local.to_s) do |event, downloader, *args|
         case event
@@ -281,7 +281,6 @@ module ZTK
     # Builds our SSH console command.
     def console_command
       log(:debug) { "console_command" }
-      log(:debug) { "config(#{@config.inspect})" }
 
       command = [ "ssh" ]
       command << [ "-q" ]
@@ -302,7 +301,6 @@ module ZTK
     # Builds our SSH proxy command.
     def proxy_command
       log(:debug) { "proxy_command" }
-      log(:debug) { "config(#{@config.inspect})" }
 
       if !@config.proxy_user
         message = "You must specify an proxy user in order to SSH proxy."
@@ -335,7 +333,6 @@ module ZTK
     # Builds our SSH options hash.
     def ssh_options
       log(:debug) { "ssh_options" }
-      log(:debug) { "config(#{@config.inspect})" }
 
       options = {}
 
