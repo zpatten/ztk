@@ -42,10 +42,9 @@ module ZTK
         spinner = Thread.new do
           while count do
             stdout.print(charset[(count += 1) % charset.length])
-            stdout.respond_to?(:flush) and stdout.flush
-            sleep(0.25)
             stdout.print("\b")
             stdout.respond_to?(:flush) and stdout.flush
+            sleep(0.25)
           end
         end
         yield.tap do
