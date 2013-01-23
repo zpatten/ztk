@@ -126,7 +126,7 @@ module ZTK
         ((IO.select(nil, [socket], nil, @config.timeout) && socket.write(@config.data)) ? true : false)
       end
 
-    rescue Errno::ETIMEDOUT, Errno::ECONNREFUSED, Errno::EHOSTUNREACH => e
+    rescue Errno::ETIMEDOUT, Errno::ECONNREFUSED, Errno::ECONNRESET, Errno::EHOSTUNREACH => e
       log(:debug) { "#{@config.host}:#{@config.port} - #{e.message}" }
       false
     ensure
