@@ -31,7 +31,7 @@ describe ZTK::Logger do
       :error => "This is a test error message",
       :fatal => "This is a test fatal message"
     }
-    @logfile = "/tmp/test.log"
+    @logfile = Tempfile.new("logger").path
   end
 
   before(:each) do

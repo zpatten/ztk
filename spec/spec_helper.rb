@@ -18,7 +18,8 @@
 #
 ################################################################################
 
-require "ztk"
+require 'ztk'
+require 'tempfile'
 
 ################################################################################
 
@@ -27,6 +28,6 @@ SimpleCov.start do
   add_filter '/spec/'
 end if ENV["COVERAGE"]
 
-$logger = ZTK::Logger.new("test.log")
+$logger = ZTK::Logger.new(Tempfile.new("test").path)
 
 ################################################################################
