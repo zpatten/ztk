@@ -204,7 +204,7 @@ module ZTK
               direct_log(:debug) { data }
 
               @config.stdout.print(data) unless options.silence
-              output += data.chomp.strip
+              output += data
             end
 
             ch.on_extended_data do |c, type, data|
@@ -216,7 +216,7 @@ module ZTK
               direct_log(:debug) { data }
 
               @config.stderr.print(data) unless options.silence
-              output += data.chomp.strip
+              output += data
             end
 
             ch.on_open_failed do |c, code, desc|
