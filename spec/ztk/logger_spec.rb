@@ -81,6 +81,16 @@ describe ZTK::Logger do
 
   end
 
+  describe "speciality logging functionality" do
+
+    it "should allow writing directly to the log device" do
+      data = "Hello World"
+      IO.write(subject.logdev, data)
+      IO.read(@logfile).match(data).should_not be nil
+    end
+
+  end
+
   describe "log message" do
 
     before(:each) do
