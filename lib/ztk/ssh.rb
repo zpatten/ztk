@@ -182,27 +182,54 @@ module ZTK
       log(:debug) { "options(#{options.inspect})" }
 
       output = ""
-      channel = ssh.open_channel do |chan|
-        log(:debug) { "channel opened" }
-        chan.exec(command) do |ch, success|
-          raise SSHError, "Could not execute '#{command}'." unless success
+      stdout_header = false
+      stderr_header = false
 
-          ch.on_data do |c, data|
-            direct_log(:debug) { "[#{self.inspect}] #{data}" }
-            @config.stdout.print(data) unless options.silence
-            output += data.chomp.strip
+      ZTK::RescueRetry.try(:tries => 3, :on => EOFError) do
+        @ssh = Net::SSH.start(@config.host_name, @config.user, ssh_options)
+
+        channel = ssh.open_channel do |chan|
+          log(:debug) { "Channel opened." }
+          direct_log(:debug) { "===[OPENED]===[OPENED]===[#{self.inspect}]===[OPENED]===[OPENED]===\n" }
+
+          chan.exec(command) do |ch, success|
+            raise SSHError, "Could not execute '#{command}'." unless success
+
+            ch.on_data do |c, data|
+              if !stdout_header
+                direct_log(:debug) { "===[STDOUT]===[STDOUT]===[#{self.inspect}]===[STDOUT]===[STDOUT]===\n" }
+                stdout_header = true
+                stderr_header = false
+              end
+              direct_log(:debug) { data }
+
+              @config.stdout.print(data) unless options.silence
+              output += data.chomp.strip
+            end
+
+            ch.on_extended_data do |c, type, data|
+              if !stderr_header
+                direct_log(:debug) { "===[STDERR]===[STDERR]===[#{self.inspect}]===[STDERR]===[STDERR]===\n" }
+                stderr_header = true
+                stdout_header = false
+              end
+              direct_log(:debug) { data }
+
+              @config.stderr.print(data) unless options.silence
+              output += data.chomp.strip
+            end
+
+            ch.on_open_failed do |c, code, desc|
+              log(:fatal) { "Open failed! (#{code.inspect} - #{desc.inspect})" }
+            end
+
           end
-
-          ch.on_extended_data do |c, type, data|
-            direct_log(:debug) { "[#{self.inspect}] #{data}" }
-            @config.stderr.print(data) unless options.silence
-            output += data.chomp.strip
-          end
-
         end
+        channel.wait
+
+        direct_log(:debug) { "===[CLOSED]===[CLOSED]===[#{self.inspect}]===[CLOSED]===[CLOSED]===\n" }
+        log(:debug) { "Channel closed." }
       end
-      channel.wait
-      log(:debug) { "channel closed" }
 
       OpenStruct.new(:output => output, :exit => $?)
     end
@@ -226,18 +253,21 @@ module ZTK
       log(:debug) { "config(#{@config.inspect})" }
       log(:info) { "upload(#{local.inspect}, #{remote.inspect})" }
 
-      sftp.upload!(local.to_s, remote.to_s) do |event, uploader, *args|
-        case event
-        when :open
-          log(:debug) { "upload(#{args[0].local} -> #{args[0].remote})" }
-        when :close
-          log(:debug) { "close(#{args[0].remote})" }
-        when :mkdir
-          log(:debug) { "mkdir(#{args[0]})" }
-        when :put
-          log(:debug) { "put(#{args[0].remote}, size #{args[2].size} bytes, offset #{args[1]})" }
-        when :finish
-          log(:debug) { "finish" }
+      ZTK::RescueRetry.try(:tries => 3, :on => EOFError) do
+        @sftp = Net::SFTP.start(@config.host_name, @config.user, ssh_options)
+        sftp.upload!(local.to_s, remote.to_s) do |event, uploader, *args|
+          case event
+          when :open
+            log(:debug) { "upload(#{args[0].local} -> #{args[0].remote})" }
+          when :close
+            log(:debug) { "close(#{args[0].remote})" }
+          when :mkdir
+            log(:debug) { "mkdir(#{args[0]})" }
+          when :put
+            log(:debug) { "put(#{args[0].remote}, size #{args[2].size} bytes, offset #{args[1]})" }
+          when :finish
+            log(:debug) { "finish" }
+          end
         end
       end
 
@@ -263,18 +293,21 @@ module ZTK
       log(:debug) { "config(#{@config.inspect})" }
       log(:info) { "download(#{remote.inspect}, #{local.inspect})" }
 
-      sftp.download!(remote.to_s, local.to_s) do |event, downloader, *args|
-        case event
-        when :open
-          log(:debug) { "download(#{args[0].remote} -> #{args[0].local})" }
-        when :close
-          log(:debug) { "close(#{args[0].local})" }
-        when :mkdir
-          log(:debug) { "mkdir(#{args[0]})" }
-        when :get
-          log(:debug) { "get(#{args[0].remote}, size #{args[2].size} bytes, offset #{args[1]})" }
-        when :finish
-          log(:debug) { "finish" }
+      ZTK::RescueRetry.try(:tries => 3, :on => EOFError) do
+        @sftp = Net::SFTP.start(@config.host_name, @config.user, ssh_options)
+        sftp.download!(remote.to_s, local.to_s) do |event, downloader, *args|
+          case event
+          when :open
+            log(:debug) { "download(#{args[0].remote} -> #{args[0].local})" }
+          when :close
+            log(:debug) { "close(#{args[0].local})" }
+          when :mkdir
+            log(:debug) { "mkdir(#{args[0]})" }
+          when :get
+            log(:debug) { "get(#{args[0].remote}, size #{args[2].size} bytes, offset #{args[1]})" }
+          when :finish
+            log(:debug) { "finish" }
+          end
         end
       end
 
@@ -286,8 +319,6 @@ module ZTK
 
     # Builds our SSH console command.
     def console_command
-      log(:debug) { "console_command" }
-
       command = [ "ssh" ]
       command << [ "-q" ]
       command << [ "-A" ]
@@ -306,8 +337,6 @@ module ZTK
 
     # Builds our SSH proxy command.
     def proxy_command
-      log(:debug) { "proxy_command" }
-
       if !@config.proxy_user
         message = "You must specify an proxy user in order to SSH proxy."
         log(:fatal) { message }
@@ -338,8 +367,6 @@ module ZTK
 
     # Builds our SSH options hash.
     def ssh_options
-      log(:debug) { "ssh_options" }
-
       options = {}
 
       # These are plainly documented on the Net::SSH config class.
