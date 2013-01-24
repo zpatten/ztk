@@ -67,11 +67,21 @@ describe ZTK::Command do
     subject.config do |config|
       config.stdout = stdout
     end
-    hostname = %x( hostname -f ).chomp
+    hostname = %x(hostname -f).chomp
     status = subject.exec("hostname -f")
     status.exit.exitstatus.should == 0
     stdout.rewind
     stdout.read.chomp.should == hostname
+  end
+
+  it "should timeout after the period specificed" do
+    stdout = StringIO.new
+    subject.config do |config|
+      config.stdout = stdout
+      config.timeout = 3
+    end
+    hostname = %x(hostname -f).chomp
+    lambda { subject.exec("hostname -f ; sleep 10") }.should raise_error ZTK::CommandError
   end
 
 end

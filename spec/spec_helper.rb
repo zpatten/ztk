@@ -28,6 +28,12 @@ SimpleCov.start do
   add_filter '/spec/'
 end if ENV["COVERAGE"]
 
+ENV['LOG_LEVEL'] = "DEBUG"
+
 $logger = ZTK::Logger.new(File.join("/tmp", "test.log"))
+
+$logger.info { "=" * 80 }
+$logger.info { "STARTING TEST RUN @ #{Time.now.utc}" }
+$logger.info { "=" * 80 }
 
 ################################################################################

@@ -46,7 +46,7 @@ describe ZTK::RescueRetry do
       }.should raise_error ZTK::RescueRetryError, "You must supply a block!"
     end
 
-    it "should retry on all exceptions" do
+    it "should retry on all exceptions by default" do
       $counter = 0
       lambda {
         ZTK::RescueRetry.try(:tries => 3) do
