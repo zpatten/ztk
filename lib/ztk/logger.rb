@@ -52,6 +52,10 @@ module ZTK
       set_log_level
     end
 
+    def logdev
+      self.instance_variable_get(:@logdev).instance_variable_get(:@dev)
+    end
+
 
   private
 
