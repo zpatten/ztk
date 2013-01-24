@@ -43,6 +43,10 @@ describe ZTK::Logger do
       subject.should be_an_instance_of ZTK::Logger
     end
 
+    it "should provide access to the raw log file handle" do
+      subject.logdev.should be_an_instance_of File
+    end
+
   end
 
   describe "general logging functionality" do
