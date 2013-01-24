@@ -97,7 +97,7 @@ module ZTK
     def process(&block)
       raise ParallelError, "You must supply a block to the process method!" if !block_given?
 
-      log(:debug) { "forks(#{@forks.inspect})" }
+      config.logger.debug { "forks(#{@forks.inspect})" }
 
       while (@forks.count >= @config.max_forks) do
         wait
@@ -114,7 +114,7 @@ module ZTK
         parent_reader.close
 
         if !(data = block.call).nil?
-          log(:debug) { "write(#{data.inspect})" }
+          config.logger.debug { "write(#{data.inspect})" }
           child_writer.write(Base64.encode64(Marshal.dump(data)))
         end
 
@@ -142,12 +142,12 @@ module ZTK
     #   status and data returned from the process block.  If wait2() fails nil
     #   is returned.
     def wait
-      log(:debug) { "wait" }
-      log(:debug) { "forks(#{@forks.inspect})" }
+      config.logger.debug { "wait" }
+      config.logger.debug { "forks(#{@forks.inspect})" }
       pid, status = (Process.wait2(-1) rescue nil)
       if !pid.nil? && !status.nil? && !(fork = @forks.select{ |f| f[:pid] == pid }.first).nil?
         data = (Marshal.load(Base64.decode64(fork[:reader].read.to_s)) rescue nil)
-        log(:debug) { "read(#{data.inspect})" }
+        config.logger.debug { "read(#{data.inspect})" }
         !data.nil? and @results.push(data)
         fork[:reader].close
         fork[:writer].close
@@ -162,7 +162,7 @@ module ZTK
     #
     # @return [Array<Object>] The results from all of the *process* blocks.
     def waitall
-      log(:debug) { "waitall" }
+      config.logger.debug { "waitall" }
       while @forks.count > 0
         self.wait
       end
@@ -173,7 +173,7 @@ module ZTK
     #
     # @return [Integer] Current number of active forks.
     def count
-      log(:debug) { "count(#{@forks.count})" }
+      config.logger.debug { "count(#{@forks.count})" }
       @forks.count
     end
 

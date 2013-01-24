@@ -73,8 +73,8 @@ module ZTK
       end
 
       options = OpenStruct.new({ :exit_code => 0, :silence => false }.merge(options))
-      log(:debug) { "options(#{options.inspect})" }
-      log(:debug) { "command(#{command.inspect})" }
+      config.logger.debug { "options(#{options.inspect})" }
+      config.logger.debug { "command(#{command.inspect})" }
 
       output = ""
       stdout_header = false
@@ -143,11 +143,11 @@ module ZTK
       parent_stdout_reader.close
       parent_stderr_reader.close
 
-      log(:debug) { "exit_code(#{$?.inspect})" }
+      config.logger.debug { "exit_code(#{$?.inspect})" }
 
       if ($? != options.exit_code)
         message = "exec(#{command.inspect}, #{options.inspect}) failed! [#{$?.inspect}]"
-        log(:fatal) { message }
+        config.logger.fatal { message }
         raise CommandError, message
       end
 

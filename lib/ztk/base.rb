@@ -46,15 +46,15 @@ module ZTK
         :stdout => $stdout,
         :stderr => $stderr,
         :stdin => $stdin,
-        :logger => $logger
+        :logger => ($logger || ZTK::Logger.new("/dev/null"))
       }.merge(config))
 
-      @config.stdout.respond_to?(:sync=) and @config.stdout.sync = true
-      @config.stderr.respond_to?(:sync=) and @config.stderr.sync = true
-      @config.stdin.respond_to?(:sync=) and @config.stdin.sync = true
-      @config.logger.respond_to?(:sync=) and @config.logger.sync = true
+      (@config.stdout && @config.stdout.respond_to?(:sync=)) and @config.stdout.sync = true
+      (@config.stderr && @config.stderr.respond_to?(:sync=)) and @config.stderr.sync = true
+      (@config.stdin  && @config.stdin.respond_to?(:sync=))  and @config.stdin.sync = true
+      (@config.logger && @config.logger.respond_to?(:sync=)) and @config.logger.sync = true
 
-      log(:debug) { "config(#{@config.inspect})" }
+      @config.logger.debug { "config(#{@config.inspect})" }
     end
 
     # Configuration OpenStruct accessor method.
@@ -73,7 +73,11 @@ module ZTK
       end
     end
 
-    # Base logging method.
+    # Direct logging method.
+    #
+    # This method provides direct writing of data to the current log device.
+    # This is mainly used for pushing STDOUT and STDERR into the log file in
+    # ZTK::SSH and ZTK::Command, but could easily be used by other classes.
     #
     # The value returned in the block is passed down to the logger specified in
     # the classes configuration.
@@ -81,14 +85,6 @@ module ZTK
     # @param [Symbol] method_name This should be any one of [:debug, :info, :warn, :error, :fatal].
     # @yield No value is passed to the block.
     # @yieldreturn [String] The message to log.
-    def log(method_name, &block)
-      if block_given?
-        @config.logger and @config.logger.method(method_name.to_sym).call { yield }
-      else
-        raise BaseError, "You must supply a block to the log method!"
-      end
-    end
-
     def direct_log(log_level, &blocK)
       @config.logger.nil? and raise BaseError, "You must supply a logger for direct logging support!"
 

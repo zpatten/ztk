@@ -106,28 +106,28 @@ module ZTK
     def ready?
       if @config.host.nil?
         message = "You must supply a host!"
-        log(:fatal) { message }
+        config.logger.fatal { message }
         raise TCPSocketCheckError, message
       end
 
       if @config.port.nil?
         message = "You must supply a port!"
-        log(:fatal) { message }
+        config.logger.fatal { message }
         raise TCPSocketCheckError, message
       end
 
       socket = TCPSocket.new(@config.host, @config.port)
 
       if @config.data.nil?
-        log(:debug) { "read(#{@config.host}:#{@config.port})" }
+        config.logger.debug { "read(#{@config.host}:#{@config.port})" }
         ((IO.select([socket], nil, nil, @config.timeout) && socket.gets) ? true : false)
       else
-        log(:debug) { "write(#{@config.host}:#{@config.port}, '#{@config.data}')" }
+        config.logger.debug { "write(#{@config.host}:#{@config.port}, '#{@config.data}')" }
         ((IO.select(nil, [socket], nil, @config.timeout) && socket.write(@config.data)) ? true : false)
       end
 
     rescue Errno::ETIMEDOUT, Errno::ECONNREFUSED, Errno::ECONNRESET, Errno::EHOSTUNREACH => e
-      log(:debug) { "#{@config.host}:#{@config.port} - #{e.message}" }
+      config.logger.debug { "#{@config.host}:#{@config.port} - #{e.message}" }
       false
     ensure
       (socket && socket.close)
@@ -140,16 +140,16 @@ module ZTK
     # @return [Boolean] Returns true or false depending on weither the socket
     #   became ready or not.
     def wait
-      log(:debug) { "waiting for socket to become available; timeout after #{@config.wait} seconds" }
+      config.logger.debug { "waiting for socket to become available; timeout after #{@config.wait} seconds" }
       Timeout.timeout(@config.wait) do
         until ready?
-          log(:debug) { "sleeping 1 second" }
+          config.logger.debug { "sleeping 1 second" }
           sleep(1)
         end
       end
       true
     rescue Timeout::Error => e
-      log(:warn) { "socket(#{@config.host}:#{@config.port}) timeout!" }
+      config.logger.warn { "socket(#{@config.host}:#{@config.port}) timeout!" }
       false
     end
 
