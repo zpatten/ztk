@@ -85,7 +85,7 @@ describe ZTK::Logger do
 
     it "should allow writing directly to the log device" do
       data = "Hello World"
-      IO.write(subject.logdev, data)
+      subject.logdev.write(data)
       IO.read(@logfile).match(data).should_not be nil
     end
 
