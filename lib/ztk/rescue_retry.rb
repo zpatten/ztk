@@ -32,24 +32,22 @@ module ZTK
     class << self
 
       def try(options={}, &block)
+        options = Base.build_config({
+          :tries => 1,
+          :on => Exception
+        }.merge(options))
+        options.logger.debug { "options(#{options.inspect})" }
+
         !block_given? and raise RescueRetryError, "You must supply a block!"
-
-        options = { :logger => $logger, :tries => 1, :on => Exception }.merge(options)
-
-        logger = options[:logger]
-        tries = options[:tries]
-        on = options[:on]
-
-        logger and logger.debug { "options(#{options.inspect})" }
 
         begin
           return block.call
-        rescue on => e
-          if ((tries -= 1) > 0)
-            logger and logger.warn { "Caught #{e.inspect}, we will give it #{tries} more tr#{tries > 1 ? 'ies' : 'y'}." }
+        rescue options.on => e
+          if ((options.tries -= 1) > 0)
+            options.logger.warn { "Caught #{e.inspect}, we will give it #{options.tries} more tr#{options.tries > 1 ? 'ies' : 'y'}." }
             retry
           else
-            logger and logger.fatal { "Caught #{e.inspect}, sorry, we have to give up now." }
+            options.logger.fatal { "Caught #{e.inspect}, sorry, we have to give up now." }
             raise e
           end
         end

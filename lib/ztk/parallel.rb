@@ -76,12 +76,13 @@ module ZTK
     # @option config [Integer] :max_forks Maximum number of forks to use.
     # @option config [Proc] :before_fork (nil) Proc to call before forking.
     # @option config [Proc] :after_fork (nil) Proc to call after forking.
-    def initialize(config={})
+    def initialize(configuration={})
       super({
         :max_forks => MAX_FORKS
-      }.merge(config))
+      }.merge(configuration))
+      config.logger.debug { "config(#{config.inspect})" }
 
-      raise ParallelError, "max_forks must be equal to or greater than one!" if @config.max_forks < 1
+      raise ParallelError, "max_forks must be equal to or greater than one!" if config.max_forks < 1
 
       @forks = Array.new
       @results = Array.new
@@ -99,16 +100,16 @@ module ZTK
 
       config.logger.debug { "forks(#{@forks.inspect})" }
 
-      while (@forks.count >= @config.max_forks) do
+      while (@forks.count >= config.max_forks) do
         wait
       end
 
       child_reader, parent_writer = IO.pipe
       parent_reader, child_writer = IO.pipe
 
-      @config.before_fork and @config.before_fork.call(Process.pid)
+      config.before_fork and config.before_fork.call(Process.pid)
       pid = Process.fork do
-        @config.after_fork and @config.after_fork.call(Process.pid)
+        config.after_fork and config.after_fork.call(Process.pid)
 
         parent_writer.close
         parent_reader.close
@@ -122,7 +123,7 @@ module ZTK
         child_writer.close
         Process.exit!(0)
       end
-      @config.after_fork and @config.after_fork.call(Process.pid)
+      config.after_fork and config.after_fork.call(Process.pid)
 
       child_reader.close
       child_writer.close

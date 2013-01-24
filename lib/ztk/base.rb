@@ -35,26 +35,61 @@ module ZTK
   # and extend functionality as appropriate.
   class Base
 
+    class << self
+
+      # @param [Hash] config Configuration options hash.
+      # @option config [IO] :stdout Instance of IO to be used for STDOUT.
+      # @option config [IO] :stderr Instance of IO to be used for STDERR.
+      # @option config [IO] :stdin Instance of IO to be used for STDIN.
+      # @option config [Logger] :logger Instance of Logger to be used for logging.
+      def build_config(configuration={})
+        if configuration.is_a?(OpenStruct)
+          configuration = configuration.send(:table)
+        end
+
+        rails_logger = Rails.logger if defined?(Rails)
+
+        config = OpenStruct.new({
+          :stdout => $stdout,
+          :stderr => $stderr,
+          :stdin => $stdin,
+          :logger => ($logger || rails_logger || ZTK::Logger.new("/dev/null"))
+        }.merge(configuration))
+
+        (config.stdout && config.stdout.respond_to?(:sync=)) and config.stdout.sync = true
+        (config.stderr && config.stderr.respond_to?(:sync=)) and config.stderr.sync = true
+        (config.stdin  && config.stdin.respond_to?(:sync=))  and config.stdin.sync = true
+        (config.logger && config.logger.respond_to?(:sync=)) and config.logger.sync = true
+
+        config
+      end
+
+      # Removes all key-value pairs which are not core so values do not bleed
+      # into classes they are not meant for.
+      #
+      # This method will leave :stdout, :stderr, :stdin and :logger key-values
+      # intact, while removing all other key-value pairs.
+      def sanitize_config(configuration={})
+        if configuration.is_a?(OpenStruct)
+          configuration = configuration.send(:table)
+        end
+
+        config = configuration.reject do |key,value|
+          !(%w(stdout stderr stdin logger).map(&:to_sym).include?(key))
+        end
+
+        config
+      end
+
+    end
+
     # @param [Hash] config Configuration options hash.
     # @option config [IO] :stdout Instance of IO to be used for STDOUT.
     # @option config [IO] :stderr Instance of IO to be used for STDERR.
     # @option config [IO] :stdin Instance of IO to be used for STDIN.
     # @option config [Logger] :logger Instance of Logger to be used for logging.
     def initialize(config={})
-      # defined?(Rails) and rails_logger = Rails.logger
-      @config = OpenStruct.new({
-        :stdout => $stdout,
-        :stderr => $stderr,
-        :stdin => $stdin,
-        :logger => ($logger || ZTK::Logger.new("/dev/null"))
-      }.merge(config))
-
-      (@config.stdout && @config.stdout.respond_to?(:sync=)) and @config.stdout.sync = true
-      (@config.stderr && @config.stderr.respond_to?(:sync=)) and @config.stderr.sync = true
-      (@config.stdin  && @config.stdin.respond_to?(:sync=))  and @config.stdin.sync = true
-      (@config.logger && @config.logger.respond_to?(:sync=)) and @config.logger.sync = true
-
-      @config.logger.debug { "config(#{@config.inspect})" }
+      @config = Base.build_config(config)
     end
 
     # Configuration OpenStruct accessor method.
@@ -93,8 +128,10 @@ module ZTK
       elsif (@config.logger.level <= ZTK::Logger.const_get(log_level.to_s.upcase))
         if @config.logger.respond_to?(:logdev)
           @config.logger.logdev.write(yield)
+          @config.logger.logdev.respond_to?(:flush) and @config.logger.logdev.flush
         else
           @config.logger.instance_variable_get(:@logdev).instance_variable_get(:@dev).write(yield)
+          @config.logger.instance_variable_get(:@logdev).instance_variable_get(:@dev).respond_to?(:flush) and @config.logger.instance_variable_get(:@logdev).instance_variable_get(:@dev).flush
         end
       end
     end

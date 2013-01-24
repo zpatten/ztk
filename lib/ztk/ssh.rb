@@ -101,13 +101,14 @@ module ZTK
     #   authentication.
     # @option config [String, Array<String>] :proxy_keys A single or series of
     #   identity files to use for authentication with the proxy.
-    def initialize(config={})
+    def initialize(configuration={})
       super({
         :forward_agent => true,
         :compression => false,
-        :user_known_hosts_file => '/dev/null'
+        :user_known_hosts_file => '/dev/null',
         :timeout => 60
-      }.merge(config))
+      }.merge(configuration))
+      config.logger.debug { "config(#{config.inspect})" }
     end
 
     def inspect

@@ -34,30 +34,27 @@ module ZTK
     class << self
 
       def bench(options={}, &block)
+        options = Base.build_config(options)
+        options.logger.debug { "options(#{options.inspect})" }
+
         !block_given? and raise BenchmarkError, "You must supply a block!"
 
-        options = { :stdout => STDOUT, :logger => $logger, :message => nil, :mark => nil }.merge(options)
+        check = [options.message, options.mark]
+        (check.any?{ |z| !z.nil? } && !check.all?{ |z| !z.nil? }) and raise BenchmarkError, "You must supply a message and a mark together!"
 
-        stdout = options[:stdout]
-        logger = options[:logger]
-        message = options[:message]
-        mark = options[:mark]
-
-        logger and logger.debug { options.inspect }
-
-        (!message.nil? && !mark.nil?) and stdout.print("#{message} ")
+        (options.message && options.mark) and options.stdout.print("#{options.message} ")
         benchmark = ::Benchmark.realtime do
-          if message.nil?
-            yield
-          else
-            ZTK::Spinner.spin do
+          if (options.message && options.mark)
+            ZTK::Spinner.spin(Base.sanitize_config(options)) do
               yield
             end
+          else
+            yield
           end
         end
 
-        (!message.nil? && !mark.nil?) and stdout.print("#{mark}\n" % benchmark)
-        logger and logger.info { "#{message} #{mark}" }
+        (options.message && options.mark) and options.stdout.print("#{options.mark}\n" % benchmark)
+        options.logger.info { "#{options.message} #{options.mark}" }
 
         benchmark
       end

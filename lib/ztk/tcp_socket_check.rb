@@ -90,11 +90,12 @@ module ZTK
     # @option config [Integer] :timeout (5) Set the IO select timeout.
     # @option config [Integer] :wait (60) Set the amount of time before the wait
     #   method call will timeout.
-    def initialize(config={})
+    def initialize(configuration={})
       super({
         :timeout => 5,
         :wait => 60
-      }.merge(config))
+      }.merge(configuration))
+      config.logger.debug { "config(#{config.inspect})" }
     end
 
     # Check to see if socket on the host and port specified is ready.  This
@@ -104,30 +105,30 @@ module ZTK
     # @return [Boolean] Returns true or false depending on weither the socket
     #   is ready or not.
     def ready?
-      if @config.host.nil?
+      if config.host.nil?
         message = "You must supply a host!"
         config.logger.fatal { message }
         raise TCPSocketCheckError, message
       end
 
-      if @config.port.nil?
+      if config.port.nil?
         message = "You must supply a port!"
         config.logger.fatal { message }
         raise TCPSocketCheckError, message
       end
 
-      socket = TCPSocket.new(@config.host, @config.port)
+      socket = TCPSocket.new(config.host, config.port)
 
-      if @config.data.nil?
-        config.logger.debug { "read(#{@config.host}:#{@config.port})" }
-        ((IO.select([socket], nil, nil, @config.timeout) && socket.gets) ? true : false)
+      if config.data.nil?
+        config.logger.debug { "read(#{config.host}:#{config.port})" }
+        ((IO.select([socket], nil, nil, config.timeout) && socket.gets) ? true : false)
       else
-        config.logger.debug { "write(#{@config.host}:#{@config.port}, '#{@config.data}')" }
-        ((IO.select(nil, [socket], nil, @config.timeout) && socket.write(@config.data)) ? true : false)
+        config.logger.debug { "write(#{config.host}:#{config.port}, '#{config.data}')" }
+        ((IO.select(nil, [socket], nil, config.timeout) && socket.write(config.data)) ? true : false)
       end
 
     rescue Errno::ETIMEDOUT, Errno::ECONNREFUSED, Errno::ECONNRESET, Errno::EHOSTUNREACH => e
-      config.logger.debug { "#{@config.host}:#{@config.port} - #{e.message}" }
+      config.logger.debug { "#{config.host}:#{config.port} - #{e.message}" }
       false
     ensure
       (socket && socket.close)
@@ -140,8 +141,8 @@ module ZTK
     # @return [Boolean] Returns true or false depending on weither the socket
     #   became ready or not.
     def wait
-      config.logger.debug { "waiting for socket to become available; timeout after #{@config.wait} seconds" }
-      Timeout.timeout(@config.wait) do
+      config.logger.debug { "waiting for socket to become available; timeout after #{config.wait} seconds" }
+      Timeout.timeout(config.wait) do
         until ready?
           config.logger.debug { "sleeping 1 second" }
           sleep(1)
@@ -149,7 +150,7 @@ module ZTK
       end
       true
     rescue Timeout::Error => e
-      config.logger.warn { "socket(#{@config.host}:#{@config.port}) timeout!" }
+      config.logger.warn { "socket(#{config.host}:#{config.port}) timeout!" }
       false
     end
 

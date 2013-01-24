@@ -36,15 +36,22 @@ module ZTK
 
     class << self
 
-      def spin(stdout=STDOUT)
+      def spin(options={}, &block)
+        options = Base.build_config({
+          :sleep => 0.1
+        }.merge(options))
+        options.logger.debug { "options(#{options.inspect})" }
+
+        !block_given? and raise SpinnerError, "You must supply a block!"
+
         charset = %w( | / - \\ )
         count = 0
         spinner = Thread.new do
           while count do
-            stdout.print(charset[(count += 1) % charset.length])
-            stdout.print("\b")
-            stdout.respond_to?(:flush) and stdout.flush
-            sleep(0.1)
+            options.stdout.print(charset[(count += 1) % charset.length])
+            options.stdout.print("\b")
+            options.stdout.respond_to?(:flush) and options.stdout.flush
+            sleep(options.sleep)
           end
         end
         yield.tap do

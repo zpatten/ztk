@@ -41,10 +41,11 @@ module ZTK
   # @author Zachary Patten <zachary@jovelabs.net>
   class Command < ZTK::Base
 
-    def initialize(config={})
+    def initialize(configuration={})
       super({
         :timeout => 600
-      }.merge(config))
+      }.merge(configuration))
+      config.logger.debug { "config(#{config.inspect})" }
     end
 
     def inspect
