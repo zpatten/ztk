@@ -19,6 +19,7 @@
 ################################################################################
 
 require "ostruct"
+require "timeout"
 
 module ZTK
 
@@ -86,6 +87,8 @@ module ZTK
       parent_stdout_reader, child_stdout_writer = IO.pipe
       parent_stderr_reader, child_stderr_writer = IO.pipe
 
+      start_time = Time.now.utc
+
       pid = Process.fork do
         parent_stdout_reader.close
         parent_stderr_reader.close
@@ -108,40 +111,50 @@ module ZTK
       direct_log(:debug) { log_header("COMMAND") }
       direct_log(:debug) { "#{command}\n" }
       direct_log(:debug) { log_header("STARTED") }
-      loop do
-        break if reader_writer_map.keys.all?{ |reader| reader.eof? }
 
-        sockets = IO.select(reader_writer_map.keys).first
-        sockets.each do |socket|
-          data = socket.read
-          next if (data.nil? || data.empty?)
+      begin
+        Timeout.timeout(config.timeout) do
+          loop do
+            pipes = IO.select(reader_writer_map.keys, [], reader_writer_map.keys).first
+            pipes.each do |pipe|
+              data = pipe.read
+              next if (data.nil? || data.empty?)
 
-          case reader_writer_key[socket]
-          when :stdout then
-            if !stdout_header
-              direct_log(:debug) { log_header("STDOUT") }
-              stdout_header = true
-              stderr_header = false
+              case reader_writer_key[pipe]
+              when :stdout then
+                if !stdout_header
+                  direct_log(:debug) { log_header("STDOUT") }
+                  stdout_header = true
+                  stderr_header = false
+                end
+                reader_writer_map[pipe].write(data) unless options.silence
+                direct_log(:debug) { data }
+
+              when :stderr then
+                if !stderr_header
+                  direct_log(:warn) { log_header("STDERR") }
+                  stderr_header = true
+                  stdout_header = false
+                end
+                reader_writer_map[pipe].write(data) unless options.silence
+                direct_log(:warn) { data }
+              end
+
+              output += data
             end
-            reader_writer_map[socket].write(data) unless options.silence
-            direct_log(:debug) { data }
-
-          when :stderr then
-            if !stderr_header
-              direct_log(:warn) { log_header("STDERR") }
-              stderr_header = true
-              stdout_header = false
-            end
-            reader_writer_map[socket].write(data) unless options.silence
-            direct_log(:warn) { data }
+            break if reader_writer_map.keys.all?{ |reader| reader.eof? }
           end
-
-          output += data
         end
+      rescue Timeout::Error => e
+        direct_log(:debug) { log_header("TIMEOUT") }
+
+        message = "Process timed out!"
+        config.logger.fatal { message }
+        raise CommandError, message
       end
-      direct_log(:debug) { log_header("STOPPED") }
 
       Process.waitpid(pid)
+      direct_log(:debug) { log_header("STOPPED") }
 
       parent_stdout_reader.close
       parent_stderr_reader.close
