@@ -157,11 +157,11 @@ module ZTK
     end
 
     def upload(*args)
-      raise CommandError, "Not Implemented"
+      raise CommandError, "Not Supported"
     end
 
     def download(*args)
-      raise CommandError, "Not Implemented"
+      raise CommandError, "Not Supported"
     end
 
   end
