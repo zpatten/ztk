@@ -42,7 +42,9 @@ module ZTK
   class Command < ZTK::Base
 
     def initialize(config={})
-      super(config)
+      super({
+        :timeout => 600
+      }.merge(config))
     end
 
     def inspect

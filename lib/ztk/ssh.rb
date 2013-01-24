@@ -106,6 +106,7 @@ module ZTK
         :forward_agent => true,
         :compression => false,
         :user_known_hosts_file => '/dev/null'
+        :timeout => 60
       }.merge(config))
     end
 
