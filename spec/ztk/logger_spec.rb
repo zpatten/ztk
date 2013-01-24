@@ -32,6 +32,9 @@ describe ZTK::Logger do
       :fatal => "This is a test fatal message"
     }
     @logfile = "/tmp/test.log"
+  end
+
+  before(:each) do
     File.exists?(@logfile) && File.delete(@logfile)
   end
 
@@ -80,7 +83,7 @@ describe ZTK::Logger do
 
   describe "log message" do
 
-    before(:all) do
+    before(:each) do
       subject.debug { @messages[:debug] }
     end
 
