@@ -40,7 +40,7 @@ module ZTK
         tries = options[:tries]
         on = options[:on]
 
-        logger and logger.debug { options.inspect }
+        logger and logger.debug { "options(#{options.inspect})" }
 
         begin
           return block.call
