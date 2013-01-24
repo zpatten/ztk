@@ -63,36 +63,174 @@ describe ZTK::SSH do
     # this stuff doesn't work as is under travis-ci
     if !ENV['CI'] && !ENV['TRAVIS']
 
-      describe "behaviour" do
+      describe "direct behaviour" do
 
-        it "should be able to connect to 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
-          stdout = StringIO.new
-          subject.config do |config|
-            config.stdout = stdout
-            config.user = ENV["USER"]
-            config.host_name = "127.0.0.1"
+        describe "execute" do
+
+          it "should be able to connect to 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
+            stdout, stderr = StringIO.new, StringIO.new
+            subject.config do |config|
+              config.stdout = stdout
+              config.stderr = stderr
+              config.user = ENV["USER"]
+              config.host_name = "127.0.0.1"
+            end
+
+            data = %x(hostname -f).chomp
+
+            status = subject.exec("hostname -f")
+            status.exit.exitstatus.should == 0
+            stdout.rewind
+            stdout.read.chomp.should == data
           end
-          hostname = %x( hostname -f ).chomp
-          status = subject.exec("hostname -f")
-          status.exit.exitstatus.should == 0
-          stdout.rewind
-          stdout.read.chomp.should == hostname
+
         end
 
-        it "should be able to proxy through 127.0.0.1, connecting to 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
-          stdout = StringIO.new
-          subject.config do |config|
-            config.stdout = stdout
-            config.user = ENV["USER"]
-            config.host_name = "127.0.0.1"
-            config.proxy_user = ENV["USER"]
-            config.proxy_host_name = "127.0.0.1"
+        describe "upload" do
+
+          it "should be able to upload a file to 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
+            stdout, stderr = StringIO.new, StringIO.new
+            subject.config do |config|
+              config.stdout = stdout
+              config.stderr = stderr
+              config.user = ENV["USER"]
+              config.host_name = "127.0.0.1"
+            end
+
+            data = "Hello World"
+
+            remote_file = File.join("/tmp", "ssh-upload-remote")
+            File.exists?(remote_file) && File.delete(remote_file)
+
+            local_file = File.join("/tmp", "ssh-upload-local")
+            IO.write(local_file, data)
+
+            File.exists?(remote_file).should == false
+            subject.upload(local_file, remote_file)
+            File.exists?(remote_file).should == true
+
+            File.exists?(remote_file) && File.delete(remote_file)
+            File.exists?(local_file) && File.delete(local_file)
           end
-          hostname = %x( hostname -f ).chomp
-          status = subject.exec("hostname -f")
-          status.exit.exitstatus.should == 0
-          stdout.rewind
-          stdout.read.chomp.should == hostname
+
+        end
+
+        describe "download" do
+
+          it "should be able to download a file from 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
+            stdout, stderr = StringIO.new, StringIO.new
+            subject.config do |config|
+              config.stdout = stdout
+              config.stderr = stderr
+              config.user = ENV["USER"]
+              config.host_name = "127.0.0.1"
+            end
+
+            data = "Hello World"
+
+            local_file = File.join("/tmp", "ssh-download-local")
+            File.exists?(local_file) && File.delete(local_file)
+
+            remote_file = File.join("/tmp", "ssh-download-remote")
+            IO.write(remote_file, data)
+
+            File.exists?(local_file).should == false
+            subject.download(remote_file, local_file)
+            File.exists?(local_file).should == true
+
+            File.exists?(local_file) && File.delete(local_file)
+            File.exists?(remote_file) && File.delete(remote_file)
+          end
+
+        end
+
+      end
+
+      describe "proxy behaviour" do
+
+        describe "execute" do
+
+          it "should be able to proxy through 127.0.0.1, connecting to 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
+            stdout, stderr = StringIO.new, StringIO.new
+            subject.config do |config|
+              config.stdout = stdout
+              config.stderr = stderr
+              config.user = ENV["USER"]
+              config.host_name = "127.0.0.1"
+              config.proxy_user = ENV["USER"]
+              config.proxy_host_name = "127.0.0.1"
+            end
+
+            data = %x( hostname -f ).chomp
+
+            status = subject.exec("hostname -f")
+            status.exit.exitstatus.should == 0
+            stdout.rewind
+            stdout.read.chomp.should == data
+          end
+
+        end
+
+        describe "upload" do
+
+          it "should be able to upload a file to 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
+            stdout, stderr = StringIO.new, StringIO.new
+            subject.config do |config|
+              config.stdout = stdout
+              config.stderr = stderr
+              config.user = ENV["USER"]
+              config.host_name = "127.0.0.1"
+              config.proxy_user = ENV["USER"]
+              config.proxy_host_name = "127.0.0.1"
+            end
+
+            data = "Hello World"
+
+            remote_file = File.join("/tmp", "ssh-upload-remote")
+            File.exists?(remote_file) && File.delete(remote_file)
+
+            local_file = File.join("/tmp", "ssh-upload-local")
+            IO.write(local_file, data)
+
+            File.exists?(remote_file).should == false
+            subject.upload(local_file, remote_file)
+            File.exists?(remote_file).should == true
+
+            File.exists?(remote_file) && File.delete(remote_file)
+            File.exists?(local_file) && File.delete(local_file)
+          end
+
+        end
+
+        describe "download" do
+
+          it "should be able to download a file from 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
+            stdout, stderr = StringIO.new, StringIO.new
+            subject.config do |config|
+              config.stdout = stdout
+              config.stderr = stderr
+              config.user = ENV["USER"]
+              config.host_name = "127.0.0.1"
+              config.proxy_user = ENV["USER"]
+              config.proxy_host_name = "127.0.0.1"
+            end
+
+            data = "Hello World"
+
+            local_file = File.join("/tmp", "ssh-download-local")
+            File.exists?(local_file) && File.delete(local_file)
+
+            remote_file = File.join("/tmp", "ssh-download-remote")
+            IO.write(remote_file, data)
+
+            File.exists?(local_file).should == false
+            subject.download(remote_file, local_file)
+            File.exists?(local_file).should == true
+
+            File.exists?(local_file) && File.delete(local_file)
+            File.exists?(remote_file) && File.delete(remote_file)
+          end
+
         end
 
       end
