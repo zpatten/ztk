@@ -175,6 +175,14 @@ module ZTK
     #   end
     #   puts ssh.exec("hostname -f").inspect
     def exec(command, options={})
+
+      def log_header(tag)
+        count = 8
+        sep = ("=" * count)
+        header = [sep, "[ #{tag} ]", sep, "[ #{self.inspect} ]", sep, "[ #{tag} ]", sep].join
+        "#{header}\n"
+      end
+
       log(:debug) { "config(#{@config.inspect})" }
       log(:info) { "exec(#{command.inspect}, #{options.inspect})" }
 
@@ -190,14 +198,14 @@ module ZTK
 
         channel = ssh.open_channel do |chan|
           log(:debug) { "Channel opened." }
-          direct_log(:debug) { "===[OPENED]===[OPENED]===[#{self.inspect}]===[OPENED]===[OPENED]===\n" }
+          direct_log(:debug) { log_header("OPENED") }
 
           chan.exec(command) do |ch, success|
             raise SSHError, "Could not execute '#{command}'." unless success
 
             ch.on_data do |c, data|
               if !stdout_header
-                direct_log(:debug) { "===[STDOUT]===[STDOUT]===[#{self.inspect}]===[STDOUT]===[STDOUT]===\n" }
+                direct_log(:debug) { log_header("STDOUT") }
                 stdout_header = true
                 stderr_header = false
               end
@@ -209,11 +217,11 @@ module ZTK
 
             ch.on_extended_data do |c, type, data|
               if !stderr_header
-                direct_log(:debug) { "===[STDERR]===[STDERR]===[#{self.inspect}]===[STDERR]===[STDERR]===\n" }
+                direct_log(:warn) { log_header("STDERR") }
                 stderr_header = true
                 stdout_header = false
               end
-              direct_log(:debug) { data }
+              direct_log(:warn) { data }
 
               @config.stderr.print(data) unless options.silence
               output += data
@@ -227,7 +235,7 @@ module ZTK
         end
         channel.wait
 
-        direct_log(:debug) { "===[CLOSED]===[CLOSED]===[#{self.inspect}]===[CLOSED]===[CLOSED]===\n" }
+        direct_log(:debug) { log_header("CLOSED") }
         log(:debug) { "Channel closed." }
       end
 

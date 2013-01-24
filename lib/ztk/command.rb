@@ -64,6 +64,14 @@ module ZTK
     #   cmd = ZTK::Command.new
     #   puts cmd.exec("hostname -f").inspect
     def exec(command, options={})
+
+      def log_header(tag)
+        count = 8
+        sep = ("=" * count)
+        header = [sep, "[ #{tag} ]", sep, "[ #{self.inspect} ]", sep, "[ #{tag} ]", sep].join
+        "#{header}\n"
+      end
+
       options = OpenStruct.new({ :exit_code => 0, :silence => false }.merge(options))
       log(:debug) { "options(#{options.inspect})" }
       log(:debug) { "command(#{command.inspect})" }
@@ -94,7 +102,7 @@ module ZTK
       reader_writer_key = {parent_stdout_reader => :stdout, parent_stderr_reader => :stderr}
       reader_writer_map = {parent_stdout_reader => @config.stdout, parent_stderr_reader => @config.stderr}
 
-      direct_log(:debug) { "===[STARTED]===[STARTED]===[#{self.inspect}]===[STARTED]===[STARTED]===\n" }
+      direct_log(:debug) { log_header("STARTED") }
       loop do
         break if reader_writer_map.keys.all?{ |reader| reader.eof? }
 
@@ -106,26 +114,27 @@ module ZTK
           case reader_writer_key[socket]
           when :stdout then
             if !stdout_header
-              direct_log(:debug) { "===[STDOUT]===[STDOUT]===[#{self.inspect}]===[STDOUT]===[STDOUT]===\n" }
+              direct_log(:debug) { log_header("STDOUT") }
               stdout_header = true
               stderr_header = false
             end
             reader_writer_map[socket].write(data) unless options.silence
+            direct_log(:debug) { data }
 
           when :stderr then
             if !stderr_header
-              direct_log(:debug) { "===[STDERR]===[STDERR]===[#{self.inspect}]===[STDERR]===[STDERR]===\n" }
+              direct_log(:warn) { log_header("STDERR") }
               stderr_header = true
               stdout_header = false
             end
             reader_writer_map[socket].write(data) unless options.silence
+            direct_log(:warn) { data }
           end
 
-          direct_log(:debug) { data }
           output += data
         end
       end
-      direct_log(:debug) { "===[FINISHED]===[FINISHED]===[#{self.inspect}]===[FINISHED]===[FINISHED]===\n" }
+      direct_log(:debug) { log_header("STOPPED") }
 
       Process.waitpid(pid)
 
