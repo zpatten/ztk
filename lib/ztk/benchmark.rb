@@ -33,9 +33,20 @@ module ZTK
 
     class << self
 
-      def bench(message=nil, stdout=STDOUT)
-        !message.nil? and print("#{message} ")
-        mark = ::Benchmark.realtime do
+      def bench(options={}, &block)
+        !block_given? and raise BenchmarkError, "You must supply a block!"
+
+        options = { :stdout => STDOUT, :logger => $logger, :message => nil, :mark => nil }.merge(options)
+
+        stdout = options[:stdout]
+        logger = options[:logger]
+        message = options[:message]
+        mark = options[:mark]
+
+        logger and logger.debug { options.inspect }
+
+        (!message.nil? && !mark.nil?) and stdout.print("#{message} ")
+        benchmark = ::Benchmark.realtime do
           if message.nil?
             yield
           else
@@ -44,9 +55,11 @@ module ZTK
             end
           end
         end
-        !message.nil? and puts("completed in %0.4f seconds.\n" % mark)
 
-        mark
+        (!message.nil? && !mark.nil?) and stdout.print("#{mark}\n" % benchmark)
+        logger and logger.info { "#{message} #{mark}" }
+
+        benchmark
       end
 
     end
