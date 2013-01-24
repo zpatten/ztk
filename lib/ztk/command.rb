@@ -65,10 +65,10 @@ module ZTK
     #   puts cmd.exec("hostname -f").inspect
     def exec(command, options={})
 
-      def log_header(tag, command)
+      def log_header(tag)
         count = 8
         sep = ("=" * count)
-        header = [sep, "[ #{tag} ]", sep, "[ #{self.inspect} ]", sep, "[ #{command} ]", sep, "[ #{tag} ]", sep].join
+        header = [sep, "[ #{tag} ]", sep, "[ #{self.inspect} ]", sep, "[ #{tag} ]", sep].join
         "#{header}\n"
       end
 
@@ -102,7 +102,9 @@ module ZTK
       reader_writer_key = {parent_stdout_reader => :stdout, parent_stderr_reader => :stderr}
       reader_writer_map = {parent_stdout_reader => @config.stdout, parent_stderr_reader => @config.stderr}
 
-      direct_log(:debug) { log_header("STARTED", command) }
+      direct_log(:debug) { log_header("COMMAND") }
+      direct_log(:debug) { "#{command}\n" }
+      direct_log(:debug) { log_header("STARTED") }
       loop do
         break if reader_writer_map.keys.all?{ |reader| reader.eof? }
 
@@ -114,7 +116,7 @@ module ZTK
           case reader_writer_key[socket]
           when :stdout then
             if !stdout_header
-              direct_log(:debug) { log_header("STDOUT", command) }
+              direct_log(:debug) { log_header("STDOUT") }
               stdout_header = true
               stderr_header = false
             end
@@ -123,7 +125,7 @@ module ZTK
 
           when :stderr then
             if !stderr_header
-              direct_log(:warn) { log_header("STDERR", command) }
+              direct_log(:warn) { log_header("STDERR") }
               stderr_header = true
               stdout_header = false
             end
@@ -134,7 +136,7 @@ module ZTK
           output += data
         end
       end
-      direct_log(:debug) { log_header("STOPPED", command) }
+      direct_log(:debug) { log_header("STOPPED") }
 
       Process.waitpid(pid)
 
