@@ -94,8 +94,12 @@ module ZTK
 
       if !block_given?
         raise BaseError, "You must supply a block to the log method!"
-      elsif (@config.logger.level == ZTK::Logger.const_get(log_level.to_s.upcase))
-        @config.logger and @config.logger.instance_variable_get(:@logdev).instance_variable_get(:@dev).write(yield)
+      elsif (@config.logger.level <= ZTK::Logger.const_get(log_level.to_s.upcase))
+        if @config.logger.respond_to?(:logdev)
+          @config.logger.logdev.write(yield)
+        else
+          @config.logger.instance_variable_get(:@logdev).instance_variable_get(:@dev).write(yield)
+        end
       end
     end
 
