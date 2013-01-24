@@ -45,6 +45,11 @@ module ZTK
       super(config)
     end
 
+    def inspect
+      @hostname ||= %x(hostname -f).chomp
+      "#{ENV['USER']}@#{@hostname}"
+    end
+
     # Executes a local command.
     #
     # @param [String] command The command to execute.
@@ -60,9 +65,12 @@ module ZTK
     #   puts cmd.exec("hostname -f").inspect
     def exec(command, options={})
       options = OpenStruct.new({ :exit_code => 0, :silence => false }.merge(options))
-      log(:debug) { "config(#{@config.inspect})" }
       log(:debug) { "options(#{options.inspect})" }
       log(:debug) { "command(#{command.inspect})" }
+
+      output = ""
+      stdout_header = false
+      stderr_header = false
 
       parent_stdout_reader, child_stdout_writer = IO.pipe
       parent_stderr_reader, child_stderr_writer = IO.pipe
@@ -83,14 +91,43 @@ module ZTK
       child_stdout_writer.close
       child_stderr_writer.close
 
+      reader_writer_key = {parent_stdout_reader => :stdout, parent_stderr_reader => :stderr}
+      reader_writer_map = {parent_stdout_reader => @config.stdout, parent_stderr_reader => @config.stderr}
+
+      direct_log(:debug) { "===[STARTED]===[STARTED]===[#{self.inspect}]===[STARTED]===[STARTED]===\n" }
+      loop do
+        break if reader_writer_map.keys.all?{ |reader| reader.eof? }
+
+        sockets = IO.select(reader_writer_map.keys).first
+        sockets.each do |socket|
+          data = socket.read
+          next if (data.nil? || data.empty?)
+
+          case reader_writer_key[socket]
+          when :stdout then
+            if !stdout_header
+              direct_log(:debug) { "===[STDOUT]===[STDOUT]===[#{self.inspect}]===[STDOUT]===[STDOUT]===\n" }
+              stdout_header = true
+              stderr_header = false
+            end
+            reader_writer_map[socket].write(data) unless options.silence
+
+          when :stderr then
+            if !stderr_header
+              direct_log(:debug) { "===[STDERR]===[STDERR]===[#{self.inspect}]===[STDERR]===[STDERR]===\n" }
+              stderr_header = true
+              stdout_header = false
+            end
+            reader_writer_map[socket].write(data) unless options.silence
+          end
+
+          direct_log(:debug) { data }
+          output += data
+        end
+      end
+      direct_log(:debug) { "===[FINISHED]===[FINISHED]===[#{self.inspect}]===[FINISHED]===[FINISHED]===\n" }
+
       Process.waitpid(pid)
-
-      stdout = parent_stdout_reader.read
-      stderr = parent_stderr_reader.read
-      output = (stdout || '') + (stderr || '')
-
-      @config.stdout.write(stdout) unless options.silence
-      @config.stderr.write(stderr) unless options.silence
 
       parent_stdout_reader.close
       parent_stderr_reader.close
