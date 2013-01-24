@@ -110,9 +110,20 @@ module ZTK
     end
 
     def inspect
+      tags = Array.new
+
+      if @config.proxy_host_name
+        proxy_user_host = "#{@config.proxy_user}@#{@config.proxy_host_name}"
+        proxy_port = (@config.proxy_port ? ":#{@config.proxy_port}" : nil)
+        tags << [proxy_user_host, proxy_port].compact.join
+        tags << " >>> "
+      end
+
       user_host = "#{@config.user}@#{@config.host_name}"
       port = (@config.port ? ":#{@config.port}" : nil)
-      [user_host, port].compact.join
+      tags << [user_host, port].compact.join
+
+      tags.join.strip
     end
 
     # Starts an SSH session.  Can also be used to get the Net::SSH object.
@@ -198,6 +209,9 @@ module ZTK
 
         channel = ssh.open_channel do |chan|
           log(:debug) { "Channel opened." }
+
+          direct_log(:debug) { log_header("COMMAND") }
+          direct_log(:debug) { "#{command}\n" }
           direct_log(:debug) { log_header("OPENED") }
 
           chan.exec(command) do |ch, success|
