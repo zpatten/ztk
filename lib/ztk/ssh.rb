@@ -196,7 +196,7 @@ module ZTK
         "#{header}\n"
       end
 
-      options = OpenStruct.new({ :silence => false }.merge(options))
+      options = OpenStruct.new({ :exit_code => 0, :silence => false }.merge(options))
 
       config.logger.debug { "config(#{config.inspect})" }
       config.logger.debug { "options(#{options.inspect})" }
@@ -256,7 +256,18 @@ module ZTK
         config.logger.debug { "Channel closed." }
       end
 
-      OpenStruct.new(:output => output, :exit => $?)
+      if RUBY_VERSION >= "1.9"
+        exit_code = $?.exitstatus
+      else
+        exit_code = $?
+      end
+
+      config.logger.debug { "exit_code(#{exit_code})" }
+
+      if (exit_code != options.exit_code)
+        log_and_raise(SSHError, "exec(#{command.inspect}, #{options.inspect}) failed! [#{exit_code}]")
+      end
+      OpenStruct.new(:output => output, :exit_code => exit_code)
     end
 
     # Uploads a local file to a remote host.
