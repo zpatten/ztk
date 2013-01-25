@@ -46,7 +46,7 @@ module ZTK
       super({
         :timeout => 600
       }.merge(configuration))
-      config.logger.debug { "config(#{config.inspect})" }
+      config.logger.debug { "config=#{config.send(:table).inspect}" }
     end
 
     def inspect
@@ -78,8 +78,8 @@ module ZTK
 
       options = OpenStruct.new({ :exit_code => 0, :silence => false }.merge(options))
 
-      config.logger.debug { "config(#{config.inspect})" }
-      config.logger.debug { "options(#{options.inspect})" }
+      config.logger.debug { "config=#{config.send(:table).inspect}" }
+      config.logger.debug { "options=#{options.send(:table).inspect}" }
       config.logger.info { "command(#{command.inspect})" }
 
       output = ""

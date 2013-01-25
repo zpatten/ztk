@@ -35,7 +35,7 @@ module ZTK
 
       def bench(options={}, &block)
         options = Base.build_config(options)
-        options.logger.debug { "options(#{options.inspect})" }
+        options.logger.debug { "options=#{options.send(:table).inspect}" }
 
         !block_given? and Base.log_and_raise(options.logger, BenchmarkError, "You must supply a block!")
 

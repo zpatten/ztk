@@ -108,7 +108,7 @@ module ZTK
         :user_known_hosts_file => '/dev/null',
         :timeout => 60
       }.merge(configuration))
-      config.logger.debug { "config(#{config.inspect})" }
+      config.logger.debug { "config=#{config.send(:table).inspect}" }
     end
 
     def inspect
@@ -160,7 +160,7 @@ module ZTK
     #   end
     #   ssh.console
     def console
-      config.logger.debug { "config(#{config.inspect})" }
+      config.logger.debug { "config=#{config.send(:table).inspect}" }
       config.logger.info { "console(#{console_command.inspect})" }
 
       Kernel.exec(console_command)
@@ -198,9 +198,9 @@ module ZTK
 
       options = OpenStruct.new({ :exit_code => 0, :silence => false }.merge(options))
 
-      config.logger.debug { "config(#{config.inspect})" }
-      config.logger.debug { "options(#{options.inspect})" }
-      config.logger.info { "exec(#{command.inspect}, #{options.inspect})" }
+      config.logger.debug { "config=#{config.send(:table).inspect}" }
+      config.logger.debug { "options=#{options.send(:table).inspect}" }
+      config.logger.info { "exec(#{command.inspect})" }
 
       output = ""
       exit_code = nil
@@ -297,7 +297,7 @@ module ZTK
     #   remote = File.expand_path(File.join("/tmp", "id_rsa.pub"))
     #   ssh.upload(local, remote)
     def upload(local, remote)
-      config.logger.debug { "config(#{config.inspect})" }
+      config.logger.debug { "config=#{config.send(:table).inspect}" }
       config.logger.info { "upload(#{local.inspect}, #{remote.inspect})" }
 
       ZTK::RescueRetry.try(:tries => 3, :on => EOFError) do
@@ -337,7 +337,7 @@ module ZTK
     #   remote = File.expand_path(File.join(ENV["HOME"], ".ssh", "id_rsa.pub"))
     #   ssh.download(remote, local)
     def download(remote, local)
-      config.logger.debug { "config(#{config.inspect})" }
+      config.logger.debug { "config=#{config.send(:table).inspect}" }
       config.logger.info { "download(#{remote.inspect}, #{local.inspect})" }
 
       ZTK::RescueRetry.try(:tries => 3, :on => EOFError) do

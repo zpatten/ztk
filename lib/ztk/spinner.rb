@@ -40,7 +40,7 @@ module ZTK
         options = Base.build_config({
           :sleep => 0.1
         }.merge(options))
-        options.logger.debug { "options(#{options.inspect})" }
+        options.logger.debug { "options(#{options.send(:table).inspect})" }
 
         !block_given? and Base.log_and_raise(options.logger, SpinnerError, "You must supply a block!")
 

@@ -61,6 +61,10 @@ module ZTK
       add(severity, nil, nil, shift, &block)
     end
 
+    def inspect
+      "#<#{self.class} filename=#{@logdev.filename.inspect}>"
+    end
+
 
   private
 

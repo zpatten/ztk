@@ -36,7 +36,7 @@ module ZTK
           :tries => 1,
           :on => Exception
         }.merge(options))
-        options.logger.debug { "options(#{options.inspect})" }
+        options.logger.debug { "options=#{options.send(:table).inspect}" }
 
         !block_given? and Base.log_and_raise(options.logger, RescueRetryError, "You must supply a block!")
 

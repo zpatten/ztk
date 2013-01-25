@@ -95,7 +95,7 @@ module ZTK
         :timeout => 5,
         :wait => 60
       }.merge(configuration))
-      config.logger.debug { "config(#{config.inspect})" }
+      config.logger.debug { "config=#{config.send(:table).inspect}" }
     end
 
     # Check to see if socket on the host and port specified is ready.  This
