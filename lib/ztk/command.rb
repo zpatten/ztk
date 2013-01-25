@@ -155,16 +155,11 @@ module ZTK
       end
 
       Process.waitpid(pid)
+      exit_code = $?.exitstatus
       direct_log(:debug) { log_header("STOPPED") }
 
       parent_stdout_reader.close
       parent_stderr_reader.close
-
-      if RUBY_VERSION >= "1.9"
-        exit_code = $?.exitstatus
-      else
-        exit_code = $?
-      end
 
       config.logger.debug { "exit_code(#{exit_code})" }
 
