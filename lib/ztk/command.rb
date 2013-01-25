@@ -97,8 +97,8 @@ module ZTK
         parent_stdout_reader.close
         parent_stderr_reader.close
 
-        STDOUT.reopen(child_stdout_writer, "a")
-        STDERR.reopen(child_stderr_writer, "a")
+        STDOUT.reopen(child_stdout_writer)
+        STDERR.reopen(child_stderr_writer)
         STDIN.reopen("/dev/null")
 
         child_stdout_writer.close
