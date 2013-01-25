@@ -85,6 +85,36 @@ module ZTK
   # @author Zachary Patten <zachary@jovelabs.net>
   class SSH < ZTK::Base
 
+    EXIT_SIGNALS = {
+      1 => "SIGHUP",
+      2 => "SIGINT",
+      3 => "SIGQUIT",
+      4 => "SIGILL",
+      5 => "SIGTRAP",
+      6 => "SIGABRT",
+      7 => "SIGBUS",
+      8 => "SIGFPE",
+      9 => "SIGKILL",
+      10 => "SIGUSR1",
+      11 => "SIGSEGV",
+      12 => "SIGUSR2",
+      13 => "SIGPIPE",
+      14 => "SIGALRM",
+      15 => "SIGTERM",
+      # 16 unused?
+      17 => "SIGCHLD",
+      18 => "SIGCONT",
+      19 => "SIGSTOP",
+      20 => "SIGTSTP",
+      21 => "SIGTTIN",
+      22 => "SIGTTOU",
+      23 => "SIGURG",
+      24 => "SIGXCPU",
+      25 => "SIGXFSZ",
+      26 => "SIGVTALRM",
+      27 => "SIGPROF"
+    }
+
     # @param [Hash] config Configuration options hash.
     # @option config [String] :host_name Server hostname to connect to.
     # @option config [String] :user Username to use for authentication.
@@ -203,7 +233,7 @@ module ZTK
       config.logger.info { "exec(#{command.inspect})" }
 
       output = ""
-      exit_code = nil
+      exit_code = -1
       exit_signal = nil
       stdout_header = false
       stderr_header = false
@@ -273,10 +303,15 @@ module ZTK
         log_and_raise(SSHError, "Session timed out after #{config.timeout} seconds!")
       end
 
-      config.logger.debug { "exit_code(#{exit_code}), exit_signal(#{exit_signal})" }
+      message = [
+        "exit_code=#{exit_code}",
+        (exit_signal.nil? ? nil : "exit_signal=#{exit_signal} (#{EXIT_SIGNALS[exit_signal]})")
+      ].compact.join(", ")
+
+      config.logger.debug { message }
 
       if (exit_code != options.exit_code)
-        log_and_raise(SSHError, "exec(#{command.inspect}, #{options.inspect}) failed! [#{exit_code}, #{exit_signal}]")
+        log_and_raise(SSHError, message)
       end
       OpenStruct.new(:output => output, :exit_code => exit_code, :exit_signal => exit_signal)
     end
