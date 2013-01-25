@@ -136,6 +136,57 @@ describe ZTK::Command do
         result = subject.exec(%Q{/bin/bash -c 'exit #{data}'}, :exit_code => data)
       end
 
+      describe "stdout" do
+
+        it "should capture STDOUT and send it to the appropriate pipe" do
+          stdout, stderr, stdin = StringIO.new, StringIO.new, StringIO.new
+
+          subject.config do |config|
+            config.stdout = stdout
+            config.stderr = stderr
+            config.stdin = stdin
+          end
+          data = "Hello World @ #{Time.now.utc}"
+
+          subject.exec(%Q{echo "#{data}" -f >&1})
+
+          stdout.rewind
+          stdout.read.match(data).should_not be nil
+
+          stderr.rewind
+          stderr.read.match(data).should be nil
+
+          stdin.rewind
+          stdin.read.match(data).should be nil
+        end
+
+      end
+
+      describe "stderr" do
+
+        it "should capture STDERR and send it to the appropriate pipe" do
+          stdout, stderr, stdin = StringIO.new, StringIO.new, StringIO.new
+
+          subject.config do |config|
+            config.stdout = stdout
+            config.stderr = stderr
+            config.stdin = stdin
+          end
+          data = "Hello World @ #{Time.now.utc}"
+
+          subject.exec(%Q{echo "#{data}" -f >&2})
+
+          stdout.rewind
+          stdout.read.match(data).should be nil
+
+          stderr.rewind
+          stderr.read.match(data).should_not be nil
+
+          stdin.rewind
+          stdin.read.match(data).should be nil
+        end
+      end
+
     end
 
     describe "upload" do
@@ -152,61 +203,6 @@ describe ZTK::Command do
         lambda { subject.download("abc", "123") }.should raise_error
       end
 
-    end
-
-    describe "stdout" do
-
-      it "should capture STDOUT and send it to the appropriate pipe" do
-        stdout = StringIO.new
-        stderr = StringIO.new
-        stdin = StringIO.new
-
-        subject.config do |config|
-          config.stdout = stdout
-          config.stderr = stderr
-          config.stdin = stdin
-        end
-        data = "Hello World @ #{Time.now.utc}"
-
-        subject.exec(%Q{echo "#{data}" -f >&1})
-
-        stdout.rewind
-        stdout.read.match(data).should_not be nil
-
-        stderr.rewind
-        stderr.read.match(data).should be nil
-
-        stdin.rewind
-        stdin.read.match(data).should be nil
-      end
-
-    end
-
-    describe "stderr" do
-
-      it "should capture STDERR and send it to the appropriate pipe" do
-        stdout = StringIO.new
-        stderr = StringIO.new
-        stdin = StringIO.new
-
-        subject.config do |config|
-          config.stdout = stdout
-          config.stderr = stderr
-          config.stdin = stdin
-        end
-        data = "Hello World @ #{Time.now.utc}"
-
-        subject.exec(%Q{echo "#{data}" -f >&2})
-
-        stdout.rewind
-        stdout.read.match(data).should be nil
-
-        stderr.rewind
-        stderr.read.match(data).should_not be nil
-
-        stdin.rewind
-        stdin.read.match(data).should be nil
-      end
     end
 
   end

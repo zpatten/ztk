@@ -62,181 +62,447 @@ describe ZTK::SSH do
 
   end
 
-  # this stuff doesn't work as is under travis-ci
-  if !ENV['CI'] && !ENV['TRAVIS']
+  # this stuff doesn't work as is under travis-ci right now
+  describe "direct SSH behaviour" do
 
-    describe "direct SSH behaviour" do
+    describe "execute" do
 
-      describe "execute" do
+      it "should be able to connect to 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
+        stdout, stderr, stdin = StringIO.new, StringIO.new, StringIO.new
+        subject.config do |config|
+          config.stdout, config.stderr, config.stdin = stdout, stderr, stdin
 
-        it "should be able to connect to 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
-          stdout, stderr = StringIO.new, StringIO.new
+          config.user = ENV["USER"]
+          config.host_name = "127.0.0.1"
+        end
+
+        data = %x(hostname -f).chomp
+
+        status = subject.exec("hostname -f")
+        status.exit_code.should == 0
+        stdout.rewind
+        stdout.read.chomp.should == data
+      end
+
+      it "should timeout after the period specified" do
+        stdout, stderr, stdin = StringIO.new, StringIO.new, StringIO.new
+        subject.config do |config|
+          config.stdout, config.stderr, config.stdin = stdout, stderr, stdin
+
+          config.user = ENV["USER"]
+          config.host_name = "127.0.0.1"
+          config.timeout = WAIT_SMALL
+        end
+        hostname = %x(hostname -f).chomp
+        lambda { subject.exec("hostname -f ; sleep 10") }.should raise_error ZTK::SSHError
+      end
+
+      it "should throw an exception if the exit status is not as expected" do
+        stdout, stderr, stdin = StringIO.new, StringIO.new, StringIO.new
+        subject.config do |config|
+          config.stdout, config.stderr, config.stdin = stdout, stderr, stdin
+
+          config.user = ENV["USER"]
+          config.host_name = "127.0.0.1"
+        end
+        lambda { subject.exec("/bin/bash -c 'exit 64'") }.should raise_error ZTK::SSHError
+      end
+
+      it "should return a instance of an OpenStruct object" do
+        stdout, stderr, stdin = StringIO.new, StringIO.new, StringIO.new
+        subject.config do |config|
+          config.stdout, config.stderr, config.stdin = stdout, stderr, stdin
+
+          config.user = ENV["USER"]
+          config.host_name = "127.0.0.1"
+        end
+        result = subject.exec(%q{echo "Hello World"})
+        result.should be_an_instance_of OpenStruct
+      end
+
+      it "should return the exit code" do
+        stdout, stderr, stdin = StringIO.new, StringIO.new, StringIO.new
+        subject.config do |config|
+          config.stdout, config.stderr, config.stdin = stdout, stderr, stdin
+
+          config.user = ENV["USER"]
+          config.host_name = "127.0.0.1"
+        end
+        data = 64
+
+        result = subject.exec(%Q{/bin/bash -c 'exit #{data}'}, :exit_code => data)
+        result.exit_code.should == data
+      end
+
+      it "should return the output" do
+        stdout, stderr, stdin = StringIO.new, StringIO.new, StringIO.new
+        subject.config do |config|
+          config.stdout, config.stderr, config.stdin = stdout, stderr, stdin
+
+          config.user = ENV["USER"]
+          config.host_name = "127.0.0.1"
+        end
+        data = "Hello World @ #{Time.now.utc}"
+
+        result = subject.exec(%Q{echo "#{data}"})
+        result.output.match(data).should_not be nil
+      end
+
+      it "should allow us to change the expected exit code" do
+        stdout, stderr, stdin = StringIO.new, StringIO.new, StringIO.new
+        subject.config do |config|
+          config.stdout, config.stderr, config.stdin = stdout, stderr, stdin
+
+          config.user = ENV["USER"]
+          config.host_name = "127.0.0.1"
+        end
+        data = 32
+        result = subject.exec(%Q{/bin/bash -c 'exit #{data}'}, :exit_code => data)
+      end
+
+      describe "stdout" do
+
+        it "should capture STDOUT and send it to the appropriate pipe" do
+          stdout, stderr, stdin = StringIO.new, StringIO.new, StringIO.new
           subject.config do |config|
-            config.stdout = stdout
-            config.stderr = stderr
+            config.stdout, config.stderr, config.stdin = stdout, stderr, stdin
+
             config.user = ENV["USER"]
             config.host_name = "127.0.0.1"
           end
+          data = "Hello World @ #{Time.now.utc}"
 
-          data = %x(hostname -f).chomp
+          subject.exec(%Q{echo "#{data}" -f >&1})
 
-          status = subject.exec("hostname -f")
-          status.exit_code.should == 0
           stdout.rewind
-          stdout.read.chomp.should == data
+          stdout.read.match(data).should_not be nil
+
+          stderr.rewind
+          stderr.read.match(data).should be nil
+
+          stdin.rewind
+          stdin.read.match(data).should be nil
         end
 
       end
 
-      describe "upload" do
+      describe "stderr" do
 
-        it "should be able to upload a file to 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
-          stdout, stderr = StringIO.new, StringIO.new
+        it "should capture STDERR and send it to the appropriate pipe" do
+          stdout, stderr, stdin = StringIO.new, StringIO.new, StringIO.new
           subject.config do |config|
-            config.stdout = stdout
-            config.stderr = stderr
+            config.stdout, config.stderr, config.stdin = stdout, stderr, stdin
+
             config.user = ENV["USER"]
             config.host_name = "127.0.0.1"
           end
-
           data = "Hello World @ #{Time.now.utc}"
 
-          remote_file = File.join("/tmp", "ssh-upload-remote")
-          File.exists?(remote_file) && File.delete(remote_file)
+          subject.exec(%Q{echo "#{data}" -f >&2})
 
-          local_file = File.join("/tmp", "ssh-upload-local")
-          IO.write(local_file, data)
+          stdout.rewind
+          stdout.read.match(data).should be nil
 
-          File.exists?(remote_file).should == false
-          subject.upload(local_file, remote_file)
-          File.exists?(remote_file).should == true
+          stderr.rewind
+          stderr.read.match(data).should_not be nil
 
-          File.exists?(remote_file) && File.delete(remote_file)
-          File.exists?(local_file) && File.delete(local_file)
+          stdin.rewind
+          stdin.read.match(data).should be nil
         end
-
-      end
-
-      describe "download" do
-
-        it "should be able to download a file from 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
-          stdout, stderr = StringIO.new, StringIO.new
-          subject.config do |config|
-            config.stdout = stdout
-            config.stderr = stderr
-            config.user = ENV["USER"]
-            config.host_name = "127.0.0.1"
-          end
-
-          data = "Hello World @ #{Time.now.utc}"
-
-          local_file = File.join("/tmp", "ssh-download-local")
-          File.exists?(local_file) && File.delete(local_file)
-
-          remote_file = File.join("/tmp", "ssh-download-remote")
-          IO.write(remote_file, data)
-
-          File.exists?(local_file).should == false
-          subject.download(remote_file, local_file)
-          File.exists?(local_file).should == true
-
-          File.exists?(local_file) && File.delete(local_file)
-          File.exists?(remote_file) && File.delete(remote_file)
-        end
-
       end
 
     end
 
-    describe "proxy SSH behaviour" do
+    describe "upload" do
 
-      describe "execute" do
+      it "should be able to upload a file to 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
+        stdout, stderr, stdin = StringIO.new, StringIO.new, StringIO.new
+        subject.config do |config|
+          config.stdout, config.stderr, config.stdin = stdout, stderr, stdin
 
-        it "should be able to proxy through 127.0.0.1, connecting to 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
-          stdout, stderr = StringIO.new, StringIO.new
-          subject.config do |config|
-            config.stdout = stdout
-            config.stderr = stderr
-            config.user = ENV["USER"]
-            config.host_name = "127.0.0.1"
-            config.proxy_user = ENV["USER"]
-            config.proxy_host_name = "127.0.0.1"
-          end
-
-          data = %x( hostname -f ).chomp
-
-          status = subject.exec("hostname -f")
-          status.exit_code.should == 0
-          stdout.rewind
-          stdout.read.chomp.should == data
+          config.user = ENV["USER"]
+          config.host_name = "127.0.0.1"
         end
 
+        data = "Hello World @ #{Time.now.utc}"
+
+        remote_file = File.join("/tmp", "ssh-upload-remote")
+        File.exists?(remote_file) && File.delete(remote_file)
+
+        local_file = File.join("/tmp", "ssh-upload-local")
+        IO.write(local_file, data)
+
+        File.exists?(remote_file).should == false
+        subject.upload(local_file, remote_file)
+        File.exists?(remote_file).should == true
+
+        File.exists?(remote_file) && File.delete(remote_file)
+        File.exists?(local_file) && File.delete(local_file)
       end
 
-      describe "upload" do
+    end
 
-        it "should be able to upload a file to 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
-          stdout, stderr = StringIO.new, StringIO.new
-          subject.config do |config|
-            config.stdout = stdout
-            config.stderr = stderr
-            config.user = ENV["USER"]
-            config.host_name = "127.0.0.1"
-            config.proxy_user = ENV["USER"]
-            config.proxy_host_name = "127.0.0.1"
-          end
+    describe "download" do
 
-          data = "Hello World @ #{Time.now.utc}"
+      it "should be able to download a file from 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
+        stdout, stderr, stdin = StringIO.new, StringIO.new, StringIO.new
+        subject.config do |config|
+          config.stdout, config.stderr, config.stdin = stdout, stderr, stdin
 
-          remote_file = File.join("/tmp", "ssh-upload-remote")
-          File.exists?(remote_file) && File.delete(remote_file)
-
-          local_file = File.join("/tmp", "ssh-upload-local")
-          IO.write(local_file, data)
-
-          File.exists?(remote_file).should == false
-          subject.upload(local_file, remote_file)
-          File.exists?(remote_file).should == true
-
-          File.exists?(remote_file) && File.delete(remote_file)
-          File.exists?(local_file) && File.delete(local_file)
+          config.user = ENV["USER"]
+          config.host_name = "127.0.0.1"
         end
 
-      end
+        data = "Hello World @ #{Time.now.utc}"
 
-      describe "download" do
+        local_file = File.join("/tmp", "ssh-download-local")
+        File.exists?(local_file) && File.delete(local_file)
 
-        it "should be able to download a file from 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
-          stdout, stderr = StringIO.new, StringIO.new
-          subject.config do |config|
-            config.stdout = stdout
-            config.stderr = stderr
-            config.user = ENV["USER"]
-            config.host_name = "127.0.0.1"
-            config.proxy_user = ENV["USER"]
-            config.proxy_host_name = "127.0.0.1"
-          end
+        remote_file = File.join("/tmp", "ssh-download-remote")
+        IO.write(remote_file, data)
 
-          data = "Hello World @ #{Time.now.utc}"
+        File.exists?(local_file).should == false
+        subject.download(remote_file, local_file)
+        File.exists?(local_file).should == true
 
-          local_file = File.join("/tmp", "ssh-download-local")
-          File.exists?(local_file) && File.delete(local_file)
-
-          remote_file = File.join("/tmp", "ssh-download-remote")
-          IO.write(remote_file, data)
-
-          File.exists?(local_file).should == false
-          subject.download(remote_file, local_file)
-          File.exists?(local_file).should == true
-
-          File.exists?(local_file) && File.delete(local_file)
-          File.exists?(remote_file) && File.delete(remote_file)
-        end
-
+        File.exists?(local_file) && File.delete(local_file)
+        File.exists?(remote_file) && File.delete(remote_file)
       end
 
     end
 
   end
+
+  describe "proxy SSH behaviour" do
+
+    describe "execute" do
+
+      it "should be able to proxy through 127.0.0.1, connecting to 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
+        stdout, stderr, stdin = StringIO.new, StringIO.new, StringIO.new
+        subject.config do |config|
+          config.stdout, config.stderr, config.stdin = stdout, stderr, stdin
+
+          config.user = ENV["USER"]
+          config.host_name = "127.0.0.1"
+          config.proxy_user = ENV["USER"]
+          config.proxy_host_name = "127.0.0.1"
+        end
+
+        data = %x( hostname -f ).chomp
+
+        status = subject.exec("hostname -f")
+        status.exit_code.should == 0
+        stdout.rewind
+        stdout.read.chomp.should == data
+      end
+
+      it "should timeout after the period specified" do
+        stdout, stderr, stdin = StringIO.new, StringIO.new, StringIO.new
+        subject.config do |config|
+          config.stdout, config.stderr, config.stdin = stdout, stderr, stdin
+
+          config.user = ENV["USER"]
+          config.host_name = "127.0.0.1"
+          config.proxy_user = ENV["USER"]
+          config.proxy_host_name = "127.0.0.1"
+          config.timeout = WAIT_SMALL
+        end
+        hostname = %x(hostname -f).chomp
+        lambda { subject.exec("hostname -f ; sleep 10") }.should raise_error ZTK::SSHError
+      end
+
+      it "should throw an exception if the exit status is not as expected" do
+        stdout, stderr, stdin = StringIO.new, StringIO.new, StringIO.new
+        subject.config do |config|
+          config.stdout, config.stderr, config.stdin = stdout, stderr, stdin
+
+          config.user = ENV["USER"]
+          config.host_name = "127.0.0.1"
+          config.proxy_user = ENV["USER"]
+          config.proxy_host_name = "127.0.0.1"
+        end
+        lambda { subject.exec("/bin/bash -c 'exit 64'") }.should raise_error ZTK::SSHError
+      end
+
+      it "should return a instance of an OpenStruct object" do
+        stdout, stderr, stdin = StringIO.new, StringIO.new, StringIO.new
+        subject.config do |config|
+          config.stdout, config.stderr, config.stdin = stdout, stderr, stdin
+
+          config.user = ENV["USER"]
+          config.host_name = "127.0.0.1"
+          config.proxy_user = ENV["USER"]
+          config.proxy_host_name = "127.0.0.1"
+        end
+        result = subject.exec(%q{echo "Hello World"})
+        result.should be_an_instance_of OpenStruct
+      end
+
+      it "should return the exit code" do
+        stdout, stderr, stdin = StringIO.new, StringIO.new, StringIO.new
+        subject.config do |config|
+          config.stdout, config.stderr, config.stdin = stdout, stderr, stdin
+
+          config.user = ENV["USER"]
+          config.host_name = "127.0.0.1"
+          config.proxy_user = ENV["USER"]
+          config.proxy_host_name = "127.0.0.1"
+        end
+        data = 64
+
+        result = subject.exec(%Q{/bin/bash -c 'exit #{data}'}, :exit_code => data)
+        result.exit_code.should == data
+      end
+
+      it "should return the output" do
+        stdout, stderr, stdin = StringIO.new, StringIO.new, StringIO.new
+        subject.config do |config|
+          config.stdout, config.stderr, config.stdin = stdout, stderr, stdin
+
+          config.user = ENV["USER"]
+          config.host_name = "127.0.0.1"
+          config.proxy_user = ENV["USER"]
+          config.proxy_host_name = "127.0.0.1"
+        end
+        data = "Hello World @ #{Time.now.utc}"
+
+        result = subject.exec(%Q{echo "#{data}"})
+        result.output.match(data).should_not be nil
+      end
+
+      it "should allow us to change the expected exit code" do
+        stdout, stderr, stdin = StringIO.new, StringIO.new, StringIO.new
+        subject.config do |config|
+          config.stdout, config.stderr, config.stdin = stdout, stderr, stdin
+
+          config.user = ENV["USER"]
+          config.host_name = "127.0.0.1"
+          config.proxy_user = ENV["USER"]
+          config.proxy_host_name = "127.0.0.1"
+        end
+        data = 32
+        result = subject.exec(%Q{/bin/bash -c 'exit #{data}'}, :exit_code => data)
+      end
+
+      describe "stdout" do
+
+        it "should capture STDOUT and send it to the appropriate pipe" do
+          stdout, stderr, stdin = StringIO.new, StringIO.new, StringIO.new
+          subject.config do |config|
+            config.stdout, config.stderr, config.stdin = stdout, stderr, stdin
+
+            config.user = ENV["USER"]
+            config.host_name = "127.0.0.1"
+            config.proxy_user = ENV["USER"]
+            config.proxy_host_name = "127.0.0.1"
+          end
+          data = "Hello World @ #{Time.now.utc}"
+
+          subject.exec(%Q{echo "#{data}" -f >&1})
+
+          stdout.rewind
+          stdout.read.match(data).should_not be nil
+
+          stderr.rewind
+          stderr.read.match(data).should be nil
+
+          stdin.rewind
+          stdin.read.match(data).should be nil
+        end
+
+      end
+
+      describe "stderr" do
+
+        it "should capture STDERR and send it to the appropriate pipe" do
+          stdout, stderr, stdin = StringIO.new, StringIO.new, StringIO.new
+          subject.config do |config|
+            config.stdout, config.stderr, config.stdin = stdout, stderr, stdin
+
+            config.user = ENV["USER"]
+            config.host_name = "127.0.0.1"
+            config.proxy_user = ENV["USER"]
+            config.proxy_host_name = "127.0.0.1"
+          end
+          data = "Hello World @ #{Time.now.utc}"
+
+          subject.exec(%Q{echo "#{data}" -f >&2})
+
+          stdout.rewind
+          stdout.read.match(data).should be nil
+
+          stderr.rewind
+          stderr.read.match(data).should_not be nil
+
+          stdin.rewind
+          stdin.read.match(data).should be nil
+        end
+      end
+
+    end
+
+    describe "upload" do
+
+      it "should be able to upload a file to 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
+        stdout, stderr, stdin = StringIO.new, StringIO.new, StringIO.new
+        subject.config do |config|
+          config.stdout, config.stderr, config.stdin = stdout, stderr, stdin
+
+          config.user = ENV["USER"]
+          config.host_name = "127.0.0.1"
+          config.proxy_user = ENV["USER"]
+          config.proxy_host_name = "127.0.0.1"
+        end
+
+        data = "Hello World @ #{Time.now.utc}"
+
+        remote_file = File.join("/tmp", "ssh-upload-remote")
+        File.exists?(remote_file) && File.delete(remote_file)
+
+        local_file = File.join("/tmp", "ssh-upload-local")
+        IO.write(local_file, data)
+
+        File.exists?(remote_file).should == false
+        subject.upload(local_file, remote_file)
+        File.exists?(remote_file).should == true
+
+        File.exists?(remote_file) && File.delete(remote_file)
+        File.exists?(local_file) && File.delete(local_file)
+      end
+
+    end
+
+    describe "download" do
+
+      it "should be able to download a file from 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
+        stdout, stderr, stdin = StringIO.new, StringIO.new, StringIO.new
+        subject.config do |config|
+          config.stdout, config.stderr, config.stdin = stdout, stderr, stdin
+
+          config.user = ENV["USER"]
+          config.host_name = "127.0.0.1"
+          config.proxy_user = ENV["USER"]
+          config.proxy_host_name = "127.0.0.1"
+        end
+
+        data = "Hello World @ #{Time.now.utc}"
+
+        local_file = File.join("/tmp", "ssh-download-local")
+        File.exists?(local_file) && File.delete(local_file)
+
+        remote_file = File.join("/tmp", "ssh-download-remote")
+        IO.write(remote_file, data)
+
+        File.exists?(local_file).should == false
+        subject.download(remote_file, local_file)
+        File.exists?(local_file).should == true
+
+        File.exists?(local_file) && File.delete(local_file)
+        File.exists?(remote_file) && File.delete(remote_file)
+      end
+
+    end
+
+  end if !ENV['CI'] && !ENV['TRAVIS']
 
 end
