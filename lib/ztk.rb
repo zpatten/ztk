@@ -38,6 +38,7 @@ module ZTK
   autoload :Config, 'ztk/config'
   autoload :Logger, 'ztk/logger'
   autoload :Parallel, 'ztk/parallel'
+  autoload :Report, 'ztk/report'
   autoload :RescueRetry, 'ztk/rescue_retry'
   autoload :Spinner, 'ztk/spinner'
   autoload :SSH, 'ztk/ssh'
