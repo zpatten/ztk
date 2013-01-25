@@ -150,7 +150,7 @@ module ZTK
         end
       rescue Timeout::Error => e
         direct_log(:debug) { log_header("TIMEOUT") }
-        log_and_raise(CommandError, "Process timed out!")
+        log_and_raise(CommandError, "Process timed out after #{config.timeout} seconds!")
       end
 
       Process.waitpid(pid)
