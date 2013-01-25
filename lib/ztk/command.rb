@@ -44,7 +44,8 @@ module ZTK
 
     def initialize(configuration={})
       super({
-        :timeout => 600
+        :timeout => 600,
+        :ignore_exit_status => false
       }.merge(configuration))
       config.logger.debug { "config=#{config.send(:table).inspect}" }
     end
@@ -167,7 +168,7 @@ module ZTK
 
       config.logger.debug { "exit_code(#{exit_code})" }
 
-      if (exit_code != options.exit_code)
+      if !config.ignore_exit_status && (exit_code != options.exit_code)
         log_and_raise(CommandError, "exec(#{command.inspect}, #{options.inspect}) failed! [#{exit_code}]")
       end
       OpenStruct.new(:output => output, :exit_code => exit_code)

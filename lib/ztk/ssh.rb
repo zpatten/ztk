@@ -136,7 +136,8 @@ module ZTK
         :forward_agent => true,
         :compression => false,
         :user_known_hosts_file => '/dev/null',
-        :timeout => 60
+        :timeout => 60,
+        :ignore_exit_status => false
       }.merge(configuration))
       config.logger.debug { "config=#{config.send(:table).inspect}" }
     end
@@ -310,7 +311,7 @@ module ZTK
 
       config.logger.debug { message }
 
-      if (exit_code != options.exit_code)
+      if !config.ignore_exit_status && (exit_code != options.exit_code)
         log_and_raise(SSHError, message)
       end
       OpenStruct.new(:output => output, :exit_code => exit_code, :exit_signal => exit_signal)
