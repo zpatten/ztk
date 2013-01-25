@@ -95,6 +95,10 @@ module ZTK
         @parent_writer.close
         @parent_reader.close
 
+        STDOUT.reopen("/dev/null", "a")
+        STDERR.reopen("/dev/null", "a")
+        STDIN.reopen("/dev/null")
+
         if !(data = block.call).nil?
           config.logger.debug { "write(#{data.inspect})" }
           @child_writer.write(Base64.encode64(Marshal.dump(data)))
