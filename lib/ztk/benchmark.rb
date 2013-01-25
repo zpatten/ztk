@@ -37,10 +37,10 @@ module ZTK
         options = Base.build_config(options)
         options.logger.debug { "options(#{options.inspect})" }
 
-        !block_given? and raise BenchmarkError, "You must supply a block!"
+        !block_given? and Base.log_and_raise(options.logger, BenchmarkError, "You must supply a block!")
 
         check = [options.message, options.mark]
-        (check.any?{ |z| !z.nil? } && !check.all?{ |z| !z.nil? }) and raise BenchmarkError, "You must supply a message and a mark together!"
+        (check.any?{ |z| !z.nil? } && !check.all?{ |z| !z.nil? }) and Base.log_and_raise(options.logger, BenchmarkError, "You must supply both a message and a mark!")
 
         (options.message && options.mark) and options.stdout.print("#{options.message} ")
         benchmark = ::Benchmark.realtime do

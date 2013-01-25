@@ -81,6 +81,15 @@ module ZTK
         config
       end
 
+      def log_and_raise(logger, exception, message, shift=1)
+        if logger.is_a?(ZTK::Logger)
+          logger.shift(:fatal, shift) { "EXCEPTION: #{exception.inspect} - #{message.inspect}" }
+        else
+          logger.fatal { "EXCEPTION: #{exception.inspect} - #{message.inspect}" }
+        end
+        raise exception, message
+      end
+
     end
 
     # @param [Hash] config Configuration options hash.
@@ -106,6 +115,10 @@ module ZTK
       else
         @config
       end
+    end
+
+    def log_and_raise(exception, message)
+      Base.log_and_raise(config.logger, exception, message, 2)
     end
 
     # Direct logging method.

@@ -82,7 +82,7 @@ module ZTK
       }.merge(configuration))
       config.logger.debug { "config(#{config.inspect})" }
 
-      raise ParallelError, "max_forks must be equal to or greater than one!" if config.max_forks < 1
+      (config.max_forks < 1) and log_and_raise(ParallelError, "max_forks must be equal to or greater than one!")
 
       @forks = Array.new
       @results = Array.new
@@ -96,7 +96,7 @@ module ZTK
     #   the parent processes result set.
     # @return [Integer] Returns the pid of the child process forked.
     def process(&block)
-      raise ParallelError, "You must supply a block to the process method!" if !block_given?
+      !block_given? and log_and_raise(ParallelError, "You must supply a block to the process method!")
 
       config.logger.debug { "forks(#{@forks.inspect})" }
 

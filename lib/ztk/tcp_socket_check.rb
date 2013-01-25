@@ -105,17 +105,8 @@ module ZTK
     # @return [Boolean] Returns true or false depending on weither the socket
     #   is ready or not.
     def ready?
-      if config.host.nil?
-        message = "You must supply a host!"
-        config.logger.fatal { message }
-        raise TCPSocketCheckError, message
-      end
-
-      if config.port.nil?
-        message = "You must supply a port!"
-        config.logger.fatal { message }
-        raise TCPSocketCheckError, message
-      end
+      config.host.nil? and log_and_raise(TCPSocketCheckError, "You must supply a host!")
+      config.port.nil? and log_and_raise(TCPSocketCheckError, "You must supply a port!")
 
       socket = TCPSocket.new(config.host, config.port)
 
