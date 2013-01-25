@@ -81,7 +81,7 @@ describe ZTK::SSH do
           data = %x(hostname -f).chomp
 
           status = subject.exec("hostname -f")
-          status.exit.exitstatus.should == 0
+          status.exit_code.should == 0
           stdout.rewind
           stdout.read.chomp.should == data
         end
@@ -166,7 +166,7 @@ describe ZTK::SSH do
           data = %x( hostname -f ).chomp
 
           status = subject.exec("hostname -f")
-          status.exit.exitstatus.should == 0
+          status.exit_code.should == 0
           stdout.rewind
           stdout.read.chomp.should == data
         end
