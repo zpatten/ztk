@@ -114,15 +114,15 @@ module ZTK
     def inspect
       tags = Array.new
 
-      if @config.proxy_host_name
-        proxy_user_host = "#{@config.proxy_user}@#{@config.proxy_host_name}"
-        proxy_port = (@config.proxy_port ? ":#{@config.proxy_port}" : nil)
+      if config.proxy_host_name
+        proxy_user_host = "#{config.proxy_user}@#{config.proxy_host_name}"
+        proxy_port = (config.proxy_port ? ":#{config.proxy_port}" : nil)
         tags << [proxy_user_host, proxy_port].compact.join
         tags << " >>> "
       end
 
-      user_host = "#{@config.user}@#{@config.host_name}"
-      port = (@config.port ? ":#{@config.port}" : nil)
+      user_host = "#{config.user}@#{config.host_name}"
+      port = (config.port ? ":#{config.port}" : nil)
       tags << [user_host, port].compact.join
 
       tags.join.strip
@@ -132,14 +132,14 @@ module ZTK
     #
     # Primarily used internally.
     def ssh
-      @ssh ||= Net::SSH.start(@config.host_name, @config.user, ssh_options)
+      @ssh ||= Net::SSH.start(config.host_name, config.user, ssh_options)
     end
 
     # Starts an SFTP session.  Can also be used to get the Net::SSH object.
     #
     # Primarily used internally.
     def sftp
-      @sftp ||= Net::SFTP.start(@config.host_name, @config.user, ssh_options)
+      @sftp ||= Net::SFTP.start(config.host_name, config.user, ssh_options)
     end
 
     # Close our session gracefully.
@@ -160,8 +160,8 @@ module ZTK
     #   end
     #   ssh.console
     def console
+      config.logger.debug { "config(#{config.inspect})" }
       config.logger.info { "console(#{console_command.inspect})" }
-      config.logger.debug { "config(#{@config.inspect})" }
 
       Kernel.exec(console_command)
     end
@@ -196,18 +196,18 @@ module ZTK
         "#{header}\n"
       end
 
-      config.logger.debug { "config(#{@config.inspect})" }
-      config.logger.info { "exec(#{command.inspect}, #{options.inspect})" }
-
       options = OpenStruct.new({ :silence => false }.merge(options))
+
+      config.logger.debug { "config(#{config.inspect})" }
       config.logger.debug { "options(#{options.inspect})" }
+      config.logger.info { "exec(#{command.inspect}, #{options.inspect})" }
 
       output = ""
       stdout_header = false
       stderr_header = false
 
       ZTK::RescueRetry.try(:tries => 3, :on => EOFError) do
-        @ssh = Net::SSH.start(@config.host_name, @config.user, ssh_options)
+        @ssh = Net::SSH.start(config.host_name, config.user, ssh_options)
 
         channel = ssh.open_channel do |chan|
           config.logger.debug { "Channel opened." }
@@ -227,7 +227,7 @@ module ZTK
               end
               direct_log(:debug) { data }
 
-              @config.stdout.print(data) unless options.silence
+              config.stdout.print(data) unless options.silence
               output += data
             end
 
@@ -239,7 +239,7 @@ module ZTK
               end
               direct_log(:warn) { data }
 
-              @config.stderr.print(data) unless options.silence
+              config.stderr.print(data) unless options.silence
               output += data
             end
 
@@ -274,11 +274,11 @@ module ZTK
     #   remote = File.expand_path(File.join("/tmp", "id_rsa.pub"))
     #   ssh.upload(local, remote)
     def upload(local, remote)
-      config.logger.debug { "config(#{@config.inspect})" }
+      config.logger.debug { "config(#{config.inspect})" }
       config.logger.info { "upload(#{local.inspect}, #{remote.inspect})" }
 
       ZTK::RescueRetry.try(:tries => 3, :on => EOFError) do
-        @sftp = Net::SFTP.start(@config.host_name, @config.user, ssh_options)
+        @sftp = Net::SFTP.start(config.host_name, config.user, ssh_options)
         sftp.upload!(local.to_s, remote.to_s) do |event, uploader, *args|
           case event
           when :open
@@ -314,11 +314,11 @@ module ZTK
     #   remote = File.expand_path(File.join(ENV["HOME"], ".ssh", "id_rsa.pub"))
     #   ssh.download(remote, local)
     def download(remote, local)
-      config.logger.debug { "config(#{@config.inspect})" }
+      config.logger.debug { "config(#{config.inspect})" }
       config.logger.info { "download(#{remote.inspect}, #{local.inspect})" }
 
       ZTK::RescueRetry.try(:tries => 3, :on => EOFError) do
-        @sftp = Net::SFTP.start(@config.host_name, @config.user, ssh_options)
+        @sftp = Net::SFTP.start(config.host_name, config.user, ssh_options)
         sftp.download!(remote.to_s, local.to_s) do |event, downloader, *args|
           case event
           when :open
@@ -350,10 +350,10 @@ module ZTK
       command << [ "-o", "StrictHostKeyChecking=no" ]
       command << [ "-o", "KeepAlive=yes" ]
       command << [ "-o", "ServerAliveInterval=60" ]
-      command << [ "-i", @config.keys ] if @config.keys
-      command << [ "-p", @config.port ] if @config.port
-      command << [ "-o", "ProxyCommand=\"#{proxy_command}\"" ] if @config.proxy_host_name
-      command << "#{@config.user}@#{@config.host_name}"
+      command << [ "-i", config.keys ] if config.keys
+      command << [ "-p", config.port ] if config.port
+      command << [ "-o", "ProxyCommand=\"#{proxy_command}\"" ] if config.proxy_host_name
+      command << "#{config.user}@#{config.host_name}"
       command = command.flatten.compact.join(" ")
       config.logger.debug { "console_command(#{command.inspect})" }
       command
@@ -371,9 +371,9 @@ module ZTK
       command << [ "-o", "StrictHostKeyChecking=no" ]
       command << [ "-o", "KeepAlive=yes" ]
       command << [ "-o", "ServerAliveInterval=60" ]
-      command << [ "-i", @config.proxy_keys ] if @config.proxy_keys
-      command << [ "-p", @config.proxy_port ] if @config.proxy_port
-      command << "#{@config.proxy_user}@#{@config.proxy_host_name}"
+      command << [ "-i", config.proxy_keys ] if config.proxy_keys
+      command << [ "-p", config.proxy_port ] if config.proxy_port
+      command << "#{config.proxy_user}@#{config.proxy_host_name}"
       command << "nc %h %p"
       command = command.flatten.compact.join(" ")
       config.logger.debug { "proxy_command(#{command.inspect})" }
@@ -385,27 +385,27 @@ module ZTK
       options = {}
 
       # These are plainly documented on the Net::SSH config class.
-      options.merge!(:encryption => @config.encryption) if @config.encryption
-      options.merge!(:compression => @config.compression) if @config.compression
-      options.merge!(:compression_level => @config.compression_level) if @config.compression_level
-      options.merge!(:timeout => @config.timeout) if @config.timeout
-      options.merge!(:forward_agent => @config.forward_agent) if @config.forward_agent
-      options.merge!(:global_known_hosts_file => @config.global_known_hosts_file) if @config.global_known_hosts_file
-      options.merge!(:auth_methods => @config.auth_methods) if @config.auth_methods
-      options.merge!(:host_key => @config.host_key) if @config.host_key
-      options.merge!(:host_key_alias => @config.host_key_alias) if @config.host_key_alias
-      options.merge!(:host_name => @config.host_name) if @config.host_name
-      options.merge!(:keys => @config.keys) if @config.keys
-      options.merge!(:keys_only => @config.keys_only) if @config.keys_only
-      options.merge!(:hmac => @config.hmac) if @config.hmac
-      options.merge!(:port => @config.port) if @config.port
-      options.merge!(:proxy => Net::SSH::Proxy::Command.new(proxy_command)) if @config.proxy_host_name
-      options.merge!(:rekey_limit => @config.rekey_limit) if @config.rekey_limit
-      options.merge!(:user => @config.user) if @config.user
-      options.merge!(:user_known_hosts_file => @config.user_known_hosts_file) if @config.user_known_hosts_file
+      options.merge!(:encryption => config.encryption) if config.encryption
+      options.merge!(:compression => config.compression) if config.compression
+      options.merge!(:compression_level => config.compression_level) if config.compression_level
+      options.merge!(:timeout => config.timeout) if config.timeout
+      options.merge!(:forward_agent => config.forward_agent) if config.forward_agent
+      options.merge!(:global_known_hosts_file => config.global_known_hosts_file) if config.global_known_hosts_file
+      options.merge!(:auth_methods => config.auth_methods) if config.auth_methods
+      options.merge!(:host_key => config.host_key) if config.host_key
+      options.merge!(:host_key_alias => config.host_key_alias) if config.host_key_alias
+      options.merge!(:host_name => config.host_name) if config.host_name
+      options.merge!(:keys => config.keys) if config.keys
+      options.merge!(:keys_only => config.keys_only) if config.keys_only
+      options.merge!(:hmac => config.hmac) if config.hmac
+      options.merge!(:port => config.port) if config.port
+      options.merge!(:proxy => Net::SSH::Proxy::Command.new(proxy_command)) if config.proxy_host_name
+      options.merge!(:rekey_limit => config.rekey_limit) if config.rekey_limit
+      options.merge!(:user => config.user) if config.user
+      options.merge!(:user_known_hosts_file => config.user_known_hosts_file) if config.user_known_hosts_file
 
       # This is not plainly documented on the Net::SSH config class.
-      options.merge!(:password => @config.password) if @config.password
+      options.merge!(:password => config.password) if config.password
 
       config.logger.debug { "ssh_options(#{options.inspect})" }
       options
