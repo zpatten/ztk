@@ -361,17 +361,8 @@ module ZTK
 
     # Builds our SSH proxy command.
     def proxy_command
-      if !@config.proxy_user
-        message = "You must specify an proxy user in order to SSH proxy."
-        config.logger.fatal { message }
-        raise SSHError, message
-      end
-
-      if !@config.proxy_host_name
-        message = "You must specify an proxy host_name in order to SSH proxy."
-        config.logger.fatal { message }
-        raise SSHError, message
-      end
+      !config.proxy_user and log_and_raise(SSHError, "You must specify an proxy user in order to SSH proxy.")
+      !config.proxy_host_name and log_and_raise(SSHError, "You must specify an proxy host_name in order to SSH proxy.")
 
       command = ["ssh"]
       command << [ "-q" ]
