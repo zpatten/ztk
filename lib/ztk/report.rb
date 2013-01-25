@@ -38,18 +38,6 @@ module ZTK
       config.logger.debug { "config=#{config.send(:table).inspect}" }
     end
 
-    def format_header(headers, lengths)
-      line = headers.collect do |header|
-        "-" * lengths.send(header)
-      end
-      ["+-", line.join("-+-"), "-+"].join.strip
-    end
-
-    def format_row(*args)
-      spacer = " "
-      [spacer, args, spacer].flatten.join(" | ").strip
-    end
-
     def spreadsheet(dataset, headers, &block)
       !block_given? and log_and_raise(ReportError, "You must supply a block!")
       headers.nil? and log_and_raise(ReportError, "Headers can not be nil!")
@@ -87,10 +75,58 @@ module ZTK
 
       config.stdout.puts(format_header(headers, max_lengths))
 
-      OpenStruct.new(:rows => rows, :max_lengths => max_lengths, :width => (2 + max_lengths.send(:table).values.reduce(:+) + ((headers.count * 3) - 3) + 2))
+      width = (2 + max_lengths.send(:table).values.reduce(:+) + ((headers.count * 3) - 3) + 2)
+
+      OpenStruct.new(:rows => rows, :max_lengths => max_lengths, :width => width)
     end
 
-    def list
+    def list(dataset, headers, &block)
+      !block_given? and log_and_raise(ReportError, "You must supply a block!")
+      headers.nil? and log_and_raise(ReportError, "Headers can not be nil!")
+      dataset.nil? and log_and_raise(ReportError, "Dataset can not be nil!")
+
+      rows = Array.new
+      max_lengths = OpenStruct.new
+      headers = headers.map(&:downcase).map(&:to_sym)
+
+      dataset.each do |data|
+        rows << block.call(data)
+      end
+
+      max_key_length = headers.collect{ |header| header.length }.max
+      max_value_length = rows.collect{ |row| headers.collect{ |header| row.send(header).to_s.length }.max }.max
+
+      width = (max_key_length + max_value_length + 2 + 2 + 2)
+
+      rows.each do |row|
+        config.stdout.puts("+#{"-" * width}+")
+        headers.each do |header|
+          entry_line = format_entry(header, max_key_length, row.send(header), max_value_length)
+          config.stdout.puts(entry_line)
+        end
+      end
+      config.stdout.puts("+#{"-" * width}+")
+
+      OpenStruct.new(:rows => rows, :max_key_length => max_key_length, :max_value_length => max_value_length, :width => width)
+    end
+
+
+  private
+
+    def format_header(headers, lengths)
+      line = headers.collect do |header|
+        "-" * lengths.send(header)
+      end
+      ["+-", line.join("-+-"), "-+"].join.strip
+    end
+
+    def format_row(*args)
+      spacer = " "
+      [spacer, args, spacer].flatten.join(" | ").strip
+    end
+
+    def format_entry(key, key_length, value, value_length)
+      "|  %#{key_length}s: %-#{value_length}s  |" % [key.to_s.upcase, value.to_s]
     end
 
   end
