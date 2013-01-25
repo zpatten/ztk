@@ -160,13 +160,19 @@ module ZTK
 
       config.logger.debug { "exit_code(#{$?.inspect})" }
 
-      if ($? != options.exit_code)
-        message = "exec(#{command.inspect}, #{options.inspect}) failed! [#{$?.inspect}]"
-        config.logger.fatal { message }
-        raise CommandError, message
+      if RUBY_VERSION >= "1.9"
+        if ($?.exitstatus != options.exit_code)
+          log_and_raise(CommandError, "exec(#{command.inspect}, #{options.inspect}) failed! [#{$?.inspect}]")
+        end
+        result = OpenStruct.new(:output => output, :exit_code => $?.exitstatus)
+      else
+        if ($? != options.exit_code)
+          log_and_raise(CommandError, "exec(#{command.inspect}, #{options.inspect}) failed! [#{$?.inspect}]")
+        end
+        result = OpenStruct.new(:output => output, :exit_code => $?)
       end
 
-      OpenStruct.new(:output => output, :exit => $?)
+      result
     end
 
     def upload(*args)
