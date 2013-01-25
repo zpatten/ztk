@@ -31,6 +31,8 @@ module ZTK
   class Error < StandardError; end
 
   autoload :Base, 'ztk/base'
+
+  autoload :Background, 'ztk/background'
   autoload :Benchmark, 'ztk/benchmark'
   autoload :Command, 'ztk/command'
   autoload :Config, 'ztk/config'
