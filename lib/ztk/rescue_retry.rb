@@ -34,7 +34,8 @@ module ZTK
       def try(options={}, &block)
         options = Base.build_config({
           :tries => 1,
-          :on => Exception
+          :on => Exception,
+          :delay => 1
         }.merge(options))
         options.logger.debug { "options=#{options.send(:table).inspect}" }
 
@@ -45,6 +46,7 @@ module ZTK
         rescue options.on => e
           if ((options.tries -= 1) > 0)
             options.logger.warn { "Caught #{e.inspect}, we will give it #{options.tries} more tr#{options.tries > 1 ? 'ies' : 'y'}." }
+            sleep(options.delay)
             retry
           else
             options.logger.fatal { "Caught #{e.inspect} and we have no more tries left, sorry, we have to give up now." }
