@@ -47,7 +47,7 @@ module ZTK
             options.logger.warn { "Caught #{e.inspect}, we will give it #{options.tries} more tr#{options.tries > 1 ? 'ies' : 'y'}." }
             retry
           else
-            options.logger.fatal { "Caught #{e.inspect}, sorry, we have to give up now." }
+            options.logger.fatal { "Caught #{e.inspect} and we have no more tries left, sorry, we have to give up now." }
             raise e
           end
         end
