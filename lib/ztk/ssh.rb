@@ -203,71 +203,82 @@ module ZTK
       config.logger.info { "exec(#{command.inspect}, #{options.inspect})" }
 
       output = ""
-      exit_code = -1
+      exit_code = nil
+      exit_signal = nil
       stdout_header = false
       stderr_header = false
 
-      ZTK::RescueRetry.try(:tries => 3, :on => EOFError) do
-        @ssh = Net::SSH.start(config.host_name, config.user, ssh_options)
+      begin
+        Timeout.timeout(config.timeout) do
+          ZTK::RescueRetry.try(:tries => 3, :on => EOFError) do
+            @ssh = Net::SSH.start(config.host_name, config.user, ssh_options)
 
-        channel = ssh.open_channel do |chan|
-          config.logger.debug { "Channel opened." }
+            channel = ssh.open_channel do |chan|
+              config.logger.debug { "Channel opened." }
 
-          direct_log(:debug) { log_header("COMMAND") }
-          direct_log(:debug) { "#{command}\n" }
-          direct_log(:debug) { log_header("OPENED") }
+              direct_log(:debug) { log_header("COMMAND") }
+              direct_log(:debug) { "#{command}\n" }
+              direct_log(:debug) { log_header("OPENED") }
 
-          chan.exec(command) do |ch, success|
-            success or log_and_raise(SSHError, "Could not execute '#{command}'.")
+              chan.exec(command) do |ch, success|
+                success or log_and_raise(SSHError, "Could not execute '#{command}'.")
 
-            ch.on_data do |c, data|
-              if !stdout_header
-                direct_log(:debug) { log_header("STDOUT") }
-                stdout_header = true
-                stderr_header = false
+                ch.on_data do |c, data|
+                  if !stdout_header
+                    direct_log(:debug) { log_header("STDOUT") }
+                    stdout_header = true
+                    stderr_header = false
+                  end
+                  direct_log(:debug) { data }
+
+                  config.stdout.print(data) unless options.silence
+                  output += data
+                end
+
+                ch.on_extended_data do |c, type, data|
+                  if !stderr_header
+                    direct_log(:warn) { log_header("STDERR") }
+                    stderr_header = true
+                    stdout_header = false
+                  end
+                  direct_log(:warn) { data }
+
+                  config.stderr.print(data) unless options.silence
+                  output += data
+                end
+
+                ch.on_request("exit-status") do |ch, data|
+                  exit_code = data.read_long
+                end
+
+                ch.on_request("exit-signal") do |ch, data|
+                  exit_signal = data.read_long
+                end
+
+                ch.on_open_failed do |c, code, desc|
+                  config.logger.fatal { "Open failed! (#{code.inspect} - #{desc.inspect})" }
+                end
+
               end
-              direct_log(:debug) { data }
-
-              config.stdout.print(data) unless options.silence
-              output += data
             end
+            channel.wait
 
-            ch.on_extended_data do |c, type, data|
-              if !stderr_header
-                direct_log(:warn) { log_header("STDERR") }
-                stderr_header = true
-                stdout_header = false
-              end
-              direct_log(:warn) { data }
-
-              config.stderr.print(data) unless options.silence
-              output += data
-            end
-
-            ch.on_open_failed do |c, code, desc|
-              config.logger.fatal { "Open failed! (#{code.inspect} - #{desc.inspect})" }
-            end
-
+            direct_log(:debug) { log_header("CLOSED") }
+            config.logger.debug { "Channel closed." }
           end
         end
-        channel.wait
 
-        direct_log(:debug) { log_header("CLOSED") }
-        config.logger.debug { "Channel closed." }
+      rescue Timeout::Error => e
+        direct_log(:debug) { log_header("TIMEOUT") }
+        log_and_raise(SSHError, "Session timed out after #{config.timeout} seconds!")
       end
 
-      if RUBY_VERSION >= "1.9"
-        exit_code = $?.exitstatus
-      else
-        exit_code = $?
-      end
-
-      config.logger.debug { "exit_code(#{exit_code})" }
+      config.logger.debug { "exit_code(#{exit_code}), exit_signal(#{exit_signal})" }
 
       if (exit_code != options.exit_code)
-        log_and_raise(SSHError, "exec(#{command.inspect}, #{options.inspect}) failed! [#{exit_code}]")
+        log_and_raise(SSHError, "exec(#{command.inspect}, #{options.inspect}) failed! [#{exit_code}, #{exit_signal}]")
       end
-      OpenStruct.new(:output => output, :exit_code => exit_code)
+      OpenStruct.new(:output => output, :exit_code => exit_code, :exit_signal => exit_signal)
     end
 
     # Uploads a local file to a remote host.
