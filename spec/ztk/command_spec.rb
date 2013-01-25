@@ -73,7 +73,7 @@ describe ZTK::Command do
         end
         hostname = %x(hostname -f).chomp
         status = subject.exec("hostname -f")
-        status.exit.exitstatus.should == 0
+        status.exit_code.should == 0
         stdout.rewind
         stdout.read.chomp.should == hostname
       end
@@ -86,6 +86,51 @@ describe ZTK::Command do
         end
         hostname = %x(hostname -f).chomp
         lambda { subject.exec("hostname -f ; sleep 10") }.should raise_error ZTK::CommandError
+      end
+
+      it "should throw an exception if the exit status is not as expected" do
+        stdout = StringIO.new
+        subject.config do |config|
+          config.stdout = stdout
+        end
+        lambda { subject.exec("exit 254") }.should raise_error ZTK::CommandError
+      end
+
+      it "should return a instance of an OpenStruct object" do
+        stdout = StringIO.new
+        subject.config do |config|
+          config.stdout = stdout
+        end
+        result = subject.exec(%q{echo "Hello World"})
+        result.should be_an_instance_of OpenStruct
+      end
+
+      it "should return the exit code" do
+        stdout = StringIO.new
+        subject.config do |config|
+          config.stdout = stdout
+        end
+        data = 64
+
+        result = subject.exec(%Q{/bin/bash -c 'exit #{data}'}, :exit_code => data)
+        result.exit_code.should == data
+      end
+
+      # it "should return a instance of an OpenStruct object" do
+      #   stdout = StringIO.new
+      #   subject.config do |config|
+      #     config.stdout = stdout
+      #   end
+      #   result = subject.exec(%q{echo "Hello World"})
+      #   result.should be_an_instance_of OpenStruct
+      # end
+
+      it "should allow us to change the expected exit code" do
+        stdout = StringIO.new
+        subject.config do |config|
+          config.stdout = stdout
+        end
+        result = subject.exec(%q{/bin/bash -c 'exit 32'}, :exit_code => 32)
       end
 
     end
