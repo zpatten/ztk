@@ -60,8 +60,8 @@ module ZTK
     # @param [Hash] options The options hash for executing the command.
     #
     # @return [OpenStruct#output] The output of the command, both STDOUT and
-    #   STDERR.
-    # @return [OpenStruct#exit] The exit status (i.e. $?).
+    #   STDERR combined.
+    # @return [OpenStruct#exit_code] The exit code of the process.
     #
     # @example Execute a command:
     #
@@ -83,6 +83,7 @@ module ZTK
       config.logger.info { "command(#{command.inspect})" }
 
       output = ""
+      exit_code = 1
       stdout_header = false
       stderr_header = false
 
@@ -161,18 +162,15 @@ module ZTK
       config.logger.debug { "exit_code(#{$?.inspect})" }
 
       if RUBY_VERSION >= "1.9"
-        if ($?.exitstatus != options.exit_code)
-          log_and_raise(CommandError, "exec(#{command.inspect}, #{options.inspect}) failed! [#{$?.inspect}]")
-        end
-        result = OpenStruct.new(:output => output, :exit_code => $?.exitstatus)
+        exit_code = $?.exitstatus
       else
-        if ($? != options.exit_code)
-          log_and_raise(CommandError, "exec(#{command.inspect}, #{options.inspect}) failed! [#{$?.inspect}]")
-        end
-        result = OpenStruct.new(:output => output, :exit_code => $?)
+        exit_code = $?
       end
 
-      result
+      if (exit_code != options.exit_code)
+        log_and_raise(CommandError, "exec(#{command.inspect}, #{options.inspect}) failed! [#{exit_code}]")
+      end
+      OpenStruct.new(:output => output, :exit_code => exit_code)
     end
 
     def upload(*args)

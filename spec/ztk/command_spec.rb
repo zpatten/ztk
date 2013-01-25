@@ -93,7 +93,7 @@ describe ZTK::Command do
         subject.config do |config|
           config.stdout = stdout
         end
-        lambda { subject.exec("exit 254") }.should raise_error ZTK::CommandError
+        lambda { subject.exec("/bin/bash -c 'exit 64'") }.should raise_error ZTK::CommandError
       end
 
       it "should return a instance of an OpenStruct object" do
@@ -116,21 +116,24 @@ describe ZTK::Command do
         result.exit_code.should == data
       end
 
-      # it "should return a instance of an OpenStruct object" do
-      #   stdout = StringIO.new
-      #   subject.config do |config|
-      #     config.stdout = stdout
-      #   end
-      #   result = subject.exec(%q{echo "Hello World"})
-      #   result.should be_an_instance_of OpenStruct
-      # end
+      it "should return the output" do
+        stdout = StringIO.new
+        subject.config do |config|
+          config.stdout = stdout
+        end
+        data = "Hello World @ #{Time.now.utc}"
+
+        result = subject.exec(%Q{echo "#{data}"})
+        result.output.match(data).should_not be nil
+      end
 
       it "should allow us to change the expected exit code" do
         stdout = StringIO.new
         subject.config do |config|
           config.stdout = stdout
         end
-        result = subject.exec(%q{/bin/bash -c 'exit 32'}, :exit_code => 32)
+        data = 32
+        result = subject.exec(%Q{/bin/bash -c 'exit #{data}'}, :exit_code => data)
       end
 
     end
