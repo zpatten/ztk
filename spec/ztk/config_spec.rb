@@ -45,26 +45,26 @@ describe ZTK::Config do
 
     end
 
-    describe "behaviour" do
+  end
 
-      it "should allow setting of arbratary configuration keys" do
-        subject.thing = "something"
-        subject.thing.should == "something"
-        subject[:thing].should == "something"
-      end
+  describe "behaviour" do
 
-      it "should allow hash bracket style access to configuration keys" do
-        subject[:thing] = "nothing"
-        subject[:thing].should == "nothing"
-      end
+    it "should allow setting of arbratary configuration keys" do
+      subject.thing = "something"
+      subject.thing.should == "something"
+      subject[:thing].should == "something"
+    end
 
-      it "should allow loading of configurations from disk" do
-        config_file = File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "test-config.rb"))
-        subject.from_file(config_file)
-        subject.message.should == "Hello World"
-        subject.thing.should == 2
-      end
+    it "should allow hash bracket style access to configuration keys" do
+      subject[:thing] = "nothing"
+      subject[:thing].should == "nothing"
+    end
 
+    it "should allow loading of configurations from disk" do
+      config_file = File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "test-config.rb"))
+      subject.from_file(config_file)
+      subject.message.should == "Hello World"
+      subject.thing.should == 2
     end
 
   end

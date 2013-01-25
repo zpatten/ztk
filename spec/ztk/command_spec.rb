@@ -62,26 +62,105 @@ describe ZTK::Command do
 
   end
 
-  it "should be able to execute the command \"hostname -f\"" do
-    stdout = StringIO.new
-    subject.config do |config|
-      config.stdout = stdout
-    end
-    hostname = %x(hostname -f).chomp
-    status = subject.exec("hostname -f")
-    status.exit.exitstatus.should == 0
-    stdout.rewind
-    stdout.read.chomp.should == hostname
-  end
+  describe "behaviour" do
 
-  it "should timeout after the period specificed" do
-    stdout = StringIO.new
-    subject.config do |config|
-      config.stdout = stdout
-      config.timeout = 3
+    describe "execute" do
+
+      it "should be able to execute the command \"hostname -f\"" do
+        stdout = StringIO.new
+        subject.config do |config|
+          config.stdout = stdout
+        end
+        hostname = %x(hostname -f).chomp
+        status = subject.exec("hostname -f")
+        status.exit.exitstatus.should == 0
+        stdout.rewind
+        stdout.read.chomp.should == hostname
+      end
+
+      it "should timeout after the period specified" do
+        stdout = StringIO.new
+        subject.config do |config|
+          config.stdout = stdout
+          config.timeout = 1
+        end
+        hostname = %x(hostname -f).chomp
+        lambda { subject.exec("hostname -f ; sleep 10") }.should raise_error ZTK::CommandError
+      end
+
     end
-    hostname = %x(hostname -f).chomp
-    lambda { subject.exec("hostname -f ; sleep 10") }.should raise_error ZTK::CommandError
+
+    describe "upload" do
+
+      it "should raise a 'Not Supported' exception when attempting to upload" do
+        lambda { subject.upload("abc", "123") }.should raise_error
+      end
+
+    end
+
+    describe "download" do
+
+      it "should raise a 'Not Supported' exception when attempting to download" do
+        lambda { subject.download("abc", "123") }.should raise_error
+      end
+
+    end
+
+    describe "stdout" do
+
+      it "should capture STDOUT and send it to the appropriate pipe" do
+        stdout = StringIO.new
+        stderr = StringIO.new
+        stdin = StringIO.new
+
+        subject.config do |config|
+          config.stdout = stdout
+          config.stderr = stderr
+          config.stdin = stdin
+        end
+        data = "Hello World @ #{Time.now.utc}"
+
+        subject.exec(%Q{echo "#{data}" -f >&1})
+
+        stdout.rewind
+        stdout.read.match(data).should_not be nil
+
+        stderr.rewind
+        stderr.read.match(data).should be nil
+
+        stdin.rewind
+        stdin.read.match(data).should be nil
+      end
+
+    end
+
+    describe "stderr" do
+
+      it "should capture STDERR and send it to the appropriate pipe" do
+        stdout = StringIO.new
+        stderr = StringIO.new
+        stdin = StringIO.new
+
+        subject.config do |config|
+          config.stdout = stdout
+          config.stderr = stderr
+          config.stdin = stdin
+        end
+        data = "Hello World @ #{Time.now.utc}"
+
+        subject.exec(%Q{echo "#{data}" -f >&2})
+
+        stdout.rewind
+        stdout.read.match(data).should be nil
+
+        stderr.rewind
+        stderr.read.match(data).should_not be nil
+
+        stdin.rewind
+        stdin.read.match(data).should be nil
+      end
+    end
+
   end
 
 end
