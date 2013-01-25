@@ -159,13 +159,13 @@ module ZTK
       parent_stdout_reader.close
       parent_stderr_reader.close
 
-      config.logger.debug { "exit_code(#{$?.inspect})" }
-
       if RUBY_VERSION >= "1.9"
         exit_code = $?.exitstatus
       else
         exit_code = $?
       end
+
+      config.logger.debug { "exit_code(#{exit_code})" }
 
       if (exit_code != options.exit_code)
         log_and_raise(CommandError, "exec(#{command.inspect}, #{options.inspect}) failed! [#{exit_code}]")
