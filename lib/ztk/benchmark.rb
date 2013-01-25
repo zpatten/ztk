@@ -54,7 +54,7 @@ module ZTK
         end
 
         (options.message && options.mark) and options.stdout.print("#{options.mark}\n" % benchmark)
-        options.logger.info { "#{options.message} #{options.mark}" }
+        options.logger.info { "#{options.message} #{options.mark}" % benchmark }
 
         benchmark
       end
