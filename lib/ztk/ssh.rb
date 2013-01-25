@@ -203,6 +203,7 @@ module ZTK
       config.logger.info { "exec(#{command.inspect}, #{options.inspect})" }
 
       output = ""
+      exit_code = -1
       stdout_header = false
       stderr_header = false
 
