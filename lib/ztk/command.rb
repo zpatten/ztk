@@ -80,7 +80,7 @@ module ZTK
 
       config.logger.debug { "config(#{config.inspect})" }
       config.logger.debug { "options(#{options.inspect})" }
-      config.logger.debug { "command(#{command.inspect})" }
+      config.logger.info { "command(#{command.inspect})" }
 
       output = ""
       stdout_header = false
