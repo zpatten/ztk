@@ -42,7 +42,7 @@ module ZTK
         }.merge(options))
         options.logger.debug { "options(#{options.inspect})" }
 
-        !block_given? and log_and_raise(SpinnerError, "You must supply a block!")
+        !block_given? and Base.log_and_raise(options.logger, SpinnerError, "You must supply a block!")
 
         charset = %w( | / - \\ )
         count = 0
