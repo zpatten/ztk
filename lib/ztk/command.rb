@@ -77,6 +77,8 @@ module ZTK
       end
 
       options = OpenStruct.new({ :exit_code => 0, :silence => false }.merge(options))
+
+      config.logger.debug { "config(#{config.inspect})" }
       config.logger.debug { "options(#{options.inspect})" }
       config.logger.debug { "command(#{command.inspect})" }
 
