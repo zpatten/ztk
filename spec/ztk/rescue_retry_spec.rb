@@ -46,7 +46,7 @@ describe ZTK::RescueRetry do
       }.should raise_error ZTK::RescueRetryError, "You must supply a block!"
     end
 
-    it "should retry on all exceptions by default" do
+    it "should retry on all exceptions by default if one is not supplied" do
       $counter = 0
       lambda {
         ZTK::RescueRetry.try(:tries => 3) do
@@ -57,7 +57,7 @@ describe ZTK::RescueRetry do
       $counter.should == 3
     end
 
-    it "should retry on specific exceptions" do
+    it "should retry on supplied exception" do
       $counter = 0
       lambda {
         ZTK::RescueRetry.try(:tries => 3, :on => EOFError) do
@@ -68,7 +68,7 @@ describe ZTK::RescueRetry do
       $counter.should == 3
     end
 
-    it "should not retry on specific exceptions if exceptions do not match" do
+    it "should not retry on exception if it does not match the supplied exception" do
       $counter = 0
       lambda {
         ZTK::RescueRetry.try(:tries => 3, :on => EOFError) do

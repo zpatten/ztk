@@ -82,7 +82,7 @@ describe ZTK::Command do
         stdout = StringIO.new
         subject.config do |config|
           config.stdout = stdout
-          config.timeout = 1
+          config.timeout = WAIT_SMALL
         end
         hostname = %x(hostname -f).chomp
         lambda { subject.exec("hostname -f ; sleep 10") }.should raise_error ZTK::CommandError

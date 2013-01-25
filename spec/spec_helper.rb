@@ -30,6 +30,8 @@ end if ENV["COVERAGE"]
 
 ENV['LOG_LEVEL'] = "DEBUG"
 
+WAIT_SMALL = 3
+
 $logger = ZTK::Logger.new(File.join("/tmp", "test.log"))
 
 $logger.info { "=" * 80 }

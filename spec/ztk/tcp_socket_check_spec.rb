@@ -128,11 +128,11 @@ describe ZTK::TCPSocketCheck do
 
       describe "read check" do
 
-        it "should return false on a read check to 127.0.0.1:1" do
+        it "should return false on a read check to 127.0.0.1:0" do
           subject.config do |config|
             config.host = "127.0.0.1"
-            config.port = 1
-            config.wait = 5
+            config.port = 0
+            config.wait = WAIT_SMALL
           end
           subject.wait.should == false
         end
@@ -141,7 +141,7 @@ describe ZTK::TCPSocketCheck do
           subject.config do |config|
             config.host = "github.com"
             config.port = 22
-            config.wait = 5
+            config.wait = WAIT_SMALL
           end
           subject.wait.should == true
         end
@@ -155,7 +155,7 @@ describe ZTK::TCPSocketCheck do
             config.host = "127.0.0.1"
             config.port = 1
             config.data = "GET"
-            config.wait = 5
+            config.wait = WAIT_SMALL
           end
           subject.wait.should == false
         end
@@ -165,7 +165,7 @@ describe ZTK::TCPSocketCheck do
             config.host = "www.google.com"
             config.port = 80
             config.data = "GET"
-            config.wait = 5
+            config.wait = WAIT_SMALL
           end
           subject.wait.should == true
         end
