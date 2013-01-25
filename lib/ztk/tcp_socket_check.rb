@@ -114,7 +114,7 @@ module ZTK
         config.logger.debug { "read(#{config.host}:#{config.port})" }
         ((IO.select([socket], nil, nil, config.timeout) && socket.gets) ? true : false)
       else
-        config.logger.debug { "write(#{config.host}:#{config.port}, '#{config.data}')" }
+        config.logger.debug { "write(#{config.host}:#{config.port}, #{config.data.size} bytes)" }
         ((IO.select(nil, [socket], nil, config.timeout) && socket.write(config.data)) ? true : false)
       end
 
@@ -132,10 +132,10 @@ module ZTK
     # @return [Boolean] Returns true or false depending on weither the socket
     #   became ready or not.
     def wait
-      config.logger.debug { "waiting for socket to become available; timeout after #{config.wait} seconds" }
+      config.logger.debug { "Waiting for socket to become available; timeout after #{config.wait} seconds." }
       Timeout.timeout(config.wait) do
         until ready?
-          config.logger.debug { "sleeping 1 second" }
+          config.logger.debug { "Sleeping 1 second." }
           sleep(1)
         end
       end
