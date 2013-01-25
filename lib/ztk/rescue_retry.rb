@@ -38,7 +38,7 @@ module ZTK
         }.merge(options))
         options.logger.debug { "options(#{options.inspect})" }
 
-        !block_given? and raise RescueRetryError, "You must supply a block!"
+        !block_given? and log_and_raise(RescueRetryError, "You must supply a block!")
 
         begin
           return block.call

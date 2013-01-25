@@ -149,10 +149,7 @@ module ZTK
         end
       rescue Timeout::Error => e
         direct_log(:debug) { log_header("TIMEOUT") }
-
-        message = "Process timed out!"
-        config.logger.fatal { message }
-        raise CommandError, message
+        log_and_raise(CommandError, "Process timed out!")
       end
 
       Process.waitpid(pid)
@@ -173,11 +170,11 @@ module ZTK
     end
 
     def upload(*args)
-      raise CommandError, "Not Supported"
+      log_and_raise(CommandError, "Not Supported")
     end
 
     def download(*args)
-      raise CommandError, "Not Supported"
+      log_and_raise(CommandError, "Not Supported")
     end
 
   end

@@ -217,7 +217,7 @@ module ZTK
           direct_log(:debug) { log_header("OPENED") }
 
           chan.exec(command) do |ch, success|
-            raise SSHError, "Could not execute '#{command}'." unless success
+            success or log_and_raise(SSHError, "Could not execute '#{command}'.")
 
             ch.on_data do |c, data|
               if !stdout_header

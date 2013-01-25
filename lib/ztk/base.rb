@@ -137,7 +137,7 @@ module ZTK
       @config.logger.nil? and raise BaseError, "You must supply a logger for direct logging support!"
 
       if !block_given?
-        raise BaseError, "You must supply a block to the log method!"
+        log_and_raise(BaseError, "You must supply a block to the log method!")
       elsif (@config.logger.level <= ZTK::Logger.const_get(log_level.to_s.upcase))
         if @config.logger.respond_to?(:logdev)
           @config.logger.logdev.write(yield)
