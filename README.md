@@ -16,7 +16,7 @@ Issues:
 
 Documentation:
 
-* http://rubydoc.info/gems/ztk
+* http://jovelabs.github.com/ztk/
 
 Wiki:
 
