@@ -41,3 +41,20 @@ task :coverage do
 end
 
 ################################################################################
+
+require 'yard'
+require 'yard/rake/yardoc_task'
+
+namespace :doc do
+  desc 'Generate Yardoc documentation'
+  YARD::Rake::YardocTask.new do |t|
+    t.name = 'yard'
+    t.options = ['--verbose']
+    # t.files = ['lib/**/*.rb']
+  end
+
+end
+desc 'Alias to doc:yard'
+task 'doc' => 'doc:yard'
+
+################################################################################
