@@ -2,7 +2,7 @@
 
 # ZTK
 
-Zachary's Tool Kit is a general purpose utility gem, featuring a collection of classes meant to simplify development of complex systems in Ruby.
+Zachary's (DevOp) Tool Kit is a general purpose utility gem, featuring a collection of classes meant to simplify development of complex systems in Ruby.
 
 # RESOURCES
 
@@ -24,7 +24,7 @@ Wiki:
 
 # LICENSE
 
-ZTK - Zachary's Tool Kit
+ZTK - Zachary's (DevOp) Tool Kit
 
 * Author: Zachary Patten <zachary@jovelabs.net>
 * Copyright: Copyright (c) Jove Labs
