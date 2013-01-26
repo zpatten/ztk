@@ -61,7 +61,8 @@ namespace :doc do
     task :publish => ['doc:pages'] do
       describe = %x(git describe).chomp.strip
       Dir.chdir(DOC_PATH) do
-        puts(%x{git commit -am"Generated YARD Documentation for #{GEM_NAME.upcase} #{describe}"})
+        puts(%x{git add -Av})
+        puts(%x{git commit -m"Generated YARD Documentation for #{GEM_NAME.upcase} #{describe}"})
         puts(%x{git push origin gh-pages})
       end
     end
