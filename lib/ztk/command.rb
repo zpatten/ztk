@@ -83,6 +83,11 @@ module ZTK
       config.logger.debug { "options=#{options.send(:table).inspect}" }
       config.logger.info { "command(#{command.inspect})" }
 
+      if config.replace_current_process
+        config.logger.fatal { "REPLACING CURRENT PROCESS - GOODBYE!" }
+        Kernel.exec(command)
+      end
+
       output = ""
       exit_code = -1
       stdout_header = false
