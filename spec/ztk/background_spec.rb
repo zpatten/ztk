@@ -74,7 +74,67 @@ describe ZTK::Background do
         subject.process do
           Process.pid
         end
+
         subject.wait
+        subject.result.should be_kind_of Integer
+        subject.result.should > 0
+        subject.result.should_not == Process.pid
+      end
+
+    end
+
+    describe "alive?" do
+
+      it "should respond true when the process is still running" do
+        subject.process do
+          sleep(WAIT_SMALL)
+        end
+        subject.alive?.should be true
+
+        subject.wait
+        subject.result.should be_kind_of Integer
+        subject.result.should > 0
+        subject.result.should == WAIT_SMALL
+      end
+
+      it "should respond false when the process is no longer running" do
+        subject.process do
+          Process.pid
+        end
+        subject.wait
+        sleep(WAIT_SMALL)
+
+        subject.alive?.should be false
+
+        subject.result.should be_kind_of Integer
+        subject.result.should > 0
+        subject.result.should_not == Process.pid
+      end
+
+    end
+
+    describe "dead?" do
+
+      it "should respond false when the process is still running" do
+        subject.process do
+          sleep(WAIT_SMALL)
+        end
+        subject.dead?.should be false
+
+        subject.wait
+        subject.result.should be_kind_of Integer
+        subject.result.should > 0
+        subject.result.should == WAIT_SMALL
+      end
+
+      it "should respond true when the process is no longer running" do
+        subject.process do
+          Process.pid
+        end
+        subject.wait
+        sleep(WAIT_SMALL)
+
+        subject.dead?.should be true
 
         subject.result.should be_kind_of Integer
         subject.result.should > 0

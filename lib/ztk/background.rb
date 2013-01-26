@@ -144,6 +144,14 @@ module ZTK
       nil
     end
 
+    def alive?
+      (Process.getpgid(@pid).is_a?(Integer) rescue false)
+    end
+
+    def dead?
+      !alive?
+    end
+
   end
 
 end
