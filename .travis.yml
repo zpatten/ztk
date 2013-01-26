@@ -10,4 +10,4 @@ branches:
 
 notifications:
   irc:
-    - "irc.freenode.org#jovelabs"
+    - "irc.freenode.net#jovelabs"
