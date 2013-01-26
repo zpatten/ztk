@@ -80,7 +80,7 @@ module ZTK
     #
     # @yield Block should execute tasks to be performed in background.
     # @yieldreturn [Object] Block can return any object to be marshalled back to
-    #   the parent processes result set.
+    #   the parent processes.
     # @return [Integer] Returns the pid of the child process forked.
     def process(&block)
       !block_given? and log_and_raise(BackgroundError, "You must supply a block to the process method!")
@@ -120,6 +120,10 @@ module ZTK
     #
     # If a process successfully finished, it's return value from the *process*
     # block is stored into the result set.
+    #
+    # It's advisable to use something like the *at_exit* hook to ensure you don't
+    # leave orphaned processes.  For example, in the *at_exit* hook you could
+    # call *wait* to block until the child process finishes up.
     #
     # @return [Array<pid, status, data>] An array containing the pid,
     #   status and data returned from the process block.  If wait2() fails nil
