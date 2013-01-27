@@ -19,6 +19,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency("erubis", ">= 0")
   gem.add_dependency("net-ssh", ">= 0")
   gem.add_dependency("net-sftp", ">= 0")
+  gem.add_dependency("activesupport", ">= 0")
 
   gem.add_development_dependency("pry", ">= 0")
   gem.add_development_dependency("rake", ">= 0")

@@ -18,6 +18,8 @@
 #
 ################################################################################
 
+require "active_support/inflector"
+
 # @author Zachary Patten <zachary@jovelabs.net>
 module ZTK
   module DSL

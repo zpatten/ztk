@@ -33,18 +33,31 @@ module ZTK::DSL::Core::Relations
     end
 
     def get_belongs_to_reference(key)
+      puts("==> get_belongs_to_reference(#{key.inspect})")
+
       if belongs_to_references.key?(key)
+        puts("  --> found key")
+
         belongs_to_references[key]
       else
-        constantize(classify(key.to_s))
+        puts("  --> looking up key")
 
-        belongs_to_references[key] = nil
+        key_id = send("#{key}_id")
+        item = key.to_s.classify.constantize.find(key_id).first
+        belongs_to_references[key] = item
       end
     end
 
     def set_belongs_to_reference(key, value)
+      puts("==> set_belongs_to_reference(#{key.inspect}, #{value.inspect})")
+
       belongs_to_references[key] = value
-      attributes.merge!("#{key}_id" => value)
+      attributes.merge!("#{key}_id".to_sym => value.id)
+
+      klass = self.class.to_s.downcase.pluralize
+      many = value.send(klass)
+      many << self
+      many.uniq!
     end
 
     def save_belongs_to_references
@@ -61,6 +74,8 @@ module ZTK::DSL::Core::Relations
         has_many_relations[key] = {:key => key}.merge(options)
 
         define_method(key) do |*args|
+          puts("==> #{key}(#{args.inspect})")
+
           if args.count == 0
             get_belongs_to_reference(key)
           else
@@ -69,8 +84,36 @@ module ZTK::DSL::Core::Relations
         end
 
         define_method("#{key}=") do |value|
+          puts("==> #{key}=(#{value.inspect})")
+
           set_belongs_to_reference(key, value)
         end
+
+        define_method("#{key}_id") do |*args|
+          puts("==> #{key}_id")
+
+          if args.count == 0
+            attributes["#{key}_id".to_sym]
+          else
+            attributes["#{key}_id".to_sym] = args.first
+          end
+
+        end
+
+        define_method("#{key}_id=") do |value|
+          puts("==> #{key}_id=#{value.inspect}")
+
+          if value != attributes["#{key}_id".to_sym]
+            item = key.to_s.classify.constantize.find(value).first
+            set_belongs_to_reference(key, item)
+          else
+            value
+          end
+        end
+
+        # define_method(singularize(key)) do |value|
+        #   set_belongs_to_reference(key, value)
+        # end
 
         # define_method(singularize(key)) do |&block|
         #   puts get_belongs_to_reference(key).inspect

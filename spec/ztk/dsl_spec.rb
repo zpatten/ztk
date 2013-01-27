@@ -35,39 +35,16 @@ describe ZTK::DSL do
     $stdin = File.open("/dev/null", "r")
   end
 
+
   describe "class" do
 
     it "should be an instance of ZTK::DSL" do
       subject.should be_an_instance_of DSLTest
     end
 
-    describe "default config" do
-
-      # it "should use $stdout as the default" do
-      #   subject.config.stdout.should be_a_kind_of $stdout.class
-      #   subject.config.stdout.should == $stdout
-      # end
-
-      # it "should use $stderr as the default" do
-      #   subject.config.stderr.should be_a_kind_of $stderr.class
-      #   subject.config.stderr.should == $stderr
-      # end
-
-      # it "should use $stdin as the default" do
-      #   subject.config.stdin.should be_a_kind_of $stdin.class
-      #   subject.config.stdin.should == $stdin
-      # end
-
-      # it "should use $logger as the default" do
-      #   subject.config.logger.should be_a_kind_of ZTK::Logger
-      #   subject.config.logger.should == $logger
-      # end
-
-    end
-
   end
 
-  describe "attribute" do
+  describe "attributes" do
 
     it "should allow setting of an attribute via a block" do
       data = "Hello World @ #{Time.now.utc}"
@@ -109,24 +86,203 @@ describe ZTK::DSL do
 
   end
 
-  describe "nesting" do
+  describe "relations" do
 
-    it "should allow nesting of DSL classes" do
-      data = "Hello World @ #{Time.now.utc}"
-      class DSLTestA < ZTK::DSL::Base
-        has_many :dsl_test_b
+    before(:each) do
+      class Environment < ZTK::DSL::Base
+        has_many :containers
+
         attribute :name
       end
 
-      class DSLTestB < ZTK::DSL::Base
+      class Container < ZTK::DSL::Base
+        belongs_to :environment
+
         attribute :name
       end
+    end
 
-      dsl_test = DSLTest.new do
-        name "#{data}"
+    describe "has_many" do
+
+      it "can has_many via nesting" do
+        env = Environment.new do
+          name "environment"
+          container do
+            name "container0"
+          end
+          container do
+            name "container1"
+          end
+          container do
+            name "container2"
+          end
+        end
+
+        env.name.should == "environment"
+        env.containers.count.should == 3
+        env.containers.each do |container|
+          %w(container0 container1 container2).include?(container.name).should == true
+          container.environment.should == env
+          container.environment_id.should == env.id
+        end
       end
 
-      dsl_test.name.should == data
+      it "can has_many via direct object assignment" do
+        env = Environment.new do
+          name "environment"
+        end
+        con0 = Container.new do
+          name "container0"
+        end
+        con1 = Container.new do
+          name "container1"
+        end
+        con2 = Container.new do
+          name "container2"
+        end
+        con0.environment = env
+        con1.environment = env
+        con2.environment = env
+
+        env.name.should == "environment"
+        env.containers.count.should == 3
+        env.containers.each do |container|
+          %w(container0 container1 container2).include?(container.name).should == true
+          container.environment.should == env
+          container.environment_id.should == env.id
+        end
+      end
+
+      it "can has_many via direct object id assignment" do
+        env = Environment.new do
+          name "environment"
+        end
+        con0 = Container.new do
+          name "container0"
+        end
+        con1 = Container.new do
+          name "container1"
+        end
+        con2 = Container.new do
+          name "container2"
+        end
+        con0.environment_id = env.id
+        con1.environment_id = env.id
+        con2.environment_id = env.id
+
+        env.name.should == "environment"
+        env.containers.count.should == 3
+        env.containers.each do |container|
+          %w(container0 container1 container2).include?(container.name).should == true
+          container.environment.should == env
+          container.environment_id.should == env.id
+        end
+      end
+
+      it "can has_many via direct object addition" do
+        env = Environment.new do
+          name "environment"
+        end
+        con0 = Container.new do
+          name "container0"
+        end
+        con1 = Container.new do
+          name "container1"
+        end
+        con2 = Container.new do
+          name "container2"
+        end
+        env.containers << con0
+        env.containers << con1
+        env.containers << con2
+
+        env.name.should == "environment"
+        env.containers.count.should == 3
+        env.containers.each do |container|
+          %w(container0 container1 container2).include?(container.name).should == true
+          container.environment.should == env
+          container.environment_id.should == env.id
+        end
+      end
+
+    end
+
+    describe "belongs_to" do
+      it "can belong_to via nesting" do
+        env = Environment.new do
+          name "environment"
+          container do
+            name "container0"
+          end
+          container do
+            name "container1"
+          end
+          container do
+            name "container2"
+          end
+        end
+
+        env.name.should == "environment"
+        env.containers.count.should == 3
+        env.containers.each do |container|
+          %w(container0 container1 container2).include?(container.name).should == true
+          container.environment.should == env
+          container.environment_id.should == env.id
+        end
+      end
+
+      it "can belong_to via direct assignment" do
+        env = Environment.new do
+          name "environment"
+        end
+        con0 = Container.new do
+          name "container0"
+          environment env
+        end
+        con1 = Container.new do
+          name "container1"
+          environment env
+        end
+        con2 = Container.new do
+          name "container2"
+          environment env
+        end
+
+        env.name.should == "environment"
+        env.containers.count.should == 3
+        env.containers.each do |container|
+          %w(container0 container1 container2).include?(container.name).should == true
+          container.environment.should == env
+          container.environment_id.should == env.id
+        end
+      end
+
+      it "can has_many via direct object id assignment" do
+        env = Environment.new do
+          name "environment"
+        end
+        con0 = Container.new do
+          name "container0"
+          environment_id env.id
+        end
+        con1 = Container.new do
+          name "container1"
+          environment_id env.id
+        end
+        con2 = Container.new do
+          name "container2"
+          environment_id env.id
+        end
+
+        env.name.should == "environment"
+        env.containers.count.should == 3
+        env.containers.each do |container|
+          %w(container0 container1 container2).include?(container.name).should == true
+          container.environment.should == env
+          container.environment_id.should == env.id
+        end
+      end
+
     end
 
   end

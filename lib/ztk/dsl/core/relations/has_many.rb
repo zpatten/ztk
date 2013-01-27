@@ -33,14 +33,22 @@ module ZTK::DSL::Core::Relations
     end
 
     def get_has_many_reference(key)
+      puts("==> get_has_many_reference(#{key.inspect})")
+
       if has_many_references.key?(key)
+        puts("  --> found key")
+
         has_many_references[key]
       else
+        puts("  --> looking up key")
+
         has_many_references[key] ||= []
       end
     end
 
     def set_has_many_reference(key, value)
+      puts("==> set_has_many_reference(#{key.inspect}, #{value.inspect})")
+
       dataset = get_has_many_reference(key)
       dataset.clear
       dataset.concat(value)
@@ -57,9 +65,13 @@ module ZTK::DSL::Core::Relations
     module ClassMethods
 
       def has_many(key, options={})
+        puts("==> has_many(#{key.inspect}, #{options.inspect})")
+
         has_many_relations[key] = {:key => key}.merge(options)
 
         define_method(key) do |*args|
+          puts("==> #{key}")
+
           if args.count == 0
             get_has_many_reference(key)
           else
@@ -68,13 +80,17 @@ module ZTK::DSL::Core::Relations
         end
 
         define_method("#{key}=") do |value|
-          set_has_many_rerence(key, value)
+          puts("==> #{key}=(#{value.inspect})")
+
+          set_has_many_reference(key, value)
         end
 
-        define_method(singularize(key)) do |&block|
-          puts get_has_many_reference(key).inspect
-          data = constantize(classify(key.to_s)).new(&block)
+        define_method(key.to_s.singularize) do |&block|
+          puts("==> #{key.to_s.singularize}(#{block.inspect})")
+
+          data = key.to_s.classify.constantize.new(&block)
           get_has_many_reference(key) << data
+          data.send("#{self.class.to_s.singularize.downcase}=", self)
           data
         end
       end

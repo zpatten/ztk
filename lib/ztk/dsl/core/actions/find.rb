@@ -29,12 +29,18 @@ module ZTK::DSL::Core::Actions
 
     module ClassMethods
 
-      def find(id)
-        dataset.select{ |data| data.id == id }.first
-      end
-
       def all
         dataset
+      end
+
+      def find(*args)
+        puts("==> #{self.to_s}.find(#{args.inspect})")
+        ids = [args].flatten
+        all.select{ |data| ids.include?(data.id) }
+      end
+
+      def count
+        all.count
       end
 
     end
