@@ -24,13 +24,12 @@ module ZTK::DSL
   class Base
     include(ZTK::DSL::Core)
 
-    # class_attribute :model_attributes
-
-    attribute :id
-
     def self.inherited(base)
       puts("inherited(#{base})")
       base.send(:extend, ZTK::DSL::Base::ClassMethods)
+      base.instance_eval do
+        attribute :id
+      end
     end
 
     def self.included(base)
