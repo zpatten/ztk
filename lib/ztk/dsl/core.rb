@@ -2,6 +2,7 @@ module ZTK::DSL
   module Core
     autoload :Attributes, "ztk/dsl/core/attributes"
     autoload :Actions, "ztk/dsl/core/actions"
+    autoload :Dataset, "ztk/dsl/core/dataset"
     autoload :IO, "ztk/dsl/core/io"
     autoload :Relations, "ztk/dsl/core/relations"
 
@@ -11,6 +12,12 @@ module ZTK::DSL
 
         base.send(:extend, ZTK::DSL::Core::DualMethods)
         base.send(:include, ZTK::DSL::Core::DualMethods)
+
+        base.send(:include, ZTK::DSL::Core::Attributes)
+        base.send(:include, ZTK::DSL::Core::Actions)
+        base.send(:include, ZTK::DSL::Core::Dataset)
+        base.send(:include, ZTK::DSL::Core::IO)
+        base.send(:include, ZTK::DSL::Core::Relations)
       end
     end
 

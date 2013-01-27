@@ -23,24 +23,18 @@ module ZTK::DSL
 
   class Base
     include(ZTK::DSL::Core)
-    include(ZTK::DSL::Core::Attributes)
-    include(ZTK::DSL::Core::Actions)
-    include(ZTK::DSL::Core::IO)
-    include(ZTK::DSL::Core::Relations)
 
     class << self
       unless defined?(@@id)
         @@id = 0
       end
 
-      unless defined?(@@dataset)
-        @@dataset = nil
-      end
     end
 
     def self.inherited(base)
       puts("inherited(#{base})")
       base.send(:extend, ZTK::DSL::Base::ClassMethods)
+      # base.add_dataset base #self.to_s.downcase.to_sym
     end
 
     def self.included(base)
@@ -62,7 +56,7 @@ module ZTK::DSL
       end
 
       klass = self.class.to_s.downcase.to_sym
-      self.class.send(:dataset, klass) << self
+      self.class.dataset << self #(klass) << self
     end
 
     def inspect
@@ -77,19 +71,6 @@ module ZTK::DSL
 
     module ClassMethods
 
-      def dataset(*args)
-        @@dataset ||= {}
-        key = args.first
-        if key.nil?
-          @@dataset
-        else
-          if @@dataset.key?(key)
-            @@dataset[key]
-          else
-            @@dataset[key] ||= []
-          end
-        end
-      end
 
       def inspect
         klass = self.to_s.downcase.to_sym
