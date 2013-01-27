@@ -34,7 +34,6 @@ module ZTK::DSL
     def self.inherited(base)
       puts("inherited(#{base})")
       base.send(:extend, ZTK::DSL::Base::ClassMethods)
-      # base.add_dataset base #self.to_s.downcase.to_sym
     end
 
     def self.included(base)
