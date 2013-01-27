@@ -387,7 +387,7 @@ describe ZTK::DSL do
       Network.purge
     end
 
-    it "one parent, two children with interdependency, id assignment" do
+    it "one parent, two children nested with interdependency, id assignment" do
       env = Environment.new do
         name "environment"
 
@@ -445,7 +445,70 @@ describe ZTK::DSL do
       end
     end
 
-    it "one parent, two children with interdependency, direct assignment" do
+    it "one parent, two children with interdependency, id assignment" do
+      env = Environment.new do
+        id :env0
+
+        name "environment"
+      end
+
+      Network.new do
+        id :net0
+        name "network0"
+      end
+      Network.new do
+        id :net1
+        name "network1"
+      end
+
+      Container.new do
+        id :con0
+        name "container0"
+        network_id :net0
+        environment_id :env0
+      end
+      Container.new do
+        id :con1
+        name "container1"
+        network_id :net0
+        environment_id :env0
+      end
+      Container.new do
+        id :con2
+        name "container2"
+        network_id :net1
+        environment_id :env0
+      end
+
+      env.name.should == "environment"
+      env.containers.count.should == 3
+      env.containers.each do |container|
+        %w(container0 container1 container2).include?(container.name).should == true
+        container.environment.should == env
+        container.environment_id.should == env.id
+      end
+      env.networks.each do |network|
+        %w(network0 network1).include?(network.name).should == true
+        network.environment.should == env
+        network.environment_id.should == env.id
+      end
+
+      n0 = Network.find(:net0).first
+      n0.containers.each do |container|
+        %w(container0 container1).include?(container.name).should == true
+        container.environment.should == env
+        container.environment_id.should == env.id
+      end
+
+      n1 = Network.find(:net1).first
+      n1.containers.each do |container|
+        %w(container2).include?(container.name).should == true
+        container.environment.should == env
+        container.environment_id.should == env.id
+      end
+    end
+
+    it "one parent, two children nested with interdependency, direct assignment" do
       env = Environment.new do
         name "environment"
 
@@ -473,6 +536,69 @@ describe ZTK::DSL do
           name "container2"
           network net1
         end
+      end
+
+      env.name.should == "environment"
+      env.containers.count.should == 3
+      env.containers.each do |container|
+        %w(container0 container1 container2).include?(container.name).should == true
+        container.environment.should == env
+        container.environment_id.should == env.id
+      end
+      env.networks.each do |network|
+        %w(network0 network1).include?(network.name).should == true
+        network.environment.should == env
+        network.environment_id.should == env.id
+      end
+
+      n0 = Network.find(:net0).first
+      n0.containers.each do |container|
+        %w(container0 container1).include?(container.name).should == true
+        container.environment.should == env
+        container.environment_id.should == env.id
+      end
+
+      n1 = Network.find(:net1).first
+      n1.containers.each do |container|
+        %w(container2).include?(container.name).should == true
+        container.environment.should == env
+        container.environment_id.should == env.id
+      end
+    end
+
+    it "one parent, two children with interdependency, direct assignment" do
+      env = Environment.new do
+        id :env0
+
+        name "environment"
+      end
+
+      Network.new do
+        id :net0
+        name "network0"
+      end
+      Network.new do
+        id :net1
+        name "network1"
+      end
+
+      Container.new do
+        id :con0
+        name "container0"
+        network_id :net0
+        environment_id :env0
+      end
+      Container.new do
+        id :con1
+        name "container1"
+        network_id :net0
+        environment_id :env0
+      end
+      Container.new do
+        id :con2
+        name "container2"
+        network_id :net1
+        environment_id :env0
       end
 
       env.name.should == "environment"
