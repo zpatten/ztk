@@ -179,31 +179,31 @@ describe ZTK::DSL do
         end
       end
 
-      it "can has_many via direct object addition" do
-        env = Environment.new do
-          name "environment"
-        end
-        con0 = Container.new do
-          name "container0"
-        end
-        con1 = Container.new do
-          name "container1"
-        end
-        con2 = Container.new do
-          name "container2"
-        end
-        env.containers << con0
-        env.containers << con1
-        env.containers << con2
+      # it "can has_many via direct object addition" do
+      #   env = Environment.new do
+      #     name "environment"
+      #   end
+      #   con0 = Container.new do
+      #     name "container0"
+      #   end
+      #   con1 = Container.new do
+      #     name "container1"
+      #   end
+      #   con2 = Container.new do
+      #     name "container2"
+      #   end
+      #   env.containers << con0
+      #   env.containers << con1
+      #   env.containers << con2
 
-        env.name.should == "environment"
-        env.containers.count.should == 3
-        env.containers.each do |container|
-          %w(container0 container1 container2).include?(container.name).should == true
-          container.environment.should == env
-          container.environment_id.should == env.id
-        end
-      end
+      #   env.name.should == "environment"
+      #   env.containers.count.should == 3
+      #   env.containers.each do |container|
+      #     %w(container0 container1 container2).include?(container.name).should == true
+      #     container.environment.should == env
+      #     container.environment_id.should == env.id
+      #   end
+      # end
 
     end
 
@@ -257,7 +257,7 @@ describe ZTK::DSL do
         end
       end
 
-      it "can has_many via direct object id assignment" do
+      it "can belong_to via direct object id assignment" do
         env = Environment.new do
           name "environment"
         end
@@ -283,6 +283,150 @@ describe ZTK::DSL do
         end
       end
 
+    end
+
+  end
+
+  describe "complex relations" do
+
+    before(:each) do
+      class Environment < ZTK::DSL::Base
+        has_many :containers
+        has_many :networks
+
+        attribute :name
+      end
+
+      class Container < ZTK::DSL::Base
+        belongs_to :environment
+        belongs_to :network
+
+        attribute :name
+      end
+
+      class Network < ZTK::DSL::Base
+        has_many :containers
+        belongs_to :environment
+
+        attribute :name
+      end
+    end
+
+    it "one parent, two children with interdependency, id assignment" do
+      env = Environment.new do
+        name "environment"
+
+        network do
+          id :net0
+          name "network0"
+        end
+        network do
+          id :net1
+          name "network1"
+        end
+
+        container do
+          id :con0
+          name "container0"
+          network_id :net0
+        end
+        container do
+          id :con1
+          name "container1"
+          network_id :net0
+        end
+        container do
+          id :con2
+          name "container2"
+          network_id :net1
+        end
+      end
+
+      env.name.should == "environment"
+      env.containers.count.should == 3
+      env.containers.each do |container|
+        %w(container0 container1 container2).include?(container.name).should == true
+        container.environment.should == env
+        container.environment_id.should == env.id
+      end
+      env.networks.each do |network|
+        %w(network0 network1).include?(network.name).should == true
+        network.environment.should == env
+        network.environment_id.should == env.id
+      end
+
+      n0 = Network.find(:net0).first
+      n0.containers.each do |container|
+        %w(container0 container1).include?(container.name).should == true
+        container.environment.should == env
+        container.environment_id.should == env.id
+      end
+
+      n1 = Network.find(:net1).first
+      n1.containers.each do |container|
+        %w(container2).include?(container.name).should == true
+        container.environment.should == env
+        container.environment_id.should == env.id
+      end
+    end
+
+    it "one parent, two children with interdependency, direct assignment" do
+      # Environment.purge
+      env = Environment.new do
+        name "environment"
+
+        net0 = network do
+          id :net0
+          name "network0"
+        end
+        net1 = network do
+          id :net1
+          name "network1"
+        end
+
+        container do
+          id :con0
+          name "container0"
+          network net0
+        end
+        container do
+          id :con1
+          name "container1"
+          network net0
+        end
+        container do
+          id :con2
+          name "container2"
+          network net1
+        end
+      end
+
+      env.name.should == "environment"
+      env.containers.count.should == 3
+      env.containers.each do |container|
+        %w(container0 container1 container2).include?(container.name).should == true
+        container.environment.should == env
+        container.environment_id.should == env.id
+      end
+      env.networks.each do |network|
+        %w(network0 network1).include?(network.name).should == true
+        network.environment.should == env
+        network.environment_id.should == env.id
+      end
+
+      n0 = Network.find(:net0).first
+      n0.containers.each do |container|
+        %w(container0 container1).include?(container.name).should == true
+        container.environment.should == env
+        container.environment_id.should == env.id
+      end
+
+      n1 = Network.find(:net1).first
+      n1.containers.each do |container|
+        %w(container2).include?(container.name).should == true
+        container.environment.should == env
+        container.environment_id.should == env.id
+      end
     end
 
   end
