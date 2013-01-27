@@ -94,12 +94,14 @@ describe ZTK::DSL do
 
         attribute :name
       end
+      Environment.purge
 
       class Container < ZTK::DSL::Base
         belongs_to :environment
 
         attribute :name
       end
+      Container.purge
     end
 
     describe "has_many" do
@@ -287,6 +289,76 @@ describe ZTK::DSL do
 
   end
 
+  describe "find" do
+
+    before(:each) do
+      class Environment < ZTK::DSL::Base
+        has_many :containers
+
+        attribute :name
+      end
+      Environment.purge
+
+      class Container < ZTK::DSL::Base
+        belongs_to :environment
+
+        attribute :name
+      end
+      Container.purge
+    end
+
+    it "single id" do
+      env = Environment.new do
+        id :env0
+        name "environment"
+
+        $con0 = container do
+          id :con0
+          name "container0"
+        end
+        $con1 = container do
+          id :con1
+          name "container1"
+        end
+        $con2 = container do
+          id :con2
+          name "container2"
+        end
+      end
+      Environment.find(:env0).first.should == env
+      Container.find(:con0).first.should == $con0
+      Container.find(:con1).first.should == $con1
+      Container.find(:con2).first.should == $con2
+    end
+
+    it "multiple ids" do
+      env = Environment.new do
+        id :env0
+        name "environment"
+
+        $con0 = container do
+          id :con0
+          name "container0"
+        end
+        $con1 = container do
+          id :con1
+          name "container1"
+        end
+        $con2 = container do
+          id :con2
+          name "container2"
+        end
+      end
+      Environment.find(:env0).first.should == env
+      containers = Container.find([:con0, :con1, :con2])
+      containers.count.should == 3
+      containers.all? do |container|
+        [:con0, :con1, :con2].include?(container.id)
+      end
+    end
+
+  end
+
   describe "complex relations" do
 
     before(:each) do
@@ -296,6 +368,7 @@ describe ZTK::DSL do
 
         attribute :name
       end
+      Environment.purge
 
       class Container < ZTK::DSL::Base
         belongs_to :environment
@@ -303,6 +376,7 @@ describe ZTK::DSL do
 
         attribute :name
       end
+      Container.purge
 
       class Network < ZTK::DSL::Base
         has_many :containers
@@ -310,6 +384,7 @@ describe ZTK::DSL do
 
         attribute :name
       end
+      Network.purge
     end
 
     it "one parent, two children with interdependency, id assignment" do
@@ -371,7 +446,6 @@ describe ZTK::DSL do
     end
 
     it "one parent, two children with interdependency, direct assignment" do
-      # Environment.purge
       env = Environment.new do
         name "environment"
 
