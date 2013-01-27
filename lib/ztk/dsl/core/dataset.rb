@@ -30,7 +30,7 @@ module ZTK::DSL::Core
     module ClassMethods
 
       def dataset
-        klass = self.to_s.downcase.to_sym
+        klass = underscore(self).to_sym
         @@dataset ||= {}
         if @@dataset.key?(klass)
           @@dataset[klass]
