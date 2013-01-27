@@ -62,7 +62,7 @@ module ZTK::DSL
       def cattr_reader(*args)
         args.flatten.each do |arg|
           next if arg.is_a?(Hash)
-          code = %Q{
+          instance_eval %Q{
             unless defined?(@@#{arg})
               @@#{arg} = nil
             end
@@ -71,14 +71,13 @@ module ZTK::DSL
               @@#{arg}
             end
           }
-          instance_eval(code, __FILE__, __LINE__)
         end
       end
 
       def cattr_writer(*args)
         args.flatten.each do |arg|
           next if arg.is_a?(Hash)
-          code = %Q{
+          instance_eval %Q{
             unless defined?(@@#{arg})
               @@#{arg} = nil
             end
@@ -87,7 +86,6 @@ module ZTK::DSL
               @@#{arg} = value
             end
           }
-          instance_eval(code, __FILE__, __LINE__)
         end
       end
     end
