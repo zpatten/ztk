@@ -18,33 +18,24 @@
 #
 ################################################################################
 
-require "ztk/version"
+module ZTK::DSL::Core
+  module IO
 
-# Main ZTK module
-#
-# @author Zachary Patten <zachary@jovelabs.net>
-module ZTK
+    def self.included(base)
+      base.class_eval do
+        base.send(:extend, ZTK::DSL::Core::IO::ClassMethods)
+      end
+    end
 
-  # ZTK error class
-  #
-  # @author Zachary Patten <zachary@jovelabs.net>
-  class Error < StandardError; end
+    module ClassMethods
 
-  autoload :Base, "ztk/base"
+      def load(rb_file)
+        new do
+          instance_eval(::IO.read(rb_file))
+        end
+      end
 
-  autoload :Background, "ztk/background"
-  autoload :Benchmark, "ztk/benchmark"
-  autoload :Command, "ztk/command"
-  autoload :Config, "ztk/config"
-  autoload :DSL, "ztk/dsl"
-  autoload :Logger, "ztk/logger"
-  autoload :Parallel, "ztk/parallel"
-  autoload :Report, "ztk/report"
-  autoload :RescueRetry, "ztk/rescue_retry"
-  autoload :Spinner, "ztk/spinner"
-  autoload :SSH, "ztk/ssh"
-  autoload :TCPSocketCheck, "ztk/tcp_socket_check"
-  autoload :Template, "ztk/template"
-  autoload :UI, "ztk/ui"
+    end
 
+  end
 end

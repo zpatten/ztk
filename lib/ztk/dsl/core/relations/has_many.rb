@@ -18,33 +18,35 @@
 #
 ################################################################################
 
-require "ztk/version"
+module ZTK::DSL::Core::Relations
+  module HasMany
 
-# Main ZTK module
-#
-# @author Zachary Patten <zachary@jovelabs.net>
-module ZTK
+    def self.included(base)
+      base.class_eval do
+        add_relation(:has_many)
+        base.send(:extend, ZTK::DSL::Core::Relations::HasMany::ClassMethods)
+      end
+    end
 
-  # ZTK error class
-  #
-  # @author Zachary Patten <zachary@jovelabs.net>
-  class Error < StandardError; end
+    def has_many_references
+      @has_many_references ||= {}
+    end
 
-  autoload :Base, "ztk/base"
+    module ClassMethods
+      def has_many(key, options={})
+        define_method(key) do |*args|
+          if args.count == 0
+            attributes[key]
+          else
+            attributes[key] = args.first
+          end
+        end
 
-  autoload :Background, "ztk/background"
-  autoload :Benchmark, "ztk/benchmark"
-  autoload :Command, "ztk/command"
-  autoload :Config, "ztk/config"
-  autoload :DSL, "ztk/dsl"
-  autoload :Logger, "ztk/logger"
-  autoload :Parallel, "ztk/parallel"
-  autoload :Report, "ztk/report"
-  autoload :RescueRetry, "ztk/rescue_retry"
-  autoload :Spinner, "ztk/spinner"
-  autoload :SSH, "ztk/ssh"
-  autoload :TCPSocketCheck, "ztk/tcp_socket_check"
-  autoload :Template, "ztk/template"
-  autoload :UI, "ztk/ui"
+        define_method("#{key}=") do |value|
+          attributes[key] = value
+        end
+      end
+    end
 
+  end
 end

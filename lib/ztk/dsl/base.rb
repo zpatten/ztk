@@ -18,33 +18,26 @@
 #
 ################################################################################
 
-require "ztk/version"
-
-# Main ZTK module
-#
 # @author Zachary Patten <zachary@jovelabs.net>
-module ZTK
+module ZTK::DSL
 
-  # ZTK error class
-  #
-  # @author Zachary Patten <zachary@jovelabs.net>
-  class Error < StandardError; end
+  class Base
+    include(ZTK::DSL::Core)
+    include(ZTK::DSL::Core::Attributes)
+    include(ZTK::DSL::Core::IO)
+    include(ZTK::DSL::Core::Relations)
 
-  autoload :Base, "ztk/base"
+    def initialize(&block)
+      block_given? and ((block.arity < 1) ? instance_eval(&block) : block.call(self))
+    end
 
-  autoload :Background, "ztk/background"
-  autoload :Benchmark, "ztk/benchmark"
-  autoload :Command, "ztk/command"
-  autoload :Config, "ztk/config"
-  autoload :DSL, "ztk/dsl"
-  autoload :Logger, "ztk/logger"
-  autoload :Parallel, "ztk/parallel"
-  autoload :Report, "ztk/report"
-  autoload :RescueRetry, "ztk/rescue_retry"
-  autoload :Spinner, "ztk/spinner"
-  autoload :SSH, "ztk/ssh"
-  autoload :TCPSocketCheck, "ztk/tcp_socket_check"
-  autoload :Template, "ztk/template"
-  autoload :UI, "ztk/ui"
+    def inspect
+      details = Array.new
+      details << "attributes=#{attributes.inspect}" if attributes.count > 0
+      details << "relations=#{attributes.inspect}" if attributes.count > 0
+      "#<ZTK::DSL #{details.join(', ')}>"
+    end
+
+  end
 
 end
