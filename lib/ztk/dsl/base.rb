@@ -65,7 +65,6 @@ module ZTK::DSL
 
     module ClassMethods
 
-
       def inspect
         klass = self.to_s.downcase.to_sym
         details = Array.new
