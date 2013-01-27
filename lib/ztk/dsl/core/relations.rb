@@ -32,11 +32,13 @@ module ZTK::DSL::Core
     end
 
     module ClassMethods
+
       def add_relation(key)
         relation_key = "#{key}_relations"
         cattr_accessor relation_key
         send(relation_key) || send("#{relation_key}=", {})
       end
+
     end
 
   end
