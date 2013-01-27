@@ -31,12 +31,12 @@ module ZTK
   class Error < StandardError; end
 
   autoload :Base, "ztk/base"
+  autoload :DSL, "ztk/dsl"
 
   autoload :Background, "ztk/background"
   autoload :Benchmark, "ztk/benchmark"
   autoload :Command, "ztk/command"
   autoload :Config, "ztk/config"
-  autoload :DSL, "ztk/dsl"
   autoload :Logger, "ztk/logger"
   autoload :Parallel, "ztk/parallel"
   autoload :Report, "ztk/report"
