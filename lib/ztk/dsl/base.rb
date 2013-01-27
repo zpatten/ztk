@@ -28,32 +28,28 @@ module ZTK::DSL
     include(ZTK::DSL::Core::IO)
     include(ZTK::DSL::Core::Relations)
 
-    unless defined?(@@id)
-      @@id = 0
-    end
-
-    unless defined?(@@dataset)
-      @@dataset = {}
-    end
-
     class << self
-      def dataset
-        @@dataset
+      unless defined?(@@id)
+        @@id = 0
       end
 
-      def dataset(key)
-        puts("dataset: key=#{key.inspect}")
-        if @@dataset.key?(key)
-          @@dataset[key]
-        else
-          @@dataset[key] = []
-        end
+      unless defined?(@@dataset)
+        @@dataset = nil
       end
     end
 
-    # def inherited(base)
-    #   base.send(:extend, ZTK::DSL::Base::ClassMethods)
-    # end
+    def self.inherited(base)
+      puts("inherited(#{base})")
+      base.send(:extend, ZTK::DSL::Base::ClassMethods)
+    end
+
+    def self.included(base)
+      puts("included(#{base})")
+    end
+
+    def self.extended(base)
+      puts("extended(#{base})")
+    end
 
     # cattr_accessor :dataset
 
@@ -64,22 +60,45 @@ module ZTK::DSL
       if self.id.nil?
         self.id = (@@id += 1)
       end
-      @@dataset[self.class.to_s.downcase.to_sym] ||= []
-      @@dataset[self.class.to_s.downcase.to_sym] << self
-      puts("---")
-      puts "#{self.class.to_s} DATASET:"
-      @@dataset[self.class.to_s.downcase.to_sym].each do |data|
-        puts data.inspect
-      end
+
+      klass = self.class.to_s.downcase.to_sym
+      self.class.send(:dataset, klass) << self
     end
 
     def inspect
+      klass = self.class.to_s.downcase.to_sym
       details = Array.new
+      details << "klass=#{klass.inspect}"
       details << "attributes=#{attributes.inspect}" if attributes.count > 0
-      details << "@relations=#{@relations.inspect}"
-      details << "@has_many_references=#{@has_many_references.inspect}" if @has_many_references
-      details << "@belongs_to_references=#{@belongs_to_references.inspect}" if @belongs_to_references
+      details << "has_many_references=#{@has_many_references.inspect}" if @has_many_references
+      details << "belongs_to_references=#{@belongs_to_references.inspect}" if @belongs_to_references
       "#<ZTK::DSL #{details.join(', ')}>"
+    end
+
+    module ClassMethods
+
+      def dataset(*args)
+        @@dataset ||= {}
+        key = args.first
+        if key.nil?
+          @@dataset
+        else
+          if @@dataset.key?(key)
+            @@dataset[key]
+          else
+            @@dataset[key] ||= []
+          end
+        end
+      end
+
+      def inspect
+        klass = self.to_s.downcase.to_sym
+        details = Array.new
+        details << "klass=#{klass.inspect}"
+        details << "count=#{self.all.count}" if self.all.count > 0
+        "#<ZTK::DSL #{details.join(', ')}>"
+      end
+
     end
 
   end
