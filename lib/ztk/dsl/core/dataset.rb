@@ -39,6 +39,10 @@ module ZTK::DSL::Core
         end
       end
 
+      def purge
+        @@dataset = nil
+      end
+
       def id
         @@id ||= 0
         (@@id += 1)
