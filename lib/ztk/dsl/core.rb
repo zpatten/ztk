@@ -1,6 +1,7 @@
 module ZTK::DSL
   module Core
     autoload :Attributes, "ztk/dsl/core/attributes"
+    autoload :Actions, "ztk/dsl/core/actions"
     autoload :IO, "ztk/dsl/core/io"
     autoload :Relations, "ztk/dsl/core/relations"
 
