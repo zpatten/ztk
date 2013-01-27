@@ -23,8 +23,20 @@ module ZTK::DSL
 
     module DualMethods
 
-      def singularize(str)
-        string = str.to_s
+      def underscore(camel_cased_word)
+        word = camel_cased_word.to_s.dup
+        word.gsub!(/::/, '/')
+        loop do
+          break if word.gsub!(/([A-Z])([A-Z])/,'\1_\2').nil?
+        end
+        word.gsub!(/([a-z\d])([A-Z])/,'\1_\2')
+        word.tr!("-", "_")
+        word.downcase!
+        word
+      end
+
+      def singularize(word)
+        string = word.to_s.dup
         if string =~ /s$/
           string = string[0..-2]
         end
@@ -32,7 +44,8 @@ module ZTK::DSL
       end
 
       def camelize(underscored_word)
-        string = underscored_word.to_s
+        string = underscored_word.to_s.dup
+        namespaces = string.split('/')
         parts = string.split("_")
         string = parts.collect{ |part| part.capitalize }.join
         string
