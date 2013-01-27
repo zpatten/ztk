@@ -37,7 +37,7 @@ module ZTK::DSL::Core
           if args.count == 0
             attributes[key]
           else
-            attributes[key] = args.first
+            send("#{key}=", *args)
           end
         end
 
