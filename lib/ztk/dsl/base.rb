@@ -45,10 +45,6 @@ module ZTK::DSL
       puts("extended(#{base})")
     end
 
-    # cattr_accessor :dataset
-
-    attribute :id
-
     def initialize(&block)
       block_given? and ((block.arity < 1) ? instance_eval(&block) : block.call(self))
       if self.id.nil?
