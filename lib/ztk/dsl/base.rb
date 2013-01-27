@@ -24,17 +24,61 @@ module ZTK::DSL
   class Base
     include(ZTK::DSL::Core)
     include(ZTK::DSL::Core::Attributes)
+    include(ZTK::DSL::Core::Actions)
     include(ZTK::DSL::Core::IO)
     include(ZTK::DSL::Core::Relations)
 
+    unless defined?(@@id)
+      @@id = 0
+    end
+
+    unless defined?(@@dataset)
+      @@dataset = {}
+    end
+
+    class << self
+      def dataset
+        @@dataset
+      end
+
+      def dataset(key)
+        puts("dataset: key=#{key.inspect}")
+        if @@dataset.key?(key)
+          @@dataset[key]
+        else
+          @@dataset[key] = []
+        end
+      end
+    end
+
+    # def inherited(base)
+    #   base.send(:extend, ZTK::DSL::Base::ClassMethods)
+    # end
+
+    # cattr_accessor :dataset
+
+    attribute :id
+
     def initialize(&block)
       block_given? and ((block.arity < 1) ? instance_eval(&block) : block.call(self))
+      if self.id.nil?
+        self.id = (@@id += 1)
+      end
+      @@dataset[self.class.to_s.downcase.to_sym] ||= []
+      @@dataset[self.class.to_s.downcase.to_sym] << self
+      puts("---")
+      puts "#{self.class.to_s} DATASET:"
+      @@dataset[self.class.to_s.downcase.to_sym].each do |data|
+        puts data.inspect
+      end
     end
 
     def inspect
       details = Array.new
       details << "attributes=#{attributes.inspect}" if attributes.count > 0
+      details << "@relations=#{@relations.inspect}"
       details << "@has_many_references=#{@has_many_references.inspect}" if @has_many_references
+      details << "@belongs_to_references=#{@belongs_to_references.inspect}" if @belongs_to_references
       "#<ZTK::DSL #{details.join(', ')}>"
     end
 
