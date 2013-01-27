@@ -34,6 +34,9 @@ module ZTK::DSL
     def self.inherited(base)
       puts("inherited(#{base})")
       base.send(:extend, ZTK::DSL::Base::ClassMethods)
+      base.instance_eval do
+        attribute :id
+      end
     end
 
     def self.included(base)
