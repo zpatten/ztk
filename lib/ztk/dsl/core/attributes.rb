@@ -32,6 +32,7 @@ module ZTK::DSL::Core
     end
 
     module ClassMethods
+
       def attribute(key, options={})
         send(:define_method, key) do |*args|
           if args.count == 0
@@ -45,6 +46,7 @@ module ZTK::DSL::Core
           attributes[key] = value
         end
       end
+
     end
 
   end
