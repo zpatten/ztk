@@ -7,10 +7,25 @@ module ZTK::DSL
     def self.included(base)
       base.class_eval do
         base.send(:extend, ZTK::DSL::Core::ClassMethods)
+
+        base.send(:extend, ZTK::DSL::Core::DualMethods)
+        base.send(:include, ZTK::DSL::Core::DualMethods)
       end
     end
 
+    module DualMethods
+
+      def singularize(string)
+        if string =~ /s$/
+          string = string[0..-2]
+        end
+        string
+      end
+
+    end
+
     module ClassMethods
+
       def cattr_accessor(*args)
         cattr_reader(*args)
         cattr_writer(*args)
