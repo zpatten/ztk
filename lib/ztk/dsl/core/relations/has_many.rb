@@ -40,6 +40,12 @@ module ZTK::DSL::Core::Relations
       end
     end
 
+    def set_has_many_reference(key, value)
+      dataset = get_has_many_reference(key)
+      dataset.clear
+      dataset.concat(value)
+    end
+
     def save_has_many_references
       has_many_references.each do |key, dataset|
         dataset.each do |data|
@@ -49,6 +55,7 @@ module ZTK::DSL::Core::Relations
     end
 
     module ClassMethods
+
       def has_many(key, options={})
         has_many_relations[key] = {:key => key}.merge(options)
 
@@ -61,9 +68,7 @@ module ZTK::DSL::Core::Relations
         end
 
         define_method("#{key}=") do |value|
-          dataset = get_has_many_reference(key)
-          dataset.clear
-          dataset.concat(value)
+          set_has_many_rerence(key, value)
         end
 
         define_method(singularize(key)) do |&block|
@@ -73,6 +78,7 @@ module ZTK::DSL::Core::Relations
           data
         end
       end
+
     end
 
   end
