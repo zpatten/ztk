@@ -44,6 +44,13 @@ module ZTK::DSL
       self.id = self.class.id
       self.class.dataset << self
       block_given? and ((block.arity < 1) ? instance_eval(&block) : block.call(self))
+
+      primary_key_count = self.class.dataset.count do |d|
+        puts("d.id == #{d.id.inspect} / self.id == #{self.id.inspect}")
+        d.id == self.id
+      end
+      puts("primary_key_count == #{primary_key_count}")
+      raise StandardError, "Primary key '#{self.id}' already exists!" if (primary_key_count > 1)
     end
 
     def inspect
