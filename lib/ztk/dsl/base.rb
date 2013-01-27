@@ -52,8 +52,8 @@ module ZTK::DSL
       details = Array.new
       details << "klass=#{klass.inspect}"
       details << "attributes=#{attributes.inspect}" if attributes.count > 0
-      details << "has_many_references=#{@has_many_references.inspect}" if @has_many_references
-      details << "belongs_to_references=#{@belongs_to_references.inspect}" if @belongs_to_references
+      details << "has_many_references=#{@has_many_references.count}" if @has_many_references
+      details << "belongs_to_references=#{@belongs_to_references.count}" if @belongs_to_references
       "#<#{self.class.to_s}:#{self.id} #{details.join(', ')}>"
     end
 
