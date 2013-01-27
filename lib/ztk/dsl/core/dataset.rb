@@ -18,23 +18,25 @@
 #
 ################################################################################
 
-module ZTK::DSL::Core::Actions
-  module Find
+module ZTK::DSL::Core
+  module Dataset
 
     def self.included(base)
       base.class_eval do
-        base.send(:extend, ZTK::DSL::Core::Actions::Find::ClassMethods)
+        base.send(:extend, ZTK::DSL::Core::Dataset::ClassMethods)
       end
     end
 
     module ClassMethods
 
-      def find(id)
-        dataset.select{ |data| data.id == id }.first
-      end
-
-      def all
-        dataset
+      def dataset
+        klass = self.to_s.downcase.to_sym
+        @@dataset ||= {}
+        if @@dataset.key?(klass)
+          @@dataset[klass]
+        else
+          @@dataset[klass] ||= []
+        end
       end
 
     end
