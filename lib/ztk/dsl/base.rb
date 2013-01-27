@@ -34,7 +34,7 @@ module ZTK::DSL
     def inspect
       details = Array.new
       details << "attributes=#{attributes.inspect}" if attributes.count > 0
-      details << "relations=#{attributes.inspect}" if attributes.count > 0
+      details << "@has_many_references=#{@has_many_references.inspect}" if @has_many_references
       "#<ZTK::DSL #{details.join(', ')}>"
     end
 
