@@ -90,12 +90,12 @@ module ZTK::DSL::Core::Relations
         end
 
         define_method("#{key}_id") do |*args|
-          puts("==> #{key}_id")
+          puts("==> #{key}_id(#{args.inspect})")
 
           if args.count == 0
             attributes["#{key}_id".to_sym]
           else
-            attributes["#{key}_id".to_sym] = args.first
+            send("#{key}_id=".to_sym, args.first)
           end
 
         end
