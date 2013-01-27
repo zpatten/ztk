@@ -37,11 +37,6 @@ module ZTK::DSL::Core::Relations
         has_many_references[key]
       else
         has_many_references[key] ||= []
-        # 1. Find items that "belong to" us
-        # 2. Lookup those items on the destination object
-        #
-        # dataset = key.to_s.classify.constantize.all
-        # look up data and set references
       end
     end
 
