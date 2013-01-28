@@ -85,6 +85,7 @@ module ZTK
   # @author Zachary Patten <zachary@jovelabs.net>
   class SSH < ZTK::Base
 
+    # Exit Signal Mappings
     EXIT_SIGNALS = {
       1 => "SIGHUP",
       2 => "SIGINT",
@@ -140,23 +141,6 @@ module ZTK
         :ignore_exit_status => false
       }.merge(configuration))
       config.logger.debug { "config=#{config.send(:table).inspect}" }
-    end
-
-    def inspect
-      tags = Array.new
-
-      if config.proxy_host_name
-        proxy_user_host = "#{config.proxy_user}@#{config.proxy_host_name}"
-        proxy_port = (config.proxy_port ? ":#{config.proxy_port}" : nil)
-        tags << [proxy_user_host, proxy_port].compact.join
-        tags << " >>> "
-      end
-
-      user_host = "#{config.user}@#{config.host_name}"
-      port = (config.port ? ":#{config.port}" : nil)
-      tags << [user_host, port].compact.join
-
-      tags.join.strip
     end
 
     # Starts an SSH session.  Can also be used to get the Net::SSH object.
@@ -219,14 +203,6 @@ module ZTK
     #   end
     #   puts ssh.exec("hostname -f").inspect
     def exec(command, options={})
-
-      def log_header(tag)
-        count = 8
-        sep = ("=" * count)
-        header = [sep, "[ #{tag} ]", sep, "[ #{self.inspect} ]", sep, "[ #{tag} ]", sep].join
-        "#{header}\n"
-      end
-
       options = OpenStruct.new({ :exit_code => 0, :silence => false }.merge(options))
 
       config.logger.debug { "config=#{config.send(:table).inspect}" }
@@ -468,6 +444,32 @@ module ZTK
 
       config.logger.debug { "ssh_options(#{options.inspect})" }
       options
+    end
+
+    # Builds a human readable tag about our connection.  Used for internal
+    # logging purposes.
+    def tag
+      tags = Array.new
+
+      if config.proxy_host_name
+        proxy_user_host = "#{config.proxy_user}@#{config.proxy_host_name}"
+        proxy_port = (config.proxy_port ? ":#{config.proxy_port}" : nil)
+        tags << [proxy_user_host, proxy_port].compact.join
+        tags << " >>> "
+      end
+
+      user_host = "#{config.user}@#{config.host_name}"
+      port = (config.port ? ":#{config.port}" : nil)
+      tags << [user_host, port].compact.join
+
+      tags.join.strip
+    end
+
+    def log_header(what)
+      count = 8
+      sep = ("=" * count)
+      header = [sep, "[ #{what} ]", sep, "[ #{tag} ]", sep, "[ #{what} ]", sep].join
+      "#{header}\n"
     end
 
   end
