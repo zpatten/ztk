@@ -49,11 +49,6 @@ module ZTK
       config.logger.debug { "config=#{config.send(:table).inspect}" }
     end
 
-    def inspect
-      @hostname ||= %x(hostname -f).chomp
-      "#{ENV['USER']}@#{@hostname}"
-    end
-
     # Executes a local command.
     #
     # @param [String] command The command to execute.
@@ -165,10 +160,14 @@ module ZTK
       OpenStruct.new(:output => output, :exit_code => exit_code)
     end
 
+    # Not Supported
+    # @raise [CommandError] Not Supported
     def upload(*args)
       log_and_raise(CommandError, "Not Supported")
     end
 
+    # Not Supported
+    # @raise [CommandError] Not Supported
     def download(*args)
       log_and_raise(CommandError, "Not Supported")
     end
@@ -176,12 +175,17 @@ module ZTK
 
   private
 
-      def log_header(what)
-        count = 8
-        sep = ("=" * count)
-        header = [sep, "[ #{what} ]", sep, "[ #{self.inspect} ]", sep, "[ #{what} ]", sep].join
-        "#{header}\n"
-      end
+    def tag
+      @hostname ||= %x(hostname -f).chomp
+      "#{ENV['USER']}@#{@hostname}"
+    end
+
+    def log_header(what)
+      count = 8
+      sep = ("=" * count)
+      header = [sep, "[ #{what} ]", sep, "[ #{tag} ]", sep, "[ #{what} ]", sep].join
+      "#{header}\n"
+    end
 
   end
 
