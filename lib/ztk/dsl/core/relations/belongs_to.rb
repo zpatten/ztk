@@ -71,7 +71,11 @@ module ZTK::DSL::Core::Relations
     module ClassMethods
 
       def belongs_to(key, options={})
-        has_many_relations[key] = {:key => key}.merge(options)
+        belongs_to_relations[key] = {
+          :class_name => key.to_s.classify,
+          :key => key
+        }.merge(options)
+        logger.debug { "key(#{key.inspect}), options(#{belongs_to_relations[key].inspect})" }
 
         define_method(key) do |*args|
           logger.debug { "*args(#{args.inspect})" }
@@ -101,10 +105,11 @@ module ZTK::DSL::Core::Relations
         end
 
         define_method("#{key}_id=") do |value|
-          puts("==> #{key}_id=#{value.inspect}")
+          options = self.class.belongs_to_relations[key]
+          logger.debug { "value(#{value.inspect}), options(#{options.inspect})" }
 
           if value != attributes["#{key}_id".to_sym]
-            item = key.to_s.classify.constantize.find(value).first
+            item = options[:class_name].constantize.find(value).first
             set_belongs_to_reference(key, item)
           else
             value
