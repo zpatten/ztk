@@ -64,9 +64,6 @@ module ZTK
     attr_accessor :pid, :result
 
     # @param [Hash] config Configuration options hash.
-    # @option config [Integer] :max_forks Maximum number of forks to use.
-    # @option config [Proc] :before_fork (nil) Proc to call before forking.
-    # @option config [Proc] :after_fork (nil) Proc to call after forking.
     def initialize(configuration={})
       super({
       }.merge(configuration))

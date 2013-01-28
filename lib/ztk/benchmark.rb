@@ -26,13 +26,40 @@ module ZTK
   # @author Zachary Patten <zachary@jovelabs.net>
   class BenchmarkError < Error; end
 
-  # Benchmark Class
+  # ZTK Benchmark Class
+  #
+  # This class contains a benchmarking tool which doubles to supply indications
+  # of activity to the console user during long running tasks.
+  #
+  # It can be run strictly for benchmarking (the default) or if supplied with
+  # the appropriate options it will display output to the user while
+  # benchmarking the supplied block.
   #
   # @author Zachary Patten <zachary@jovelabs.net>
   class Benchmark
 
     class << self
 
+      # Benchmark the supplied block.
+      #
+      # If *message* and *mark* options are used, then the *message* text will
+      # be displayed to the user.  The the supplied *block* is yielded inside
+      # a *ZTK::Spinner.spin* call.  This will provide the spinning cursor while
+      # the block executes.  It is advisable to not have output sent to the
+      # console during this period.
+      #
+      # Once the block finishes executing, the *mark* text is displayed with
+      # the benchmark supplied to it as a sprintf option.  One could use "%0.4f"
+      # in a *String* for example to get the benchmark time embedded in it
+      # (see Kernel#sprintf).
+      #
+      # @param [Hash] options Configuration options hash.
+      # @option options [String] :message Instance of IO to be used for STDOUT.
+      # @option options [String] :mark Instance of IO to be used for STDERR.
+      #
+      # @yield Block should execute the tasks to be benchmarked.
+      # @yieldreturn [Object] The return value of the block is ignored.
+      # @return [Float] The benchmark time.
       def bench(options={}, &block)
         options = Base.build_config(options)
         options.logger.debug { "options=#{options.send(:table).inspect}" }
