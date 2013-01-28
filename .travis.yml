@@ -9,4 +9,4 @@ branches:
     - master
 
 notifications:
-  irc: "irc.freenode.org#jovelabs"
+  irc: "irc.freenode.net#jovelabs"
