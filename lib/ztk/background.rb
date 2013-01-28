@@ -62,7 +62,7 @@ module ZTK
     # Result Set
     attr_accessor :pid, :result
 
-    # @param [Hash] config Configuration options hash.
+    # @param [Hash] configuration Configuration options hash.
     def initialize(configuration={})
       super({
       }.merge(configuration))

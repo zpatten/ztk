@@ -82,7 +82,7 @@ module ZTK
   # @author Zachary Patten <zachary@jovelabs.net>
   class TCPSocketCheck < ZTK::Base
 
-    # @param [Hash] config Configuration options hash.
+    # @param [Hash] configuration Configuration options hash.
     # @option config [String] :host Host to connect to.
     # @option config [Integer, String] :port Port to connect to.
     # @option config [String] :data Data to send to host to provoke a response.

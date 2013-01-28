@@ -72,7 +72,7 @@ module ZTK
     # Result Set
     attr_accessor :results
 
-    # @param [Hash] config Configuration options hash.
+    # @param [Hash] configuration Configuration options hash.
     # @option config [Integer] :max_forks Maximum number of forks to use.
     # @option config [Proc] :before_fork (nil) Proc to call before forking.
     # @option config [Proc] :after_fork (nil) Proc to call after forking.

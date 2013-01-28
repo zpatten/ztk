@@ -36,7 +36,7 @@ module ZTK
 
     class << self
 
-      # @param [Hash] config Configuration options hash.
+      # @param [Hash] configuration Configuration options hash.
       # @option config [IO] :stdout Instance of IO to be used for STDOUT.
       # @option config [IO] :stderr Instance of IO to be used for STDERR.
       # @option config [IO] :stdin Instance of IO to be used for STDIN.
@@ -145,7 +145,7 @@ module ZTK
     # The value returned in the block is passed down to the logger specified in
     # the classes configuration.
     #
-    # @param [Symbol] method_name This should be any one of [:debug, :info, :warn, :error, :fatal].
+    # @param [Symbol] log_level This should be any one of [:debug, :info, :warn, :error, :fatal].
     # @yield No value is passed to the block.
     # @yieldreturn [String] The message to log.
     def direct_log(log_level, &blocK)

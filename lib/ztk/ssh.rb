@@ -115,7 +115,7 @@ module ZTK
       27 => "SIGPROF"
     }
 
-    # @param [Hash] config Configuration options hash.
+    # @param [Hash] configuration Configuration options hash.
     # @option config [String] :host_name Server hostname to connect to.
     # @option config [String] :user Username to use for authentication.
     # @option config [String, Array<String>] :keys A single or series of
