@@ -33,21 +33,21 @@ module ZTK::DSL::Core::Relations
     end
 
     def get_has_many_reference(key)
-      puts("==> get_has_many_reference(#{key.inspect})")
+      logger.debug { "key(#{key})" }
 
       if has_many_references.key?(key)
-        puts("  --> found key")
+        logger.debug { "found key -> (#{key})" }
 
         has_many_references[key]
       else
-        puts("  --> looking up key")
+        logger.debug { "looking up key -> (#{key})" }
 
         has_many_references[key] ||= []
       end
     end
 
     def set_has_many_reference(key, value)
-      puts("==> set_has_many_reference(#{key.inspect}, #{value.inspect})")
+      logger.debug { "key(#{key}), value(#{value})" }
 
       dataset = get_has_many_reference(key)
       dataset.clear

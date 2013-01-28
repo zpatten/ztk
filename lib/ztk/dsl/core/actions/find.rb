@@ -34,7 +34,7 @@ module ZTK::DSL::Core::Actions
       end
 
       def find(*args)
-        puts("==> #{self.to_s}.find(#{args.inspect})")
+        logger.debug { "*args(#{args.inspect})" }
         ids = [args].flatten
         all.select{ |data| ids.include?(data.id) }
       end

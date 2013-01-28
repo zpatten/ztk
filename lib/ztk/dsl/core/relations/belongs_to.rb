@@ -33,14 +33,14 @@ module ZTK::DSL::Core::Relations
     end
 
     def get_belongs_to_reference(key)
-      puts("==> get_belongs_to_reference(#{key.inspect})")
+      logger.debug { "key(#{key})" }
 
       if belongs_to_references.key?(key)
-        puts("  --> found key")
+        logger.debug { "found key -> (#{key})" }
 
         belongs_to_references[key]
       else
-        puts("  --> looking up key")
+        logger.debug { "looking up key -> (#{key})" }
 
         key_id = send("#{key}_id")
         item = key.to_s.classify.constantize.find(key_id).first
@@ -49,7 +49,7 @@ module ZTK::DSL::Core::Relations
     end
 
     def set_belongs_to_reference(key, value)
-      puts("==> set_belongs_to_reference(#{key.inspect}, #{value.inspect})")
+      logger.debug { "key(#{key}), value(#{value})" }
 
       belongs_to_references[key] = value
       attributes.merge!("#{key}_id".to_sym => value.id)
