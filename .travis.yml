@@ -10,4 +10,5 @@ branches:
 
 notifications:
   irc:
-    - "irc.freenode.net#jovelabs"
+    channels:
+      - "irc.freenode.net#jovelabs"
