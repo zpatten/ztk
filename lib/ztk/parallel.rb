@@ -62,6 +62,7 @@ module ZTK
   # @author Zachary Patten <zachary@jovelabs.net>
   class Parallel < ZTK::Base
 
+    # Default Maximum Number of Forks
     MAX_FORKS = case RUBY_PLATFORM
     when /darwin/ then
       %x( sysctl hw.ncpu ).chomp.split(':').last.strip.to_i

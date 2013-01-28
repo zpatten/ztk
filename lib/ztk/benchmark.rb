@@ -54,8 +54,12 @@ module ZTK
       # (see Kernel#sprintf).
       #
       # @param [Hash] options Configuration options hash.
-      # @option options [String] :message Instance of IO to be used for STDOUT.
-      # @option options [String] :mark Instance of IO to be used for STDERR.
+      # @option options [String] :message The *String* to be displayed to the
+      #   user before the block is yielded.
+      # @option options [String] :mark The *String* to be displayed to the user
+      #   after the block is yielded.  This *String* should have an *sprintf*
+      #   floating point macro in it if the benchmark is desired to be embedded
+      #   in the given *String*.
       #
       # @yield Block should execute the tasks to be benchmarked.
       # @yieldreturn [Object] The return value of the block is ignored.

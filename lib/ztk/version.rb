@@ -19,5 +19,8 @@
 ################################################################################
 
 module ZTK
-  VERSION = "0.3.1" unless const_defined?(:VERSION)
+
+  # ZTK Version String
+  VERSION = "0.3.1"
+
 end
