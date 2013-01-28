@@ -10,67 +10,12 @@ module ZTK::DSL
       base.class_eval do
         base.send(:extend, ZTK::DSL::Core::ClassMethods)
 
-        base.send(:extend, ZTK::DSL::Core::DualMethods)
-        base.send(:include, ZTK::DSL::Core::DualMethods)
-
         base.send(:include, ZTK::DSL::Core::Attributes)
         base.send(:include, ZTK::DSL::Core::Actions)
         base.send(:include, ZTK::DSL::Core::Dataset)
         base.send(:include, ZTK::DSL::Core::IO)
         base.send(:include, ZTK::DSL::Core::Relations)
       end
-    end
-
-    module DualMethods
-
-      # def underscore(camel_cased_word)
-      #   word = camel_cased_word.to_s.dup
-      #   word.gsub!(/::/, '/')
-      #   loop do
-      #     break if word.gsub!(/([A-Z])([A-Z])/,'\1_\2').nil?
-      #   end
-      #   word.gsub!(/([a-z\d])([A-Z])/,'\1_\2')
-      #   word.tr!("-", "_")
-      #   word.downcase!
-      #   word
-      # end
-
-      # def singularize(word)
-      #   string = word.to_s.dup
-      #   if string =~ /s$/
-      #     string = string[0..-2]
-      #   end
-      #   string
-      # end
-
-      # def camelize(underscored_word)
-      #   string = underscored_word.to_s.dup
-      #   namespaces = string.split('/')
-      #   parts = string.split("_")
-      #   string = parts.collect{ |part| part.capitalize }.join
-      #   string
-      # end
-
-      # def classify(underscored_word)
-      #   string = underscored_word.to_s
-      #   camelize(singularize(string))
-      # end
-
-      # def constantize(camel_cased_word)
-      #   names = camel_cased_word.to_s.split('::')
-      #   (names.empty? || names.first.empty?) and names.shift
-
-      #   constant = Object
-      #   names.each do |name|
-      #     if Module.method(:const_get).arity == 1
-      #       constant = constant.const_defined?(name) ? constant.const_get(name) : constant.const_missing(name)
-      #     else
-      #       constant = constant.const_defined?(name, false) ? constant.const_get(name) : constant.const_missing(name)
-      #     end
-      #   end
-      #   constant
-      # end
-
     end
 
     module ClassMethods
