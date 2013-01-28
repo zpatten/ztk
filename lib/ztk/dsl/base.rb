@@ -54,21 +54,17 @@ module ZTK::DSL
     end
 
     def inspect
-      klass = self.class.to_s.downcase.to_sym
       details = Array.new
-      details << "klass=#{klass.inspect}"
       details << "attributes=#{attributes.inspect}" if attributes.count > 0
       details << "has_many_references=#{@has_many_references.count}" if @has_many_references
       details << "belongs_to_references=#{@belongs_to_references.count}" if @belongs_to_references
-      "#<#{self.class.to_s}:#{self.id} #{details.join(', ')}>"
+      "#<#{self.class.to_s} id=#{self.id.inspect} #{details.join(', ')}>"
     end
 
     module ClassMethods
 
       def inspect
-        klass = self.to_s.downcase.to_sym
         details = Array.new
-        details << "klass=#{klass.inspect}"
         details << "count=#{self.all.count}" if self.all.count > 0
         "#<#{self.class.to_s}:#{self.id} #{details.join(', ')}>"
       end
