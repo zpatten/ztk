@@ -17,7 +17,6 @@
 #   limitatIOns under the License.
 #
 ################################################################################
-
 require "base64"
 
 module ZTK

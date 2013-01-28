@@ -17,7 +17,6 @@
 #   limitations under the License.
 #
 ################################################################################
-
 require 'socket'
 require 'timeout'
 

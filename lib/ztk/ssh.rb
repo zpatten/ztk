@@ -17,7 +17,6 @@
 #   limitations under the License.
 #
 ################################################################################
-
 require "ostruct"
 require "net/ssh"
 require "net/ssh/proxy/command"

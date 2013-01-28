@@ -17,7 +17,6 @@
 #   limitations under the License.
 #
 ################################################################################
-
 require "logger"
 
 module ZTK
@@ -45,6 +44,7 @@ module ZTK
   # @author Zachary Patten <zachary@jovelabs.net>
   class Logger < ::Logger
 
+    # Log Levels
     SEVERITIES = Severity.constants.inject([]) {|arr,c| arr[Severity.const_get(c)] = c; arr}
 
     def initialize(*args)
@@ -52,15 +52,28 @@ module ZTK
       set_log_level
     end
 
+    # Provides access to the raw log device.
     def logdev
       self.instance_variable_get(:@logdev).instance_variable_get(:@dev)
     end
 
+    # Specialized logging.  Logs messages in the same format, except has the
+    # option to shift the caller_at position to exposed the proper calling
+    # method.
+    #
+    # Very useful in situations of class inheritence, for example, where you
+    # might have logging statements in a base class, which are inherited by
+    # another class.  When calling the base class method via the inherited class
+    # the log messages will indicate the base class as the caller.  While this
+    # is technically true it is not always what we want to see in the logs
+    # because it is ambigious and does not show us where the call truly
+    # originated from.
     def shift(severity, shift=0, &block)
       severity = ZTK::Logger.const_get(severity.to_s.upcase)
       add(severity, nil, nil, shift, &block)
     end
 
+    # Generates a human-readable string about the logger.
     def inspect
       "#<#{self.class} filename=#{@logdev.filename.inspect}>"
     end
