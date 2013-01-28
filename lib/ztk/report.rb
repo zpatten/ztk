@@ -27,6 +27,15 @@ module ZTK
   # @author Zachary Patten <zachary@jovelabs.net>
   class ReportError < Error; end
 
+  # ZTK Report Class
+  #
+  # This class contains tools for generating spreadsheet or key-value list
+  # styled output.  Report methods are currently meant to be interchangeable;
+  # that is one should be able to just switch which method they are calling
+  # to change the output type.
+  #
+  # The idea here is that everything is auto-sized and simply displayed.
+  #
   # @author Zachary Patten <zachary@jovelabs.net>
   class Report < ZTK::Base
 
@@ -37,6 +46,21 @@ module ZTK
       config.logger.debug { "config=#{config.send(:table).inspect}" }
     end
 
+    # Displays data in a spreadsheet style.
+    #
+    #     +-------------+-------+-------+--------+----------------+-------------------+--------------+---------+
+    #     | NAME        | ALIVE | ARCH  | DISTRO | IP             | MAC               | CHEF VERSION | PERSIST |
+    #     +-------------+-------+-------+--------+----------------+-------------------+--------------+---------+
+    #     | sudo        | false | amd64 | ubuntu | 192.168.99.110 | 00:00:5e:34:d6:aa | N/A          | true    |
+    #     | timezone    | false | amd64 | ubuntu | 192.168.122.47 | 00:00:5e:92:d7:f6 | N/A          | true    |
+    #     | chef-client | false | amd64 | ubuntu | 192.168.159.98 | 00:00:5e:c7:ce:26 | N/A          | true    |
+    #     | users       | false | amd64 | ubuntu | 192.168.7.78   | 00:00:5e:89:f9:50 | N/A          | true    |
+    #     +-------------+-------+-------+--------+----------------+-------------------+--------------+---------+
+    #
+    # @param [Array] dataset An array of items for which we want to generate a
+    #   report
+    # @param [Array] headers An array of headers used for ordering the output.
+    # @return [OpenStruct]
     def spreadsheet(dataset, headers, &block)
       !block_given? and log_and_raise(ReportError, "You must supply a block!")
       headers.nil? and log_and_raise(ReportError, "Headers can not be nil!")
@@ -79,6 +103,25 @@ module ZTK
       OpenStruct.new(:rows => rows, :max_lengths => max_lengths, :width => width)
     end
 
+    # Displays data in a key-value list style.
+    #
+    #     +-------------------------------------------------------------------+
+    #     |                      PROVIDER: Cucumber::Chef::Provider::Vagrant  |
+    #     |                            ID: default                            |
+    #     |                         STATE: aborted                            |
+    #     |                      USERNAME: vagrant                            |
+    #     |                    IP ADDRESS: 127.0.0.1                          |
+    #     |                          PORT: 2222                               |
+    #     |               CHEF-SERVER API: http://127.0.0.1:4000              |
+    #     |             CHEF-SERVER WEBUI: http://127.0.0.1:4040              |
+    #     |      CHEF-SERVER DEFAULT USER: admin                              |
+    #     |  CHEF-SERVER DEFAULT PASSWORD: p@ssw0rd1                          |
+    #     +-------------------------------------------------------------------+
+    #
+    # @param [Array] dataset An array of items for which we want to generate a
+    #   report
+    # @param [Array] headers An array of headers used for ordering the output.
+    # @return [OpenStruct]
     def list(dataset, headers, &block)
       !block_given? and log_and_raise(ReportError, "You must supply a block!")
       headers.nil? and log_and_raise(ReportError, "Headers can not be nil!")

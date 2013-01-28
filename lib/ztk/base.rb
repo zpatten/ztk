@@ -80,6 +80,14 @@ module ZTK
         config
       end
 
+      # Logs an exception and then raises it.
+      #
+      # @param [Logger] logger An instance of a class based off the Ruby
+      #   *Logger* class.
+      # @param [Exception] exception The exception class to raise.
+      # @param [String] message The message to display with the exception.
+      # @param [Integer] shift (1) How many places to shift the caller stack in
+      #   the log statement.
       def log_and_raise(logger, exception, message, shift=1)
         if logger.is_a?(ZTK::Logger)
           logger.shift(:fatal, shift) { "EXCEPTION: #{exception.inspect} - #{message.inspect}" }
@@ -116,8 +124,16 @@ module ZTK
       end
     end
 
-    def log_and_raise(exception, message)
-      Base.log_and_raise(config.logger, exception, message, 2)
+    # Logs an exception and then raises it.
+    #
+    # @see Base.log_and_raise
+    #
+    # @param [Exception] exception The exception class to raise.
+    # @param [String] message The message to display with the exception.
+    # @param [Integer] shift (2) How many places to shift the caller stack in
+    #   the log statement.
+    def log_and_raise(exception, message, shift=2)
+      Base.log_and_raise(config.logger, exception, message, shift)
     end
 
     # Direct logging method.

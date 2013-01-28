@@ -22,6 +22,10 @@ require "ztk/version"
 
 # Main ZTK module
 #
+# ZTK is a general purpose utility library.  It definately has devops activities
+# in mind.  It provides several classes that ease SSH and SFTP, templating,
+# and a myraid of other activities.
+#
 # @author Zachary Patten <zachary@jovelabs.net>
 module ZTK
 

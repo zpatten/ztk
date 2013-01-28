@@ -51,7 +51,8 @@ module ZTK
       # Once the block finishes executing, the *mark* text is displayed with
       # the benchmark supplied to it as a sprintf option.  One could use "%0.4f"
       # in a *String* for example to get the benchmark time embedded in it
-      # (see Kernel#sprintf).
+      #
+      # @see Kernel#sprintf
       #
       # @param [Hash] options Configuration options hash.
       # @option options [String] :message The *String* to be displayed to the
