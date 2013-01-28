@@ -59,10 +59,16 @@ namespace :doc do
 
     desc 'Generate and publish YARD Documentation to GitHub pages'
     task :publish => ['doc:pages'] do
-      describe = %x(git describe).chomp.strip
+      describe = %x(git describe).chomp
+      stats = %x(bundle exec yard stats).chomp
+
+      commit_message = Array.new
+      commit_message << "Generated YARD Documentation for #{GEM_NAME.upcase} #{describe}\n\n"
+      commit_message << stats
+
       Dir.chdir(DOC_PATH) do
         puts(%x{git add -Av})
-        puts(%x{git commit -m"Generated YARD Documentation for #{GEM_NAME.upcase} #{describe}"})
+        puts(%x{git commit -m"#{commit_message.join}"})
         puts(%x{git push origin gh-pages})
       end
     end
