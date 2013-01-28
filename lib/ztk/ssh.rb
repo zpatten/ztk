@@ -150,7 +150,7 @@ module ZTK
       @ssh ||= Net::SSH.start(config.host_name, config.user, ssh_options)
     end
 
-    # Starts an SFTP session.  Can also be used to get the Net::SSH object.
+    # Starts an SFTP session.  Can also be used to get the Net::SFTP object.
     #
     # Primarily used internally.
     def sftp
