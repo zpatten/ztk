@@ -74,7 +74,7 @@ module ZTK::DSL::Core::Relations
         has_many_relations[key] = {:key => key}.merge(options)
 
         define_method(key) do |*args|
-          puts("==> #{key}(#{args.inspect})")
+          logger.debug { "*args(#{args.inspect})" }
 
           if args.count == 0
             get_belongs_to_reference(key)
@@ -84,13 +84,13 @@ module ZTK::DSL::Core::Relations
         end
 
         define_method("#{key}=") do |value|
-          puts("==> #{key}=(#{value.inspect})")
+          logger.debug { "value(#{value.inspect})" }
 
           set_belongs_to_reference(key, value)
         end
 
         define_method("#{key}_id") do |*args|
-          puts("==> #{key}_id(#{args.inspect})")
+          logger.debug { "*args(#{args.inspect})" }
 
           if args.count == 0
             attributes["#{key}_id".to_sym]

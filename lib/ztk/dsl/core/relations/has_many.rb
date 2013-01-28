@@ -70,7 +70,7 @@ module ZTK::DSL::Core::Relations
         has_many_relations[key] = {:key => key}.merge(options)
 
         define_method(key) do |*args|
-          puts("==> #{key}")
+          logger.debug { "*args(#{args.inspect})" }
 
           if args.count == 0
             get_has_many_reference(key)
@@ -80,7 +80,7 @@ module ZTK::DSL::Core::Relations
         end
 
         define_method("#{key}=") do |value|
-          puts("==> #{key}=(#{value.inspect})")
+          logger.debug { "value(#{value.inspect})" }
 
           set_has_many_reference(key, value)
         end
