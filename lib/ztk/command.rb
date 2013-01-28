@@ -68,14 +68,6 @@ module ZTK
     #   cmd = ZTK::Command.new
     #   puts cmd.exec("hostname -f").inspect
     def exec(command, options={})
-
-      def log_header(tag)
-        count = 8
-        sep = ("=" * count)
-        header = [sep, "[ #{tag} ]", sep, "[ #{self.inspect} ]", sep, "[ #{tag} ]", sep].join
-        "#{header}\n"
-      end
-
       options = OpenStruct.new({ :exit_code => 0, :silence => false }.merge(options))
 
       config.logger.debug { "config=#{config.send(:table).inspect}" }
@@ -180,6 +172,16 @@ module ZTK
     def download(*args)
       log_and_raise(CommandError, "Not Supported")
     end
+
+
+  private
+
+      def log_header(what)
+        count = 8
+        sep = ("=" * count)
+        header = [sep, "[ #{what} ]", sep, "[ #{self.inspect} ]", sep, "[ #{what} ]", sep].join
+        "#{header}\n"
+      end
 
   end
 
