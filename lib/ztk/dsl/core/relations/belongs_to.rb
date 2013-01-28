@@ -54,7 +54,8 @@ module ZTK::DSL::Core::Relations
       belongs_to_references[key] = value
       attributes.merge!("#{key}_id".to_sym => value.id)
 
-      klass = self.class.to_s.downcase.pluralize
+      klass = self.class.to_s.demodulize.downcase.pluralize
+      logger.debug { "send(#{klass})" }
       many = value.send(klass)
       many << self
       many.uniq!
@@ -88,13 +89,13 @@ module ZTK::DSL::Core::Relations
         end
 
         define_method("#{key}=") do |value|
-          logger.debug { "value(#{value.inspect})" }
+          logger.debug { "#{key}= value(#{value.inspect})" }
 
           set_belongs_to_reference(key, value)
         end
 
         define_method("#{key}_id") do |*args|
-          logger.debug { "*args(#{args.inspect})" }
+          logger.debug { "#{key}_id *args(#{args.inspect})" }
 
           if args.count == 0
             attributes["#{key}_id".to_sym]
@@ -106,7 +107,7 @@ module ZTK::DSL::Core::Relations
 
         define_method("#{key}_id=") do |value|
           options = self.class.belongs_to_relations[key]
-          logger.debug { "value(#{value.inspect}), options(#{options.inspect})" }
+          logger.debug { "#{key}_id= value(#{value.inspect}), options(#{options.inspect})" }
 
           if value != attributes["#{key}_id".to_sym]
             item = options[:class_name].constantize.find(value).first

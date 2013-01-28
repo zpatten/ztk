@@ -69,11 +69,10 @@ module ZTK::DSL::Core::Relations
           :class_name => key.to_s.classify,
           :key => key
         }.merge(options)
-
         logger.debug { "key(#{key.inspect}), options(#{has_many_relations[key].inspect})" }
 
         define_method(key) do |*args|
-          logger.debug { "*args(#{args.inspect})" }
+          logger.debug { "#{key} *args(#{args.inspect})" }
 
           if args.count == 0
             get_has_many_reference(key)
@@ -83,19 +82,19 @@ module ZTK::DSL::Core::Relations
         end
 
         define_method("#{key}=") do |value|
-          logger.debug { "value(#{value.inspect})" }
+          logger.debug { "#{key}= value(#{value.inspect})" }
 
           set_has_many_reference(key, value)
         end
 
         define_method(key.to_s.singularize) do |&block|
           options = self.class.has_many_relations[key]
-          logger.debug { "block(#{block.inspect}), options(#{options.inspect})" }
-
+          logger.debug { "#{key.to_s.singularize} block(#{block.inspect}), options(#{options.inspect})" }
           data = options[:class_name].constantize.new(&block)
           get_has_many_reference(key) << data
-          logger.debug { "send(#{options[:key].to_s.singularize.downcase})" }
-          data.send("#{self.class.to_s.singularize.downcase}=", self)
+          klass = self.class.to_s.demodulize.singularize.downcase
+          logger.debug { "send(#{klass})" }
+          data.send("#{klass}=", self)
           data
         end
       end
