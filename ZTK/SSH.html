@@ -190,7 +190,17 @@
     <dl class="constants">
       
         <dt id="EXIT_SIGNALS-constant" class="">EXIT_SIGNALS =
-          
+          <div class="docstring">
+  <div class="discussion">
+    <p>Exit Signal Mappings</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
         </dt>
         <dd><pre class="code"><span class='lbrace'>{</span>
   <span class='int'>1</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SIGHUP</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
@@ -353,50 +363,6 @@ process.</p>
   
     <span class="summary_desc"><div class='inline'><p>A new instance of SSH.</p>
 </div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#inspect-instance_method" title="#inspect (instance method)">- (Object) <strong>inspect</strong> </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#log_header-instance_method" title="#log_header (instance method)">- (Object) <strong>log_header</strong>(tag) </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -596,13 +562,13 @@ process.</p>
       <pre class="lines">
 
 
-177
-178
-179
-180</pre>
+160
+161
+162
+163</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 177</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 160</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_close'>close</span>
   <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>close</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -656,15 +622,15 @@ process.</p>
       <pre class="lines">
 
 
-193
-194
-195
-196
-197
-198</pre>
+176
+177
+178
+179
+180
+181</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 193</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 176</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_console'>console</span>
   <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>config=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:table</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -755,33 +721,33 @@ process.</p>
       <pre class="lines">
 
 
-375
-376
-377
-378
-379
-380
-381
-382
-383
-384
-385
-386
-387
-388
-389
-390
-391
-392
-393
-394
-395
-396
-397
-398</pre>
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 375</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 350</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_download'>download</span><span class='lparen'>(</span><span class='id identifier rubyid_remote'>remote</span><span class='comma'>,</span> <span class='id identifier rubyid_local'>local</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>config=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:table</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -947,6 +913,23 @@ STDERR.</p>
       <pre class="lines">
 
 
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
 221
 222
 223
@@ -1019,45 +1002,12 @@ STDERR.</p>
 290
 291
 292
-293
-294
-295
-296
-297
-298
-299
-300
-301
-302
-303
-304
-305
-306
-307
-308
-309
-310
-311
-312
-313
-314
-315
-316
-317
-318</pre>
+293</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 221</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 204</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='id identifier rubyid_command'>command</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-
-  <span class='kw'>def</span> <span class='id identifier rubyid_log_header'>log_header</span><span class='lparen'>(</span><span class='id identifier rubyid_tag'>tag</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_count'>count</span> <span class='op'>=</span> <span class='int'>8</span>
-    <span class='id identifier rubyid_sep'>sep</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>=</span><span class='tstring_end'>&quot;</span></span> <span class='op'>*</span> <span class='id identifier rubyid_count'>count</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_header'>header</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_sep'>sep</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>[ </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tag'>tag</span><span class='rbrace'>}</span><span class='tstring_content'> ]</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_sep'>sep</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>[ </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'> ]</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_sep'>sep</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>[ </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tag'>tag</span><span class='rbrace'>}</span><span class='tstring_content'> ]</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_sep'>sep</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span>
-    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_header'>header</span><span class='rbrace'>}</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>end</span>
-
   <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='const'>OpenStruct</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='lbrace'>{</span> <span class='symbol'>:exit_code</span> <span class='op'>=&gt;</span> <span class='int'>0</span><span class='comma'>,</span> <span class='symbol'>:silence</span> <span class='op'>=&gt;</span> <span class='kw'>false</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>config=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:table</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -1153,98 +1103,6 @@ STDERR.</p>
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="inspect-instance_method">
-  
-    - (<tt>Object</tt>) <strong>inspect</strong> 
-  
-
-  
-
-  
-</h3><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-145
-146
-147
-148
-149
-150
-151
-152
-153
-154
-155
-156
-157
-158
-159
-160</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 145</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
-  <span class='id identifier rubyid_tags'>tags</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
-
-  <span class='kw'>if</span> <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_proxy_host_name'>proxy_host_name</span>
-    <span class='id identifier rubyid_proxy_user_host'>proxy_user_host</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_proxy_user'>proxy_user</span><span class='rbrace'>}</span><span class='tstring_content'>@</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_proxy_host_name'>proxy_host_name</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_proxy_port'>proxy_port</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_proxy_port'>proxy_port</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>:</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_proxy_port'>proxy_port</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='op'>:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_tags'>tags</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='id identifier rubyid_proxy_user_host'>proxy_user_host</span><span class='comma'>,</span> <span class='id identifier rubyid_proxy_port'>proxy_port</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span>
-    <span class='id identifier rubyid_tags'>tags</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> &gt;&gt;&gt; </span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>end</span>
-
-  <span class='id identifier rubyid_user_host'>user_host</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_user'>user</span><span class='rbrace'>}</span><span class='tstring_content'>@</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_host_name'>host_name</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
-  <span class='id identifier rubyid_port'>port</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_port'>port</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>:</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_port'>port</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='op'>:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_tags'>tags</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='id identifier rubyid_user_host'>user_host</span><span class='comma'>,</span> <span class='id identifier rubyid_port'>port</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span>
-
-  <span class='id identifier rubyid_tags'>tags</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="log_header-instance_method">
-  
-    - (<tt>Object</tt>) <strong>log_header</strong>(tag) 
-  
-
-  
-
-  
-</h3><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-223
-224
-225
-226
-227
-228</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 223</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_log_header'>log_header</span><span class='lparen'>(</span><span class='id identifier rubyid_tag'>tag</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_count'>count</span> <span class='op'>=</span> <span class='int'>8</span>
-  <span class='id identifier rubyid_sep'>sep</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>=</span><span class='tstring_end'>&quot;</span></span> <span class='op'>*</span> <span class='id identifier rubyid_count'>count</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_header'>header</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_sep'>sep</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>[ </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tag'>tag</span><span class='rbrace'>}</span><span class='tstring_content'> ]</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_sep'>sep</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>[ </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'> ]</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_sep'>sep</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>[ </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tag'>tag</span><span class='rbrace'>}</span><span class='tstring_content'> ]</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_sep'>sep</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span>
-  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_header'>header</span><span class='rbrace'>}</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
   <h3 class="signature " id="sftp-instance_method">
   
     - (<tt>Object</tt>) <strong>sftp</strong> 
@@ -1255,7 +1113,7 @@ STDERR.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Starts an SFTP session.  Can also be used to get the Net::SSH object.</p>
+    <p>Starts an SFTP session.  Can also be used to get the Net::SFTP object.</p>
 
 <p>Primarily used internally.</p>
 
@@ -1271,12 +1129,12 @@ STDERR.</p>
       <pre class="lines">
 
 
-172
-173
-174</pre>
+155
+156
+157</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 172</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 155</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sftp'>sftp</span>
   <span class='ivar'>@sftp</span> <span class='op'>||=</span> <span class='const'>Net</span><span class='op'>::</span><span class='const'>SFTP</span><span class='period'>.</span><span class='id identifier rubyid_start'>start</span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_host_name'>host_name</span><span class='comma'>,</span> <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_ssh_options'>ssh_options</span><span class='rparen'>)</span>
@@ -1313,12 +1171,12 @@ STDERR.</p>
       <pre class="lines">
 
 
-165
-166
-167</pre>
+148
+149
+150</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 165</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 148</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ssh'>ssh</span>
   <span class='ivar'>@ssh</span> <span class='op'>||=</span> <span class='const'>Net</span><span class='op'>::</span><span class='const'>SSH</span><span class='period'>.</span><span class='id identifier rubyid_start'>start</span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_host_name'>host_name</span><span class='comma'>,</span> <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_ssh_options'>ssh_options</span><span class='rparen'>)</span>
@@ -1406,33 +1264,33 @@ STDERR.</p>
       <pre class="lines">
 
 
-335
-336
-337
-338
-339
-340
-341
-342
-343
-344
-345
-346
-347
-348
-349
-350
-351
-352
-353
-354
-355
-356
-357
-358</pre>
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 335</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 310</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_upload'>upload</span><span class='lparen'>(</span><span class='id identifier rubyid_local'>local</span><span class='comma'>,</span> <span class='id identifier rubyid_remote'>remote</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>config=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:table</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -1468,7 +1326,7 @@ STDERR.</p>
 </div>
 
     <div id="footer">
-  Generated on Fri Jan 25 20:01:13 2013 by
+  Generated on Sun Jan 27 23:07:26 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.3 (ruby-1.9.3).
 </div>

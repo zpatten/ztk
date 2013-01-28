@@ -151,7 +151,17 @@ use this library like so:
     <dl class="constants">
       
         <dt id="SEVERITIES-constant" class="">SEVERITIES =
-          
+          <div class="docstring">
+  <div class="discussion">
+    <p>Log Levels</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
         </dt>
         <dd><pre class="code"><span class='const'>Severity</span><span class='period'>.</span><span class='id identifier rubyid_constants'>constants</span><span class='period'>.</span><span class='id identifier rubyid_inject'>inject</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_arr'>arr</span><span class='comma'>,</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span> <span class='id identifier rubyid_arr'>arr</span><span class='lbracket'>[</span><span class='const'>Severity</span><span class='period'>.</span><span class='id identifier rubyid_const_get'>const_get</span><span class='lparen'>(</span><span class='id identifier rubyid_c'>c</span><span class='rparen'>)</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_c'>c</span><span class='semicolon'>;</span> <span class='id identifier rubyid_arr'>arr</span><span class='rbrace'>}</span></pre></dd>
       
@@ -214,7 +224,8 @@ use this library like so:
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'><p>Generates a human-readable string about the logger.</p>
+</div></span>
   
 </li>
 
@@ -236,7 +247,8 @@ use this library like so:
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'><p>Provides access to the raw log device.</p>
+</div></span>
   
 </li>
 
@@ -258,7 +270,8 @@ use this library like so:
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'><p>Specialized logging.</p>
+</div></span>
   
 </li>
 
@@ -328,18 +341,28 @@ use this library like so:
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Generates a human-readable string about the logger.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-64
-65
-66</pre>
+77
+78
+79</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/logger.rb', line 64</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/logger.rb', line 77</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#&lt;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='rbrace'>}</span><span class='tstring_content'> filename=</span><span class='embexpr_beg'>#{</span><span class='ivar'>@logdev</span><span class='period'>.</span><span class='id identifier rubyid_filename'>filename</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>&gt;</span><span class='tstring_end'>&quot;</span></span>
@@ -358,18 +381,28 @@ use this library like so:
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Provides access to the raw log device.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-55
 56
-57</pre>
+57
+58</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/logger.rb', line 55</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/logger.rb', line 56</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_logdev'>logdev</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_instance_variable_get'>instance_variable_get</span><span class='lparen'>(</span><span class='symbol'>:@logdev</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_instance_variable_get'>instance_variable_get</span><span class='lparen'>(</span><span class='symbol'>:@dev</span><span class='rparen'>)</span>
@@ -388,19 +421,39 @@ use this library like so:
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Specialized logging.  Logs messages in the same format, except has the
+option to shift the caller_at position to exposed the proper calling
+method.</p>
+
+<p>Very useful in situations of class inheritence, for example, where you
+might have logging statements in a base class, which are inherited by
+another class.  When calling the base class method via the inherited class
+the log messages will indicate the base class as the caller.  While this
+is technically true it is not always what we want to see in the logs
+because it is ambigious and does not show us where the call truly
+originated from.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-59
-60
-61
-62</pre>
+71
+72
+73
+74</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/logger.rb', line 59</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/logger.rb', line 71</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_shift'>shift</span><span class='lparen'>(</span><span class='id identifier rubyid_severity'>severity</span><span class='comma'>,</span> <span class='id identifier rubyid_shift'>shift</span><span class='op'>=</span><span class='int'>0</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_severity'>severity</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Logger</span><span class='period'>.</span><span class='id identifier rubyid_const_get'>const_get</span><span class='lparen'>(</span><span class='id identifier rubyid_severity'>severity</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_upcase'>upcase</span><span class='rparen'>)</span>
@@ -416,7 +469,7 @@ use this library like so:
 </div>
 
     <div id="footer">
-  Generated on Fri Jan 25 20:01:14 2013 by
+  Generated on Sun Jan 27 23:07:26 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.3 (ruby-1.9.3).
 </div>

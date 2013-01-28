@@ -435,16 +435,16 @@ configuration class.</p>
       <pre class="lines">
 
 
+136
 137
 138
 139
 140
 141
-142
-143</pre>
+142</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/config.rb', line 137</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/config.rb', line 136</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_method_missing'>method_missing</span><span class='lparen'>(</span><span class='id identifier rubyid_method_symbol'>method_symbol</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_method_args'>method_args</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_method_args'>method_args</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&gt;</span> <span class='int'>0</span>
@@ -493,16 +493,16 @@ a new <em>OpenStruct</em> object assigning it to the <em>configuration</em> attr
       <pre class="lines">
 
 
+72
 73
 74
 75
 76
 77
-78
-79</pre>
+78</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/config.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/config.rb', line 72</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_extended'>extended</span><span class='lparen'>(</span><span class='id identifier rubyid_base'>base</span><span class='rparen'>)</span>
   <span class='kw'>class</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_base'>base</span>
@@ -584,12 +584,12 @@ key to return.</p>
       <pre class="lines">
 
 
+99
 100
-101
-102</pre>
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/config.rb', line 100</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/config.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='op'>[]</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
   <span class='id identifier rubyid__get'>_get</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
@@ -677,12 +677,12 @@ key.</p>
       <pre class="lines">
 
 
+111
 112
-113
-114</pre>
+113</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/config.rb', line 112</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/config.rb', line 111</span>
 
 <span class='kw'>def</span> <span class='op'>[]=</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
   <span class='id identifier rubyid__set'>_set</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
@@ -735,12 +735,12 @@ specified block.</p>
       <pre class="lines">
 
 
+89
 90
-91
-92</pre>
+91</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/config.rb', line 90</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/config.rb', line 89</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_config'>config</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_block'>block</span> <span class='kw'>and</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_configuration'>configuration</span><span class='rparen'>)</span>
@@ -775,12 +775,12 @@ specified block.</p>
       <pre class="lines">
 
 
+81
 82
-83
-84</pre>
+83</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/config.rb', line 82</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/config.rb', line 81</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_from_file'>from_file</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_instance_eval'>instance_eval</span><span class='lparen'>(</span><span class='const'>IO</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span> <span class='int'>1</span><span class='rparen'>)</span>
@@ -834,12 +834,12 @@ specified block.</p>
       <pre class="lines">
 
 
+121
 122
-123
-124</pre>
+123</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/config.rb', line 122</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/config.rb', line 121</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_has_key?'>has_key?</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_configuration'>configuration</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:table</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_has_key?'>has_key?</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
@@ -880,12 +880,12 @@ specified block.</p>
       <pre class="lines">
 
 
+116
 117
-118
-119</pre>
+118</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/config.rb', line 117</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/config.rb', line 116</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_keys'>keys</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_configuration'>configuration</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:table</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span>
@@ -926,12 +926,12 @@ specified block.</p>
       <pre class="lines">
 
 
+126
 127
-128
-129</pre>
+128</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/config.rb', line 127</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/config.rb', line 126</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_hash'>hash</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_configuration'>configuration</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:table</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_hash'>hash</span><span class='rparen'>)</span>
@@ -972,12 +972,12 @@ specified block.</p>
       <pre class="lines">
 
 
+131
 132
-133
-134</pre>
+133</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/config.rb', line 132</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/config.rb', line 131</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_merge!'>merge!</span><span class='lparen'>(</span><span class='id identifier rubyid_hash'>hash</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_configuration'>configuration</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:table</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_merge!'>merge!</span><span class='lparen'>(</span><span class='id identifier rubyid_hash'>hash</span><span class='rparen'>)</span>
@@ -992,7 +992,7 @@ specified block.</p>
 </div>
 
     <div id="footer">
-  Generated on Fri Jan 25 20:01:13 2013 by
+  Generated on Sun Jan 27 23:07:26 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.3 (ruby-1.9.3).
 </div>

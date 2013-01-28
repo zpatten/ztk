@@ -101,7 +101,26 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>RescueRetry Class</p>
+    <p>ZTK RescueRetry Class</p>
+
+<p>This class contains an exception handling tool, which will allowing retry
+of all or specific <em>Exceptions</em> based on a set number of attempts to make.</p>
+
+<p>The block is yielded and if a valid exception occurs the block will be
+re-executed for the set number of attempts.</p>
+
+<p>For example, from the ZTK SSH class:</p>
+
+<pre class="code ruby"><code>ZTK::RescueRetry.try(:tries =&gt; 3, :on =&gt; EOFError) do
+  @ssh = Net::SSH.start(config.host_name, config.user, ssh_options)
+  ...
+end
+</code></pre>
+
+<p>If an SSH connection drops on the other side and we go to write to it, we
+will get this error.  Wrapping the SSH code in <em>RescueRetry</em> allows us to
+retry the connection in the event this happens.  If we have no luck after
+3 attempts at executing the block, <em>RescueRetry</em> surfaces the exception.</p>
 
 
   </div>
@@ -142,7 +161,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#try-class_method" title="try (class method)">+ (Object) <strong>try</strong>(options = {}, &amp;block) </a>
+      <a href="#try-class_method" title="try (class method)">+ (Object) <strong>try</strong>(options = {}) { ... }</a>
     
 
     
@@ -156,7 +175,8 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'><p>Rescue and Retry the supplied block.</p>
+</div></span>
   
 </li>
 
@@ -173,45 +193,174 @@
       <div class="method_details first">
   <h3 class="signature first" id="try-class_method">
   
-    + (<tt>Object</tt>) <strong>try</strong>(options = {}, &amp;block) 
+    + (<tt>Object</tt>) <strong>try</strong>(options = {}) { ... }
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Rescue and Retry the supplied block.</p>
+
+<p>When no options are supplied, if an <em>Exception</em> is encounter it is
+surfaced immediately and no retry is performed.</p>
+
+<p>It is advisable to at least leave the <em>delay</em> option at 1.  You could
+optionally set this to 0, but this is generally a bad idea.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>options</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Configuration options hash.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  
+    
+    
+    <p class="tag_title">Options Hash (<tt>options</tt>):</p>
+    <ul class="option">
+      
+        <li>
+          <span class="name">:tries</span>
+          <span class="type">(<tt>String</tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>1</tt>
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>How many attempts at executing the
+block before we give up and surface the <em>Exception</em>.</p>
+</div>
+          
+        </li>
+      
+        <li>
+          <span class="name">:on</span>
+          <span class="type">(<tt>String</tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>Exception</tt>
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>Watch for a specific exception
+instead of performing retry on all exceptions.</p>
+</div>
+          
+        </li>
+      
+        <li>
+          <span class="name">:delay</span>
+          <span class="type">(<tt>Float</tt>, <tt>Integer</tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>1</tt>
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>How long to sleep for between
+each retry.</p>
+</div>
+          
+        </li>
+      
+    </ul>
+  
+
+<p class="tag_title">Yields:</p>
+<ul class="yield">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'><p>Block should execute the tasks to be rescued and retried if
+needed.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Object</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The return value of the block.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57</pre>
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/rescue_retry.rb', line 34</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/rescue_retry.rb', line 72</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_try'>try</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='const'>Base</span><span class='period'>.</span><span class='id identifier rubyid_build_config'>build_config</span><span class='lparen'>(</span><span class='lbrace'>{</span>
@@ -247,7 +396,7 @@
 </div>
 
     <div id="footer">
-  Generated on Fri Jan 25 20:01:14 2013 by
+  Generated on Sun Jan 27 23:07:27 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.3 (ruby-1.9.3).
 </div>

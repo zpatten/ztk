@@ -101,7 +101,14 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Benchmark Class</p>
+    <p>ZTK Benchmark Class</p>
+
+<p>This class contains a benchmarking tool which doubles to supply indications
+of activity to the console user during long running tasks.</p>
+
+<p>It can be run strictly for benchmarking (the default) or if supplied with
+the appropriate options it will display output to the user while
+benchmarking the supplied block.</p>
 
 
   </div>
@@ -142,7 +149,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#bench-class_method" title="bench (class method)">+ (Object) <strong>bench</strong>(options = {}, &amp;block) </a>
+      <a href="#bench-class_method" title="bench (class method)">+ (Float) <strong>bench</strong>(options = {}) { ... }</a>
     
 
     
@@ -156,7 +163,8 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'><p>Benchmark the supplied block.</p>
+</div></span>
   
 </li>
 
@@ -173,46 +181,182 @@
       <div class="method_details first">
   <h3 class="signature first" id="bench-class_method">
   
-    + (<tt>Object</tt>) <strong>bench</strong>(options = {}, &amp;block) 
+    + (<tt>Float</tt>) <strong>bench</strong>(options = {}) { ... }
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Benchmark the supplied block.</p>
+
+<p>If <em>message</em> and <em>mark</em> options are used, then the <em>message</em> text will
+be displayed to the user.  The the supplied <em>block</em> is yielded inside
+a <em>ZTK::Spinner.spin</em> call.  This will provide the spinning cursor while
+the block executes.  It is advisable to not have output sent to the
+console during this period.</p>
+
+<p>Once the block finishes executing, the <em>mark</em> text is displayed with
+the benchmark supplied to it as a sprintf option.  One could use &quot;%0.4f&quot;
+in a <em>String</em> for example to get the benchmark time embedded in it</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>options</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Configuration options hash.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  
+    
+    
+    <p class="tag_title">Options Hash (<tt>options</tt>):</p>
+    <ul class="option">
+      
+        <li>
+          <span class="name">:message</span>
+          <span class="type">(<tt>String</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>The <em>String</em> to be displayed to the
+user before the block is yielded.</p>
+</div>
+          
+        </li>
+      
+        <li>
+          <span class="name">:mark</span>
+          <span class="type">(<tt>String</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>The <em>String</em> to be displayed to the user
+after the block is yielded.  This <em>String</em> should have an <em>sprintf</em>
+floating point macro in it if the benchmark is desired to be embedded
+in the given <em>String</em>.</p>
+</div>
+          
+        </li>
+      
+    </ul>
+  
+
+<p class="tag_title">Yields:</p>
+<ul class="yield">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'><p>Block should execute the tasks to be benchmarked.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Yield Returns:</p>
+<ul class="yieldreturn">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Object</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The return value of the block is ignored.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Float</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The benchmark time.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li>Kernel#sprintf</li>
+    
+  </ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60</pre>
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/benchmark.rb', line 36</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/benchmark.rb', line 68</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_bench'>bench</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='const'>Base</span><span class='period'>.</span><span class='id identifier rubyid_build_config'>build_config</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -249,7 +393,7 @@
 </div>
 
     <div id="footer">
-  Generated on Fri Jan 25 20:01:14 2013 by
+  Generated on Sun Jan 27 23:07:27 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.3 (ruby-1.9.3).
 </div>
