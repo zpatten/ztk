@@ -181,6 +181,7 @@ describe ZTK::DSL do
         end
       end
 
+      # FIXME
       # it "can has_many via direct object addition" do
       #   env = Environment.new do
       #     name "environment"
@@ -573,11 +574,11 @@ describe ZTK::DSL do
         name "environment"
       end
 
-      Network.new do
+      net0 = Network.new do
         id :net0
         name "network0"
       end
-      Network.new do
+      net1 = Network.new do
         id :net1
         name "network1"
       end
@@ -585,20 +586,20 @@ describe ZTK::DSL do
       Container.new do
         id :con0
         name "container0"
-        network_id :net0
-        environment_id :env0
+        network net0
+        environment env
       end
       Container.new do
         id :con1
         name "container1"
-        network_id :net0
-        environment_id :env0
+        network net0
+        environment env
       end
       Container.new do
         id :con2
         name "container2"
-        network_id :net1
-        environment_id :env0
+        network net1
+        environment env
       end
 
       env.name.should == "environment"
