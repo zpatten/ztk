@@ -103,7 +103,160 @@
 </dl>
 <div class="clear"></div>
 
-<h2>Defined Under Namespace</h2>
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>Generic Domain-specific Language Interface</p>
+
+<p>This module allows you to easily add attributes and relationships to classes
+to create a custom DSL in no time.</p>
+
+<p>You can then access these classes in manners similar to what <em>ActiveRecord</em>
+provides for relationships.  You can easily link classes together; load
+stored objects from Ruby rb files (think Opscode Chef DSL).</p>
+
+<p>I intend the interface to act like ActiveRecord for the programmer and a
+nice DSL for the end user.  It&#39;s not meant to be a database; more like
+a soft dataset in memory; extremely fast but highly volitale.  As always
+you can never have your cake and eat it too.</p>
+
+<p>You specify the &quot;schema&quot; in the classes itself; there is no data storage at
+this time, but I do plan to add support for loading/saving <em>datasets</em> to
+disk.  Keep in mind since you do not specify type constrants in Ruby, one
+can assign any object to an attribute.</p>
+
+<p>At this time if you do not specify an ID; one is auto generated.</p>
+
+<p>If you wish to create objects in a nested fashion the outer most object must
+be started using the class name initializer.  Once inside the block you can
+start using the relationship names and do not need to call any further
+class initializers.</p>
+
+<p>You can also instantiate classes separately and associate them after the
+fact.  That is not shown in this example.</p>
+
+<p><em>example code</em>:</p>
+
+<pre class="code ruby"><code><span class='kw'>class</span> <span class='const'>Network</span> <span class='op'>&lt;</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Base</span>
+  <span class='id identifier rubyid_has_many'>has_many</span> <span class='symbol'>:servers</span>
+
+  <span class='id identifier rubyid_attribute'>attribute</span> <span class='symbol'>:name</span>
+  <span class='id identifier rubyid_attribute'>attribute</span> <span class='symbol'>:gw</span>
+  <span class='id identifier rubyid_attribute'>attribute</span> <span class='symbol'>:network</span>
+  <span class='id identifier rubyid_attribute'>attribute</span> <span class='symbol'>:netmask</span>
+<span class='kw'>end</span>
+
+<span class='kw'>class</span> <span class='const'>Server</span> <span class='op'>&lt;</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Base</span>
+  <span class='id identifier rubyid_belongs_to'>belongs_to</span> <span class='symbol'>:network</span>
+
+  <span class='id identifier rubyid_attribute'>attribute</span> <span class='symbol'>:name</span>
+<span class='kw'>end</span>
+
+<span class='const'>Network</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_id'>id</span> <span class='symbol'>:leet_net</span>
+  <span class='id identifier rubyid_name'>name</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>leet-net</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_gw'>gw</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>7.3.3.1</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_network'>network</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>7.3.3.0</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_netmask'>netmask</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>255.255.255.0</span><span class='tstring_end'>&quot;</span></span>
+
+  <span class='id identifier rubyid_server'>server</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_name'>name</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>leet-server</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_server'>server</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_id'>id</span> <span class='symbol'>:my_server</span>
+    <span class='id identifier rubyid_name'>name</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>my-server</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_server'>server</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_name'>name</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>dev-server</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+
+<span class='const'>Network</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span>
+<span class='const'>Network</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span>
+<span class='const'>Network</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='symbol'>:leet_net</span><span class='rparen'>)</span>
+
+<span class='const'>Server</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span>
+<span class='const'>Server</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span>
+<span class='const'>Server</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='symbol'>:my_server</span><span class='rparen'>)</span>
+</code></pre>
+
+<p><em>pry output</em>:</p>
+
+<pre class="code ruby"><code>[1] pry(main)&gt; class Network &lt; ZTK::DSL::Base
+[1] pry(main)*   has_many :servers
+[1] pry(main)*
+[1] pry(main)*   attribute :name
+[1] pry(main)*   attribute :gw
+[1] pry(main)*   attribute :network
+[1] pry(main)*   attribute :netmask
+[1] pry(main)* end
+=&gt; #&lt;Proc:0x0000000121f498@/home/zpatten/Dropbox/code/chef-repo/vendor/checkouts/ztk/lib/ztk/dsl/core/attributes.rb:45 (lambda)&gt;
+[2] pry(main)&gt; class Server &lt; ZTK::DSL::Base
+[2] pry(main)*   belongs_to :network
+[2] pry(main)*
+[2] pry(main)*   attribute :name
+[2] pry(main)* end
+=&gt; #&lt;Proc:0x00000001983108@/home/zpatten/Dropbox/code/chef-repo/vendor/checkouts/ztk/lib/ztk/dsl/core/attributes.rb:45 (lambda)&gt;
+[3] pry(main)&gt; Network.new do
+[3] pry(main)*   id :leet_net
+[3] pry(main)*   name &quot;leet-net&quot;
+[3] pry(main)*   gw &quot;7.3.3.1&quot;
+[3] pry(main)*   network &quot;7.3.3.0&quot;
+[3] pry(main)*   netmask &quot;255.255.255.0&quot;
+[3] pry(main)*
+[3] pry(main)*   server do
+[3] pry(main)*     name &quot;leet-server&quot;
+[3] pry(main)*   end
+[3] pry(main)*
+[3] pry(main)*   server do
+[3] pry(main)*     id :my_server
+[3] pry(main)*     name &quot;my-server&quot;
+[3] pry(main)*   end
+[3] pry(main)*
+[3] pry(main)*   server do
+[3] pry(main)*     name &quot;dev-server&quot;
+[3] pry(main)*   end
+[3] pry(main)* end
+=&gt; #&lt;Network id=:leet_net attributes={:id=&gt;:leet_net, :name=&gt;&quot;leet-net&quot;, :gw=&gt;&quot;7.3.3.1&quot;, :network=&gt;&quot;7.3.3.0&quot;, :netmask=&gt;&quot;255.255.255.0&quot;}, has_many_references=1&gt;
+[4] pry(main)&gt; Network.count
+=&gt; 1
+[5] pry(main)&gt; Network.all
+=&gt; [#&lt;Network id=:leet_net attributes={:id=&gt;:leet_net, :name=&gt;&quot;leet-net&quot;, :gw=&gt;&quot;7.3.3.1&quot;, :network=&gt;&quot;7.3.3.0&quot;, :netmask=&gt;&quot;255.255.255.0&quot;}, has_many_references=1&gt;]
+[6] pry(main)&gt; Network.find(:leet_net)
+=&gt; [#&lt;Network id=:leet_net attributes={:id=&gt;:leet_net, :name=&gt;&quot;leet-net&quot;, :gw=&gt;&quot;7.3.3.1&quot;, :network=&gt;&quot;7.3.3.0&quot;, :netmask=&gt;&quot;255.255.255.0&quot;}, has_many_references=1&gt;]
+[7] pry(main)&gt; Server.count
+=&gt; 3
+[8] pry(main)&gt; Server.all
+=&gt; [#&lt;Server id=2 attributes={:id=&gt;2, :name=&gt;&quot;leet-server&quot;, :network_id=&gt;:leet_net}, belongs_to_references=1&gt;,
+ #&lt;Server id=:my_server attributes={:id=&gt;:my_server, :name=&gt;&quot;my-server&quot;, :network_id=&gt;:leet_net}, belongs_to_references=1&gt;,
+ #&lt;Server id=4 attributes={:id=&gt;4, :name=&gt;&quot;dev-server&quot;, :network_id=&gt;:leet_net}, belongs_to_references=1&gt;]
+[9] pry(main)&gt; Server.find(:my_server)
+=&gt; [#&lt;Server id=:my_server attributes={:id=&gt;:my_server, :name=&gt;&quot;my-server&quot;, :network_id=&gt;:leet_net}, belongs_to_references=1&gt;]
+</code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Author:</p>
+<ul class="author">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>Zachary Patten <a href="mailto:zachary@jovelabs.net">zachary@jovelabs.net</a></p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><h2>Defined Under Namespace</h2>
 <p class="children">
   
     
@@ -142,7 +295,7 @@
   
   
   
-  
+  <span class="private note title">private</span>
 
   
     <span class="summary_desc"><div class='inline'></div></span>
@@ -164,7 +317,7 @@
   
   
   
-  
+  <span class="private note title">private</span>
 
   
     <span class="summary_desc"><div class='inline'></div></span>
@@ -186,7 +339,7 @@
   
   
   
-  
+  <span class="private note title">private</span>
 
   
     <span class="summary_desc"><div class='inline'></div></span>
@@ -300,21 +453,21 @@
       <pre class="lines">
 
 
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54</pre>
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/base.rb', line 43</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/base.rb', line 174</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span>
@@ -349,18 +502,31 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-39
-40
-41</pre>
+170
+171
+172</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/base.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/base.rb', line 170</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_extended'>extended</span><span class='lparen'>(</span><span class='id identifier rubyid_base'>base</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_puts'>puts</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>extended(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_base'>base</span><span class='rbrace'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -379,18 +545,31 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-35
-36
-37</pre>
+165
+166
+167</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/base.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/base.rb', line 165</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_included'>included</span><span class='lparen'>(</span><span class='id identifier rubyid_base'>base</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_puts'>puts</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>included(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_base'>base</span><span class='rbrace'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -409,22 +588,35 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-27
-28
-29
-30
-31
-32
-33</pre>
+156
+157
+158
+159
+160
+161
+162</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/base.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/base.rb', line 156</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_inherited'>inherited</span><span class='lparen'>(</span><span class='id identifier rubyid_base'>base</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_puts'>puts</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>inherited(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_base'>base</span><span class='rbrace'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -459,16 +651,16 @@
       <pre class="lines">
 
 
-56
-57
-58
-59
-60
-61
-62</pre>
+187
+188
+189
+190
+191
+192
+193</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/base.rb', line 56</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/base.rb', line 187</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
   <span class='id identifier rubyid_details'>details</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -487,7 +679,7 @@
 </div>
 
     <div id="footer">
-  Generated on Sun Jan 27 23:57:40 2013 by
+  Generated on Tue Jan 29 00:20:46 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.3 (ruby-1.9.3).
 </div>

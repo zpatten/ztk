@@ -79,8 +79,8 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">lib/ztk/dsl/core/actions/find.rb<span class="defines">,<br />
-  lib/ztk/dsl/core/actions.rb,<br /> lib/ztk/dsl/core/actions/timestamps.rb</span>
+    <dd class="r1 last">lib/ztk/dsl/core/actions.rb<span class="defines">,<br />
+  lib/ztk/dsl/core/actions/find.rb,<br /> lib/ztk/dsl/core/actions/timestamps.rb</span>
 </dd>
   
 </dl>
@@ -150,7 +150,7 @@
   
   
   
-  
+  <span class="private note title">private</span>
 
   
     <span class="summary_desc"><div class='inline'></div></span>
@@ -176,21 +176,34 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-26
-27
-28
 29
 30
-31</pre>
+31
+32
+33
+34</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/actions.rb', line 26</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/actions.rb', line 29</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_included'>included</span><span class='lparen'>(</span><span class='id identifier rubyid_base'>base</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_class_eval'>class_eval</span> <span class='kw'>do</span>
@@ -208,7 +221,7 @@
 </div>
 
     <div id="footer">
-  Generated on Sun Jan 27 23:57:39 2013 by
+  Generated on Tue Jan 29 00:20:45 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.3 (ruby-1.9.3).
 </div>
