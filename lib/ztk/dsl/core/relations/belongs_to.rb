@@ -19,6 +19,9 @@
 ################################################################################
 
 module ZTK::DSL::Core::Relations
+
+  # @author Zachary Patten <zachary@jovelabs.net>
+  # @api private
   module BelongsTo
 
     def self.included(base)
@@ -69,6 +72,7 @@ module ZTK::DSL::Core::Relations
       end
     end
 
+    # @author Zachary Patten <zachary@jovelabs.net>
     module ClassMethods
 
       def belongs_to(key, options={})

@@ -22,11 +22,13 @@ require "base64"
 
 module ZTK
 
-  # ZTK::Ui Error Class
+  # ZTK::UI Error Class
   #
   # @author Zachary Patten <zachary@jovelabs.net>
   class UIError < Error; end
 
+  # ZTK UI Wrapper Class
+  #
   # @author Zachary Patten <zachary@jovelabs.net>
   class UI < ZTK::Base
 

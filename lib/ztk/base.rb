@@ -22,6 +22,8 @@ require "ostruct"
 module ZTK
 
   # ZTK::Base Error Class
+  #
+  # @author Zachary Patten <zachary@jovelabs.net>
   class BaseError < Error; end
 
   # ZTK Base Class
@@ -32,6 +34,8 @@ module ZTK
   #
   # You should never interact with this class directly; you should inherit it
   # and extend functionality as appropriate.
+  #
+  # @author Zachary Patten <zachary@jovelabs.net>
   class Base
 
     class << self

@@ -19,6 +19,9 @@
 ################################################################################
 
 module ZTK::DSL::Core::Relations
+
+  # @author Zachary Patten <zachary@jovelabs.net>
+  # @api private
   module HasMany
 
     def self.included(base)
@@ -62,6 +65,7 @@ module ZTK::DSL::Core::Relations
       end
     end
 
+    # @author Zachary Patten <zachary@jovelabs.net>
     module ClassMethods
 
       def has_many(key, options={})

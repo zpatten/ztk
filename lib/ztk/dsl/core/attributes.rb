@@ -19,6 +19,9 @@
 ################################################################################
 
 module ZTK::DSL::Core
+
+  # @author Zachary Patten <zachary@jovelabs.net>
+  # @api private
   module Attributes
 
     def self.included(base)
@@ -31,6 +34,7 @@ module ZTK::DSL::Core
       @attributes ||= {}
     end
 
+    # @author Zachary Patten <zachary@jovelabs.net>
     module ClassMethods
 
       def attribute(key, options={})

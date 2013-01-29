@@ -19,6 +19,9 @@
 ################################################################################
 
 module ZTK::DSL::Core
+
+  # @author Zachary Patten <zachary@jovelabs.net>
+  # @api private
   module Actions
     autoload :Find, "ztk/dsl/core/actions/find"
     autoload :Timestamps, "ztk/dsl/core/actions/timestamps"

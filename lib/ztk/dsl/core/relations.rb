@@ -19,6 +19,9 @@
 ################################################################################
 
 module ZTK::DSL::Core
+
+  # @author Zachary Patten <zachary@jovelabs.net>
+  # @api private
   module Relations
     autoload :BelongsTo, "ztk/dsl/core/relations/belongs_to"
     autoload :HasMany, "ztk/dsl/core/relations/has_many"
@@ -31,6 +34,7 @@ module ZTK::DSL::Core
       end
     end
 
+    # @author Zachary Patten <zachary@jovelabs.net>
     module ClassMethods
 
       def add_relation(key)

@@ -19,6 +19,9 @@
 ################################################################################
 
 module ZTK::DSL::Core::Actions
+
+  # @author Zachary Patten <zachary@jovelabs.net>
+  # @api private
   module Find
 
     def self.included(base)
@@ -27,6 +30,7 @@ module ZTK::DSL::Core::Actions
       end
     end
 
+    # @author Zachary Patten <zachary@jovelabs.net>
     module ClassMethods
 
       def all

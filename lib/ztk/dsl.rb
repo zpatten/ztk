@@ -17,29 +17,13 @@
 #   limitations under the License.
 #
 ################################################################################
-
 require "active_support/inflector"
 
 module ZTK
 
   # Generic Domain-specific Language Interface
   #
-  # This module allows you to easily add attributes and relationships to classes
-  # create a custom DSL in no time.
-  #
-  # You can then access these classes in manners similar to what *ActiveRecord*
-  # provides for relationships.  You can easily link classes together; load
-  # stored objects from Ruby rb files (think Opscode Chef DSL).
-  #
-  # I intend the interface to act like ActiveRecord for the programmer and a
-  # nice DSL for the end user.  It's not meant to be a database; more like
-  # a soft dataset in memory; extremely fast but highly volitale.  As always
-  # you can never have your cake and eat it too.
-  #
-  # You specify the schema in the classes itself; there is no data storage at
-  # this time, but I do plan to add support for loading/saving *datasets* to
-  # disk.
-  #
+  # @see ZTK::DSL::Base
   # @author Zachary Patten <zachary@jovelabs.net>
   module DSL
 
