@@ -48,6 +48,7 @@ module ZTK
 
         rails_logger = Rails.logger if defined?(Rails)
 
+        # FIXME: this needs to be refactored into the UI class
         config = OpenStruct.new({
           :stdout => $stdout,
           :stderr => $stderr,
