@@ -33,17 +33,66 @@ module ZTK
   # The block is yielded and if a valid exception occurs the block will be
   # re-executed for the set number of attempts.
   #
-  # For example, from the ZTK SSH class:
+  # *example code*:
   #
+  #     counter = 0
   #     ZTK::RescueRetry.try(:tries => 3, :on => EOFError) do
-  #       @ssh = Net::SSH.start(config.host_name, config.user, ssh_options)
-  #       ...
+  #       counter += 1
+  #       raise EOFError
   #     end
+  #     puts counter.inspect
   #
-  # If an SSH connection drops on the other side and we go to write to it, we
-  # will get this error.  Wrapping the SSH code in *RescueRetry* allows us to
-  # retry the connection in the event this happens.  If we have no luck after
-  # 3 attempts at executing the block, *RescueRetry* surfaces the exception.
+  #     counter = 0
+  #     ZTK::RescueRetry.try(:tries => 3) do
+  #       counter += 1
+  #       raise "OMGWTFBBQ"
+  #     end
+  #     puts counter.inspect
+  #
+  #     counter = 0
+  #     ZTK::RescueRetry.try(:tries => 3, :on => EOFError) do
+  #       counter += 1
+  #       raise "OMGWTFBBQ"
+  #     end
+  #     puts counter.inspect
+  #
+  # *pry output*:
+  #
+  #     [1] pry(main)> counter = 0
+  #     => 0
+  #     [2] pry(main)> ZTK::RescueRetry.try(:tries => 3, :on => EOFError) do
+  #     [2] pry(main)*   counter += 1
+  #     [2] pry(main)*   raise EOFError
+  #     [2] pry(main)* end
+  #     EOFError: EOFError
+  #     from (pry):4:in `block in <main>'
+  #     [3] pry(main)> puts counter.inspect
+  #     3
+  #     => nil
+  #     [4] pry(main)>
+  #     [5] pry(main)> counter = 0
+  #     => 0
+  #     [6] pry(main)> ZTK::RescueRetry.try(:tries => 3) do
+  #     [6] pry(main)*   counter += 1
+  #     [6] pry(main)*   raise "OMGWTFBBQ"
+  #     [6] pry(main)* end
+  #     RuntimeError: OMGWTFBBQ
+  #     from (pry):10:in `block in <main>'
+  #     [7] pry(main)> puts counter.inspect
+  #     3
+  #     => nil
+  #     [8] pry(main)>
+  #     [9] pry(main)> counter = 0
+  #     => 0
+  #     [10] pry(main)> ZTK::RescueRetry.try(:tries => 3, :on => EOFError) do
+  #     [10] pry(main)*   counter += 1
+  #     [10] pry(main)*   raise "OMGWTFBBQ"
+  #     [10] pry(main)* end
+  #     RuntimeError: OMGWTFBBQ
+  #     from (pry):16:in `block in <main>'
+  #     [11] pry(main)> puts counter.inspect
+  #     1
+  #     => nil
   #
   # @author Zachary Patten <zachary@jovelabs.net>
   class RescueRetry
