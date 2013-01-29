@@ -35,6 +35,26 @@ module ZTK
   # the appropriate options it will display output to the user while
   # benchmarking the supplied block.
   #
+  # *example code*:
+  #
+  #     message = "I wonder how long this will take?"
+  #     mark = " ...looks like it took %0.4f seconds!"
+  #     ZTK::Benchmark.bench(:message => message, :mark => mark) do
+  #       sleep(1.5)
+  #     end
+  #
+  # *pry output*:
+  #
+  #     [1] pry(main)> message = "I wonder how long this will take?"
+  #     => "I wonder how long this will take?"
+  #     [2] pry(main)> mark = " ...looks like it took %0.4f seconds!"
+  #     => " ...looks like it took %0.4f seconds!"
+  #     [3] pry(main)> ZTK::Benchmark.bench(:message => message, :mark => mark) do
+  #     [3] pry(main)*   sleep(1.5)
+  #     [3] pry(main)* end
+  #     I wonder how long this will take?  ...looks like it took 1.5229 seconds!
+  #     => 1.522871547
+  #
   # @author Zachary Patten <zachary@jovelabs.net>
   class Benchmark
 
@@ -61,12 +81,16 @@ module ZTK
       #   after the block is yielded.  This *String* should have an *sprintf*
       #   floating point macro in it if the benchmark is desired to be embedded
       #   in the given *String*.
+      # @option options [Boolean] :use_spinner (true) Weither or not to use the
+      #   ZTK::Spinner while benchmarking.
       #
       # @yield Block should execute the tasks to be benchmarked.
       # @yieldreturn [Object] The return value of the block is ignored.
       # @return [Float] The benchmark time.
       def bench(options={}, &block)
-        options = Base.build_config(options)
+        options = Base.build_config({
+          :use_spinner => true
+        }.merge(options))
         options.logger.debug { "options=#{options.send(:table).inspect}" }
 
         !block_given? and Base.log_and_raise(options.logger, BenchmarkError, "You must supply a block!")
@@ -77,7 +101,11 @@ module ZTK
         (options.message && options.mark) and options.stdout.print("#{options.message} ")
         benchmark = ::Benchmark.realtime do
           if (options.message && options.mark)
-            ZTK::Spinner.spin(Base.sanitize_config(options)) do
+            if options.use_spinner
+              ZTK::Spinner.spin(Base.sanitize_config(options)) do
+                yield
+              end
+            else
               yield
             end
           else
