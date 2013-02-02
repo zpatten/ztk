@@ -52,18 +52,6 @@ module ZTK::DSL::Core
         (@@id += 1)
       end
 
-      # def foreign_keys(target)
-      #   puts("==> foreign_keys(#{target.inspect})")
-
-      #   target = singularize(underscore(target).to_sym)
-      #   source = singularize(underscore(self).to_sym)
-
-      #   splat = [source, target].sort
-
-      #   key = [ splat[0], "references", splat[1] ].join(":")
-      #   puts("key=#{key}")
-      # end
-
     end
 
   end
