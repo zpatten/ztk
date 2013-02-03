@@ -31,7 +31,9 @@ end if ENV["COVERAGE"]
 ENV['LOG_LEVEL'] = "DEBUG"
 
 WAIT_SMALL = 3
+
 RSpec.configure do |config|
+
   config.before(:all) do
     $stdout = File.open("/dev/null", "w")
     $stderr = File.open("/dev/null", "w")
@@ -42,6 +44,15 @@ RSpec.configure do |config|
     $logger.info { "STARTING ZTK v#{ZTK::VERSION} TEST RUN @ #{Time.now.utc}" }
     $logger.info { "=" * 80 }
   end
+
+  config.before(:each) do
+    $ui = ZTK::UI.new(
+      :stdout => StringIO.new,
+      :stderr => StringIO.new,
+      :stdin => StringIO.new
+    )
+  end
+
 end
 
 

@@ -109,7 +109,7 @@ module ZTK
     def initialize(configuration={})
       super({
       }.merge(configuration))
-      config.logger.debug { "config=#{config.send(:table).inspect}" }
+      config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
 
       @result = nil
       GC.respond_to?(:copy_on_write_friendly=) and GC.copy_on_write_friendly = true
@@ -139,7 +139,7 @@ module ZTK
         STDIN.reopen("/dev/null")
 
         if !(data = block.call).nil?
-          config.logger.debug { "write(#{data.inspect})" }
+          config.ui.logger.debug { "write(#{data.inspect})" }
           @child_writer.write(Base64.encode64(Marshal.dump(data)))
         end
 
@@ -168,11 +168,11 @@ module ZTK
     #   status and data returned from the process block.  If wait2() fails nil
     #   is returned.
     def wait
-      config.logger.debug { "wait" }
+      config.ui.logger.debug { "wait" }
       pid, status = (Process.wait2(@pid) rescue nil)
       if !pid.nil? && !status.nil?
         data = (Marshal.load(Base64.decode64(@parent_reader.read.to_s)) rescue nil)
-        config.logger.debug { "read(#{data.inspect})" }
+        config.ui.logger.debug { "read(#{data.inspect})" }
         !data.nil? and @result = data
 
         @parent_reader.close

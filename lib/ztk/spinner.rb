@@ -60,16 +60,16 @@ module ZTK
         options = Base.build_config({
           :step => 0.1
         }.merge(options))
-        options.logger.debug { "options(#{options.send(:table).inspect})" }
+        options.ui.logger.debug { "options(#{options.send(:table).inspect})" }
 
-        !block_given? and Base.log_and_raise(options.logger, SpinnerError, "You must supply a block!")
+        !block_given? and Base.log_and_raise(options.ui.logger, SpinnerError, "You must supply a block!")
 
         count = 0
         spinner = Thread.new do
           while count do
-            options.stdout.print(CHARSET[(count += 1) % CHARSET.length])
-            options.stdout.print("\b")
-            options.stdout.respond_to?(:flush) and options.stdout.flush
+            options.ui.stdout.print(CHARSET[(count += 1) % CHARSET.length])
+            options.ui.stdout.print("\b")
+            options.ui.stdout.respond_to?(:flush) and options.ui.stdout.flush
             sleep(options.step)
           end
         end

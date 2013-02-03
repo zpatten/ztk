@@ -35,10 +35,18 @@ module ZTK
     attr_accessor :stdout, :stderr, :stdin, :logger
 
     def initialize(configuration={})
-      @stdout = configuration[:stdout] || $stdout
-      @stderr = configuration[:stderr] || $stderr
-      @stdin  = configuration[:stdin]  || $stdin
-      @logger = configuration[:logger] || ZTK::Logger.new("/dev/null")
+      defined?(Rails) and (rails_logger = Rails.logger)
+      null_logger = (::ZTK::Logger.new("/dev/null") rescue ::Logger.new("/dev/null"))
+
+      @stdout = (configuration[:stdout] || $stdout || STDOUT)
+      @stderr = (configuration[:stderr] || $stderr || STDERR)
+      @stdin  = (configuration[:stdin]  || $stdin  || STDIN)
+      @logger = (configuration[:logger] || $logger || rails_logger || null_logger)
+
+      (@stdout && @stdout.respond_to?(:sync=)) and @stdout.sync = true
+      (@stderr && @stderr.respond_to?(:sync=)) and @stderr.sync = true
+      (@stdin  && @stdin.respond_to?(:sync=))  and @stdin.sync  = true
+      (@logger && @logger.respond_to?(:sync=)) and @logger.sync = true
     end
 
   end

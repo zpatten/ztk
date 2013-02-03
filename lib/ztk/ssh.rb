@@ -139,7 +139,7 @@ module ZTK
         :timeout => 60,
         :ignore_exit_status => false
       }.merge(configuration))
-      config.logger.debug { "config=#{config.send(:table).inspect}" }
+      config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
     end
 
     # Starts an SSH session.  Can also be used to get the Net::SSH object.
@@ -158,7 +158,7 @@ module ZTK
 
     # Close our session gracefully.
     def close
-      config.logger.debug { "close" }
+      config.ui.logger.debug { "close" }
       ssh and !ssh.closed? and ssh.close
     end
 
@@ -174,8 +174,8 @@ module ZTK
     #   end
     #   ssh.console
     def console
-      config.logger.debug { "config=#{config.send(:table).inspect}" }
-      config.logger.info { "console(#{console_command.inspect})" }
+      config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
+      config.ui.logger.info { "console(#{console_command.inspect})" }
 
       Kernel.exec(console_command)
     end
@@ -204,9 +204,9 @@ module ZTK
     def exec(command, options={})
       options = OpenStruct.new({ :exit_code => 0, :silence => false }.merge(options))
 
-      config.logger.debug { "config=#{config.send(:table).inspect}" }
-      config.logger.debug { "options=#{options.send(:table).inspect}" }
-      config.logger.info { "exec(#{command.inspect})" }
+      config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
+      config.ui.logger.debug { "options=#{options.send(:table).inspect}" }
+      config.ui.logger.info { "exec(#{command.inspect})" }
 
       output = ""
       exit_code = -1
@@ -220,7 +220,7 @@ module ZTK
             @ssh = Net::SSH.start(config.host_name, config.user, ssh_options)
 
             channel = ssh.open_channel do |chan|
-              config.logger.debug { "Channel opened." }
+              config.ui.logger.debug { "Channel opened." }
 
               direct_log(:debug) { log_header("COMMAND") }
               direct_log(:debug) { "#{command}\n" }
@@ -237,7 +237,7 @@ module ZTK
                   end
                   direct_log(:debug) { data }
 
-                  config.stdout.print(data) unless options.silence
+                  config.ui.stdout.print(data) unless options.silence
                   output += data
                 end
 
@@ -249,7 +249,7 @@ module ZTK
                   end
                   direct_log(:warn) { data }
 
-                  config.stderr.print(data) unless options.silence
+                  config.ui.stderr.print(data) unless options.silence
                   output += data
                 end
 
@@ -262,7 +262,7 @@ module ZTK
                 end
 
                 ch.on_open_failed do |c, code, desc|
-                  config.logger.fatal { "Open failed! (#{code.inspect} - #{desc.inspect})" }
+                  config.ui.logger.fatal { "Open failed! (#{code.inspect} - #{desc.inspect})" }
                 end
 
               end
@@ -270,7 +270,7 @@ module ZTK
             channel.wait
 
             direct_log(:debug) { log_header("CLOSED") }
-            config.logger.debug { "Channel closed." }
+            config.ui.logger.debug { "Channel closed." }
           end
         end
 
@@ -284,7 +284,7 @@ module ZTK
         (exit_signal.nil? ? nil : "exit_signal=#{exit_signal} (#{EXIT_SIGNALS[exit_signal]})")
       ].compact.join(", ")
 
-      config.logger.debug { message }
+      config.ui.logger.debug { message }
 
       if !config.ignore_exit_status && (exit_code != options.exit_code)
         log_and_raise(SSHError, message)
@@ -308,23 +308,23 @@ module ZTK
     #   remote = File.expand_path(File.join("/tmp", "id_rsa.pub"))
     #   ssh.upload(local, remote)
     def upload(local, remote)
-      config.logger.debug { "config=#{config.send(:table).inspect}" }
-      config.logger.info { "upload(#{local.inspect}, #{remote.inspect})" }
+      config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
+      config.ui.logger.info { "upload(#{local.inspect}, #{remote.inspect})" }
 
       ZTK::RescueRetry.try(:tries => 3, :on => EOFError) do
         @sftp = Net::SFTP.start(config.host_name, config.user, ssh_options)
         sftp.upload!(local.to_s, remote.to_s) do |event, uploader, *args|
           case event
           when :open
-            config.logger.debug { "upload(#{args[0].local} -> #{args[0].remote})" }
+            config.ui.logger.debug { "upload(#{args[0].local} -> #{args[0].remote})" }
           when :close
-            config.logger.debug { "close(#{args[0].remote})" }
+            config.ui.logger.debug { "close(#{args[0].remote})" }
           when :mkdir
-            config.logger.debug { "mkdir(#{args[0]})" }
+            config.ui.logger.debug { "mkdir(#{args[0]})" }
           when :put
-            config.logger.debug { "put(#{args[0].remote}, size #{args[2].size} bytes, offset #{args[1]})" }
+            config.ui.logger.debug { "put(#{args[0].remote}, size #{args[2].size} bytes, offset #{args[1]})" }
           when :finish
-            config.logger.debug { "finish" }
+            config.ui.logger.debug { "finish" }
           end
         end
       end
@@ -348,23 +348,23 @@ module ZTK
     #   remote = File.expand_path(File.join(ENV["HOME"], ".ssh", "id_rsa.pub"))
     #   ssh.download(remote, local)
     def download(remote, local)
-      config.logger.debug { "config=#{config.send(:table).inspect}" }
-      config.logger.info { "download(#{remote.inspect}, #{local.inspect})" }
+      config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
+      config.ui.logger.info { "download(#{remote.inspect}, #{local.inspect})" }
 
       ZTK::RescueRetry.try(:tries => 3, :on => EOFError) do
         @sftp = Net::SFTP.start(config.host_name, config.user, ssh_options)
         sftp.download!(remote.to_s, local.to_s) do |event, downloader, *args|
           case event
           when :open
-            config.logger.debug { "download(#{args[0].remote} -> #{args[0].local})" }
+            config.ui.logger.debug { "download(#{args[0].remote} -> #{args[0].local})" }
           when :close
-            config.logger.debug { "close(#{args[0].local})" }
+            config.ui.logger.debug { "close(#{args[0].local})" }
           when :mkdir
-            config.logger.debug { "mkdir(#{args[0]})" }
+            config.ui.logger.debug { "mkdir(#{args[0]})" }
           when :get
-            config.logger.debug { "get(#{args[0].remote}, size #{args[2].size} bytes, offset #{args[1]})" }
+            config.ui.logger.debug { "get(#{args[0].remote}, size #{args[2].size} bytes, offset #{args[1]})" }
           when :finish
-            config.logger.debug { "finish" }
+            config.ui.logger.debug { "finish" }
           end
         end
       end
@@ -389,7 +389,7 @@ module ZTK
       command << [ "-o", "ProxyCommand=\"#{proxy_command}\"" ] if config.proxy_host_name
       command << "#{config.user}@#{config.host_name}"
       command = command.flatten.compact.join(" ")
-      config.logger.debug { "console_command(#{command.inspect})" }
+      config.ui.logger.debug { "console_command(#{command.inspect})" }
       command
     end
 
@@ -410,7 +410,7 @@ module ZTK
       command << "#{config.proxy_user}@#{config.proxy_host_name}"
       command << "nc %h %p"
       command = command.flatten.compact.join(" ")
-      config.logger.debug { "proxy_command(#{command.inspect})" }
+      config.ui.logger.debug { "proxy_command(#{command.inspect})" }
       command
     end
 
@@ -441,7 +441,7 @@ module ZTK
       # This is not plainly documented on the Net::SSH config class.
       options.merge!(:password => config.password) if config.password
 
-      config.logger.debug { "ssh_options(#{options.inspect})" }
+      config.ui.logger.debug { "ssh_options(#{options.inspect})" }
       options
     end
 

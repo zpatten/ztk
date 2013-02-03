@@ -41,29 +41,17 @@ module ZTK
     class << self
 
       # @param [Hash] configuration Configuration options hash.
-      # @option config [IO] :stdout Instance of IO to be used for STDOUT.
-      # @option config [IO] :stderr Instance of IO to be used for STDERR.
-      # @option config [IO] :stdin Instance of IO to be used for STDIN.
-      # @option config [Logger] :logger Instance of Logger to be used for logging.
+      # @option config [ZTK::UI] :ui Instance of ZTK:UI to be used for
+      #   console IO and logging.
       def build_config(configuration={})
         if configuration.is_a?(OpenStruct)
           configuration = configuration.send(:table)
         end
 
-        rails_logger = Rails.logger if defined?(Rails)
-
         # FIXME: this needs to be refactored into the UI class
         config = OpenStruct.new({
-          :stdout => $stdout,
-          :stderr => $stderr,
-          :stdin => $stdin,
-          :logger => ($logger || rails_logger || ZTK::Logger.new("/dev/null"))
+          :ui => ::ZTK::UI.new
         }.merge(configuration))
-
-        (config.stdout && config.stdout.respond_to?(:sync=)) and config.stdout.sync = true
-        (config.stderr && config.stderr.respond_to?(:sync=)) and config.stderr.sync = true
-        (config.stdin  && config.stdin.respond_to?(:sync=))  and config.stdin.sync = true
-        (config.logger && config.logger.respond_to?(:sync=)) and config.logger.sync = true
 
         config
       end
@@ -138,7 +126,7 @@ module ZTK
     # @param [Integer] shift (2) How many places to shift the caller stack in
     #   the log statement.
     def log_and_raise(exception, message, shift=2)
-      Base.log_and_raise(config.logger, exception, message, shift)
+      Base.log_and_raise(config.ui.logger, exception, message, shift)
     end
 
     # Direct logging method.
@@ -154,17 +142,17 @@ module ZTK
     # @yield No value is passed to the block.
     # @yieldreturn [String] The message to log.
     def direct_log(log_level, &blocK)
-      @config.logger.nil? and raise BaseError, "You must supply a logger for direct logging support!"
+      @config.ui.logger.nil? and raise BaseError, "You must supply a logger for direct logging support!"
 
       if !block_given?
         log_and_raise(BaseError, "You must supply a block to the log method!")
-      elsif (@config.logger.level <= ZTK::Logger.const_get(log_level.to_s.upcase))
-        if @config.logger.respond_to?(:logdev)
-          @config.logger.logdev.write(yield)
-          @config.logger.logdev.respond_to?(:flush) and @config.logger.logdev.flush
+      elsif (@config.ui.logger.level <= ZTK::Logger.const_get(log_level.to_s.upcase))
+        if @config.ui.logger.respond_to?(:logdev)
+          @config.ui.logger.logdev.write(yield)
+          @config.ui.logger.logdev.respond_to?(:flush) and @config.ui.logger.logdev.flush
         else
-          @config.logger.instance_variable_get(:@logdev).instance_variable_get(:@dev).write(yield)
-          @config.logger.instance_variable_get(:@logdev).instance_variable_get(:@dev).respond_to?(:flush) and @config.logger.instance_variable_get(:@logdev).instance_variable_get(:@dev).flush
+          @config.ui.logger.instance_variable_get(:@logdev).instance_variable_get(:@dev).write(yield)
+          @config.ui.logger.instance_variable_get(:@logdev).instance_variable_get(:@dev).respond_to?(:flush) and @config.ui.logger.instance_variable_get(:@logdev).instance_variable_get(:@dev).flush
         end
       end
     end

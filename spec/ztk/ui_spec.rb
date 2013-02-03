@@ -41,6 +41,30 @@ describe ZTK::UI do
       subject.logger.should be_an_instance_of ZTK::Logger
     end
 
+    it "should allow us to set a custom STDOUT" do
+      stdout = StringIO.new
+      ui = ZTK::UI.new(:stdout => stdout)
+      ui.stdout.should == stdout
+    end
+
+    it "should allow us to set a custom STDERR" do
+      stderr = StringIO.new
+      ui = ZTK::UI.new(:stderr => stderr)
+      ui.stderr.should == stderr
+    end
+
+    it "should allow us to set a custom STDIN" do
+      stdin = StringIO.new
+      ui = ZTK::UI.new(:stdin => stdin)
+      ui.stdin.should == stdin
+    end
+
+    it "should allow us to set a custom LOGGER" do
+      logger = StringIO.new
+      ui = ZTK::UI.new(:logger => logger)
+      ui.logger.should == logger
+    end
+
   end
 
 end

@@ -91,14 +91,14 @@ module ZTK
         options = Base.build_config({
           :use_spinner => true
         }.merge(options))
-        options.logger.debug { "options=#{options.send(:table).inspect}" }
+        options.ui.logger.debug { "options=#{options.send(:table).inspect}" }
 
-        !block_given? and Base.log_and_raise(options.logger, BenchmarkError, "You must supply a block!")
+        !block_given? and Base.log_and_raise(options.ui.logger, BenchmarkError, "You must supply a block!")
 
         check = [options.message, options.mark]
-        (check.any?{ |z| !z.nil? } && !check.all?{ |z| !z.nil? }) and Base.log_and_raise(options.logger, BenchmarkError, "You must supply both a message and a mark!")
+        (check.any?{ |z| !z.nil? } && !check.all?{ |z| !z.nil? }) and Base.log_and_raise(options.ui.logger, BenchmarkError, "You must supply both a message and a mark!")
 
-        (options.message && options.mark) and options.stdout.print("#{options.message} ")
+        (options.message && options.mark) and options.ui.stdout.print("#{options.message} ")
         benchmark = ::Benchmark.realtime do
           if (options.message && options.mark)
             if options.use_spinner
@@ -113,8 +113,8 @@ module ZTK
           end
         end
 
-        (options.message && options.mark) and options.stdout.print("#{options.mark}\n" % benchmark)
-        options.logger.info { "#{options.message} #{options.mark}" % benchmark }
+        (options.message && options.mark) and options.ui.stdout.print("#{options.mark}\n" % benchmark)
+        options.ui.logger.info { "#{options.message} #{options.mark}" % benchmark }
 
         benchmark
       end

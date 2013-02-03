@@ -43,7 +43,7 @@ module ZTK
     def initialize(configuration={})
       super({
       }.merge(configuration))
-      config.logger.debug { "config=#{config.send(:table).inspect}" }
+      config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
     end
 
     # Displays data in a spreadsheet style.
@@ -84,19 +84,19 @@ module ZTK
       end
       header_line = format_row(header_line)
 
-      config.stdout.puts(format_header(headers, max_lengths))
-      config.stdout.puts(header_line)
-      config.stdout.puts(format_header(headers, max_lengths))
+      config.ui.stdout.puts(format_header(headers, max_lengths))
+      config.ui.stdout.puts(header_line)
+      config.ui.stdout.puts(format_header(headers, max_lengths))
 
       rows.each do |row|
         row_line = headers.collect do |header|
           "%-#{max_lengths.send(header)}s" % row.send(header)
         end
         row_line = format_row(row_line)
-        config.stdout.puts(row_line)
+        config.ui.stdout.puts(row_line)
       end
 
-      config.stdout.puts(format_header(headers, max_lengths))
+      config.ui.stdout.puts(format_header(headers, max_lengths))
 
       width = (2 + max_lengths.send(:table).values.reduce(:+) + ((headers.count * 3) - 3) + 2)
 
@@ -141,13 +141,13 @@ module ZTK
       width = (max_key_length + max_value_length + 2 + 2 + 2)
 
       rows.each do |row|
-        config.stdout.puts("+#{"-" * width}+")
+        config.ui.stdout.puts("+#{"-" * width}+")
         headers.each do |header|
           entry_line = format_entry(header, max_key_length, row.send(header), max_value_length)
-          config.stdout.puts(entry_line)
+          config.ui.stdout.puts(entry_line)
         end
       end
-      config.stdout.puts("+#{"-" * width}+")
+      config.ui.stdout.puts("+#{"-" * width}+")
 
       OpenStruct.new(:rows => rows, :max_key_length => max_key_length, :max_value_length => max_value_length, :width => width)
     end

@@ -124,19 +124,19 @@ module ZTK
           :on => Exception,
           :delay => 1
         }.merge(options))
-        options.logger.debug { "options=#{options.send(:table).inspect}" }
+        options.ui.logger.debug { "options=#{options.send(:table).inspect}" }
 
-        !block_given? and Base.log_and_raise(options.logger, RescueRetryError, "You must supply a block!")
+        !block_given? and Base.log_and_raise(options.ui.logger, RescueRetryError, "You must supply a block!")
 
         begin
           return block.call
         rescue options.on => e
           if ((options.tries -= 1) > 0)
-            options.logger.warn { "Caught #{e.inspect}, we will give it #{options.tries} more tr#{options.tries > 1 ? 'ies' : 'y'}." }
+            options.ui.logger.warn { "Caught #{e.inspect}, we will give it #{options.tries} more tr#{options.tries > 1 ? 'ies' : 'y'}." }
             sleep(options.delay)
             retry
           else
-            options.logger.fatal { "Caught #{e.inspect} and we have no more tries left, sorry, we have to give up now." }
+            options.ui.logger.fatal { "Caught #{e.inspect} and we have no more tries left, sorry, we have to give up now." }
             raise e
           end
         end

@@ -134,7 +134,7 @@ module ZTK
       super({
         :max_forks => MAX_FORKS
       }.merge(configuration))
-      config.logger.debug { "config=#{config.send(:table).inspect}" }
+      config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
 
       (config.max_forks < 1) and log_and_raise(ParallelError, "max_forks must be equal to or greater than one!")
 
@@ -152,7 +152,7 @@ module ZTK
     def process(&block)
       !block_given? and log_and_raise(ParallelError, "You must supply a block to the process method!")
 
-      config.logger.debug { "forks(#{@forks.inspect})" }
+      config.ui.logger.debug { "forks(#{@forks.inspect})" }
 
       while (@forks.count >= config.max_forks) do
         wait
@@ -169,7 +169,7 @@ module ZTK
         parent_reader.close
 
         if !(data = block.call).nil?
-          config.logger.debug { "write(#{data.inspect})" }
+          config.ui.logger.debug { "write(#{data.inspect})" }
           child_writer.write(Base64.encode64(Marshal.dump(data)))
         end
 
@@ -197,12 +197,12 @@ module ZTK
     #   status and data returned from the process block.  If wait2() fails nil
     #   is returned.
     def wait
-      config.logger.debug { "wait" }
-      config.logger.debug { "forks(#{@forks.inspect})" }
+      config.ui.logger.debug { "wait" }
+      config.ui.logger.debug { "forks(#{@forks.inspect})" }
       pid, status = (Process.wait2(-1) rescue nil)
       if !pid.nil? && !status.nil? && !(fork = @forks.select{ |f| f[:pid] == pid }.first).nil?
         data = (Marshal.load(Base64.decode64(fork[:reader].read.to_s)) rescue nil)
-        config.logger.debug { "read(#{data.inspect})" }
+        config.ui.logger.debug { "read(#{data.inspect})" }
         !data.nil? and @results.push(data)
         fork[:reader].close
         fork[:writer].close
@@ -217,7 +217,7 @@ module ZTK
     #
     # @return [Array<Object>] The results from all of the *process* blocks.
     def waitall
-      config.logger.debug { "waitall" }
+      config.ui.logger.debug { "waitall" }
       while @forks.count > 0
         self.wait
       end
@@ -228,7 +228,7 @@ module ZTK
     #
     # @return [Integer] Current number of active forks.
     def count
-      config.logger.debug { "count(#{@forks.count})" }
+      config.ui.logger.debug { "count(#{@forks.count})" }
       @forks.count
     end
 

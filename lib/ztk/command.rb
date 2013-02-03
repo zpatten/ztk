@@ -46,7 +46,7 @@ module ZTK
         :timeout => 600,
         :ignore_exit_status => false
       }.merge(configuration))
-      config.logger.debug { "config=#{config.send(:table).inspect}" }
+      config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
     end
 
     # Executes a local command.
@@ -65,12 +65,12 @@ module ZTK
     def exec(command, options={})
       options = OpenStruct.new({ :exit_code => 0, :silence => false }.merge(options))
 
-      config.logger.debug { "config=#{config.send(:table).inspect}" }
-      config.logger.debug { "options=#{options.send(:table).inspect}" }
-      config.logger.info { "command(#{command.inspect})" }
+      config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
+      config.ui.logger.debug { "options=#{options.send(:table).inspect}" }
+      config.ui.logger.info { "command(#{command.inspect})" }
 
       if config.replace_current_process
-        config.logger.fatal { "REPLACING CURRENT PROCESS - GOODBYE!" }
+        config.ui.logger.fatal { "REPLACING CURRENT PROCESS - GOODBYE!" }
         Kernel.exec(command)
       end
 
@@ -101,7 +101,7 @@ module ZTK
       child_stderr_writer.close
 
       reader_writer_key = {parent_stdout_reader => :stdout, parent_stderr_reader => :stderr}
-      reader_writer_map = {parent_stdout_reader => @config.stdout, parent_stderr_reader => @config.stderr}
+      reader_writer_map = {parent_stdout_reader => @config.ui.stdout, parent_stderr_reader => @config.ui.stderr}
 
       direct_log(:debug) { log_header("COMMAND") }
       direct_log(:debug) { "#{command}\n" }
@@ -152,7 +152,7 @@ module ZTK
       parent_stdout_reader.close
       parent_stderr_reader.close
 
-      config.logger.debug { "exit_code(#{exit_code})" }
+      config.ui.logger.debug { "exit_code(#{exit_code})" }
 
       if !config.ignore_exit_status && (exit_code != options.exit_code)
         log_and_raise(CommandError, "exec(#{command.inspect}, #{options.inspect}) failed! [#{exit_code}]")
