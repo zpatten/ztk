@@ -38,7 +38,8 @@ module ZTK
   # If we wanted to redirect STDOUT and STDERR to a StringIO we can do this:
   #
   #     std_combo = StringIO.new
-  #     ssh = ZTK::SSH.new(:stdout => std_combo, :stderr => std_combo)
+  #     ui = ZTK::UI.new(:stdout => std_combo, :stderr => std_combo)
+  #     ssh = ZTK::SSH.new(:ui => ui)
   #
   # If you want to specify SSH options you can:
   #
