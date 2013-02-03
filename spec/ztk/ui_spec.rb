@@ -35,9 +35,9 @@ describe ZTK::UI do
   describe "behaviour" do
 
     it "should return a class with accessors for stdout, stderr, stdin and a logger" do
-      subject.stdout.should == STDOUT
-      subject.stderr.should == STDERR
-      subject.stdin.should == STDIN
+      subject.stdout.should == $stdout
+      subject.stderr.should == $stderr
+      subject.stdin.should == $stdin
       subject.logger.should be_an_instance_of ZTK::Logger
     end
 
