@@ -24,12 +24,6 @@ describe ZTK::RescueRetry do
 
   subject { ZTK::RescueRetry }
 
-  before(:all) do
-    $stdout = File.open("/dev/null", "w")
-    $stderr = File.open("/dev/null", "w")
-    $stdin = File.open("/dev/null", "r")
-  end
-
   describe "class" do
 
     it "should be ZTK::RescueRetry" do

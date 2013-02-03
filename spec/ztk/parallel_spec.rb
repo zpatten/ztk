@@ -24,12 +24,6 @@ describe ZTK::Parallel do
 
   subject { ZTK::Parallel.new }
 
-  before(:all) do
-    $stdout = File.open("/dev/null", "w")
-    $stderr = File.open("/dev/null", "w")
-    $stdin = File.open("/dev/null", "r")
-  end
-
   describe "class" do
 
     it "should be an instance of ZTK::Parallel" do

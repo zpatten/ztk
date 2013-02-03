@@ -24,12 +24,6 @@ describe ZTK::Config do
 
   subject { class C; extend(ZTK::Config); end; C }
 
-  before(:all) do
-    $stdout = File.open("/dev/null", "w")
-    $stderr = File.open("/dev/null", "w")
-    $stdin = File.open("/dev/null", "r")
-  end
-
   describe "class" do
 
     it "should be a kind of ZTK::Config" do

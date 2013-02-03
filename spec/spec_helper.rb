@@ -31,11 +31,18 @@ end if ENV["COVERAGE"]
 ENV['LOG_LEVEL'] = "DEBUG"
 
 WAIT_SMALL = 3
+RSpec.configure do |config|
+  config.before(:all) do
+    $stdout = File.open("/dev/null", "w")
+    $stderr = File.open("/dev/null", "w")
+    $stdin = File.open("/dev/null", "r")
+    $logger = ZTK::Logger.new(File.join("/tmp", "test.log"))
 
-$logger = ZTK::Logger.new(File.join("/tmp", "test.log"))
+    $logger.info { "=" * 80 }
+    $logger.info { "STARTING ZTK v#{ZTK::VERSION} TEST RUN @ #{Time.now.utc}" }
+    $logger.info { "=" * 80 }
+  end
+end
 
-$logger.info { "=" * 80 }
-$logger.info { "STARTING ZTK v#{ZTK::VERSION} TEST RUN @ #{Time.now.utc}" }
-$logger.info { "=" * 80 }
 
 ################################################################################
