@@ -21,7 +21,7 @@ require "ostruct"
 
 module ZTK
 
-  # ZTK::Base Error Class
+  # ZTK::Base General Error Class
   #
   # @author Zachary Patten <zachary@jovelabs.net>
   class BaseError < Error; end

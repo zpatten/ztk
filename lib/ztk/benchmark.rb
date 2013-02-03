@@ -21,7 +21,7 @@ require 'benchmark'
 
 module ZTK
 
-  # ZTK::Benchmark Error Class
+  # ZTK::Benchmark General Error Class
   #
   # @author Zachary Patten <zachary@jovelabs.net>
   class BenchmarkError < Error; end
@@ -87,6 +87,7 @@ module ZTK
       # @yield Block should execute the tasks to be benchmarked.
       # @yieldreturn [Object] The return value of the block is ignored.
       # @return [Float] The benchmark time.
+      #
       def bench(options={}, &block)
         options = Base.build_config({
           :use_spinner => true

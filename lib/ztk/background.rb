@@ -21,7 +21,7 @@ require "base64"
 
 module ZTK
 
-  # ZTK::Background Error Class
+  # ZTK::Background General Error Class
   #
   # @author Zachary Patten <zachary@jovelabs.net>
   class BackgroundError < Error; end
@@ -106,6 +106,7 @@ module ZTK
     attr_accessor :pid, :result
 
     # @param [Hash] configuration Configuration options hash.
+    #
     def initialize(configuration={})
       super({
       }.merge(configuration))
@@ -121,6 +122,7 @@ module ZTK
     # @yieldreturn [Object] Block can return any object to be marshalled back to
     #   the parent processes.
     # @return [Integer] Returns the pid of the child process forked.
+    #
     def process(&block)
       !block_given? and log_and_raise(BackgroundError, "You must supply a block to the process method!")
 
@@ -167,6 +169,7 @@ module ZTK
     # @return [Array<pid, status, data>] An array containing the pid,
     #   status and data returned from the process block.  If wait2() fails nil
     #   is returned.
+    #
     def wait
       config.ui.logger.debug { "wait" }
       pid, status = (Process.wait2(@pid) rescue nil)

@@ -21,7 +21,7 @@ require 'ostruct'
 
 module ZTK
 
-  # ZTK::Config Error Class
+  # ZTK::Config General Error Class
   #
   # @author Zachary Patten <zachary@jovelabs.net>
   class ConfigError < Error; end
@@ -69,6 +69,7 @@ module ZTK
     #
     # This will add the *configuration* attribute to the base class and create
     # a new *OpenStruct* object assigning it to the *configuration* attribute.
+    #
     def self.extended(base)
       class << base
         attr_accessor :configuration
@@ -78,14 +79,16 @@ module ZTK
     end
 
     # Loads a configuration from a file.
+    #
     def from_file(filename)
-      self.instance_eval(IO.read(filename), filename, 1)
+      self.instance_eval(IO.read(filename), filename)
     end
 
     # Yields the configuration OpenStruct object to a block.
     #
     # @yield [configuration] Pass the configuration OpenStruct object to the
     #   specified block.
+    #
     def config(&block)
       block and block.call(self.configuration)
     end
@@ -96,6 +99,7 @@ module ZTK
     #   key to return.
     #
     # @return The value currently assigned to the configuration key.
+    #
     def [](key)
       _get(key)
     end
@@ -108,31 +112,37 @@ module ZTK
     #   key.
     #
     # @return The value assigned to the configuration key.
+    #
     def []=(key, value)
       _set(key, value)
     end
 
     # @see Hash#keys
+    #
     def keys
       self.configuration.send(:table).keys
     end
 
     # @see Hash#has_key?
+    #
     def has_key?(key)
       self.configuration.send(:table).has_key?(key)
     end
 
     # @see Hash#merge
+    #
     def merge(hash)
       self.configuration.send(:table).merge(hash)
     end
 
     # @see Hash#merge!
+    #
     def merge!(hash)
       self.configuration.send(:table).merge!(hash)
     end
 
     # Handles method calls for our configuration keys.
+    #
     def method_missing(method_symbol, *method_args)
       if method_args.length > 0
         _set(method_symbol, method_args.first)

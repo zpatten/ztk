@@ -23,7 +23,6 @@ require "timeout"
 module ZTK
 
   # ZTK::Command Error Class
-  #
   # @author Zachary Patten <zachary@jovelabs.net>
   class CommandError < Error; end
 
@@ -36,7 +35,8 @@ module ZTK
   # If we wanted to redirect STDOUT and STDERR to a StringIO we can do this:
   #
   #     std_combo = StringIO.new
-  #     cmd = ZTK::Command.new(:stdout => std_combo, :stderr => std_combo)
+  #     ui = ZTK::UI.new(:stdout => std_combo, :stderr => std_combo)
+  #     cmd = ZTK::Command.new(:ui => ui)
   #
   # @author Zachary Patten <zachary@jovelabs.net>
   class Command < ZTK::Base
@@ -62,6 +62,7 @@ module ZTK
     #
     #   cmd = ZTK::Command.new
     #   puts cmd.exec("hostname -f").inspect
+    #
     def exec(command, options={})
       options = OpenStruct.new({ :exit_code => 0, :silence => false }.merge(options))
 
@@ -175,11 +176,15 @@ module ZTK
 
   private
 
+    # Returns a string in the format of "user@hostname" for the current
+    #   shell.
     def tag
       @hostname ||= %x(hostname -f).chomp
       "#{ENV['USER']}@#{@hostname}"
     end
 
+    # Formats a header suitable for writing to the direct logger when logging
+    #   sessions.
     def log_header(what)
       count = 8
       sep = ("=" * count)
