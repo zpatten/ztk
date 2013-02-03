@@ -35,13 +35,10 @@ module ZTK
     attr_accessor :stdout, :stderr, :stdin, :logger
 
     def initialize(configuration={})
-      super({
-        :stdout => $stdout,
-        :stderr => $stderr,
-        :stdin => $stdin,
-        :logger => $logger
-      }.merge(configuration))
-      config.logger.debug { "config=#{config.send(:table).inspect}" }
+      @stdout = configuration[:stdout] || $stdout
+      @stderr = configuration[:stderr] || $stderr
+      @stdin  = configuration[:stdin]  || $stdin
+      @logger = configuration[:logger] || ZTK::Logger.new("/dev/null")
     end
 
   end
