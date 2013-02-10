@@ -27,7 +27,10 @@ module ZTK
   # @author Zachary Patten <zachary@jovelabs.net>
   class UIError < Error; end
 
-  # ZTK UI Wrapper Class
+  # ZTK UI Class
+  # 
+  # This class encapsulates a STDOUT, STDERR, STDIN
+  # and logging device.
   #
   # @author Zachary Patten <zachary@jovelabs.net>
   class UI < ZTK::Base
