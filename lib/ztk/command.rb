@@ -64,14 +64,14 @@ module ZTK
     #   puts cmd.exec("hostname -f").inspect
     #
     def exec(command, options={})
-      options = OpenStruct.new({ :exit_code => 0, :silence => false }.merge(options))
+      options = OpenStruct.new({ :exit_code => 0, :silence => false }.merge(config.send(:table)).merge(options))
 
-      config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
-      config.ui.logger.debug { "options=#{options.send(:table).inspect}" }
-      config.ui.logger.info { "command(#{command.inspect})" }
+      options.ui.logger.debug { "config=#{options.send(:table).inspect}" }
+      options.ui.logger.debug { "options=#{options.send(:table).inspect}" }
+      options.ui.logger.info { "command(#{command.inspect})" }
 
-      if config.replace_current_process
-        config.ui.logger.fatal { "REPLACING CURRENT PROCESS - GOODBYE!" }
+      if options.replace_current_process
+        options.ui.logger.fatal { "REPLACING CURRENT PROCESS - GOODBYE!" }
         Kernel.exec(command)
       end
 
@@ -102,14 +102,14 @@ module ZTK
       child_stderr_writer.close
 
       reader_writer_key = {parent_stdout_reader => :stdout, parent_stderr_reader => :stderr}
-      reader_writer_map = {parent_stdout_reader => @config.ui.stdout, parent_stderr_reader => @config.ui.stderr}
+      reader_writer_map = {parent_stdout_reader => options.ui.stdout, parent_stderr_reader => options.ui.stderr}
 
       direct_log(:debug) { log_header("COMMAND") }
       direct_log(:debug) { "#{command}\n" }
       direct_log(:debug) { log_header("STARTED") }
 
       begin
-        Timeout.timeout(config.timeout) do
+        Timeout.timeout(options.timeout) do
           loop do
             pipes = IO.select(reader_writer_map.keys, [], reader_writer_map.keys).first
             pipes.each do |pipe|
@@ -143,7 +143,7 @@ module ZTK
         end
       rescue Timeout::Error => e
         direct_log(:debug) { log_header("TIMEOUT") }
-        log_and_raise(CommandError, "Process timed out after #{config.timeout} seconds!")
+        log_and_raise(CommandError, "Process timed out after #{options.timeout} seconds!")
       end
 
       Process.waitpid(pid)
@@ -153,9 +153,9 @@ module ZTK
       parent_stdout_reader.close
       parent_stderr_reader.close
 
-      config.ui.logger.debug { "exit_code(#{exit_code})" }
+      options.ui.logger.debug { "exit_code(#{exit_code})" }
 
-      if !config.ignore_exit_status && (exit_code != options.exit_code)
+      if !options.ignore_exit_status && (exit_code != options.exit_code)
         log_and_raise(CommandError, "exec(#{command.inspect}, #{options.inspect}) failed! [#{exit_code}]")
       end
       OpenStruct.new(:output => output, :exit_code => exit_code)

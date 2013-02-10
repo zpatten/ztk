@@ -203,11 +203,11 @@ module ZTK
     #   end
     #   puts ssh.exec("hostname -f").inspect
     def exec(command, options={})
-      options = OpenStruct.new({ :exit_code => 0, :silence => false }.merge(options))
+      options = OpenStruct.new({ :exit_code => 0, :silence => false }.merge(config.send(:table)).merge(options))
 
-      config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
-      config.ui.logger.debug { "options=#{options.send(:table).inspect}" }
-      config.ui.logger.info { "exec(#{command.inspect})" }
+      options.ui.logger.debug { "config=#{options.send(:table).inspect}" }
+      options.ui.logger.debug { "options=#{options.send(:table).inspect}" }
+      options.ui.logger.info { "exec(#{command.inspect})" }
 
       output = ""
       exit_code = -1
@@ -216,12 +216,12 @@ module ZTK
       stderr_header = false
 
       begin
-        Timeout.timeout(config.timeout) do
+        Timeout.timeout(options.timeout) do
           ZTK::RescueRetry.try(:tries => 3, :on => EOFError) do
-            @ssh = Net::SSH.start(config.host_name, config.user, ssh_options)
+            @ssh = Net::SSH.start(options.host_name, options.user, ssh_options)
 
             channel = ssh.open_channel do |chan|
-              config.ui.logger.debug { "Channel opened." }
+              options.ui.logger.debug { "Channel opened." }
 
               direct_log(:debug) { log_header("COMMAND") }
               direct_log(:debug) { "#{command}\n" }
@@ -238,7 +238,7 @@ module ZTK
                   end
                   direct_log(:debug) { data }
 
-                  config.ui.stdout.print(data) unless options.silence
+                  options.ui.stdout.print(data) unless options.silence
                   output += data
                 end
 
@@ -250,7 +250,7 @@ module ZTK
                   end
                   direct_log(:warn) { data }
 
-                  config.ui.stderr.print(data) unless options.silence
+                  options.ui.stderr.print(data) unless options.silence
                   output += data
                 end
 
@@ -263,7 +263,7 @@ module ZTK
                 end
 
                 ch.on_open_failed do |c, code, desc|
-                  config.ui.logger.fatal { "Open failed! (#{code.inspect} - #{desc.inspect})" }
+                  options.ui.logger.fatal { "Open failed! (#{code.inspect} - #{desc.inspect})" }
                 end
 
               end
@@ -271,13 +271,13 @@ module ZTK
             channel.wait
 
             direct_log(:debug) { log_header("CLOSED") }
-            config.ui.logger.debug { "Channel closed." }
+            options.ui.logger.debug { "Channel closed." }
           end
         end
 
       rescue Timeout::Error => e
         direct_log(:debug) { log_header("TIMEOUT") }
-        log_and_raise(SSHError, "Session timed out after #{config.timeout} seconds!")
+        log_and_raise(SSHError, "Session timed out after #{options.timeout} seconds!")
       end
 
       message = [
@@ -285,9 +285,9 @@ module ZTK
         (exit_signal.nil? ? nil : "exit_signal=#{exit_signal} (#{EXIT_SIGNALS[exit_signal]})")
       ].compact.join(", ")
 
-      config.ui.logger.debug { message }
+      options.ui.logger.debug { message }
 
-      if !config.ignore_exit_status && (exit_code != options.exit_code)
+      if !options.ignore_exit_status && (exit_code != options.exit_code)
         log_and_raise(SSHError, message)
       end
       OpenStruct.new(:output => output, :exit_code => exit_code, :exit_signal => exit_signal)
