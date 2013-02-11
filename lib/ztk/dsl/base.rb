@@ -154,7 +154,7 @@ module ZTK::DSL
 
     # @api private
     def self.inherited(base)
-      puts("inherited(#{base})")
+      # puts("inherited(#{base})")
       base.send(:extend, ZTK::DSL::Base::ClassMethods)
       base.instance_eval do
         attribute :id
@@ -163,12 +163,12 @@ module ZTK::DSL
 
     # @api private
     def self.included(base)
-      puts("included(#{base})")
+      # puts("included(#{base})")
     end
 
     # @api private
     def self.extended(base)
-      puts("extended(#{base})")
+      # puts("extended(#{base})")
     end
 
     def initialize(&block)
@@ -177,10 +177,10 @@ module ZTK::DSL
       block_given? and ((block.arity < 1) ? instance_eval(&block) : block.call(self))
 
       primary_key_count = self.class.dataset.count do |d|
-        puts("d.id == #{d.id.inspect} / self.id == #{self.id.inspect}")
+        # puts("d.id == #{d.id.inspect} / self.id == #{self.id.inspect}")
         d.id == self.id
       end
-      puts("primary_key_count == #{primary_key_count}")
+      # puts("primary_key_count == #{primary_key_count}")
       raise StandardError, "Primary key '#{self.id}' already exists!" if (primary_key_count > 1)
     end
 
