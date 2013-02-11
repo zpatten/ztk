@@ -223,20 +223,20 @@ module ZTK
             channel = ssh.open_channel do |chan|
               options.ui.logger.debug { "Channel opened." }
 
-              direct_log(:debug) { log_header("COMMAND") }
-              direct_log(:debug) { "#{command}\n" }
-              direct_log(:debug) { log_header("OPENED") }
+              direct_log(:info) { log_header("COMMAND") }
+              direct_log(:info) { "#{command}\n" }
+              direct_log(:info) { log_header("OPENED") }
 
               chan.exec(command) do |ch, success|
                 success or log_and_raise(SSHError, "Could not execute '#{command}'.")
 
                 ch.on_data do |c, data|
                   if !stdout_header
-                    direct_log(:debug) { log_header("STDOUT") }
+                    direct_log(:info) { log_header("STDOUT") }
                     stdout_header = true
                     stderr_header = false
                   end
-                  direct_log(:debug) { data }
+                  direct_log(:info) { data }
 
                   options.ui.stdout.print(data) unless options.silence
                   output += data
@@ -270,13 +270,13 @@ module ZTK
             end
             channel.wait
 
-            direct_log(:debug) { log_header("CLOSED") }
+            direct_log(:info) { log_header("CLOSED") }
             options.ui.logger.debug { "Channel closed." }
           end
         end
 
       rescue Timeout::Error => e
-        direct_log(:debug) { log_header("TIMEOUT") }
+        direct_log(:fatal) { log_header("TIMEOUT") }
         log_and_raise(SSHError, "Session timed out after #{options.timeout} seconds!")
       end
 

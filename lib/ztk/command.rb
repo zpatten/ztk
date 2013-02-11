@@ -104,9 +104,9 @@ module ZTK
       reader_writer_key = {parent_stdout_reader => :stdout, parent_stderr_reader => :stderr}
       reader_writer_map = {parent_stdout_reader => options.ui.stdout, parent_stderr_reader => options.ui.stderr}
 
-      direct_log(:debug) { log_header("COMMAND") }
-      direct_log(:debug) { "#{command}\n" }
-      direct_log(:debug) { log_header("STARTED") }
+      direct_log(:info) { log_header("COMMAND") }
+      direct_log(:info) { "#{command}\n" }
+      direct_log(:info) { log_header("STARTED") }
 
       begin
         Timeout.timeout(options.timeout) do
@@ -119,12 +119,12 @@ module ZTK
               case reader_writer_key[pipe]
               when :stdout then
                 if !stdout_header
-                  direct_log(:debug) { log_header("STDOUT") }
+                  direct_log(:info) { log_header("STDOUT") }
                   stdout_header = true
                   stderr_header = false
                 end
                 reader_writer_map[pipe].write(data) unless options.silence
-                direct_log(:debug) { data }
+                direct_log(:info) { data }
 
               when :stderr then
                 if !stderr_header
@@ -142,13 +142,13 @@ module ZTK
           end
         end
       rescue Timeout::Error => e
-        direct_log(:debug) { log_header("TIMEOUT") }
+        direct_log(:fatal) { log_header("TIMEOUT") }
         log_and_raise(CommandError, "Process timed out after #{options.timeout} seconds!")
       end
 
       Process.waitpid(pid)
       exit_code = $?.exitstatus
-      direct_log(:debug) { log_header("STOPPED") }
+      direct_log(:info) { log_header("STOPPED") }
 
       parent_stdout_reader.close
       parent_stderr_reader.close
