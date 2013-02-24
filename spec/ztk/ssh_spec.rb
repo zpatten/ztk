@@ -176,7 +176,7 @@ describe ZTK::SSH do
 
     describe "upload" do
 
-      it "should be able to upload a file to 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
+      it "should be able to upload a file to 127.0.0.1 as the current user (your key must be in ssh-agent)" do
         subject.config do |config|
           config.ui = $ui
 
@@ -204,7 +204,7 @@ describe ZTK::SSH do
 
     describe "download" do
 
-      it "should be able to download a file from 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
+      it "should be able to download a file from 127.0.0.1 as the current user (your key must be in ssh-agent)" do
         subject.config do |config|
           config.ui = $ui
 
@@ -393,7 +393,7 @@ describe ZTK::SSH do
 
     describe "upload" do
 
-      it "should be able to upload a file to 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
+      it "should be able to upload a file to 127.0.0.1 as the current user (your key must be in ssh-agent)" do
         subject.config do |config|
           config.ui = $ui
 
@@ -423,7 +423,7 @@ describe ZTK::SSH do
 
     describe "download" do
 
-      it "should be able to download a file from 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
+      it "should be able to download a file from 127.0.0.1 as the current user (your key must be in ssh-agent)" do
         subject.config do |config|
           config.ui = $ui
 
