@@ -103,7 +103,10 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>ZTK UI Wrapper Class</p>
+    <p>ZTK UI Class</p>
+
+<p>This class encapsulates a STDOUT, STDERR, STDIN
+and logging device.</p>
 
 
   </div>
@@ -317,9 +320,6 @@
       <pre class="lines">
 
 
-37
-38
-39
 40
 41
 42
@@ -330,10 +330,13 @@
 47
 48
 49
-50</pre>
+50
+51
+52
+53</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ui.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/ui.rb', line 40</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_configuration'>configuration</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>defined?</span><span class='lparen'>(</span><span class='const'>Rails</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='lparen'>(</span><span class='id identifier rubyid_rails_logger'>rails_logger</span> <span class='op'>=</span> <span class='const'>Rails</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='rparen'>)</span>
@@ -386,12 +389,12 @@
       <pre class="lines">
 
 
-35
-36
-37</pre>
+38
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ui.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/ui.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_logger'>logger</span>
   <span class='ivar'>@logger</span>
@@ -428,12 +431,12 @@
       <pre class="lines">
 
 
-35
-36
-37</pre>
+38
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ui.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/ui.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_stderr'>stderr</span>
   <span class='ivar'>@stderr</span>
@@ -470,12 +473,12 @@
       <pre class="lines">
 
 
-35
-36
-37</pre>
+38
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ui.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/ui.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_stdin'>stdin</span>
   <span class='ivar'>@stdin</span>
@@ -512,12 +515,12 @@
       <pre class="lines">
 
 
-35
-36
-37</pre>
+38
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ui.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/ui.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_stdout'>stdout</span>
   <span class='ivar'>@stdout</span>
@@ -533,7 +536,7 @@
 </div>
 
     <div id="footer">
-  Generated on Sat Feb  2 20:06:14 2013 by
+  Generated on Sun Feb 24 00:08:05 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.3 (ruby-1.9.3).
 </div>
