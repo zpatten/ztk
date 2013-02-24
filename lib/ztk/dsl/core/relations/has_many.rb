@@ -91,10 +91,10 @@ module ZTK::DSL::Core::Relations
           set_has_many_reference(key, value)
         end
 
-        define_method(key.to_s.singularize) do |&block|
+        define_method(key.to_s.singularize) do |id=nil, &block|
           options = self.class.has_many_relations[key]
           logger.debug { "#{key.to_s.singularize} block(#{block.inspect}), options(#{options.inspect})" }
-          data = options[:class_name].constantize.new(&block)
+          data = options[:class_name].constantize.new(id, &block)
           get_has_many_reference(key) << data
           klass = self.class.to_s.demodulize.singularize.downcase
           logger.debug { "send(#{klass})" }
