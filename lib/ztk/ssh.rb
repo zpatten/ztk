@@ -398,8 +398,7 @@ module ZTK
       command << [ "-o", "ServerAliveInterval=60" ]
       command << [ "-i", config.keys ] if config.keys
       command << [ "-p", config.port ] if config.port
-      command << [ "-t" ] if config.request_pty
-      command << [ "-o", "ProxyCommand=\"#{proxy_command}\"" ] if config.proxy_host_name
+      command << [ "-o", %(ProxyCommand="#{proxy_command}") ] if config.proxy_host_name
       command << "#{config.user}@#{config.host_name}"
       command = command.flatten.compact.join(" ")
       config.ui.logger.debug { "console_command(#{command.inspect})" }
@@ -420,7 +419,6 @@ module ZTK
       command << [ "-o", "ServerAliveInterval=60" ]
       command << [ "-i", config.proxy_keys ] if config.proxy_keys
       command << [ "-p", config.proxy_port ] if config.proxy_port
-      command << [ "-t" ] if config.request_pty
       command << "#{config.proxy_user}@#{config.proxy_host_name}"
       command << "nc %h %p"
       command = command.flatten.compact.join(" ")
