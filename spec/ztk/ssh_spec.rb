@@ -125,7 +125,7 @@ describe ZTK::SSH do
 
       describe "stdout" do
 
-        it "should capture STDOUT and send it to the appropriate pipe" do
+        it "should capture STDOUT (with PTY) and send it to the STDOUT pipe" do
           subject.config do |config|
             config.ui = $ui
 
@@ -146,16 +146,62 @@ describe ZTK::SSH do
           $ui.stdin.read.match(data).should be nil
         end
 
-      end
-
-      describe "stderr" do
-
-        it "should capture STDERR and send it to the appropriate pipe" do
+        it "should capture STDOUT (without PTY) and send it to the STDOUT pipe" do
           subject.config do |config|
             config.ui = $ui
 
             config.user = ENV["USER"]
             config.host_name = "127.0.0.1"
+
+            config.request_pty = false
+          end
+          data = "Hello World @ #{Time.now.utc}"
+
+          subject.exec(%Q{echo "#{data}" -f >&1})
+
+          $ui.stdout.rewind
+          $ui.stdout.read.match(data).should_not be nil
+
+          $ui.stderr.rewind
+          $ui.stderr.read.match(data).should be nil
+
+          $ui.stdin.rewind
+          $ui.stdin.read.match(data).should be nil
+        end
+
+      end
+
+      describe "stderr" do
+
+        it "should capture STDERR (with PTY) and send it to the STDOUT pipe" do
+          subject.config do |config|
+            config.ui = $ui
+
+            config.user = ENV["USER"]
+            config.host_name = "127.0.0.1"
+          end
+          data = "Hello World @ #{Time.now.utc}"
+
+          subject.exec(%Q{echo "#{data}" -f >&2})
+
+          $ui.stdout.rewind
+          $ui.stdout.read.match(data).should_not be nil
+
+          $ui.stderr.rewind
+          $ui.stderr.read.match(data).should be nil
+
+          $ui.stdin.rewind
+          $ui.stdin.read.match(data).should be nil
+        end
+
+        it "should capture STDERR (without PTY) and send it to the STDERR pipe" do
+          subject.config do |config|
+            config.ui = $ui
+
+            config.user = ENV["USER"]
+            config.host_name = "127.0.0.1"
+
+            config.request_pty = false
           end
           data = "Hello World @ #{Time.now.utc}"
 
@@ -170,6 +216,7 @@ describe ZTK::SSH do
           $ui.stdin.rewind
           $ui.stdin.read.match(data).should be nil
         end
+
       end
 
     end
@@ -338,7 +385,7 @@ describe ZTK::SSH do
 
       describe "stdout" do
 
-        it "should capture STDOUT and send it to the appropriate pipe" do
+        it "should capture STDOUT (with PTY) and send it to the STDOUT pipe" do
           subject.config do |config|
             config.ui = $ui
 
@@ -361,11 +408,7 @@ describe ZTK::SSH do
           $ui.stdin.read.match(data).should be nil
         end
 
-      end
-
-      describe "stderr" do
-
-        it "should capture STDERR and send it to the appropriate pipe" do
+        it "should capture STDOUT (without PTY) and send it to the STDOUT pipe" do
           subject.config do |config|
             config.ui = $ui
 
@@ -373,6 +416,60 @@ describe ZTK::SSH do
             config.host_name = "127.0.0.1"
             config.proxy_user = ENV["USER"]
             config.proxy_host_name = "127.0.0.1"
+
+            config.request_pty = false
+          end
+          data = "Hello World @ #{Time.now.utc}"
+
+          subject.exec(%Q{echo "#{data}" -f >&1})
+
+          $ui.stdout.rewind
+          $ui.stdout.read.match(data).should_not be nil
+
+          $ui.stderr.rewind
+          $ui.stderr.read.match(data).should be nil
+
+          $ui.stdin.rewind
+          $ui.stdin.read.match(data).should be nil
+        end
+
+      end
+
+      describe "stderr" do
+
+        it "should capture STDERR (with PTY) and send it to the STDOUT pipe" do
+          subject.config do |config|
+            config.ui = $ui
+
+            config.user = ENV["USER"]
+            config.host_name = "127.0.0.1"
+            config.proxy_user = ENV["USER"]
+            config.proxy_host_name = "127.0.0.1"
+          end
+          data = "Hello World @ #{Time.now.utc}"
+
+          subject.exec(%Q{echo "#{data}" -f >&2})
+
+          $ui.stdout.rewind
+          $ui.stdout.read.match(data).should_not be nil
+
+          $ui.stderr.rewind
+          $ui.stderr.read.match(data).should be nil
+
+          $ui.stdin.rewind
+          $ui.stdin.read.match(data).should be nil
+        end
+
+        it "should capture STDERR (without PTY) and send it to the STDERR pipe" do
+          subject.config do |config|
+            config.ui = $ui
+
+            config.user = ENV["USER"]
+            config.host_name = "127.0.0.1"
+            config.proxy_user = ENV["USER"]
+            config.proxy_host_name = "127.0.0.1"
+
+            config.request_pty = false
           end
           data = "Hello World @ #{Time.now.utc}"
 
@@ -387,6 +484,7 @@ describe ZTK::SSH do
           $ui.stdin.rewind
           $ui.stdin.read.match(data).should be nil
         end
+
       end
 
     end
