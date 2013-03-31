@@ -1,4 +1,5 @@
-[![Build Status](https://secure.travis-ci.org/jovelabs/ztk.png)](http://travis-ci.org/jovelabs/ztk) [![Dependency Status](https://gemnasium.com/jovelabs/ztk.png)](https://gemnasium.com/jovelabs/ztk)
+[![Build Status](https://secure.travis-ci.org/zpatten/ztk.png)](http://travis-ci.org/zpatten/ztk)
+[![Dependency Status](https://gemnasium.com/zpatten/ztk.png)](https://gemnasium.com/zpatten/ztk)
 
 # ZTK
 
@@ -8,19 +9,15 @@ Zachary's (DevOp) Tool Kit is a general purpose utility gem, featuring a collect
 
 Source:
 
-* https://github.com/jovelabs/ztk
+* https://github.com/zpatten/ztk
 
 Issues:
 
-* https://github.com/jovelabs/ztk/issues
+* https://github.com/zpatten/ztk/issues
 
 Documentation:
 
-* http://jovelabs.github.com/ztk/
-
-Wiki:
-
-* https://github.com/jovelabs/ztk/wiki
+* http://zpatten.github.com/ztk/
 
 # LICENSE
 
