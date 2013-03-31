@@ -130,6 +130,8 @@ module ZTK
     # @option config [String] :proxy_host_name Server hostname to proxy through.
     # @option config [String] :proxy_user Username to use for proxy
     #   authentication.
+    # @option config [Boolean] :request_pty Weither or not we should try to
+    #   obtain a PTY
     # @option config [String, Array<String>] :proxy_keys A single or series of
     #   identity files to use for authentication with the proxy.
     def initialize(configuration={})
@@ -138,7 +140,8 @@ module ZTK
         :compression => false,
         :user_known_hosts_file => '/dev/null',
         :timeout => 60,
-        :ignore_exit_status => false
+        :ignore_exit_status => false,
+        :request_pty => true
       }.merge(configuration))
       config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
     end
@@ -222,6 +225,14 @@ module ZTK
 
             channel = ssh.open_channel do |chan|
               options.ui.logger.debug { "Channel opened." }
+
+              (options.request_pty == true) and chan.request_pty do |ch, success|
+                if success
+                  options.ui.logger.debug { "PTY obtained." }
+                else
+                  options.ui.logger.warn { "Could not obtain PTY." }
+                end
+              end
 
               direct_log(:info) { log_header("COMMAND") }
               direct_log(:info) { "#{command}\n" }
