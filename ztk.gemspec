@@ -7,7 +7,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["zachary@jovelabs.net"]
   gem.description   = %q{Zachary's (DevOp) Tool Kit}
   gem.summary       = %q{Contains various classes and utilities I find I regularly need.}
-  gem.homepage      = "https://github.com/jovelabs/ztk"
+  gem.homepage      = "https://github.com/zpatten/ztk"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
