@@ -1,7 +1,7 @@
 ################################################################################
 #
 #      Author: Zachary Patten <zachary@jovelabs.net>
-#   Copyright: Copyright (c) Jove Labs
+#   Copyright: Copyright (c) Zachary Patten
 #     License: Apache License, VersIOn 2.0
 #
 #   Licensed under the Apache License, VersIOn 2.0 (the "License");
@@ -28,7 +28,7 @@ module ZTK
   class UIError < Error; end
 
   # ZTK UI Class
-  # 
+  #
   # This class encapsulates a STDOUT, STDERR, STDIN
   # and logging device.
   #
