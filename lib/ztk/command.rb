@@ -179,7 +179,7 @@ module ZTK
     # Returns a string in the format of "user@hostname" for the current
     #   shell.
     def tag
-      @hostname ||= %x(hostname -f).chomp
+      @@hostname ||= %x(hostname).chomp
       "#{ENV['USER']}@#{@hostname}"
     end
 
