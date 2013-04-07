@@ -181,6 +181,7 @@ module ZTK
       config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
       config.ui.logger.info { "console(#{console_command.inspect})" }
 
+      config.ui.logger.fatal { "REPLACING CURRENT PROCESS - GOODBYE!" }
       Kernel.exec(console_command)
     end
 
