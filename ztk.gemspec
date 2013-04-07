@@ -24,7 +24,7 @@ require 'ztk/version'
 
 Gem::Specification.new do |gem|
   gem.authors       = ["Zachary Patten"]
-  gem.email         = ["zachary@jovelabs.net"]
+  gem.email         = ["zachary@jovelabs.com"]
   gem.description   = %q{Zachary's (DevOp) Tool Kit}
   gem.summary       = %q{Contains various classes and utilities I find I regularly need.}
   gem.homepage      = "https://github.com/zpatten/ztk"
