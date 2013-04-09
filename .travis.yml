@@ -10,7 +10,7 @@ before_install:
 
 bundler_args: --binstubs
 
-script: "rake spec"
+script: "rake test"
 
 notifications:
   irc: "irc.freenode.net#jovelabs"
