@@ -61,7 +61,7 @@ module ZTK
     # @example Execute a command:
     #
     #   cmd = ZTK::Command.new
-    #   puts cmd.exec("hostname -f").inspect
+    #   puts cmd.exec("hostname").inspect
     #
     def exec(command, options={})
       options = OpenStruct.new({ :exit_code => 0, :silence => false }.merge(config.send(:table)).merge(options))

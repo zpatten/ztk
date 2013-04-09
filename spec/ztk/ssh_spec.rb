@@ -45,9 +45,9 @@ describe ZTK::SSH do
           config.host_name = "127.0.0.1"
         end
 
-        data = %x(hostname -f).chomp
+        data = %x(hostname).chomp
 
-        status = subject.exec("hostname -f")
+        status = subject.exec("hostname")
         status.exit_code.should == 0
         $ui.stdout.rewind
         $ui.stdout.read.chomp.should == data
@@ -61,8 +61,8 @@ describe ZTK::SSH do
           config.host_name = "127.0.0.1"
           config.timeout = WAIT_SMALL
         end
-        hostname = %x(hostname -f).chomp
-        lambda { subject.exec("hostname -f ; sleep 10") }.should raise_error ZTK::SSHError
+        hostname = %x(hostname).chomp
+        lambda { subject.exec("hostname ; sleep 10") }.should raise_error ZTK::SSHError
       end
 
       it "should throw an exception if the exit status is not as expected" do
@@ -293,9 +293,9 @@ describe ZTK::SSH do
           config.proxy_host_name = "127.0.0.1"
         end
 
-        data = %x( hostname -f ).chomp
+        data = %x( hostname ).chomp
 
-        status = subject.exec("hostname -f")
+        status = subject.exec("hostname")
         status.exit_code.should == 0
         $ui.stdout.rewind
         $ui.stdout.read.chomp.should == data
@@ -311,8 +311,8 @@ describe ZTK::SSH do
           config.proxy_host_name = "127.0.0.1"
           config.timeout = WAIT_SMALL
         end
-        hostname = %x(hostname -f).chomp
-        lambda { subject.exec("hostname -f ; sleep 10") }.should raise_error ZTK::SSHError
+        hostname = %x(hostname).chomp
+        lambda { subject.exec("hostname ; sleep 10") }.should raise_error ZTK::SSHError
       end
 
       it "should throw an exception if the exit status is not as expected" do

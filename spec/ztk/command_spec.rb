@@ -36,12 +36,12 @@ describe ZTK::Command do
 
     describe "execute" do
 
-      it "should be able to execute the command \"hostname -f\"" do
+      it "should be able to execute the command \"hostname\"" do
         subject.config do |config|
           config.ui = $ui
         end
-        hostname = %x(hostname -f).chomp
-        status = subject.exec("hostname -f")
+        hostname = %x(hostname).chomp
+        status = subject.exec("hostname")
         status.exit_code.should == 0
         $ui.stdout.rewind
         $ui.stdout.read.chomp.should == hostname
@@ -52,8 +52,8 @@ describe ZTK::Command do
           config.ui = $ui
           config.timeout = WAIT_SMALL
         end
-        hostname = %x(hostname -f).chomp
-        lambda { subject.exec("hostname -f ; sleep 10") }.should raise_error ZTK::CommandError
+        hostname = %x(hostname).chomp
+        lambda { subject.exec("hostname ; sleep 10") }.should raise_error ZTK::CommandError
       end
 
       it "should throw an exception if the exit status is not as expected" do

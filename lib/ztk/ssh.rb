@@ -205,7 +205,7 @@ module ZTK
     #     config.user = ENV["USER"]
     #     config.host_name = "127.0.0.1"
     #   end
-    #   puts ssh.exec("hostname -f").inspect
+    #   puts ssh.exec("hostname").inspect
     def exec(command, options={})
       options = OpenStruct.new({ :exit_code => 0, :silence => false }.merge(config.send(:table)).merge(options))
 
