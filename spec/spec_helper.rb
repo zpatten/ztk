@@ -31,6 +31,7 @@ end if ENV["COVERAGE"]
 ENV['LOG_LEVEL'] = "DEBUG"
 
 WAIT_SMALL = 3
+READ_PARTIAL_CHUNK = 2048
 
 RSpec.configure do |config|
 
