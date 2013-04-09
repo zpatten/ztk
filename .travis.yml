@@ -6,7 +6,7 @@ rvm:
   - 2.0.0
 
 before_install:
-  - sudo apt-get -qq update
+  - sudo apt-get -qq --force-yes update
 
 bundler_args: --binstubs
 
