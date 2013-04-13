@@ -75,7 +75,10 @@ module ZTK
       end
 
       headers.each do |header|
-        maximum = [header, rows.collect{ |r| r.send(header) }].flatten.map(&:to_s).map(&:length).max
+        row_collection = rows.collect{ |r| r.send(header) }
+        collection = [header, row_collection]
+        collection.flatten!
+        maximum = collection.map(&:to_s).map(&:length).max
         max_lengths.send("#{header}=", maximum)
       end
 
@@ -90,15 +93,21 @@ module ZTK
 
       rows.each do |row|
         row_line = headers.collect do |header|
-          "%-#{max_lengths.send(header)}s" % row.send(header)
+          header_length = max_lengths.send(header)
+          context = row.send(header)
+
+          "%-#{header_length}s" % content
         end
+
         row_line = format_row(row_line)
         config.ui.stdout.puts(row_line)
       end
 
       config.ui.stdout.puts(format_header(headers, max_lengths))
 
-      width = (2 + max_lengths.send(:table).values.reduce(:+) + ((headers.count * 3) - 3) + 2)
+      header_lengths = ((headers.count * 3) - 3)
+      max_lengths = max_lengths.send(:table).values.reduce(:+)
+      width = (2 + max_lengths + header_lengths + 2)
 
       OpenStruct.new(:rows => rows, :max_lengths => max_lengths, :width => width)
     end
