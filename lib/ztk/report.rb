@@ -158,10 +158,7 @@ module ZTK
     def max_spreadsheet_lengths(headers, rows)
       max_lengths = OpenStruct.new
       headers.each do |header|
-        row_collection = rows.map(&header)
-        collection = [header, row_collection].flatten
-        maximum = collection.map(&:to_s).map(&:length).max
-        max_lengths.send("#{header}=", maximum)
+        max_lengths.send("#{header}=", [header, rows.map(&header)].flatten.map(&:to_s).map(&:length).max)
       end
       max_lengths
     end
