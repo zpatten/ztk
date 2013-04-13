@@ -6,7 +6,7 @@
 <title>
   Class: ZTK::RescueRetry
   
-    &mdash; Documentation by YARD 0.8.3
+    &mdash; Documentation by YARD 0.8.5.2
   
 </title>
 
@@ -111,7 +111,7 @@ re-executed for the set number of attempts.</p>
 
 <p><em>example code</em>:</p>
 
-<pre class="code ruby"><code><span class='id identifier rubyid_counter'>counter</span> <span class='op'>=</span> <span class='int'>0</span>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_counter'>counter</span> <span class='op'>=</span> <span class='int'>0</span>
 <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>RescueRetry</span><span class='period'>.</span><span class='id identifier rubyid_try'>try</span><span class='lparen'>(</span><span class='symbol'>:tries</span> <span class='op'>=&gt;</span> <span class='int'>3</span><span class='comma'>,</span> <span class='symbol'>:on</span> <span class='op'>=&gt;</span> <span class='const'>EOFError</span><span class='rparen'>)</span> <span class='kw'>do</span>
   <span class='id identifier rubyid_counter'>counter</span> <span class='op'>+=</span> <span class='int'>1</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>EOFError</span>
@@ -135,7 +135,7 @@ re-executed for the set number of attempts.</p>
 
 <p><em>pry output</em>:</p>
 
-<pre class="code ruby"><code>[1] pry(main)&gt; counter = 0
+<pre class="code ruby"><code class="ruby">[1] pry(main)&gt; counter = 0
 =&gt; 0
 [2] pry(main)&gt; ZTK::RescueRetry.try(:tries =&gt; 3, :on =&gt; EOFError) do
 [2] pry(main)*   counter += 1
@@ -446,9 +446,9 @@ needed.</p>
 </div>
 
     <div id="footer">
-  Generated on Sun Apr  7 16:39:31 2013 by
+  Generated on Sat Apr 13 16:01:52 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.3 (ruby-1.9.3).
+  0.8.5.2 (ruby-1.9.3).
 </div>
 
   </body>

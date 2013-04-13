@@ -6,7 +6,7 @@
 <title>
   Class: ZTK::Command
   
-    &mdash; Documentation by YARD 0.8.3
+    &mdash; Documentation by YARD 0.8.5.2
   
 </title>
 
@@ -107,12 +107,12 @@
 
 <p>We can get a new instance of Command like so:</p>
 
-<pre class="code ruby"><code><span class='id identifier rubyid_cmd'>cmd</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Command</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_cmd'>cmd</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Command</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
 </code></pre>
 
 <p>If we wanted to redirect STDOUT and STDERR to a StringIO we can do this:</p>
 
-<pre class="code ruby"><code><span class='id identifier rubyid_std_combo'>std_combo</span> <span class='op'>=</span> <span class='const'>StringIO</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_std_combo'>std_combo</span> <span class='op'>=</span> <span class='const'>StringIO</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
 <span class='id identifier rubyid_ui'>ui</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='symbol'>:stdout</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_std_combo'>std_combo</span><span class='comma'>,</span> <span class='symbol'>:stderr</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_std_combo'>std_combo</span><span class='rparen'>)</span>
 <span class='id identifier rubyid_cmd'>cmd</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Command</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='symbol'>:ui</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_ui'>ui</span><span class='rparen'>)</span>
 </code></pre>
@@ -401,9 +401,9 @@
         <p class="example_title"><div class='inline'><p>Execute a command:</p>
 </div></p>
       
-      <pre class="example code">
+      <pre class="example code"><code>
 <span class='id identifier rubyid_cmd'>cmd</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Command</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
-<span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_cmd'>cmd</span><span class='period'>.</span><span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hostname -f</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span></pre>
+<span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_cmd'>cmd</span><span class='period'>.</span><span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hostname</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -746,9 +746,9 @@ STDERR combined.</p>
 </div>
 
     <div id="footer">
-  Generated on Sun Apr  7 16:39:29 2013 by
+  Generated on Sat Apr 13 16:01:52 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.3 (ruby-1.9.3).
+  0.8.5.2 (ruby-1.9.3).
 </div>
 
   </body>

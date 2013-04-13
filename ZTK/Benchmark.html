@@ -6,7 +6,7 @@
 <title>
   Class: ZTK::Benchmark
   
-    &mdash; Documentation by YARD 0.8.3
+    &mdash; Documentation by YARD 0.8.5.2
   
 </title>
 
@@ -112,7 +112,7 @@ benchmarking the supplied block.</p>
 
 <p><em>example code</em>:</p>
 
-<pre class="code ruby"><code><span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>I wonder how long this will take?</span><span class='tstring_end'>&quot;</span></span>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>I wonder how long this will take?</span><span class='tstring_end'>&quot;</span></span>
 <span class='id identifier rubyid_mark'>mark</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> ...looks like it took %0.4f seconds!</span><span class='tstring_end'>&quot;</span></span>
 <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Benchmark</span><span class='period'>.</span><span class='id identifier rubyid_bench'>bench</span><span class='lparen'>(</span><span class='symbol'>:message</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='symbol'>:mark</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_mark'>mark</span><span class='rparen'>)</span> <span class='kw'>do</span>
   <span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='float'>1.5</span><span class='rparen'>)</span>
@@ -121,7 +121,7 @@ benchmarking the supplied block.</p>
 
 <p><em>pry output</em>:</p>
 
-<pre class="code ruby"><code>[1] pry(main)&gt; message = &quot;I wonder how long this will take?&quot;
+<pre class="code ruby"><code class="ruby">[1] pry(main)&gt; message = &quot;I wonder how long this will take?&quot;
 =&gt; &quot;I wonder how long this will take?&quot;
 [2] pry(main)&gt; mark = &quot; ...looks like it took %0.4f seconds!&quot;
 =&gt; &quot; ...looks like it took %0.4f seconds!&quot;
@@ -443,9 +443,9 @@ ZTK::Spinner while benchmarking.</p>
 </div>
 
     <div id="footer">
-  Generated on Sun Apr  7 16:39:30 2013 by
+  Generated on Sat Apr 13 16:01:52 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.3 (ruby-1.9.3).
+  0.8.5.2 (ruby-1.9.3).
 </div>
 
   </body>
