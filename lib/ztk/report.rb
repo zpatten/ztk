@@ -74,17 +74,8 @@ module ZTK
         rows << block.call(data)
       end
 
-      headers.each do |header|
-        row_collection = rows.collect{ |r| r.send(header) }
-        collection = [header, row_collection]
-        collection.flatten!
-        maximum = collection.map(&:to_s).map(&:length).max
-        max_lengths.send("#{header}=", maximum)
-      end
-
-      header_line = headers.collect do |header|
-        "%-#{max_lengths.send(header)}s" % header.to_s.upcase
-      end
+      max_lengths = max_spreadsheet_lengths(headers, rows)
+      header_line = headers.collect { |header| "%-#{max_lengths.send(header)}s" % header.to_s.upcase }
       header_line = format_row(header_line)
 
       config.ui.stdout.puts(format_header(headers, max_lengths))
@@ -94,7 +85,7 @@ module ZTK
       rows.each do |row|
         row_line = headers.collect do |header|
           header_length = max_lengths.send(header)
-          context = row.send(header)
+          content = row.send(header)
 
           "%-#{header_length}s" % content
         end
@@ -105,11 +96,11 @@ module ZTK
 
       config.ui.stdout.puts(format_header(headers, max_lengths))
 
-      header_lengths = ((headers.count * 3) - 3)
-      max_lengths = max_lengths.send(:table).values.reduce(:+)
-      width = (2 + max_lengths + header_lengths + 2)
-
-      OpenStruct.new(:rows => rows, :max_lengths => max_lengths, :width => width)
+      OpenStruct.new(
+        :rows => rows,
+        :max_lengths => max_lengths,
+        :width => calculate_spreadsheet_width(headers, max_lengths)
+      )
     end
 
     # Displays data in a key-value list style.
@@ -163,6 +154,23 @@ module ZTK
 
 
   private
+
+    def max_spreadsheet_lengths(headers, rows)
+      max_lengths = OpenStruct.new
+      headers.each do |header|
+        row_collection = rows.collect{ |r| r.send(header) }
+        collection = [header, row_collection].flatten!
+        maximum = collection.map(&:to_s).map(&:length).max
+        max_lengths.send("#{header}=", maximum)
+      end
+      max_lengths
+    end
+
+    def calculate_spreadsheet_width(headers, max_lengths)
+      header_lengths = ((headers.count * 3) - 3)
+      max_length = max_lengths.send(:table).values.reduce(:+)
+      (2 + max_length + header_lengths + 2)
+    end
 
     def format_header(headers, lengths)
       line = headers.collect do |header|
