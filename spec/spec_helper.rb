@@ -17,16 +17,14 @@
 #   limitations under the License.
 #
 ################################################################################
-
-require 'ztk'
 require 'tempfile'
-
-################################################################################
 
 require 'simplecov'
 SimpleCov.start do
   add_filter '/spec/'
 end if ENV["COVERAGE"]
+
+require 'ztk'
 
 ENV['LOG_LEVEL'] = "DEBUG"
 
