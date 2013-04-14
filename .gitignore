@@ -2,7 +2,6 @@
 *.txt
 *.gem
 *.rbc
-.rvmrc
 .bundle
 .config
 .yardoc
