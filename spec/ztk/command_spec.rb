@@ -22,7 +22,15 @@ require "spec_helper"
 
 describe ZTK::Command do
 
-  subject { ZTK::Command.new }
+  before(:each) do
+    @ui = ZTK::UI.new(
+      :stdout => StringIO.new,
+      :stderr => StringIO.new,
+      :stdin => StringIO.new
+    )
+  end
+
+  subject { ZTK::Command.new(:ui => @ui) }
 
   describe "class" do
 
@@ -38,18 +46,18 @@ describe ZTK::Command do
 
       it "should be able to execute the command \"hostname\"" do
         subject.config do |config|
-          config.ui = $ui
+          config.ui = @ui
         end
         hostname = %x(hostname).chomp
         status = subject.exec("hostname")
         status.exit_code.should == 0
-        $ui.stdout.rewind
-        $ui.stdout.read.chomp.should == hostname
+        @ui.stdout.rewind
+        @ui.stdout.read.chomp.should == hostname
       end
 
       it "should timeout after the period specified" do
         subject.config do |config|
-          config.ui = $ui
+          config.ui = @ui
           config.timeout = WAIT_SMALL
         end
         hostname = %x(hostname).chomp
@@ -58,14 +66,14 @@ describe ZTK::Command do
 
       it "should throw an exception if the exit status is not as expected" do
         subject.config do |config|
-          config.ui = $ui
+          config.ui = @ui
         end
         lambda { subject.exec("/bin/bash -c 'exit 64'") }.should raise_error ZTK::CommandError
       end
 
       it "should return a instance of an OpenStruct object" do
         subject.config do |config|
-          config.ui = $ui
+          config.ui = @ui
         end
         result = subject.exec(%q{echo "Hello World"})
         result.should be_an_instance_of OpenStruct
@@ -73,7 +81,7 @@ describe ZTK::Command do
 
       it "should return the exit code" do
         subject.config do |config|
-          config.ui = $ui
+          config.ui = @ui
         end
         data = 64
 
@@ -83,7 +91,7 @@ describe ZTK::Command do
 
       it "should return the output" do
         subject.config do |config|
-          config.ui = $ui
+          config.ui = @ui
         end
         data = "Hello World @ #{Time.now.utc}"
 
@@ -93,7 +101,7 @@ describe ZTK::Command do
 
       it "should allow us to change the expected exit code" do
         subject.config do |config|
-          config.ui = $ui
+          config.ui = @ui
         end
         data = 32
         result = subject.exec(%Q{/bin/bash -c 'exit #{data}'}, :exit_code => data)
@@ -103,20 +111,20 @@ describe ZTK::Command do
 
         it "should capture STDOUT and send it to the appropriate pipe" do
           subject.config do |config|
-            config.ui = $ui
+            config.ui = @ui
           end
           data = "Hello World @ #{Time.now.utc}"
 
           subject.exec(%Q{echo "#{data}" >&1})
 
-          $ui.stdout.rewind
-          $ui.stdout.read.match(data).should_not be nil
+          @ui.stdout.rewind
+          @ui.stdout.read.match(data).should_not be nil
 
-          $ui.stderr.rewind
-          $ui.stderr.read.match(data).should be nil
+          @ui.stderr.rewind
+          @ui.stderr.read.match(data).should be nil
 
-          $ui.stdin.rewind
-          $ui.stdin.read.match(data).should be nil
+          @ui.stdin.rewind
+          @ui.stdin.read.match(data).should be nil
         end
 
       end
@@ -125,20 +133,20 @@ describe ZTK::Command do
 
         it "should capture STDERR and send it to the appropriate pipe" do
           subject.config do |config|
-            config.ui = $ui
+            config.ui = @ui
           end
           data = "Hello World @ #{Time.now.utc}"
 
           subject.exec(%Q{echo "#{data}" >&2})
 
-          $ui.stdout.rewind
-          $ui.stdout.read.match(data).should be nil
+          @ui.stdout.rewind
+          @ui.stdout.read.match(data).should be nil
 
-          $ui.stderr.rewind
-          $ui.stderr.read.match(data).should_not be nil
+          @ui.stderr.rewind
+          @ui.stderr.read.match(data).should_not be nil
 
-          $ui.stdin.rewind
-          $ui.stdin.read.match(data).should be nil
+          @ui.stdin.rewind
+          @ui.stdin.read.match(data).should be nil
         end
       end
 

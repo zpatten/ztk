@@ -22,7 +22,15 @@ require "spec_helper"
 
 describe ZTK::SSH do
 
-  subject { ZTK::SSH.new }
+  before(:each) do
+    @ui = ZTK::UI.new(
+      :stdout => StringIO.new,
+      :stderr => StringIO.new,
+      :stdin => StringIO.new
+    )
+  end
+
+  subject { ZTK::SSH.new(:ui => @ui) }
 
   describe "class" do
 
@@ -39,7 +47,7 @@ describe ZTK::SSH do
 
       it "should be able to connect to 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
         subject.config do |config|
-          config.ui = $ui
+          config.ui = @ui
 
           config.user = ENV["USER"]
           config.host_name = "127.0.0.1"
@@ -49,13 +57,13 @@ describe ZTK::SSH do
 
         status = subject.exec("hostname")
         status.exit_code.should == 0
-        $ui.stdout.rewind
-        $ui.stdout.read.chomp.should == data
+        @ui.stdout.rewind
+        @ui.stdout.read.chomp.should == data
       end
 
       it "should timeout after the period specified" do
         subject.config do |config|
-          config.ui = $ui
+          config.ui = @ui
 
           config.user = ENV["USER"]
           config.host_name = "127.0.0.1"
@@ -67,7 +75,7 @@ describe ZTK::SSH do
 
       it "should throw an exception if the exit status is not as expected" do
         subject.config do |config|
-          config.ui = $ui
+          config.ui = @ui
 
           config.user = ENV["USER"]
           config.host_name = "127.0.0.1"
@@ -77,7 +85,7 @@ describe ZTK::SSH do
 
       it "should return a instance of an OpenStruct object" do
         subject.config do |config|
-          config.ui = $ui
+          config.ui = @ui
 
           config.user = ENV["USER"]
           config.host_name = "127.0.0.1"
@@ -88,7 +96,7 @@ describe ZTK::SSH do
 
       it "should return the exit code" do
         subject.config do |config|
-          config.ui = $ui
+          config.ui = @ui
 
           config.user = ENV["USER"]
           config.host_name = "127.0.0.1"
@@ -101,7 +109,7 @@ describe ZTK::SSH do
 
       it "should return the output" do
         subject.config do |config|
-          config.ui = $ui
+          config.ui = @ui
 
           config.user = ENV["USER"]
           config.host_name = "127.0.0.1"
@@ -114,7 +122,7 @@ describe ZTK::SSH do
 
       it "should allow us to change the expected exit code" do
         subject.config do |config|
-          config.ui = $ui
+          config.ui = @ui
 
           config.user = ENV["USER"]
           config.host_name = "127.0.0.1"
@@ -127,7 +135,7 @@ describe ZTK::SSH do
 
         it "should capture STDOUT (with PTY) and send it to the STDOUT pipe" do
           subject.config do |config|
-            config.ui = $ui
+            config.ui = @ui
 
             config.user = ENV["USER"]
             config.host_name = "127.0.0.1"
@@ -136,19 +144,19 @@ describe ZTK::SSH do
 
           subject.exec(%Q{echo "#{data}" -f >&1})
 
-          $ui.stdout.rewind
-          $ui.stdout.read.match(data).should_not be nil
+          @ui.stdout.rewind
+          @ui.stdout.read.match(data).should_not be nil
 
-          $ui.stderr.rewind
-          $ui.stderr.read.match(data).should be nil
+          @ui.stderr.rewind
+          @ui.stderr.read.match(data).should be nil
 
-          $ui.stdin.rewind
-          $ui.stdin.read.match(data).should be nil
+          @ui.stdin.rewind
+          @ui.stdin.read.match(data).should be nil
         end
 
         it "should capture STDOUT (without PTY) and send it to the STDOUT pipe" do
           subject.config do |config|
-            config.ui = $ui
+            config.ui = @ui
 
             config.user = ENV["USER"]
             config.host_name = "127.0.0.1"
@@ -159,14 +167,14 @@ describe ZTK::SSH do
 
           subject.exec(%Q{echo "#{data}" -f >&1})
 
-          $ui.stdout.rewind
-          $ui.stdout.read.match(data).should_not be nil
+          @ui.stdout.rewind
+          @ui.stdout.read.match(data).should_not be nil
 
-          $ui.stderr.rewind
-          $ui.stderr.read.match(data).should be nil
+          @ui.stderr.rewind
+          @ui.stderr.read.match(data).should be nil
 
-          $ui.stdin.rewind
-          $ui.stdin.read.match(data).should be nil
+          @ui.stdin.rewind
+          @ui.stdin.read.match(data).should be nil
         end
 
       end
@@ -175,7 +183,7 @@ describe ZTK::SSH do
 
         it "should capture STDERR (with PTY) and send it to the STDOUT pipe" do
           subject.config do |config|
-            config.ui = $ui
+            config.ui = @ui
 
             config.user = ENV["USER"]
             config.host_name = "127.0.0.1"
@@ -184,19 +192,19 @@ describe ZTK::SSH do
 
           subject.exec(%Q{echo "#{data}" -f >&2})
 
-          $ui.stdout.rewind
-          $ui.stdout.read.match(data).should_not be nil
+          @ui.stdout.rewind
+          @ui.stdout.read.match(data).should_not be nil
 
-          $ui.stderr.rewind
-          $ui.stderr.read.match(data).should be nil
+          @ui.stderr.rewind
+          @ui.stderr.read.match(data).should be nil
 
-          $ui.stdin.rewind
-          $ui.stdin.read.match(data).should be nil
+          @ui.stdin.rewind
+          @ui.stdin.read.match(data).should be nil
         end
 
         it "should capture STDERR (without PTY) and send it to the STDERR pipe" do
           subject.config do |config|
-            config.ui = $ui
+            config.ui = @ui
 
             config.user = ENV["USER"]
             config.host_name = "127.0.0.1"
@@ -207,14 +215,14 @@ describe ZTK::SSH do
 
           subject.exec(%Q{echo "#{data}" -f >&2})
 
-          $ui.stdout.rewind
-          $ui.stdout.read.match(data).should be nil
+          @ui.stdout.rewind
+          @ui.stdout.read.match(data).should be nil
 
-          $ui.stderr.rewind
-          $ui.stderr.read.match(data).should_not be nil
+          @ui.stderr.rewind
+          @ui.stderr.read.match(data).should_not be nil
 
-          $ui.stdin.rewind
-          $ui.stdin.read.match(data).should be nil
+          @ui.stdin.rewind
+          @ui.stdin.read.match(data).should be nil
         end
 
       end
@@ -225,7 +233,7 @@ describe ZTK::SSH do
 
       it "should be able to upload a file to 127.0.0.1 as the current user (your key must be in ssh-agent)" do
         subject.config do |config|
-          config.ui = $ui
+          config.ui = @ui
 
           config.user = ENV["USER"]
           config.host_name = "127.0.0.1"
@@ -253,7 +261,7 @@ describe ZTK::SSH do
 
       it "should be able to download a file from 127.0.0.1 as the current user (your key must be in ssh-agent)" do
         subject.config do |config|
-          config.ui = $ui
+          config.ui = @ui
 
           config.user = ENV["USER"]
           config.host_name = "127.0.0.1"
@@ -285,7 +293,7 @@ describe ZTK::SSH do
 
       it "should be able to proxy through 127.0.0.1, connecting to 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
         subject.config do |config|
-          config.ui = $ui
+          config.ui = @ui
 
           config.user = ENV["USER"]
           config.host_name = "127.0.0.1"
@@ -297,13 +305,13 @@ describe ZTK::SSH do
 
         status = subject.exec("hostname")
         status.exit_code.should == 0
-        $ui.stdout.rewind
-        $ui.stdout.read.chomp.should == data
+        @ui.stdout.rewind
+        @ui.stdout.read.chomp.should == data
       end
 
       it "should timeout after the period specified" do
         subject.config do |config|
-          config.ui = $ui
+          config.ui = @ui
 
           config.user = ENV["USER"]
           config.host_name = "127.0.0.1"
@@ -317,7 +325,7 @@ describe ZTK::SSH do
 
       it "should throw an exception if the exit status is not as expected" do
         subject.config do |config|
-          config.ui = $ui
+          config.ui = @ui
 
           config.user = ENV["USER"]
           config.host_name = "127.0.0.1"
@@ -329,7 +337,7 @@ describe ZTK::SSH do
 
       it "should return a instance of an OpenStruct object" do
         subject.config do |config|
-          config.ui = $ui
+          config.ui = @ui
 
           config.user = ENV["USER"]
           config.host_name = "127.0.0.1"
@@ -342,7 +350,7 @@ describe ZTK::SSH do
 
       it "should return the exit code" do
         subject.config do |config|
-          config.ui = $ui
+          config.ui = @ui
 
           config.user = ENV["USER"]
           config.host_name = "127.0.0.1"
@@ -357,7 +365,7 @@ describe ZTK::SSH do
 
       it "should return the output" do
         subject.config do |config|
-          config.ui = $ui
+          config.ui = @ui
 
           config.user = ENV["USER"]
           config.host_name = "127.0.0.1"
@@ -372,7 +380,7 @@ describe ZTK::SSH do
 
       it "should allow us to change the expected exit code" do
         subject.config do |config|
-          config.ui = $ui
+          config.ui = @ui
 
           config.user = ENV["USER"]
           config.host_name = "127.0.0.1"
@@ -387,7 +395,7 @@ describe ZTK::SSH do
 
         it "should capture STDOUT (with PTY) and send it to the STDOUT pipe" do
           subject.config do |config|
-            config.ui = $ui
+            config.ui = @ui
 
             config.user = ENV["USER"]
             config.host_name = "127.0.0.1"
@@ -398,19 +406,19 @@ describe ZTK::SSH do
 
           subject.exec(%Q{echo "#{data}" -f >&1})
 
-          $ui.stdout.rewind
-          $ui.stdout.read.match(data).should_not be nil
+          @ui.stdout.rewind
+          @ui.stdout.read.match(data).should_not be nil
 
-          $ui.stderr.rewind
-          $ui.stderr.read.match(data).should be nil
+          @ui.stderr.rewind
+          @ui.stderr.read.match(data).should be nil
 
-          $ui.stdin.rewind
-          $ui.stdin.read.match(data).should be nil
+          @ui.stdin.rewind
+          @ui.stdin.read.match(data).should be nil
         end
 
         it "should capture STDOUT (without PTY) and send it to the STDOUT pipe" do
           subject.config do |config|
-            config.ui = $ui
+            config.ui = @ui
 
             config.user = ENV["USER"]
             config.host_name = "127.0.0.1"
@@ -423,14 +431,14 @@ describe ZTK::SSH do
 
           subject.exec(%Q{echo "#{data}" -f >&1})
 
-          $ui.stdout.rewind
-          $ui.stdout.read.match(data).should_not be nil
+          @ui.stdout.rewind
+          @ui.stdout.read.match(data).should_not be nil
 
-          $ui.stderr.rewind
-          $ui.stderr.read.match(data).should be nil
+          @ui.stderr.rewind
+          @ui.stderr.read.match(data).should be nil
 
-          $ui.stdin.rewind
-          $ui.stdin.read.match(data).should be nil
+          @ui.stdin.rewind
+          @ui.stdin.read.match(data).should be nil
         end
 
       end
@@ -439,7 +447,7 @@ describe ZTK::SSH do
 
         it "should capture STDERR (with PTY) and send it to the STDOUT pipe" do
           subject.config do |config|
-            config.ui = $ui
+            config.ui = @ui
 
             config.user = ENV["USER"]
             config.host_name = "127.0.0.1"
@@ -450,19 +458,19 @@ describe ZTK::SSH do
 
           subject.exec(%Q{echo "#{data}" -f >&2})
 
-          $ui.stdout.rewind
-          $ui.stdout.read.match(data).should_not be nil
+          @ui.stdout.rewind
+          @ui.stdout.read.match(data).should_not be nil
 
-          $ui.stderr.rewind
-          $ui.stderr.read.match(data).should be nil
+          @ui.stderr.rewind
+          @ui.stderr.read.match(data).should be nil
 
-          $ui.stdin.rewind
-          $ui.stdin.read.match(data).should be nil
+          @ui.stdin.rewind
+          @ui.stdin.read.match(data).should be nil
         end
 
         it "should capture STDERR (without PTY) and send it to the STDERR pipe" do
           subject.config do |config|
-            config.ui = $ui
+            config.ui = @ui
 
             config.user = ENV["USER"]
             config.host_name = "127.0.0.1"
@@ -475,14 +483,14 @@ describe ZTK::SSH do
 
           subject.exec(%Q{echo "#{data}" -f >&2})
 
-          $ui.stdout.rewind
-          $ui.stdout.read.match(data).should be nil
+          @ui.stdout.rewind
+          @ui.stdout.read.match(data).should be nil
 
-          $ui.stderr.rewind
-          $ui.stderr.read.match(data).should_not be nil
+          @ui.stderr.rewind
+          @ui.stderr.read.match(data).should_not be nil
 
-          $ui.stdin.rewind
-          $ui.stdin.read.match(data).should be nil
+          @ui.stdin.rewind
+          @ui.stdin.read.match(data).should be nil
         end
 
       end
@@ -493,7 +501,7 @@ describe ZTK::SSH do
 
       it "should be able to upload a file to 127.0.0.1 as the current user (your key must be in ssh-agent)" do
         subject.config do |config|
-          config.ui = $ui
+          config.ui = @ui
 
           config.user = ENV["USER"]
           config.host_name = "127.0.0.1"
@@ -523,7 +531,7 @@ describe ZTK::SSH do
 
       it "should be able to download a file from 127.0.0.1 as the current user (your key must be in ssh-agent)" do
         subject.config do |config|
-          config.ui = $ui
+          config.ui = @ui
 
           config.user = ENV["USER"]
           config.host_name = "127.0.0.1"

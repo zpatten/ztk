@@ -22,6 +22,14 @@ require "spec_helper"
 
 describe ZTK::Benchmark do
 
+  before(:each) do
+    @ui = ZTK::UI.new(
+      :stdout => StringIO.new,
+      :stderr => StringIO.new,
+      :stdin => StringIO.new
+    )
+  end
+
   subject { ZTK::Benchmark }
 
   describe "class" do
@@ -49,28 +57,28 @@ describe ZTK::Benchmark do
 
     it "should throw an exception if executed with a message but without a mark" do
       lambda {
-        ZTK::Benchmark.bench(:ui => $ui, :message => "Hello World")
+        ZTK::Benchmark.bench(:ui => @ui, :message => "Hello World")
       }.should raise_error ZTK::BenchmarkError
     end
 
     it "should throw an exception if executed without a message but with a mark" do
       lambda {
-        ZTK::Benchmark.bench(:ui => $ui, :mark => "%0.4f")
+        ZTK::Benchmark.bench(:ui => @ui, :mark => "%0.4f")
       }.should raise_error ZTK::BenchmarkError
     end
 
     it "should not write to STDOUT if not given a message or mark" do
-      ZTK::Benchmark.bench(:ui => $ui) do
+      ZTK::Benchmark.bench(:ui => @ui) do
         sleep(0.1)
       end
-      $ui.stdout.size.should == 0
+      @ui.stdout.size.should == 0
     end
 
     it "should write to STDOUT if given a message and mark" do
-      ZTK::Benchmark.bench(:ui => $ui, :message => "Hello World", :mark => "%0.4f") do
+      ZTK::Benchmark.bench(:ui => @ui, :message => "Hello World", :mark => "%0.4f") do
         sleep(0.1)
       end
-      $ui.stdout.size.should > 0
+      @ui.stdout.size.should > 0
     end
 
   end

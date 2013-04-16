@@ -17,42 +17,15 @@
 #   limitations under the License.
 #
 ################################################################################
+require 'coveralls'
+Coveralls.wear!
+
 require 'tempfile'
-
-require 'simplecov'
-SimpleCov.start do
-  add_filter '/spec/'
-end if ENV["COVERAGE"]
-
 require 'ztk'
 
 ENV['LOG_LEVEL'] = "DEBUG"
 
 WAIT_SMALL = 3
 READ_PARTIAL_CHUNK = 2048
-
-RSpec.configure do |config|
-
-  config.before(:all) do
-    $stdout = File.open("/dev/null", "w")
-    $stderr = File.open("/dev/null", "w")
-    $stdin = File.open("/dev/null", "r")
-    $logger = ZTK::Logger.new(File.join("/tmp", "test.log"))
-
-    $logger.info { "=" * 80 }
-    $logger.info { "STARTING ZTK v#{ZTK::VERSION} TEST RUN @ #{Time.now.utc}" }
-    $logger.info { "=" * 80 }
-  end
-
-  config.before(:each) do
-    $ui = ZTK::UI.new(
-      :stdout => StringIO.new,
-      :stderr => StringIO.new,
-      :stdin => StringIO.new
-    )
-  end
-
-end
-
 
 ################################################################################
