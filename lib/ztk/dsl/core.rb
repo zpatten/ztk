@@ -35,8 +35,8 @@ module ZTK::DSL
       base.class_eval do
         base.send(:extend, ZTK::DSL::Core::ClassMethods)
 
-        base.send(:extend, ZTK::DSL::Core::DualMethods)
-        base.send(:include, ZTK::DSL::Core::DualMethods)
+        # base.send(:extend, ZTK::DSL::Core::DualMethods)
+        # base.send(:include, ZTK::DSL::Core::DualMethods)
 
         base.send(:include, ZTK::DSL::Core::Attributes)
         base.send(:include, ZTK::DSL::Core::Actions)
@@ -47,19 +47,19 @@ module ZTK::DSL
     end
 
     # @author Zachary Patten <zachary@jovelabs.net>
-    module DualMethods
+    # module DualMethods
 
-      def logger
-        unless defined?($logger)
-          $logger = ::ZTK::Logger.new("dsl.log")
-          $logger.info {"=" * 80}
-          $logger.info {"=" * 80}
-          $logger.info {"=" * 80}
-        end
-        $logger
-      end
+    #   def logger
+    #     unless defined?($logger)
+    #       $logger = ::ZTK::Logger.new("dsl.log")
+    #       $logger.info {"=" * 80}
+    #       $logger.info {"=" * 80}
+    #       $logger.info {"=" * 80}
+    #     end
+    #     $logger
+    #   end
 
-    end
+    # end
 
     # @author Zachary Patten <zachary@jovelabs.net>
     module ClassMethods

@@ -36,15 +36,9 @@ module ZTK::DSL::Core::Relations
     end
 
     def get_belongs_to_reference(key)
-      logger.debug { "key(#{key})" }
-
       if belongs_to_references.key?(key)
-        logger.debug { "found key -> (#{key})" }
-
         belongs_to_references[key]
       else
-        logger.debug { "looking up key -> (#{key})" }
-
         key_id = send("#{key}_id")
         item = key.to_s.classify.constantize.find(key_id).first
         belongs_to_references[key] = item
@@ -52,13 +46,11 @@ module ZTK::DSL::Core::Relations
     end
 
     def set_belongs_to_reference(key, value)
-      logger.debug { "key(#{key}), value(#{value})" }
-
       belongs_to_references[key] = value
       attributes.merge!("#{key}_id".to_sym => value.id)
 
       klass = self.class.to_s.demodulize.downcase.pluralize
-      logger.debug { "send(#{klass})" }
+
       many = value.send(klass)
       many << self
       many.uniq!
@@ -80,11 +72,8 @@ module ZTK::DSL::Core::Relations
           :class_name => key.to_s.classify,
           :key => key
         }.merge(options)
-        logger.debug { "key(#{key.inspect}), options(#{belongs_to_relations[key].inspect})" }
 
         define_method(key) do |*args|
-          logger.debug { "*args(#{args.inspect})" }
-
           if args.count == 0
             get_belongs_to_reference(key)
           else
@@ -93,14 +82,10 @@ module ZTK::DSL::Core::Relations
         end
 
         define_method("#{key}=") do |value|
-          logger.debug { "#{key}= value(#{value.inspect})" }
-
           set_belongs_to_reference(key, value)
         end
 
         define_method("#{key}_id") do |*args|
-          logger.debug { "#{key}_id *args(#{args.inspect})" }
-
           if args.count == 0
             attributes["#{key}_id".to_sym]
           else
@@ -111,8 +96,6 @@ module ZTK::DSL::Core::Relations
 
         define_method("#{key}_id=") do |value|
           options = self.class.belongs_to_relations[key]
-          logger.debug { "#{key}_id= value(#{value.inspect}), options(#{options.inspect})" }
-
           if value != attributes["#{key}_id".to_sym]
             item = options[:class_name].constantize.find(value).first
             set_belongs_to_reference(key, item)
