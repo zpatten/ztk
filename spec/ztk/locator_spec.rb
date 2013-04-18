@@ -34,12 +34,12 @@ describe ZTK::Locator do
 
       describe "#find" do
 
-        it "should find root" do
-          subject.find("root").should == "/root"
-        end
-
         it "should find home" do
           subject.find("home").should == "/home"
+        end
+
+        it "should not find funkytown_123_abc" do
+          lambda { subject.find("funkytown_123_abc") }.should raise_error ZTK::LocatorError
         end
 
       end
