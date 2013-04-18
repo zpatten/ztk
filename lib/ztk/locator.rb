@@ -17,40 +17,41 @@
 #   limitations under the License.
 #
 ################################################################################
-
-require "ztk/version"
-
-# Main ZTK module
-#
-# ZTK is a general purpose utility library.  It definately has devops activities
-# in mind.  It provides several classes that ease SSH and SFTP, templating,
-# and a myraid of other activities.
-#
-# @author Zachary Patten <zachary@jovelabs.net>
 module ZTK
 
-  # ZTK error class
+  # ZTK::Locator Error Class
   #
   # @author Zachary Patten <zachary@jovelabs.net>
-  class Error < StandardError; end
+  class LocatorError < Error; end
 
-  autoload :Base, "ztk/base"
-  autoload :DSL, "ztk/dsl"
+  # @author Zachary Patten <zachary@jovelabs.net>
+  class Locator
 
-  autoload :Background, "ztk/background"
-  autoload :Benchmark, "ztk/benchmark"
-  autoload :Command, "ztk/command"
-  autoload :Config, "ztk/config"
-  autoload :Locator, "ztk/locator"
-  autoload :Logger, "ztk/logger"
-  autoload :Parallel, "ztk/parallel"
-  autoload :PTY, "ztk/pty"
-  autoload :Report, "ztk/report"
-  autoload :RescueRetry, "ztk/rescue_retry"
-  autoload :Spinner, "ztk/spinner"
-  autoload :SSH, "ztk/ssh"
-  autoload :TCPSocketCheck, "ztk/tcp_socket_check"
-  autoload :Template, "ztk/template"
-  autoload :UI, "ztk/ui"
+    class << self
+
+      # Locate a file or directory
+      #
+      # Attempts to locate the file or directory supplied, starting with
+      # the current working directory and crawling it up looking for a match
+      # at each step of the way.
+      #
+      # @param [String,Array<String>] args A string or array of strings to
+      #   attempt to locate.
+      #
+      # @return [String] The expanded path to the located entry.
+      def find(*args)
+        pwd = Dir.pwd.split(File::SEPARATOR)
+
+        (pwd.length - 1).downto(0) do |i|
+          candidate = File.expand_path(File.join(pwd[0..i], args))
+          return candidate if File.exists?(candidate)
+        end
+
+        raise LocatorError, "Could not locate '#{File.join(args)}'!"
+      end
+
+    end
+
+  end
 
 end
