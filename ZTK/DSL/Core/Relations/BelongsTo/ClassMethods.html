@@ -6,7 +6,7 @@
 <title>
   Module: ZTK::DSL::Core::Relations::BelongsTo::ClassMethods
   
-    &mdash; Documentation by YARD 0.8.6
+    &mdash; Documentation by YARD 0.8.6.1
   
 </title>
 
@@ -186,6 +186,14 @@
       <pre class="lines">
 
 
+70
+71
+72
+73
+74
+75
+76
+77
 78
 79
 80
@@ -225,38 +233,18 @@
 114
 115
 116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134</pre>
+117</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/relations/belongs_to.rb', line 78</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/relations/belongs_to.rb', line 70</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_belongs_to'>belongs_to</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_belongs_to_relations'>belongs_to_relations</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbrace'>{</span>
     <span class='symbol'>:class_name</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_classify'>classify</span><span class='comma'>,</span>
     <span class='symbol'>:key</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_key'>key</span>
   <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>key(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>), options(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_belongs_to_relations'>belongs_to_relations</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 
   <span class='id identifier rubyid_define_method'>define_method</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='op'>|</span>
-    <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*args(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
-
     <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>==</span> <span class='int'>0</span>
       <span class='id identifier rubyid_get_belongs_to_reference'>get_belongs_to_reference</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
     <span class='kw'>else</span>
@@ -265,14 +253,10 @@
   <span class='kw'>end</span>
 
   <span class='id identifier rubyid_define_method'>define_method</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='rbrace'>}</span><span class='tstring_content'>=</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
-    <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='rbrace'>}</span><span class='tstring_content'>= value(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
-
     <span class='id identifier rubyid_set_belongs_to_reference'>set_belongs_to_reference</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
   <span class='id identifier rubyid_define_method'>define_method</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='rbrace'>}</span><span class='tstring_content'>_id</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='op'>|</span>
-    <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='rbrace'>}</span><span class='tstring_content'>_id *args(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
-
     <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>==</span> <span class='int'>0</span>
       <span class='id identifier rubyid_attributes'>attributes</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='rbrace'>}</span><span class='tstring_content'>_id</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbracket'>]</span>
     <span class='kw'>else</span>
@@ -283,8 +267,6 @@
 
   <span class='id identifier rubyid_define_method'>define_method</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='rbrace'>}</span><span class='tstring_content'>_id=</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
     <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_belongs_to_relations'>belongs_to_relations</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span>
-    <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='rbrace'>}</span><span class='tstring_content'>_id= value(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>), options(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
-
     <span class='kw'>if</span> <span class='id identifier rubyid_value'>value</span> <span class='op'>!=</span> <span class='id identifier rubyid_attributes'>attributes</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='rbrace'>}</span><span class='tstring_content'>_id</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbracket'>]</span>
       <span class='id identifier rubyid_item'>item</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:class_name</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_constantize'>constantize</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
       <span class='id identifier rubyid_set_belongs_to_reference'>set_belongs_to_reference</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_item'>item</span><span class='rparen'>)</span>
@@ -314,9 +296,9 @@
 </div>
 
     <div id="footer">
-  Generated on Sat Apr 13 21:57:31 2013 by
+  Generated on Wed Apr 17 18:05:41 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6 (ruby-1.9.3).
+  0.8.6.1 (ruby-1.9.3).
 </div>
 
   </body>

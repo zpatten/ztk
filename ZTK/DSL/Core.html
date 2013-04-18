@@ -6,7 +6,7 @@
 <title>
   Module: ZTK::DSL::Core
   
-    &mdash; Documentation by YARD 0.8.6
+    &mdash; Documentation by YARD 0.8.6.1
   
 </title>
 
@@ -119,7 +119,7 @@
 <p class="children">
   
     
-      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Core/Actions.html" title="ZTK::DSL::Core::Actions (module)">Actions</a></span>, <span class='object_link'><a href="Core/Attributes.html" title="ZTK::DSL::Core::Attributes (module)">Attributes</a></span>, <span class='object_link'><a href="Core/ClassMethods.html" title="ZTK::DSL::Core::ClassMethods (module)">ClassMethods</a></span>, <span class='object_link'><a href="Core/Dataset.html" title="ZTK::DSL::Core::Dataset (module)">Dataset</a></span>, <span class='object_link'><a href="Core/DualMethods.html" title="ZTK::DSL::Core::DualMethods (module)">DualMethods</a></span>, <span class='object_link'><a href="Core/IO.html" title="ZTK::DSL::Core::IO (module)">IO</a></span>, <span class='object_link'><a href="Core/Relations.html" title="ZTK::DSL::Core::Relations (module)">Relations</a></span>
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Core/Actions.html" title="ZTK::DSL::Core::Actions (module)">Actions</a></span>, <span class='object_link'><a href="Core/Attributes.html" title="ZTK::DSL::Core::Attributes (module)">Attributes</a></span>, <span class='object_link'><a href="Core/ClassMethods.html" title="ZTK::DSL::Core::ClassMethods (module)">ClassMethods</a></span>, <span class='object_link'><a href="Core/Dataset.html" title="ZTK::DSL::Core::Dataset (module)">Dataset</a></span>, <span class='object_link'><a href="Core/IO.html" title="ZTK::DSL::Core::IO (module)">IO</a></span>, <span class='object_link'><a href="Core/Relations.html" title="ZTK::DSL::Core::Relations (module)">Relations</a></span>
     
   
     
@@ -221,9 +221,9 @@
   <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_class_eval'>class_eval</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:extend</span><span class='comma'>,</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Core</span><span class='op'>::</span><span class='const'>ClassMethods</span><span class='rparen'>)</span>
 
-    <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:extend</span><span class='comma'>,</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Core</span><span class='op'>::</span><span class='const'>DualMethods</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:include</span><span class='comma'>,</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Core</span><span class='op'>::</span><span class='const'>DualMethods</span><span class='rparen'>)</span>
-
+    <span class='comment'># base.send(:extend, ZTK::DSL::Core::DualMethods)
+</span>    <span class='comment'># base.send(:include, ZTK::DSL::Core::DualMethods)
+</span>
     <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:include</span><span class='comma'>,</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Core</span><span class='op'>::</span><span class='const'>Attributes</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:include</span><span class='comma'>,</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Core</span><span class='op'>::</span><span class='const'>Actions</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:include</span><span class='comma'>,</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Core</span><span class='op'>::</span><span class='const'>Dataset</span><span class='rparen'>)</span>
@@ -241,9 +241,9 @@
 </div>
 
     <div id="footer">
-  Generated on Sat Apr 13 21:57:31 2013 by
+  Generated on Wed Apr 17 18:05:40 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6 (ruby-1.9.3).
+  0.8.6.1 (ruby-1.9.3).
 </div>
 
   </body>
