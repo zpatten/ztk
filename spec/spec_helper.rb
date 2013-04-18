@@ -25,7 +25,7 @@ require 'ztk'
 
 ENV['LOG_LEVEL'] = "DEBUG"
 
-WAIT_SMALL = 3
+WAIT_SMALL = 5
 READ_PARTIAL_CHUNK = 2048
 
 ################################################################################
