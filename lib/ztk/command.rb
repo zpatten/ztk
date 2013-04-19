@@ -158,7 +158,7 @@ module ZTK
       if !options.ignore_exit_status && (exit_code != options.exit_code)
         log_and_raise(CommandError, "exec(#{command.inspect}, #{options.inspect}) failed! [#{exit_code}]")
       end
-      OpenStruct.new(:output => output, :exit_code => exit_code)
+      OpenStruct.new(:command => command, :output => output, :exit_code => exit_code)
     end
 
     # Not Supported

@@ -302,7 +302,7 @@ module ZTK
       if !options.ignore_exit_status && (exit_code != options.exit_code)
         log_and_raise(SSHError, message)
       end
-      OpenStruct.new(:output => output, :exit_code => exit_code, :exit_signal => exit_signal)
+      OpenStruct.new(:command => command, :output => output, :exit_code => exit_code, :exit_signal => exit_signal)
     end
 
     # Uploads a local file to a remote host.
