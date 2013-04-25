@@ -42,6 +42,10 @@ module ZTK::DSL::Core::Actions
         all.select{ |data| ids.include?(data.id) }
       end
 
+      def first(*args)
+        find(*args).first
+      end
+
       def count
         all.count
       end
