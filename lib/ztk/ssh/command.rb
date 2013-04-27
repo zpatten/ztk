@@ -26,7 +26,6 @@ module ZTK
       def console_command
         command = [ "/usr/bin/env ssh" ]
         command << [ "-q" ]
-        command << [ "-4" ]
         command << [ "-x" ]
         command << [ "-a" ]
         command << [ "-o", "UserKnownHostsFile=/dev/null" ]
@@ -50,7 +49,6 @@ module ZTK
 
         command = ["/usr/bin/env ssh"]
         command << [ "-q" ]
-        command << [ "-4" ]
         command << [ "-x" ]
         command << [ "-a" ]
         command << [ "-o", "UserKnownHostsFile=/dev/null" ]
