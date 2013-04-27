@@ -57,6 +57,29 @@ module ZTK
         render_template(load_template(template), context)
       end
 
+      # Renders a "DO NOT EDIT" notice for placement in generated files.
+      #
+      # @param [Hash] options Options hash.
+      # @option options [String] :message An optional message to display in the notice.
+      # @option options [String] :char The comment character; defaults to '#'.
+      #
+      # @return [String] The rendered noticed.
+      def do_not_edit_notice(options={})
+        message = options[:message]
+        char    = (options[:char] || '#')
+        notice  = Array.new
+
+        notice << char
+        notice << "#{char} WARNING: AUTOMATICALLY GENERATED FILE; DO NOT EDIT!"
+        notice << char
+        notice << "#{char} #{message}" if !message.nil?
+        notice << char
+        notice << "#{char} Generated @ #{Time.now.utc}"
+        notice << char
+
+        notice.join("\n")
+      end
+
 
     private
 
