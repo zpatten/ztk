@@ -187,7 +187,6 @@ module ZTK
     # process.
     #
     # @example Launch a console:
-    #   $logger = ZTK::Logger.new(STDOUT)
     #   ssh = ZTK::SSH.new
     #   ssh.config do |config|
     #     config.user = ENV["USER"]
