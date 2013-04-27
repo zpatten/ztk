@@ -10,6 +10,10 @@ Zachary's (DevOp) Tool Kit is a general purpose utility gem, featuring a collect
 
 # RESOURCES
 
+Documentation:
+
+* http://zpatten.github.io/ztk/
+
 Source:
 
 * https://github.com/zpatten/ztk
@@ -17,10 +21,6 @@ Source:
 Issues:
 
 * https://github.com/zpatten/ztk/issues
-
-Documentation:
-
-* http://zpatten.github.io/ztk/
 
 # LICENSE
 
