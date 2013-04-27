@@ -135,7 +135,7 @@ module ZTK
     # @option configuration [String] :password Password to use for authentication.
     # @option configuration [Integer] :timeout (60) SSH connection timeout in
     #   seconds to use.
-    # @option configuration [Boolean] :compression (false) Weither or not to use
+    # @option configuration [Boolean] :compression (false) Whether or not to use
     #   compression for this session.
     # @option configuration [Integer] :compression_level What level of
     #   compression to use.
@@ -143,11 +143,11 @@ module ZTK
     #   through.
     # @option configuration [String] :proxy_user Username to use for proxy
     #   authentication.
-    # @option configuration [Boolean] :request_pty (true) Weither or not we
+    # @option configuration [Boolean] :request_pty (true) Whether or not we
     #   should try to obtain a PTY
-    # @option configuration [Boolean] :ignore_exit_status (false) Weither or not
+    # @option configuration [Boolean] :ignore_exit_status (false) Whether or not
     #   we should throw an exception if the exit status is not kosher.
-    # @option configuration [Boolean] :forward_agent (true) Weither or not to
+    # @option configuration [Boolean] :forward_agent (true) Whether or not to
     #   enable SSH agent forwarding.
     # @option configuration [String, Array<String>] :proxy_keys A single or
     #   series of identity files to use for authentication with the proxy.

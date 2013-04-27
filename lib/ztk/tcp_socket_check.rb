@@ -101,7 +101,7 @@ module ZTK
     # method will timeout and return false after the amount of seconds specified
     # in *config.timeout* has passed if the socket has not become ready.
     #
-    # @return [Boolean] Returns true or false depending on weither the socket
+    # @return [Boolean] Returns true or false depending on Whether the socket
     #   is ready or not.
     def ready?
       config.host.nil? and log_and_raise(TCPSocketCheckError, "You must supply a host!")
@@ -128,7 +128,7 @@ module ZTK
     # method will timeout and return false after the amount of seconds specified
     # in *config.wait* has passed if the socket has not become ready.
     #
-    # @return [Boolean] Returns true or false depending on weither the socket
+    # @return [Boolean] Returns true or false depending on Whether the socket
     #   became ready or not.
     def wait
       config.ui.logger.debug { "Waiting for socket to become available; timeout after #{config.wait} seconds." }

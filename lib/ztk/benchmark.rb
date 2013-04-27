@@ -81,7 +81,7 @@ module ZTK
       #   after the block is yielded.  This *String* should have an *sprintf*
       #   floating point macro in it if the benchmark is desired to be embedded
       #   in the given *String*.
-      # @option options [Boolean] :use_spinner (true) Weither or not to use the
+      # @option options [Boolean] :use_spinner (true) Whether or not to use the
       #   ZTK::Spinner while benchmarking.
       #
       # @yield Block should execute the tasks to be benchmarked.
