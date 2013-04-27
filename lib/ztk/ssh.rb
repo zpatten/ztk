@@ -128,22 +128,22 @@ module ZTK
     include ZTK::SSH::Upload
 
     # @param [Hash] configuration Configuration options hash.
-    # @option config [String] :host_name Server hostname to connect to.
-    # @option config [String] :user Username to use for authentication.
-    # @option config [String, Array<String>] :keys A single or series of
+    # @option configuration [String] :host_name Server hostname to connect to.
+    # @option configuration [String] :user Username to use for authentication.
+    # @option configuration [String, Array<String>] :keys A single or series of
     #   identity files to use for authentication.
-    # @option config [String] :password Password to use for authentication.
-    # @option config [Integer] :timeout SSH connection timeout to use.
-    # @option config [Boolean] :compression Weither or not to use compression
+    # @option configuration [String] :password Password to use for authentication.
+    # @option configuration [Integer] :timeout SSH connection timeout to use.
+    # @option configuration [Boolean] :compression Weither or not to use compression
     #   for this session.
-    # @option config [Integer] :compression_level What level of compression to
+    # @option configuration [Integer] :compression_level What level of compression to
     #   use.
-    # @option config [String] :proxy_host_name Server hostname to proxy through.
-    # @option config [String] :proxy_user Username to use for proxy
+    # @option configuration [String] :proxy_host_name Server hostname to proxy through.
+    # @option configuration [String] :proxy_user Username to use for proxy
     #   authentication.
-    # @option config [Boolean] :request_pty Weither or not we should try to
+    # @option configuration [Boolean] :request_pty Weither or not we should try to
     #   obtain a PTY
-    # @option config [String, Array<String>] :proxy_keys A single or series of
+    # @option configuration [String, Array<String>] :proxy_keys A single or series of
     #   identity files to use for authentication with the proxy.
     def initialize(configuration={})
       super({
