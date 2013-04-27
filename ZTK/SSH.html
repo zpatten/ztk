@@ -555,9 +555,13 @@ identity files to use for authentication.</p>
           <span class="type">(<tt>Integer</tt>)</span>
           <span class="default">
             
+              &mdash; default:
+              <tt>60</tt>
+            
           </span>
           
-            &mdash; <div class='inline'><p>SSH connection timeout to use.</p>
+            &mdash; <div class='inline'><p>SSH connection timeout in
+seconds to use.</p>
 </div>
           
         </li>
@@ -567,10 +571,13 @@ identity files to use for authentication.</p>
           <span class="type">(<tt>Boolean</tt>)</span>
           <span class="default">
             
+              &mdash; default:
+              <tt>false</tt>
+            
           </span>
           
-            &mdash; <div class='inline'><p>Weither or not to use compression
-for this session.</p>
+            &mdash; <div class='inline'><p>Weither or not to use
+compression for this session.</p>
 </div>
           
         </li>
@@ -582,8 +589,8 @@ for this session.</p>
             
           </span>
           
-            &mdash; <div class='inline'><p>What level of compression to
-use.</p>
+            &mdash; <div class='inline'><p>What level of
+compression to use.</p>
 </div>
           
         </li>
@@ -595,7 +602,8 @@ use.</p>
             
           </span>
           
-            &mdash; <div class='inline'><p>Server hostname to proxy through.</p>
+            &mdash; <div class='inline'><p>Server hostname to proxy
+through.</p>
 </div>
           
         </li>
@@ -618,10 +626,45 @@ authentication.</p>
           <span class="type">(<tt>Boolean</tt>)</span>
           <span class="default">
             
+              &mdash; default:
+              <tt>true</tt>
+            
           </span>
           
-            &mdash; <div class='inline'><p>Weither or not we should try to
-obtain a PTY</p>
+            &mdash; <div class='inline'><p>Weither or not we
+should try to obtain a PTY</p>
+</div>
+          
+        </li>
+      
+        <li>
+          <span class="name">:ignore_exit_status</span>
+          <span class="type">(<tt>Boolean</tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>false</tt>
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>Weither or not
+we should throw an exception if the exit status is not kosher.</p>
+</div>
+          
+        </li>
+      
+        <li>
+          <span class="name">:forward_agent</span>
+          <span class="type">(<tt>Boolean</tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>true</tt>
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>Weither or not to
+enable SSH agent forwarding.</p>
 </div>
           
         </li>
@@ -633,8 +676,8 @@ obtain a PTY</p>
             
           </span>
           
-            &mdash; <div class='inline'><p>A single or series of
-identity files to use for authentication with the proxy.</p>
+            &mdash; <div class='inline'><p>A single or
+series of identity files to use for authentication with the proxy.</p>
 </div>
           
         </li>
@@ -649,20 +692,20 @@ identity files to use for authentication with the proxy.</p>
       <pre class="lines">
 
 
-148
-149
-150
-151
-152
-153
 154
 155
 156
 157
-158</pre>
+158
+159
+160
+161
+162
+163
+164</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 148</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 154</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_configuration'>configuration</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='lbrace'>{</span>
@@ -712,13 +755,13 @@ identity files to use for authentication with the proxy.</p>
       <pre class="lines">
 
 
-175
-176
-177
-178</pre>
+181
+182
+183
+184</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 175</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 181</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_close'>close</span>
   <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>close</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -772,16 +815,16 @@ process.</p>
       <pre class="lines">
 
 
-191
-192
-193
-194
-195
-196
-197</pre>
+197
+198
+199
+200
+201
+202
+203</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 191</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 197</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_console'>console</span>
   <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>config=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:table</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -822,12 +865,12 @@ process.</p>
       <pre class="lines">
 
 
-170
-171
-172</pre>
+176
+177
+178</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 170</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 176</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sftp'>sftp</span>
   <span class='ivar'>@sftp</span> <span class='op'>||=</span> <span class='const'>Net</span><span class='op'>::</span><span class='const'>SFTP</span><span class='period'>.</span><span class='id identifier rubyid_start'>start</span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_host_name'>host_name</span><span class='comma'>,</span> <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_ssh_options'>ssh_options</span><span class='rparen'>)</span>
@@ -864,12 +907,12 @@ process.</p>
       <pre class="lines">
 
 
-163
-164
-165</pre>
+169
+170
+171</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 163</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 169</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ssh'>ssh</span>
   <span class='ivar'>@ssh</span> <span class='op'>||=</span> <span class='const'>Net</span><span class='op'>::</span><span class='const'>SSH</span><span class='period'>.</span><span class='id identifier rubyid_start'>start</span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_host_name'>host_name</span><span class='comma'>,</span> <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_ssh_options'>ssh_options</span><span class='rparen'>)</span>
@@ -884,7 +927,7 @@ process.</p>
 </div>
 
     <div id="footer">
-  Generated on Sat Apr 27 10:43:05 2013 by
+  Generated on Sat Apr 27 10:49:34 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.6.1 (ruby-1.9.3).
 </div>
