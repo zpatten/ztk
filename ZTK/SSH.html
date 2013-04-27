@@ -493,26 +493,154 @@ process.</p>
       
     </li>
   
-    <li>
-      
-        <span class='name'>config</span>
-      
-      
-        <span class='type'>(<tt>Hash</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>a customizable set of options</p>
-</div>
-      
-    </li>
-  
 </ul>
 
   
     
     
+    <p class="tag_title">Options Hash (<tt>configuration</tt>):</p>
+    <ul class="option">
+      
+        <li>
+          <span class="name">:host_name</span>
+          <span class="type">(<tt>String</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>Server hostname to connect to.</p>
+</div>
+          
+        </li>
+      
+        <li>
+          <span class="name">:user</span>
+          <span class="type">(<tt>String</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>Username to use for authentication.</p>
+</div>
+          
+        </li>
+      
+        <li>
+          <span class="name">:keys</span>
+          <span class="type">(<tt>String</tt>, <tt>Array&lt;String&gt;</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>A single or series of
+identity files to use for authentication.</p>
+</div>
+          
+        </li>
+      
+        <li>
+          <span class="name">:password</span>
+          <span class="type">(<tt>String</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>Password to use for authentication.</p>
+</div>
+          
+        </li>
+      
+        <li>
+          <span class="name">:timeout</span>
+          <span class="type">(<tt>Integer</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>SSH connection timeout to use.</p>
+</div>
+          
+        </li>
+      
+        <li>
+          <span class="name">:compression</span>
+          <span class="type">(<tt>Boolean</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>Weither or not to use compression
+for this session.</p>
+</div>
+          
+        </li>
+      
+        <li>
+          <span class="name">:compression_level</span>
+          <span class="type">(<tt>Integer</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>What level of compression to
+use.</p>
+</div>
+          
+        </li>
+      
+        <li>
+          <span class="name">:proxy_host_name</span>
+          <span class="type">(<tt>String</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>Server hostname to proxy through.</p>
+</div>
+          
+        </li>
+      
+        <li>
+          <span class="name">:proxy_user</span>
+          <span class="type">(<tt>String</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>Username to use for proxy
+authentication.</p>
+</div>
+          
+        </li>
+      
+        <li>
+          <span class="name">:request_pty</span>
+          <span class="type">(<tt>Boolean</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>Weither or not we should try to
+obtain a PTY</p>
+</div>
+          
+        </li>
+      
+        <li>
+          <span class="name">:proxy_keys</span>
+          <span class="type">(<tt>String</tt>, <tt>Array&lt;String&gt;</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>A single or series of
+identity files to use for authentication with the proxy.</p>
+</div>
+          
+        </li>
+      
+    </ul>
+  
 
 
 </div><table class="source_code">
@@ -756,7 +884,7 @@ process.</p>
 </div>
 
     <div id="footer">
-  Generated on Sat Apr 27 10:41:22 2013 by
+  Generated on Sat Apr 27 10:43:05 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.6.1 (ruby-1.9.3).
 </div>
