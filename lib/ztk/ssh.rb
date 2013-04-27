@@ -84,7 +84,6 @@ module ZTK
   #
   # @author Zachary Patten <zachary@jovelabs.net>
   class SSH < ZTK::Base
-
     # Exit Signal Mappings
     EXIT_SIGNALS = {
       1 => "SIGHUP",
@@ -115,6 +114,16 @@ module ZTK
       26 => "SIGVTALRM",
       27 => "SIGPROF"
     }
+
+    autoload :Command, 'ztk/ssh/command'
+    autoload :Download, 'ztk/ssh/download'
+    autoload :Exec, 'ztk/ssh/exec'
+    autoload :Upload, 'ztk/ssh/upload'
+
+    include(ZTK::SSH::Command)
+    include(ZTK::SSH::Download)
+    include(ZTK::SSH::Exec)
+    include(ZTK::SSH::Upload)
 
     # @param [Hash] configuration Configuration options hash.
     # @option config [String] :host_name Server hostname to connect to.
@@ -185,253 +194,8 @@ module ZTK
       Kernel.exec(console_command)
     end
 
-    # Executes a command on the remote host.
-    #
-    # @param [String] command The command to execute.
-    # @param [Hash] options The options hash for executing the command.
-    # @option options [Boolean] :silence Squelch output to STDOUT and STDERR.
-    #   If the log level is :debug, STDOUT and STDERR will go to the log file
-    #   regardless of this setting.  STDOUT and STDERR are always returned in
-    #   the output return value regardless of this setting.
-    #
-    # @return [OpenStruct#output] The output of the command, both STDOUT and
-    #   STDERR.
-    # @return [OpenStruct#exit] The exit status (i.e. $?).
-    #
-    # @example Execute a command:
-    #
-    #   ssh = ZTK::SSH.new
-    #   ssh.config do |config|
-    #     config.user = ENV["USER"]
-    #     config.host_name = "127.0.0.1"
-    #   end
-    #   puts ssh.exec("hostname").inspect
-    def exec(command, options={})
-      options = OpenStruct.new({ :exit_code => 0, :silence => false }.merge(config.send(:table)).merge(options))
-
-      options.ui.logger.debug { "config=#{options.send(:table).inspect}" }
-      options.ui.logger.debug { "options=#{options.send(:table).inspect}" }
-      options.ui.logger.info { "exec(#{command.inspect})" }
-
-      output = ""
-      exit_code = -1
-      exit_signal = nil
-      stdout_header = false
-      stderr_header = false
-
-      begin
-        Timeout.timeout(options.timeout) do
-          ZTK::RescueRetry.try(:tries => 3, :on => EOFError) do
-            @ssh = Net::SSH.start(options.host_name, options.user, ssh_options)
-
-            channel = ssh.open_channel do |chan|
-              options.ui.logger.debug { "Channel opened." }
-
-              (options.request_pty == true) and chan.request_pty do |ch, success|
-                if success
-                  options.ui.logger.debug { "PTY obtained." }
-                else
-                  options.ui.logger.warn { "Could not obtain PTY." }
-                end
-              end
-
-              direct_log(:info) { log_header("COMMAND") }
-              direct_log(:info) { "#{command}\n" }
-              direct_log(:info) { log_header("OPENED") }
-
-              chan.exec(command) do |ch, success|
-                success or log_and_raise(SSHError, "Could not execute '#{command}'.")
-
-                ch.on_data do |c, data|
-                  if !stdout_header
-                    direct_log(:info) { log_header("STDOUT") }
-                    stdout_header = true
-                    stderr_header = false
-                  end
-                  direct_log(:info) { data }
-
-                  options.ui.stdout.print(data) unless options.silence
-                  output += data
-                end
-
-                ch.on_extended_data do |c, type, data|
-                  if !stderr_header
-                    direct_log(:warn) { log_header("STDERR") }
-                    stderr_header = true
-                    stdout_header = false
-                  end
-                  direct_log(:warn) { data }
-
-                  options.ui.stderr.print(data) unless options.silence
-                  output += data
-                end
-
-                ch.on_request("exit-status") do |ch, data|
-                  exit_code = data.read_long
-                end
-
-                ch.on_request("exit-signal") do |ch, data|
-                  exit_signal = data.read_long
-                end
-
-                ch.on_open_failed do |c, code, desc|
-                  options.ui.logger.fatal { "Open failed! (#{code.inspect} - #{desc.inspect})" }
-                end
-
-              end
-            end
-            channel.wait
-
-            direct_log(:info) { log_header("CLOSED") }
-            options.ui.logger.debug { "Channel closed." }
-          end
-        end
-
-      rescue Timeout::Error => e
-        direct_log(:fatal) { log_header("TIMEOUT") }
-        log_and_raise(SSHError, "Session timed out after #{options.timeout} seconds!")
-      end
-
-      message = [
-        "exit_code=#{exit_code}",
-        (exit_signal.nil? ? nil : "exit_signal=#{exit_signal} (#{EXIT_SIGNALS[exit_signal]})")
-      ].compact.join(", ")
-
-      options.ui.logger.debug { message }
-
-      if !options.ignore_exit_status && (exit_code != options.exit_code)
-        log_and_raise(SSHError, message)
-      end
-      OpenStruct.new(:command => command, :output => output, :exit_code => exit_code, :exit_signal => exit_signal)
-    end
-
-    # Uploads a local file to a remote host.
-    #
-    # @param [String] local The local file/path you wish to upload from.
-    # @param [String] remote The remote file/path you with to upload to.
-    #
-    # @example Upload a file:
-    #   $logger = ZTK::Logger.new(STDOUT)
-    #   ssh = ZTK::SSH.new
-    #   ssh.config do |config|
-    #     config.user = ENV["USER"]
-    #     config.host_name = "127.0.0.1"
-    #   end
-    #   local = File.expand_path(File.join(ENV["HOME"], ".ssh", "id_rsa.pub"))
-    #   remote = File.expand_path(File.join("/tmp", "id_rsa.pub"))
-    #   ssh.upload(local, remote)
-    def upload(local, remote)
-      config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
-      config.ui.logger.info { "upload(#{local.inspect}, #{remote.inspect})" }
-
-      ZTK::RescueRetry.try(:tries => 3, :on => EOFError) do
-        @sftp = Net::SFTP.start(config.host_name, config.user, ssh_options)
-        sftp.upload!(local.to_s, remote.to_s) do |event, uploader, *args|
-          case event
-          when :open
-            config.ui.logger.debug { "upload(#{args[0].local} -> #{args[0].remote})" }
-          when :close
-            config.ui.logger.debug { "close(#{args[0].remote})" }
-          when :mkdir
-            config.ui.logger.debug { "mkdir(#{args[0]})" }
-          when :put
-            config.ui.logger.debug { "put(#{args[0].remote}, size #{args[2].size} bytes, offset #{args[1]})" }
-          when :finish
-            config.ui.logger.debug { "finish" }
-          end
-        end
-      end
-
-      true
-    end
-
-    # Downloads a remote file to the local host.
-    #
-    # @param [String] remote The remote file/path you with to download from.
-    # @param [String] local The local file/path you wish to download to.
-    #
-    # @example Download a file:
-    #   $logger = ZTK::Logger.new(STDOUT)
-    #   ssh = ZTK::SSH.new
-    #   ssh.config do |config|
-    #     config.user = ENV["USER"]
-    #     config.host_name = "127.0.0.1"
-    #   end
-    #   local = File.expand_path(File.join("/tmp", "id_rsa.pub"))
-    #   remote = File.expand_path(File.join(ENV["HOME"], ".ssh", "id_rsa.pub"))
-    #   ssh.download(remote, local)
-    def download(remote, local)
-      config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
-      config.ui.logger.info { "download(#{remote.inspect}, #{local.inspect})" }
-
-      ZTK::RescueRetry.try(:tries => 3, :on => EOFError) do
-        @sftp = Net::SFTP.start(config.host_name, config.user, ssh_options)
-        sftp.download!(remote.to_s, local.to_s) do |event, downloader, *args|
-          case event
-          when :open
-            config.ui.logger.debug { "download(#{args[0].remote} -> #{args[0].local})" }
-          when :close
-            config.ui.logger.debug { "close(#{args[0].local})" }
-          when :mkdir
-            config.ui.logger.debug { "mkdir(#{args[0]})" }
-          when :get
-            config.ui.logger.debug { "get(#{args[0].remote}, size #{args[2].size} bytes, offset #{args[1]})" }
-          when :finish
-            config.ui.logger.debug { "finish" }
-          end
-        end
-      end
-
-      true
-    end
-
 
   private
-
-    # Builds our SSH console command.
-    def console_command
-      command = [ "/usr/bin/env ssh" ]
-      command << [ "-q" ]
-      command << [ "-4" ]
-      command << [ "-x" ]
-      command << [ "-a" ]
-      command << [ "-o", "UserKnownHostsFile=/dev/null" ]
-      command << [ "-o", "StrictHostKeyChecking=no" ]
-      command << [ "-o", "KeepAlive=yes" ]
-      command << [ "-o", "ServerAliveInterval=60" ]
-      command << [ "-o", %(ProxyCommand="#{proxy_command}") ] if config.proxy_host_name
-      command << [ "-i", config.keys ] if config.keys
-      command << [ "-p", config.port ] if config.port
-      # command << [ "-vv" ]
-      command << "#{config.user}@#{config.host_name}"
-      command = command.flatten.compact.join(' ')
-      config.ui.logger.debug { "console_command(#{command.inspect})" }
-      command
-    end
-
-    # Builds our SSH proxy command.
-    def proxy_command
-      !config.proxy_user and log_and_raise(SSHError, "You must specify an proxy user in order to SSH proxy.")
-      !config.proxy_host_name and log_and_raise(SSHError, "You must specify an proxy host_name in order to SSH proxy.")
-
-      command = ["/usr/bin/env ssh"]
-      command << [ "-q" ]
-      command << [ "-4" ]
-      command << [ "-x" ]
-      command << [ "-a" ]
-      command << [ "-o", "UserKnownHostsFile=/dev/null" ]
-      command << [ "-o", "StrictHostKeyChecking=no" ]
-      command << [ "-o", "KeepAlive=yes" ]
-      command << [ "-o", "ServerAliveInterval=60" ]
-      command << [ "-i", config.proxy_keys ] if config.proxy_keys
-      command << [ "-p", config.proxy_port ] if config.proxy_port
-      # command << [ "-vv" ]
-      command << "#{config.proxy_user}@#{config.proxy_host_name}"
-      command << "'/usr/bin/env nc %h %p'"
-      command = command.flatten.compact.join(' ')
-      config.ui.logger.debug { "proxy_command(#{command.inspect})" }
-      command
-    end
 
     # Builds our SSH options hash.
     def ssh_options
