@@ -115,15 +115,17 @@ module ZTK
       27 => "SIGPROF"
     }
 
-    autoload :Command, 'ztk/ssh/command'
-    autoload :Download, 'ztk/ssh/download'
-    autoload :Exec, 'ztk/ssh/exec'
-    autoload :Upload, 'ztk/ssh/upload'
+    autoload :Bootstrap, 'ztk/ssh/bootstrap'
+    autoload :Command,   'ztk/ssh/command'
+    autoload :Download,  'ztk/ssh/download'
+    autoload :Exec,      'ztk/ssh/exec'
+    autoload :Upload,    'ztk/ssh/upload'
 
-    include(ZTK::SSH::Command)
-    include(ZTK::SSH::Download)
-    include(ZTK::SSH::Exec)
-    include(ZTK::SSH::Upload)
+    include ZTK::SSH::Bootstrap
+    include ZTK::SSH::Command
+    include ZTK::SSH::Download
+    include ZTK::SSH::Exec
+    include ZTK::SSH::Upload
 
     # @param [Hash] configuration Configuration options hash.
     # @option config [String] :host_name Server hostname to connect to.
