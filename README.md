@@ -20,7 +20,7 @@ Issues:
 
 Documentation:
 
-* http://zpatten.github.com/ztk/
+* http://zpatten.github.io/ztk/
 
 # LICENSE
 
