@@ -133,18 +133,24 @@ module ZTK
     # @option configuration [String, Array<String>] :keys A single or series of
     #   identity files to use for authentication.
     # @option configuration [String] :password Password to use for authentication.
-    # @option configuration [Integer] :timeout SSH connection timeout to use.
-    # @option configuration [Boolean] :compression Weither or not to use compression
-    #   for this session.
-    # @option configuration [Integer] :compression_level What level of compression to
-    #   use.
-    # @option configuration [String] :proxy_host_name Server hostname to proxy through.
+    # @option configuration [Integer] :timeout (60) SSH connection timeout in
+    #   seconds to use.
+    # @option configuration [Boolean] :compression (false) Weither or not to use
+    #   compression for this session.
+    # @option configuration [Integer] :compression_level What level of
+    #   compression to use.
+    # @option configuration [String] :proxy_host_name Server hostname to proxy
+    #   through.
     # @option configuration [String] :proxy_user Username to use for proxy
     #   authentication.
-    # @option configuration [Boolean] :request_pty Weither or not we should try to
-    #   obtain a PTY
-    # @option configuration [String, Array<String>] :proxy_keys A single or series of
-    #   identity files to use for authentication with the proxy.
+    # @option configuration [Boolean] :request_pty (true) Weither or not we
+    #   should try to obtain a PTY
+    # @option configuration [Boolean] :ignore_exit_status (false) Weither or not
+    #   we should throw an exception if the exit status is not kosher.
+    # @option configuration [Boolean] :forward_agent (true) Weither or not to
+    #   enable SSH agent forwarding.
+    # @option configuration [String, Array<String>] :proxy_keys A single or
+    #   series of identity files to use for authentication with the proxy.
     def initialize(configuration={})
       super({
         :forward_agent => true,
