@@ -36,7 +36,7 @@ module ZTK
       #   to change ownership of the target file to (i.e. 'root:root').
       # @option options [String] :chmod An octal file mode which to set the
       #   target file to (i.e. '0755').
-      # @return [Boolean] Returns true if successfull.
+      # @return [Boolean] Returns true if successful.
       def file(options={}, &block)
         target = options[:target]
         chown  = options[:chown]
