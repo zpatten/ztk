@@ -119,12 +119,14 @@ module ZTK
     autoload :Command,   'ztk/ssh/command'
     autoload :Download,  'ztk/ssh/download'
     autoload :Exec,      'ztk/ssh/exec'
+    autoload :File,      'ztk/ssh/file'
     autoload :Upload,    'ztk/ssh/upload'
 
     include ZTK::SSH::Bootstrap
     include ZTK::SSH::Command
     include ZTK::SSH::Download
     include ZTK::SSH::Exec
+    include ZTK::SSH::File
     include ZTK::SSH::Upload
 
     # @param [Hash] configuration Configuration options hash.
