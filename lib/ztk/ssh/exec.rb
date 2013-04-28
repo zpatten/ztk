@@ -102,11 +102,11 @@ module ZTK
                     output += data
                   end
 
-                  ch.on_request("exit-status") do |ch, data|
+                  ch.on_request("exit-status") do |c, data|
                     exit_code = data.read_long
                   end
 
-                  ch.on_request("exit-signal") do |ch, data|
+                  ch.on_request("exit-signal") do |c, data|
                     exit_signal = data.read_long
                   end
 
