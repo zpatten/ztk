@@ -430,11 +430,11 @@ STDERR.</p>
               <span class='id identifier rubyid_output'>output</span> <span class='op'>+=</span> <span class='id identifier rubyid_data'>data</span>
             <span class='kw'>end</span>
 
-            <span class='id identifier rubyid_ch'>ch</span><span class='period'>.</span><span class='id identifier rubyid_on_request'>on_request</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>exit-status</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_ch'>ch</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='op'>|</span>
+            <span class='id identifier rubyid_ch'>ch</span><span class='period'>.</span><span class='id identifier rubyid_on_request'>on_request</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>exit-status</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='op'>|</span>
               <span class='id identifier rubyid_exit_code'>exit_code</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_read_long'>read_long</span>
             <span class='kw'>end</span>
 
-            <span class='id identifier rubyid_ch'>ch</span><span class='period'>.</span><span class='id identifier rubyid_on_request'>on_request</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>exit-signal</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_ch'>ch</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='op'>|</span>
+            <span class='id identifier rubyid_ch'>ch</span><span class='period'>.</span><span class='id identifier rubyid_on_request'>on_request</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>exit-signal</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='op'>|</span>
               <span class='id identifier rubyid_exit_signal'>exit_signal</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_read_long'>read_long</span>
             <span class='kw'>end</span>
 
@@ -478,7 +478,7 @@ STDERR.</p>
 </div>
 
     <div id="footer">
-  Generated on Sun Apr 28 10:50:15 2013 by
+  Generated on Sun Apr 28 11:19:11 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.6.1 (ruby-1.9.3).
 </div>
