@@ -10,6 +10,10 @@ Zachary's (DevOp) Tool Kit is a general purpose utility gem, featuring a collect
 
 # RESOURCES
 
+IRC:
+
+* #jovelabs on irc.freenode.net
+
 Documentation:
 
 * http://zpatten.github.io/ztk/
