@@ -24,7 +24,7 @@ module ZTK
 
       # Builds our SSH console command.
       def console_command
-        verbosity = ((ENV['LOG_LEVEL'].upcase == "DEBUG") ? '-vv' : '-q')
+        verbosity = ((ENV['LOG_LEVEL'] == "DEBUG") ? '-vv' : '-q')
 
         command = [ "/usr/bin/env ssh" ]
         command << [ verbosity ]
@@ -48,7 +48,7 @@ module ZTK
         !config.proxy_user and log_and_raise(SSHError, "You must specify an proxy user in order to SSH proxy.")
         !config.proxy_host_name and log_and_raise(SSHError, "You must specify an proxy host_name in order to SSH proxy.")
 
-        verbosity = ((ENV['LOG_LEVEL'].upcase == "DEBUG") ? '-vv' : '-q')
+        verbosity = ((ENV['LOG_LEVEL'] == "DEBUG") ? '-vv' : '-q')
 
         command = ["/usr/bin/env ssh"]
         command << [ verbosity ]
