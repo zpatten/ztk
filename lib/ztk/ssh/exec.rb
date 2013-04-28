@@ -59,7 +59,6 @@ module ZTK
         begin
           Timeout.timeout(options.timeout) do
             ZTK::RescueRetry.try(:tries => 3, :on => EOFError) do
-              @ssh = Net::SSH.start(options.host_name, options.user, ssh_options)
 
               channel = ssh.open_channel do |chan|
                 options.ui.logger.debug { "Channel opened." }
