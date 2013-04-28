@@ -366,8 +366,7 @@ STDERR.</p>
 139
 140
 141
-142
-143</pre>
+142</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/ssh/exec.rb', line 46</span>
@@ -388,7 +387,6 @@ STDERR.</p>
   <span class='kw'>begin</span>
     <span class='const'>Timeout</span><span class='period'>.</span><span class='id identifier rubyid_timeout'>timeout</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_timeout'>timeout</span><span class='rparen'>)</span> <span class='kw'>do</span>
       <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>RescueRetry</span><span class='period'>.</span><span class='id identifier rubyid_try'>try</span><span class='lparen'>(</span><span class='symbol'>:tries</span> <span class='op'>=&gt;</span> <span class='int'>3</span><span class='comma'>,</span> <span class='symbol'>:on</span> <span class='op'>=&gt;</span> <span class='const'>EOFError</span><span class='rparen'>)</span> <span class='kw'>do</span>
-        <span class='ivar'>@ssh</span> <span class='op'>=</span> <span class='const'>Net</span><span class='op'>::</span><span class='const'>SSH</span><span class='period'>.</span><span class='id identifier rubyid_start'>start</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_host_name'>host_name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_ssh_options'>ssh_options</span><span class='rparen'>)</span>
 
         <span class='id identifier rubyid_channel'>channel</span> <span class='op'>=</span> <span class='id identifier rubyid_ssh'>ssh</span><span class='period'>.</span><span class='id identifier rubyid_open_channel'>open_channel</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_chan'>chan</span><span class='op'>|</span>
           <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Channel opened.</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -480,7 +478,7 @@ STDERR.</p>
 </div>
 
     <div id="footer">
-  Generated on Sun Apr 28 10:41:27 2013 by
+  Generated on Sun Apr 28 10:50:15 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.6.1 (ruby-1.9.3).
 </div>
