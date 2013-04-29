@@ -24,6 +24,17 @@ module ZTK
   class ANSIError < Error; end
 
   # ANSI Mixin Module
+  #
+  # Include this module to enable easy ANSI coloring methods like:
+  #
+  #   "bold red".red.bold
+  #
+  # Or
+  #
+  #   "green".green
+  #
+  # Standard use is to mix this module into String.
+  #
   # @author Zachary Patten <zachary@jovelabs.net>
   module ANSI
 
