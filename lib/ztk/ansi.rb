@@ -54,7 +54,9 @@ module ZTK
       :bold   => 1
     }
 
-    def self.build_ansi_methods(hash)
+    ANSI_REGEX = /\e\[(?:(?:[349]|10)[0-7]|[0-9]|[34]8;5;\d{1,3})?m/
+
+    def build_ansi_methods(hash)
       hash.each do |key, value|
         define_method(key) do |string=nil, &block|
           result = Array.new
@@ -75,10 +77,22 @@ module ZTK
       end
     end
 
-    build_ansi_methods(COLOR_MATRIX)
-    build_ansi_methods(ATTRIBUTE_MATRIX)
+    def uncolor(string=nil)
+      if block_given?
+        yield.to_str.gsub(ANSI_REGEX, '')
+      elsif string.respond_to?(:to_str)
+        string.to_str.gsub(ANSI_REGEX, '')
+      elsif respond_to?(:to_str)
+        to_str.gsub(ANSI_REGEX, '')
+      else
+        ''
+      end
+    end
 
     extend self
+
+    build_ansi_methods(COLOR_MATRIX)
+    build_ansi_methods(ATTRIBUTE_MATRIX)
 
   end
 
