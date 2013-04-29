@@ -42,7 +42,6 @@ module ZTK
         config.ui.logger.info { "download(#{remote.inspect}, #{local.inspect})" }
 
         ZTK::RescueRetry.try(:tries => 3, :on => EOFError) do
-          @sftp = Net::SFTP.start(config.host_name, config.user, ssh_options)
           sftp.download!(remote.to_s, local.to_s) do |event, downloader, *args|
             case event
             when :open
