@@ -17,8 +17,6 @@
 #   limitations under the License.
 #
 ################################################################################
-require 'pty'
-
 module ZTK
 
   # ANSI Error Class
