@@ -37,6 +37,7 @@ module ZTK
   autoload :Base, "ztk/base"
   autoload :DSL, "ztk/dsl"
 
+  autoload :ANSI, "ztk/ansi"
   autoload :Background, "ztk/background"
   autoload :Benchmark, "ztk/benchmark"
   autoload :Command, "ztk/command"
