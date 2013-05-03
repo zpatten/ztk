@@ -41,7 +41,7 @@ module ZTK
         config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
         config.ui.logger.info { "upload(#{local.inspect}, #{remote.inspect})" }
 
-        ZTK::RescueRetry.try(:tries => 3, :on => EOFError) do
+        ZTK::RescueRetry.try(:tries => 3, :on => EOFError, :on_retry => method(:on_retry)) do
           sftp.upload!(local.to_s, remote.to_s) do |event, uploader, *args|
             case event
             when :open

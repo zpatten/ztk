@@ -41,7 +41,7 @@ module ZTK
         config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
         config.ui.logger.info { "download(#{remote.inspect}, #{local.inspect})" }
 
-        ZTK::RescueRetry.try(:tries => 3, :on => EOFError) do
+        ZTK::RescueRetry.try(:tries => 3, :on => EOFError, :on_retry => method(:on_retry)) do
           sftp.download!(remote.to_s, local.to_s) do |event, downloader, *args|
             case event
             when :open

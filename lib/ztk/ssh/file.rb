@@ -49,12 +49,15 @@ module ZTK
         ::File.open(tempfile, 'w') do |file|
           yield(file)
         end
-        self.upload(tempfile.path, tempfile.path)
 
-        self.exec(%(sudo mv -v #{tempfile.path} #{target}), :silence => true)
+        ZTK::RescueRetry.try(:tries => 2, :on_retry => method(:on_retry)) do
+          upload(tempfile.path, tempfile.path)
 
-        self.exec(%(sudo chown -v #{chown} #{target}), :silence => true) if !chown.nil?
-        self.exec(%(sudo chmod -v #{chmod} #{target}), :silence => true) if !chmod.nil?
+          exec(%(sudo mv -v #{tempfile.path} #{target}), :silence => true)
+
+          exec(%(sudo chown -v #{chown} #{target}), :silence => true) if !chown.nil?
+          exec(%(sudo chmod -v #{chmod} #{target}), :silence => true) if !chmod.nil?
+        end
 
         true
       end

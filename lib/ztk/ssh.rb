@@ -185,6 +185,13 @@ module ZTK
       ssh and !ssh.closed? and ssh.close
     end
 
+    # The on_retry method we'll use with the RescueRetry class.
+    def on_retry(exception)
+      close
+      @ssh = nil
+      @sftp = nil
+    end
+
     # Launches an SSH console, replacing the current process with the console
     # process.
     #
