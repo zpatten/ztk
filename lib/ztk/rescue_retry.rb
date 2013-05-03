@@ -114,6 +114,8 @@ module ZTK
       #   instead of performing retry on all exceptions.
       # @option options [Float,Integer] :delay (1) How long to sleep for between
       #   each retry.
+      # @option options [Lambda,Proc] :on_retry (nil) A proc or lambda to call
+      #   when we catch an exception and retry.
       #
       # @yield Block should execute the tasks to be rescued and retried if
       #   needed.
@@ -133,10 +135,15 @@ module ZTK
         rescue options.on => e
           if ((options.tries -= 1) > 0)
             options.ui.logger.warn { "Caught #{e.inspect}, we will give it #{options.tries} more tr#{options.tries > 1 ? 'ies' : 'y'}." }
+
             sleep(options.delay)
+
+            options.on_retry and options.on_retry.call(e)
+
             retry
           else
             options.ui.logger.fatal { "Caught #{e.inspect} and we have no more tries left, sorry, we have to give up now." }
+
             raise e
           end
         end
