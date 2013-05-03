@@ -341,6 +341,29 @@ process.</p>
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#on_retry-instance_method" title="#on_retry (instance method)">- (Object) <strong>on_retry</strong>(exception) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The on_retry method we&#39;ll use with the RescueRetry class.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#sftp-instance_method" title="#sftp (instance method)">- (Object) <strong>sftp</strong> </a>
     
 
@@ -825,16 +848,16 @@ process.</p>
       <pre class="lines">
 
 
-198
-199
-200
-201
-202
-203
-204</pre>
+205
+206
+207
+208
+209
+210
+211</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 198</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 205</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_console'>console</span>
   <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>config=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:table</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -842,6 +865,50 @@ process.</p>
 
   <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_fatal'>fatal</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>REPLACING CURRENT PROCESS - GOODBYE!</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
   <span class='const'>Kernel</span><span class='period'>.</span><span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='id identifier rubyid_console_command'>console_command</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="on_retry-instance_method">
+  
+    - (<tt>Object</tt>) <strong>on_retry</strong>(exception) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>The on_retry method we&#39;ll use with the RescueRetry class.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+189
+190
+191
+192
+193</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 189</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_on_retry'>on_retry</span><span class='lparen'>(</span><span class='id identifier rubyid_exception'>exception</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_close'>close</span>
+  <span class='ivar'>@ssh</span> <span class='op'>=</span> <span class='kw'>nil</span>
+  <span class='ivar'>@sftp</span> <span class='op'>=</span> <span class='kw'>nil</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -937,7 +1004,7 @@ process.</p>
 </div>
 
     <div id="footer">
-  Generated on Thu May  2 23:06:21 2013 by
+  Generated on Thu May  2 23:43:53 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.6.1 (ruby-1.9.3).
 </div>
