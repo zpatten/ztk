@@ -24,15 +24,18 @@ sudo apt-get -qq update
 
 ssh -V
 cat /etc/ssh/sshd_config
+ls -la $HOME
 
 eval `ssh-agent -s`
 ssh-add -L
 
 mkdir -p $HOME/.ssh
 ssh-keygen -N '' -f $HOME/.ssh/id_rsa
+
 ls -la $HOME/.ssh
+
+cat $HOME/.ssh/id_rsa.pub | tee $HOME/.ssh/authorized_keys
+cat $HOME/.ssh/id_rsa.pub | tee $HOME/.ssh/authorized_keys2
 
 ssh-add $HOME/.ssh/id_rsa
 ssh-add -L
-cat $HOME/.ssh/id_rsa.pub > $HOME/.ssh/authorized_keys
-cat $HOME/.ssh/id_rsa.pub > $HOME/.ssh/authorized_keys2
