@@ -5,12 +5,10 @@ rvm:
   - 1.9.3
   - 2.0.0
 
+before_install: sudo ./spec/support/before_install.sh
+
 before_install:
   - sudo apt-get -qq --force-yes update
-
-bundler_args: --binstubs
-
-script: "rake test"
 
 notifications:
   irc: "irc.freenode.net#jovelabs"

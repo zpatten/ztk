@@ -285,7 +285,7 @@ describe ZTK::SSH do
 
     end
 
-  end if !ENV['CI'] && !ENV['TRAVIS']
+  end #if !ENV['CI'] && !ENV['TRAVIS']
 
   describe "proxy SSH behaviour" do
 
@@ -557,6 +557,6 @@ describe ZTK::SSH do
 
     end
 
-  end if !ENV['CI'] && !ENV['TRAVIS']
+  end #if !ENV['CI'] && !ENV['TRAVIS']
 
 end
