@@ -5,7 +5,7 @@ rvm:
   - 1.9.3
   - 2.0.0
 
-before_install: sudo ./spec/support/before_install.sh
+before_install: ./spec/support/before_install.sh
 
 notifications:
   irc: "irc.freenode.net#jovelabs"

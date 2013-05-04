@@ -20,7 +20,7 @@
 #!/bin/bash
 set -x
 
-apt-get -qq update
+sudo apt-get -qq update
 
 ssh -V
 cat /etc/ssh/sshd_config
