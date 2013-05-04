@@ -57,8 +57,8 @@ module ZTK
     #     | users       | false | amd64 | ubuntu | 192.168.7.78   | 00:00:5e:89:f9:50 | N/A          | true    |
     #     +-------------+-------+-------+--------+----------------+-------------------+--------------+---------+
     #
-    # @param [Array] dataset An array of items for which we want to generate a
-    #   report
+    # @param [Array<Object>,Object] dataset A single object or an array of
+    #   objects for which we want to generate a report
     # @param [Array] headers An array of headers used for ordering the output.
     # @return [OpenStruct]
     def spreadsheet(dataset, headers, &block)
@@ -70,8 +70,12 @@ module ZTK
       max_lengths = OpenStruct.new
       headers = headers.map(&:downcase).map(&:to_sym)
 
-      dataset.each do |data|
-        rows << block.call(data)
+      if dataset.is_a?(Array)
+        dataset.each do |data|
+          rows << block.call(data)
+        end
+      else
+        rows << block.call(dataset)
       end
 
       max_lengths = max_spreadsheet_lengths(headers, rows)
@@ -118,8 +122,8 @@ module ZTK
     #     |  CHEF-SERVER DEFAULT PASSWORD: p@ssw0rd1                          |
     #     +-------------------------------------------------------------------+
     #
-    # @param [Array] dataset An array of items for which we want to generate a
-    #   report
+    # @param [Array<Object>,Object] dataset A single object or an array of
+    #   objects for which we want to generate a report
     # @param [Array] headers An array of headers used for ordering the output.
     # @return [OpenStruct]
     def list(dataset, headers, &block)
@@ -131,8 +135,12 @@ module ZTK
       max_lengths = OpenStruct.new
       headers = headers.map(&:downcase).map(&:to_sym)
 
-      dataset.each do |data|
-        rows << block.call(data)
+      if dataset.is_a?(Array)
+        dataset.each do |data|
+          rows << block.call(data)
+        end
+      else
+        rows << block.call(dataset)
       end
 
       max_key_length = headers.collect{ |header| header.length }.max
