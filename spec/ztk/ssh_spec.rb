@@ -281,11 +281,11 @@ describe ZTK::SSH do
 
         remote_file = File.join("/tmp", "ssh-download-remote")
         if RUBY_VERSION < "1.9.3"
-          File.open(local_file, 'w') do |file|
+          File.open(remote_file, 'w') do |file|
             file.puts(data)
           end
         else
-          IO.write(local_file, data)
+          IO.write(remote_file, data)
         end
 
         File.exists?(local_file).should == false
