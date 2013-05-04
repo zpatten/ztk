@@ -164,6 +164,12 @@ module ZTK::DSL
       raise StandardError, "Primary key '#{self.id}' already exists!" if (primary_key_count > 1)
     end
 
+    # Instance Inspect
+    #
+    # Inspect the DSL object's instance, returning a concise string
+    # representation of the instance.
+    #
+    # @return [String] A concise string representation of the instance.
     def inspect
       details = Array.new
       details << "attributes=#{attributes.inspect}" if attributes.count > 0
@@ -175,6 +181,12 @@ module ZTK::DSL
     # @author Zachary Patten <zachary AT jovelabs DOT com>
     module ClassMethods
 
+      # Class Inspect
+      #
+      # Inspect the DSL object's class, returning a concise string
+      # representation of the class.
+      #
+      # @return [String] A concise string representation of the class.
       def inspect
         details = Array.new
         details << "count=#{self.all.count}" if self.all.count > 0

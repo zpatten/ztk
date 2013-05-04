@@ -1,6 +1,7 @@
 module ZTK
   class SSH
 
+    # SSH Command Execution Functionality
     module Exec
 
       # Executes a command on the remote host.

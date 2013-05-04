@@ -1,6 +1,7 @@
 module ZTK
   class SSH
 
+    # SSH Remote File Functionality
     module File
       require 'tempfile'
 

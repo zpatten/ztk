@@ -1,6 +1,7 @@
 module ZTK
   class SSH
 
+    # SSH Console Command Helpers
     module Command
 
       # Builds our SSH console command.

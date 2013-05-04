@@ -1,6 +1,6 @@
 module ZTK::DSL
 
-  # ZTK::DSL Core
+  # DSL Core
   #
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   # @api private

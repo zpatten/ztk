@@ -1,12 +1,10 @@
 module ZTK
   class SSH
 
+    # SSH Upload Functionality
     module Upload
 
       # Uploads a local file to a remote host.
-      #
-      # @param [String] local The local file/path you wish to upload from.
-      # @param [String] remote The remote file/path you with to upload to.
       #
       # @example Upload a file:
       #   $logger = ZTK::Logger.new(STDOUT)
@@ -18,6 +16,10 @@ module ZTK
       #   local = File.expand_path(File.join(ENV["HOME"], ".ssh", "id_rsa.pub"))
       #   remote = File.expand_path(File.join("/tmp", "id_rsa.pub"))
       #   ssh.upload(local, remote)
+      #
+      # @param [String] local The local file/path you wish to upload from.
+      # @param [String] remote The remote file/path you with to upload to.
+      # @return [Boolean] True if successful.
       def upload(local, remote)
         config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
         config.ui.logger.info { "upload(#{local.inspect}, #{remote.inspect})" }

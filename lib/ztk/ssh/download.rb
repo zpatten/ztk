@@ -1,6 +1,7 @@
 module ZTK
   class SSH
 
+    # SSH Download Functionality
     module Download
 
       # Downloads a remote file to the local host.
