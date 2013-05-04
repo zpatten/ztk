@@ -253,7 +253,6 @@ describe ZTK::SSH do
           IO.write(local_file, data)
         end
 
-
         File.exists?(remote_file).should == false
         subject.upload(local_file, remote_file)
         File.exists?(remote_file).should == true
@@ -528,7 +527,13 @@ describe ZTK::SSH do
         File.exists?(remote_file) && File.delete(remote_file)
 
         local_file = File.join("/tmp", "ssh-upload-local")
-        IO.write(local_file, data)
+        if RUBY_VERSION < "1.9.3"
+          File.open(local_file, 'w') do |file|
+            file.puts(data)
+          end
+        else
+          IO.write(local_file, data)
+        end
 
         File.exists?(remote_file).should == false
         subject.upload(local_file, remote_file)
@@ -558,7 +563,13 @@ describe ZTK::SSH do
         File.exists?(local_file) && File.delete(local_file)
 
         remote_file = File.join("/tmp", "ssh-download-remote")
-        IO.write(remote_file, data)
+        if RUBY_VERSION < "1.9.3"
+          File.open(remote_file, 'w') do |file|
+            file.puts(data)
+          end
+        else
+          IO.write(remote_file, data)
+        end
 
         File.exists?(local_file).should == false
         subject.download(remote_file, local_file)
