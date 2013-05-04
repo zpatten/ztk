@@ -1,6 +1,6 @@
 ################################################################################
 #
-#      Author: Zachary Patten <zachary@jovelabs.net>
+#      Author: Zachary Patten <zachary AT jovelabs DOT net>
 #   Copyright: Copyright (c) Zachary Patten
 #     License: Apache License, Version 2.0
 #
@@ -23,7 +23,7 @@ module ZTK
 
   # ZTK::Template Error Class
   #
-  # @author Zachary Patten <zachary@jovelabs.net>
+  # @author Zachary Patten <zachary AT jovelabs DOT net>
   class TemplateError < Error; end
 
   # Erubis Templating Class
@@ -42,7 +42,7 @@ module ZTK
   #     This is a test template!
   #     Hello World
   #
-  # @author Zachary Patten <zachary@jovelabs.net>
+  # @author Zachary Patten <zachary AT jovelabs DOT net>
   class Template
 
     class << self

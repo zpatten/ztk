@@ -1,6 +1,6 @@
 ################################################################################
 #
-#      Author: Zachary Patten <zachary@jovelabs.net>
+#      Author: Zachary Patten <zachary AT jovelabs DOT net>
 #   Copyright: Copyright (c) Zachary Patten
 #     License: Apache License, Version 2.0
 #
@@ -22,7 +22,7 @@ module ZTK
 
   # ZTK::RescueRetry Error Class
   #
-  # @author Zachary Patten <zachary@jovelabs.net>
+  # @author Zachary Patten <zachary AT jovelabs DOT net>
   class RescueRetryError < Error; end
 
   # ZTK RescueRetry Class
@@ -94,7 +94,7 @@ module ZTK
   #     1
   #     => nil
   #
-  # @author Zachary Patten <zachary@jovelabs.net>
+  # @author Zachary Patten <zachary AT jovelabs DOT net>
   class RescueRetry
 
     class << self

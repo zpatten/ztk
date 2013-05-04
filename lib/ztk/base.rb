@@ -1,6 +1,6 @@
 ################################################################################
 #
-#      Author: Zachary Patten <zachary@jovelabs.net>
+#      Author: Zachary Patten <zachary AT jovelabs DOT net>
 #   Copyright: Copyright (c) Zachary Patten
 #     License: Apache License, Version 2.0
 #
@@ -23,7 +23,7 @@ module ZTK
 
   # ZTK::Base General Error Class
   #
-  # @author Zachary Patten <zachary@jovelabs.net>
+  # @author Zachary Patten <zachary AT jovelabs DOT net>
   class BaseError < Error; end
 
   # ZTK Base Class
@@ -35,7 +35,7 @@ module ZTK
   # You should never interact with this class directly; you should inherit it
   # and extend functionality as appropriate.
   #
-  # @author Zachary Patten <zachary@jovelabs.net>
+  # @author Zachary Patten <zachary AT jovelabs DOT net>
   class Base
 
     class << self

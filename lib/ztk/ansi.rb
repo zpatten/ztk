@@ -1,6 +1,6 @@
 ################################################################################
 #
-#      Author: Zachary Patten <zachary@jovelabs.net>
+#      Author: Zachary Patten <zachary AT jovelabs DOT net>
 #   Copyright: Copyright (c) Zachary Patten
 #     License: Apache License, Version 2.0
 #
@@ -20,7 +20,7 @@
 module ZTK
 
   # ANSI Error Class
-  # @author Zachary Patten <zachary@jovelabs.net>
+  # @author Zachary Patten <zachary AT jovelabs DOT net>
   class ANSIError < Error; end
 
   # ANSI Mixin Module
@@ -35,7 +35,7 @@ module ZTK
   #
   # Standard use is to mix this module into String.
   #
-  # @author Zachary Patten <zachary@jovelabs.net>
+  # @author Zachary Patten <zachary AT jovelabs DOT net>
   module ANSI
 
     COLOR_MATRIX = {

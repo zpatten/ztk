@@ -1,6 +1,6 @@
 ################################################################################
 #
-#      Author: Zachary Patten <zachary@jovelabs.net>
+#      Author: Zachary Patten <zachary AT jovelabs DOT net>
 #   Copyright: Copyright (c) Zachary Patten
 #     License: Apache License, Version 2.0
 #
@@ -20,7 +20,7 @@
 
 module ZTK::DSL::Core::Actions
 
-  # @author Zachary Patten <zachary@jovelabs.net>
+  # @author Zachary Patten <zachary AT jovelabs DOT net>
   # @api private
   module Timestamps
 
@@ -34,7 +34,7 @@ module ZTK::DSL::Core::Actions
       end
     end
 
-    # @author Zachary Patten <zachary@jovelabs.net>
+    # @author Zachary Patten <zachary AT jovelabs DOT net>
     module ClassMethods
 
       def updated_at_timestamp
