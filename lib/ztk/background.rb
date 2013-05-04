@@ -2,7 +2,7 @@ require 'base64'
 
 module ZTK
 
-  # ZTK::Background General Error Class
+  # Background Error Class
   #
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   class BackgroundError < Error; end

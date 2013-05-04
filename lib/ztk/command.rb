@@ -3,25 +3,39 @@ require 'timeout'
 
 module ZTK
 
-  # ZTK::Command Error Class
+  # Command Error Class
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   class CommandError < Error; end
 
   # Command Execution Class
   #
-  # We can get a new instance of Command like so:
-  #
+  # @example We can get a new instance of Command like so:
   #     cmd = ZTK::Command.new
   #
-  # If we wanted to redirect STDOUT and STDERR to a StringIO we can do this:
-  #
+  # @example If we wanted to redirect STDOUT and STDERR to a StringIO we can do this:
   #     std_combo = StringIO.new
   #     ui = ZTK::UI.new(:stdout => std_combo, :stderr => std_combo)
-  #     cmd = ZTK::Command.new(:ui => ui)
+  #     cmd = ZTK::Command.new(:ui => ui, :silence => true)
+  #     puts cmd.exec("hostname", :silence => false).inspect
   #
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   class Command < ZTK::Base
 
+    # @param [Hash] configuration Sets the overall default configuration for the
+    #   class.  For example, all calls to *exec* against this instance will use
+    #   the configuration options specified here by default.  These options can
+    #   be overriden on a per call basis as well.
+    # @option configuration [Integer] :timeout (600) How long in seconds before
+    #   the command will timeout.
+    # @option configuration [Boolean] :ignore_exit_status (false) Whether or not
+    #   we should ignore the exit status of the the process we spawn.  By
+    #   default we do not ignore the exit status and throw an exception if it is
+    #   non-zero.
+    # @option configuration [Integer] :exit_code (0) The exit code we expect the
+    #   process to return.  This is ignore if *ignore_exit_status* is true.
+    # @option configuration [Boolean] :silence (false) Whether or not we should
+    #   squelch the output of the process.  The output will always go to the
+    #   logging device supplied in the ZTK::UI object.
     def initialize(configuration={})
       super({
         :timeout => 600,
@@ -30,20 +44,29 @@ module ZTK
       config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
     end
 
-    # Executes a local command.
+    # Execute Command
+    #
+    # @example Execute a command:
+    #   cmd = ZTK::Command.new(:silence => true)
+    #   puts cmd.exec("hostname", :silence => false).inspect
     #
     # @param [String] command The command to execute.
     # @param [Hash] options The options hash for executing the command.
+    # @option options [Integer] :timeout (600) How long in seconds before
+    #   the command will timeout.
+    # @option options [Boolean] :ignore_exit_status (false) Whether or not
+    #   we should ignore the exit status of the the process we spawn.  By
+    #   default we do not ignore the exit status and throw an exception if it is
+    #   non-zero.
+    # @option options [Integer] :exit_code (0) The exit code we expect the
+    #   process to return.  This is ignore if *ignore_exit_status* is true.
+    # @option options [Boolean] :silence (false) Whether or not we should
+    #   squelch the output of the process.  The output will always go to the
+    #   logging device supplied in the ZTK::UI object.
     #
     # @return [OpenStruct#output] The output of the command, both STDOUT and
     #   STDERR combined.
     # @return [OpenStruct#exit_code] The exit code of the process.
-    #
-    # @example Execute a command:
-    #
-    #   cmd = ZTK::Command.new
-    #   puts cmd.exec("hostname").inspect
-    #
     def exec(command, options={})
       options = OpenStruct.new({ :exit_code => 0, :silence => false }.merge(config.send(:table)).merge(options))
 
@@ -158,14 +181,14 @@ module ZTK
   private
 
     # Returns a string in the format of "user@hostname" for the current
-    #   shell.
+    # shell.
     def tag
       @@hostname ||= %x(hostname).chomp
       "#{ENV['USER']}@#{@hostname}"
     end
 
     # Formats a header suitable for writing to the direct logger when logging
-    #   sessions.
+    # sessions.
     def log_header(what)
       count = 8
       sep = ("=" * count)

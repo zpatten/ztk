@@ -2,12 +2,12 @@ require 'benchmark'
 
 module ZTK
 
-  # ZTK::Benchmark General Error Class
+  # Benchmark Error Class
   #
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   class BenchmarkError < Error; end
 
-  # ZTK Benchmark Class
+  # Benchmark Class
   #
   # This class contains a benchmarking tool which doubles to supply indications
   # of activity to the console user during long running tasks.

@@ -2,12 +2,12 @@ require 'base64'
 
 module ZTK
 
-  # ZTK::UI Error Class
+  # UI Error Class
   #
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   class UIError < Error; end
 
-  # ZTK UI Class
+  # UI Class
   #
   # This class encapsulates a STDOUT, STDERR, STDIN
   # and logging device.

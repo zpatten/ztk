@@ -1,11 +1,11 @@
 module ZTK
 
-  # ZTK::RescueRetry Error Class
+  # RescueRetry Error Class
   #
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   class RescueRetryError < Error; end
 
-  # ZTK RescueRetry Class
+  # RescueRetry Class
   #
   # This class contains an exception handling tool, which will allowing retry
   # of all or specific *Exceptions* based on a set number of attempts to make.

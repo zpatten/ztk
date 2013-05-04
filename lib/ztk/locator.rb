@@ -1,6 +1,6 @@
 module ZTK
 
-  # ZTK::Locator Error Class
+  # Locator Error Class
   #
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   class LocatorError < Error; end

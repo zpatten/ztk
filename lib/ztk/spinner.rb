@@ -2,12 +2,12 @@ require 'ostruct'
 
 module ZTK
 
-  # ZTK::Spinner Error Class
+  # Spinner Error Class
   #
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   class SpinnerError < Error; end
 
-  # ZTK Spinner Class
+  # Spinner Class
   #
   # This class can be used to display an "activity indicator" to a user while
   # a task is executed in the supplied block.  This indicator takes the form

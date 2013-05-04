@@ -2,7 +2,7 @@ require 'ostruct'
 
 module ZTK
 
-  # ZTK::Config General Error Class
+  # Config Error Class
   #
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   class ConfigError < Error; end

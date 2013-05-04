@@ -5,7 +5,7 @@ require 'net/sftp'
 
 module ZTK
 
-  # ZTK::SSH Error Class
+  # SSH Error Class
   #
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   class SSHError < Error; end

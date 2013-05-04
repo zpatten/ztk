@@ -3,12 +3,12 @@ require 'timeout'
 
 module ZTK
 
-  # ZTK::Report Error Class
+  # Report Error Class
   #
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   class ReportError < Error; end
 
-  # ZTK Report Class
+  # Report Class
   #
   # This class contains tools for generating spreadsheet or key-value list
   # styled output.  Report methods are currently meant to be interchangeable;

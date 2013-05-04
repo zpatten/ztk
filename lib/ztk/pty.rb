@@ -2,7 +2,7 @@ require 'pty'
 
 module ZTK
 
-  # ZTK::PTY Error Class
+  # PTY Error Class
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   class PTYError < Error; end
 

@@ -2,7 +2,7 @@ require 'erubis'
 
 module ZTK
 
-  # ZTK::Template Error Class
+  # Template Error Class
   #
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   class TemplateError < Error; end

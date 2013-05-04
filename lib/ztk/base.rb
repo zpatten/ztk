@@ -2,12 +2,12 @@ require 'ostruct'
 
 module ZTK
 
-  # ZTK::Base General Error Class
+  # Base Error Class
   #
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   class BaseError < Error; end
 
-  # ZTK Base Class
+  # Base Class
   #
   # This is the base class inherited by most of the other classes in this
   # library.  It provides a standard set of features to control STDOUT, STDERR
