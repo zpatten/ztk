@@ -21,7 +21,9 @@
 set -x
 
 apt-get -qq update
-ssh-keygen -N ''
+ssh -V
+mkdir -p $HOME/.ssh
+ssh-keygen -N '' -f $HOME/.ssh/id_rsa
 
 # cat <<EOF | tee /usr/sbin/policy-rc.d
 # #!/bin/sh
