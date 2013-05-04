@@ -25,6 +25,8 @@ apt-get -qq update
 ssh -V
 cat /etc/ssh/sshd_config
 
+eval `ssh-agent -s`
+
 mkdir -p $HOME/.ssh
 ssh-keygen -N '' -f $HOME/.ssh/id_rsa
 ssh-add -L
