@@ -52,8 +52,10 @@ module ZTK
 
         notice << char
         notice << "#{char} WARNING: AUTOMATICALLY GENERATED FILE; DO NOT EDIT!"
-        notice << char
-        notice << "#{char} #{message}" if !message.nil?
+        if !message.nil?
+          notice << char
+          notice << "#{char} #{message}"
+        end
         notice << char
         notice << "#{char} Generated @ #{Time.now.utc}"
         notice << char
