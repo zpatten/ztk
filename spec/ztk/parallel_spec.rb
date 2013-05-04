@@ -32,42 +32,81 @@ describe ZTK::Parallel do
 
   end
 
-  describe "behaviour" do
+  describe "methods" do
 
-    it "should throw an exception if the process method is called without a block" do
-      lambda{ subject.process }.should raise_error ZTK::ParallelError, "You must supply a block to the process method!"
+
+    describe "#process" do
+
+      it "should throw an exception if the process method is called without a block" do
+        lambda{ subject.process }.should raise_error ZTK::ParallelError, "You must supply a block to the process method!"
+      end
+
+      it "should spawn multiple processes to handle each iteration" do
+        3.times do |x|
+          subject.process do
+            Process.pid
+          end
+        end
+
+        subject.waitall
+
+        subject.results.all?{ |r| r.should be_kind_of Integer }
+        subject.results.all?{ |r| r.should > 0 }
+        subject.results.uniq.count.should == 3
+        subject.results.include?(Process.pid).should be false
+      end
+
     end
 
-    it "should spawn multiple processes to handle each iteration" do
-      3.times do |x|
-        subject.process do
-          Process.pid
+    describe "#wait" do
+
+      it "should be able to incrementally wait the forks" do
+        3.times do |x|
+          subject.process do
+            Process.pid
+          end
         end
+
+        3.times do
+          subject.wait
+        end
+
+        subject.results.all?{ |r| r.should be_kind_of Integer }
+        subject.results.all?{ |r| r.should > 0 }
+        subject.results.uniq.count.should == 3
+        subject.results.include?(Process.pid).should be false
       end
 
-      subject.waitall
-
-      subject.results.all?{ |r| r.should be_kind_of Integer }
-      subject.results.all?{ |r| r.should > 0 }
-      subject.results.uniq.count.should == 3
-      subject.results.include?(Process.pid).should be false
     end
 
-    it "should be able to incrementally wait the forks" do
-      3.times do |x|
-        subject.process do
-          Process.pid
+    describe "#waitall" do
+
+      it "should be able to wait for all forks to stop" do
+        3.times do |x|
+          subject.process do
+            Process.pid
+          end
         end
+
+        subject.waitall
+        subject.count.should == 0
       end
 
-      3.times do
-        subject.wait
+    end
+
+    describe "#count" do
+
+      it "should return the number of active forked processes" do
+        3.times do |x|
+          subject.process do
+            sleep(WAIT_SMALL)
+          end
+        end
+
+        subject.count.should == 3
+        subject.waitall
       end
 
-      subject.results.all?{ |r| r.should be_kind_of Integer }
-      subject.results.all?{ |r| r.should > 0 }
-      subject.results.uniq.count.should == 3
-      subject.results.include?(Process.pid).should be false
     end
 
   end
