@@ -293,15 +293,15 @@
       <pre class="lines">
 
 
-27
-28
-29
-30
-31
-32</pre>
+7
+8
+9
+10
+11
+12</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/relations/belongs_to.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/relations/belongs_to.rb', line 7</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_included'>included</span><span class='lparen'>(</span><span class='id identifier rubyid_base'>base</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_class_eval'>class_eval</span> <span class='kw'>do</span>
@@ -348,12 +348,12 @@
       <pre class="lines">
 
 
-34
-35
-36</pre>
+14
+15
+16</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/relations/belongs_to.rb', line 34</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/relations/belongs_to.rb', line 14</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_belongs_to_references'>belongs_to_references</span>
   <span class='ivar'>@belongs_to_references</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -391,18 +391,18 @@
       <pre class="lines">
 
 
-38
-39
-40
-41
-42
-43
-44
-45
-46</pre>
+18
+19
+20
+21
+22
+23
+24
+25
+26</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/relations/belongs_to.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/relations/belongs_to.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_belongs_to_reference'>get_belongs_to_reference</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_belongs_to_references'>belongs_to_references</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
@@ -446,16 +446,16 @@
       <pre class="lines">
 
 
-59
-60
-61
-62
-63
-64
-65</pre>
+39
+40
+41
+42
+43
+44
+45</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/relations/belongs_to.rb', line 59</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/relations/belongs_to.rb', line 39</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_save_belongs_to_references'>save_belongs_to_references</span>
   <span class='id identifier rubyid_belongs_to_references'>belongs_to_references</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_dataset'>dataset</span><span class='op'>|</span>
@@ -497,19 +497,19 @@
       <pre class="lines">
 
 
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57</pre>
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/relations/belongs_to.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/relations/belongs_to.rb', line 28</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_belongs_to_reference'>set_belongs_to_reference</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_belongs_to_references'>belongs_to_references</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
@@ -531,7 +531,7 @@
 </div>
 
     <div id="footer">
-  Generated on Fri May  3 21:41:04 2013 by
+  Generated on Fri May  3 22:45:47 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.6.1 (ruby-1.9.3).
 </div>

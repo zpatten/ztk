@@ -183,28 +183,28 @@
       <pre class="lines">
 
 
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44</pre>
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ssh/command.rb', line 26</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/ssh/command.rb', line 7</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_console_command'>console_command</span>
   <span class='id identifier rubyid_verbosity'>verbosity</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='lparen'>(</span><span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>LOG_LEVEL</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>DEBUG</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>-vv</span><span class='tstring_end'>'</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>-q</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
@@ -255,31 +255,31 @@
       <pre class="lines">
 
 
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
 47
 48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68</pre>
+49</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ssh/command.rb', line 47</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/ssh/command.rb', line 28</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_proxy_command'>proxy_command</span>
   <span class='op'>!</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_proxy_user'>proxy_user</span> <span class='kw'>and</span> <span class='id identifier rubyid_log_and_raise'>log_and_raise</span><span class='lparen'>(</span><span class='const'>SSHError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>You must specify an proxy user in order to SSH proxy.</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -313,7 +313,7 @@
 </div>
 
     <div id="footer">
-  Generated on Fri May  3 21:41:03 2013 by
+  Generated on Fri May  3 22:45:46 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.6.1 (ruby-1.9.3).
 </div>

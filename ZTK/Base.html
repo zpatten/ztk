@@ -431,12 +431,12 @@ into classes they are not meant for.</p>
       <pre class="lines">
 
 
-100
-101
-102</pre>
+81
+82
+83</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/base.rb', line 100</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/base.rb', line 81</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='ivar'>@config</span> <span class='op'>=</span> <span class='const'>Base</span><span class='period'>.</span><span class='id identifier rubyid_build_config'>build_config</span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='rparen'>)</span>
@@ -517,21 +517,21 @@ into classes they are not meant for.</p>
       <pre class="lines">
 
 
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57</pre>
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/base.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/base.rb', line 27</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_build_config'>build_config</span><span class='lparen'>(</span><span class='id identifier rubyid_configuration'>configuration</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_configuration'>configuration</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>OpenStruct</span><span class='rparen'>)</span>
@@ -656,17 +656,17 @@ the log statement.</p>
       <pre class="lines">
 
 
-84
-85
-86
-87
-88
-89
-90
-91</pre>
+65
+66
+67
+68
+69
+70
+71
+72</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/base.rb', line 84</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/base.rb', line 65</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_log_and_raise'>log_and_raise</span><span class='lparen'>(</span><span class='id identifier rubyid_logger'>logger</span><span class='comma'>,</span> <span class='id identifier rubyid_exception'>exception</span><span class='comma'>,</span> <span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='id identifier rubyid_shift'>shift</span><span class='op'>=</span><span class='int'>1</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Logger</span><span class='rparen'>)</span>
@@ -710,20 +710,20 @@ intact, while removing all other key-value pairs.</p>
       <pre class="lines">
 
 
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74</pre>
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/base.rb', line 64</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/base.rb', line 45</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sanitize_config'>sanitize_config</span><span class='lparen'>(</span><span class='id identifier rubyid_configuration'>configuration</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_configuration'>configuration</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>OpenStruct</span><span class='rparen'>)</span>
@@ -812,16 +812,16 @@ OpenStruct object.</p>
       <pre class="lines">
 
 
-112
-113
-114
-115
-116
-117
-118</pre>
+93
+94
+95
+96
+97
+98
+99</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/base.rb', line 112</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/base.rb', line 93</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_config'>config</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
@@ -920,24 +920,24 @@ the classes configuration.</p>
       <pre class="lines">
 
 
-144
-145
-146
-147
-148
-149
-150
-151
-152
-153
-154
-155
-156
-157
-158</pre>
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/base.rb', line 144</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/base.rb', line 125</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_direct_log'>direct_log</span><span class='lparen'>(</span><span class='id identifier rubyid_log_level'>log_level</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_blocK'>blocK</span><span class='rparen'>)</span>
   <span class='ivar'>@config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='kw'>and</span> <span class='id identifier rubyid_raise'>raise</span> <span class='const'>BaseError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>You must supply a logger for direct logging support!</span><span class='tstring_end'>&quot;</span></span>
@@ -1043,12 +1043,12 @@ the log statement.</p>
       <pre class="lines">
 
 
-128
-129
-130</pre>
+109
+110
+111</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/base.rb', line 128</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/base.rb', line 109</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_log_and_raise'>log_and_raise</span><span class='lparen'>(</span><span class='id identifier rubyid_exception'>exception</span><span class='comma'>,</span> <span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='id identifier rubyid_shift'>shift</span><span class='op'>=</span><span class='int'>2</span><span class='rparen'>)</span>
   <span class='const'>Base</span><span class='period'>.</span><span class='id identifier rubyid_log_and_raise'>log_and_raise</span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='comma'>,</span> <span class='id identifier rubyid_exception'>exception</span><span class='comma'>,</span> <span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='id identifier rubyid_shift'>shift</span><span class='rparen'>)</span>
@@ -1063,7 +1063,7 @@ the log statement.</p>
 </div>
 
     <div id="footer">
-  Generated on Fri May  3 21:41:04 2013 by
+  Generated on Fri May  3 22:45:47 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.6.1 (ruby-1.9.3).
 </div>
