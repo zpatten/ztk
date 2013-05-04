@@ -1,6 +1,6 @@
 ################################################################################
 #
-#      Author: Zachary Patten <zachary AT jovelabs DOT net>
+#      Author: Zachary Patten <zachary AT jovelabs DOT com>
 #   Copyright: Copyright (c) Zachary Patten
 #     License: Apache License, Version 2.0
 #
@@ -23,7 +23,7 @@ module ZTK
 
   # ZTK::Benchmark General Error Class
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT net>
+  # @author Zachary Patten <zachary AT jovelabs DOT com>
   class BenchmarkError < Error; end
 
   # ZTK Benchmark Class
@@ -55,7 +55,7 @@ module ZTK
   #     I wonder how long this will take?  ...looks like it took 1.5229 seconds!
   #     => 1.522871547
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT net>
+  # @author Zachary Patten <zachary AT jovelabs DOT com>
   class Benchmark
 
     class << self

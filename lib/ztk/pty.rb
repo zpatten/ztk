@@ -1,6 +1,6 @@
 ################################################################################
 #
-#      Author: Zachary Patten <zachary AT jovelabs DOT net>
+#      Author: Zachary Patten <zachary AT jovelabs DOT com>
 #   Copyright: Copyright (c) Zachary Patten
 #     License: Apache License, Version 2.0
 #
@@ -22,11 +22,11 @@ require 'pty'
 module ZTK
 
   # ZTK::PTY Error Class
-  # @author Zachary Patten <zachary AT jovelabs DOT net>
+  # @author Zachary Patten <zachary AT jovelabs DOT com>
   class PTYError < Error; end
 
   # Ruby PTY Class Wrapper
-  # @author Zachary Patten <zachary AT jovelabs DOT net>
+  # @author Zachary Patten <zachary AT jovelabs DOT com>
   class PTY
 
     class << self

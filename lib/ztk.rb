@@ -1,6 +1,6 @@
 ################################################################################
 #
-#      Author: Zachary Patten <zachary AT jovelabs DOT net>
+#      Author: Zachary Patten <zachary AT jovelabs DOT com>
 #   Copyright: Copyright (c) Zachary Patten
 #     License: Apache License, Version 2.0
 #
@@ -26,12 +26,12 @@ require "ztk/version"
 # in mind.  It provides several classes that ease SSH and SFTP, templating,
 # and a myraid of other activities.
 #
-# @author Zachary Patten <zachary AT jovelabs DOT net>
+# @author Zachary Patten <zachary AT jovelabs DOT com>
 module ZTK
 
   # ZTK error class
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT net>
+  # @author Zachary Patten <zachary AT jovelabs DOT com>
   class Error < StandardError; end
 
   autoload :Base, "ztk/base"

@@ -30,7 +30,7 @@ Issues:
 
 ZTK - Zachary's (DevOp) Tool Kit
 
-* Author: Zachary Patten <zachary@jovelabs.com> [![endorse](http://api.coderwall.com/zpatten/endorsecount.png)](http://coderwall.com/zpatten)
+* Author: Zachary Patten <zachary AT jovelabs DOT com> [![endorse](http://api.coderwall.com/zpatten/endorsecount.png)](http://coderwall.com/zpatten)
 * Copyright: Copyright (c) Zachary Patten
 * License: Apache License, Version 2.0
 

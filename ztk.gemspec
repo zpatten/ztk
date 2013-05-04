@@ -1,6 +1,6 @@
 ################################################################################
 #
-#      Author: Zachary Patten <zachary AT jovelabs DOT net>
+#      Author: Zachary Patten <zachary AT jovelabs DOT com>
 #   Copyright: Copyright (c) Zachary Patten
 #     License: Apache License, Version 2.0
 #
@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
   spec.name          = "ztk"
   spec.version       = ZTK::VERSION
   spec.authors       = ["Zachary Patten"]
-  spec.email         = ["zachary@jovelabs.com"]
+  spec.email         = ["zachary AT jovelabs DOT com"]
   spec.description   = %q{Zachary's (DevOp) Tool Kit}
   spec.summary       = %q{Zachary's (DevOp) Tool Kit}
   spec.homepage      = "https://github.com/zpatten/ztk"

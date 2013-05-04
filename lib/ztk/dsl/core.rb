@@ -1,6 +1,6 @@
 ################################################################################
 #
-#      Author: Zachary Patten <zachary AT jovelabs DOT net>
+#      Author: Zachary Patten <zachary AT jovelabs DOT com>
 #   Copyright: Copyright (c) Zachary Patten
 #     License: Apache License, Version 2.0
 #
@@ -22,7 +22,7 @@ module ZTK::DSL
 
   # ZTK::DSL Core
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT net>
+  # @author Zachary Patten <zachary AT jovelabs DOT com>
   # @api private
   module Core
     autoload :Attributes, "ztk/dsl/core/attributes"
@@ -46,7 +46,7 @@ module ZTK::DSL
       end
     end
 
-    # @author Zachary Patten <zachary AT jovelabs DOT net>
+    # @author Zachary Patten <zachary AT jovelabs DOT com>
     # module DualMethods
 
     #   def logger
@@ -61,7 +61,7 @@ module ZTK::DSL
 
     # end
 
-    # @author Zachary Patten <zachary AT jovelabs DOT net>
+    # @author Zachary Patten <zachary AT jovelabs DOT com>
     module ClassMethods
 
       def cattr_accessor(*args)

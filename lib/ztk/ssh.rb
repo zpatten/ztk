@@ -1,6 +1,6 @@
 ################################################################################
 #
-#      Author: Zachary Patten <zachary AT jovelabs DOT net>
+#      Author: Zachary Patten <zachary AT jovelabs DOT com>
 #   Copyright: Copyright (c) Zachary Patten
 #     License: Apache License, Version 2.0
 #
@@ -26,7 +26,7 @@ module ZTK
 
   # ZTK::SSH Error Class
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT net>
+  # @author Zachary Patten <zachary AT jovelabs DOT com>
   class SSHError < Error; end
 
   # SSH Multi-function Class
@@ -82,7 +82,7 @@ module ZTK
   #       config.host_key_verify = true
   #     end
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT net>
+  # @author Zachary Patten <zachary AT jovelabs DOT com>
   class SSH < ZTK::Base
     # Exit Signal Mappings
     EXIT_SIGNALS = {

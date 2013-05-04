@@ -1,6 +1,6 @@
 ################################################################################
 #
-#      Author: Zachary Patten <zachary AT jovelabs DOT net>
+#      Author: Zachary Patten <zachary AT jovelabs DOT com>
 #   Copyright: Copyright (c) Zachary Patten
 #     License: Apache License, Version 2.0
 #
@@ -20,7 +20,7 @@
 
 module ZTK::DSL::Core::Relations
 
-  # @author Zachary Patten <zachary AT jovelabs DOT net>
+  # @author Zachary Patten <zachary AT jovelabs DOT com>
   # @api private
   module HasMany
 
@@ -57,7 +57,7 @@ module ZTK::DSL::Core::Relations
       end
     end
 
-    # @author Zachary Patten <zachary AT jovelabs DOT net>
+    # @author Zachary Patten <zachary AT jovelabs DOT com>
     module ClassMethods
 
       def has_many(key, options={})

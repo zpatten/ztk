@@ -1,6 +1,6 @@
 ################################################################################
 #
-#      Author: Zachary Patten <zachary AT jovelabs DOT net>
+#      Author: Zachary Patten <zachary AT jovelabs DOT com>
 #   Copyright: Copyright (c) Zachary Patten
 #     License: Apache License, VersIOn 2.0
 #
@@ -23,7 +23,7 @@ module ZTK
 
   # ZTK::Parallel Error Class
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT net>
+  # @author Zachary Patten <zachary AT jovelabs DOT com>
   class ParallelError < Error; end
 
   # Parallel Processing Class
@@ -112,7 +112,7 @@ module ZTK
   #     [0, 1, 2]
   #     => nil
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT net>
+  # @author Zachary Patten <zachary AT jovelabs DOT com>
   class Parallel < ZTK::Base
 
     # Default Maximum Number of Forks

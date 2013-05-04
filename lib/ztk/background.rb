@@ -1,6 +1,6 @@
 ################################################################################
 #
-#      Author: Zachary Patten <zachary AT jovelabs DOT net>
+#      Author: Zachary Patten <zachary AT jovelabs DOT com>
 #   Copyright: Copyright (c) Zachary Patten
 #     License: Apache License, VersIOn 2.0
 #
@@ -23,7 +23,7 @@ module ZTK
 
   # ZTK::Background General Error Class
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT net>
+  # @author Zachary Patten <zachary AT jovelabs DOT com>
   class BackgroundError < Error; end
 
   # Background Processing Class
@@ -99,7 +99,7 @@ module ZTK
   #     1
   #     => nil
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT net>
+  # @author Zachary Patten <zachary AT jovelabs DOT com>
   class Background < ZTK::Base
 
     # Result Set

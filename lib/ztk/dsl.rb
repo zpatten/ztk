@@ -1,6 +1,6 @@
 ################################################################################
 #
-#      Author: Zachary Patten <zachary AT jovelabs DOT net>
+#      Author: Zachary Patten <zachary AT jovelabs DOT com>
 #   Copyright: Copyright (c) Zachary Patten
 #     License: Apache License, Version 2.0
 #
@@ -24,10 +24,10 @@ module ZTK
   # Generic Domain-specific Language Interface
   #
   # @see ZTK::DSL::Base
-  # @author Zachary Patten <zachary AT jovelabs DOT net>
+  # @author Zachary Patten <zachary AT jovelabs DOT com>
   module DSL
 
-    # @author Zachary Patten <zachary AT jovelabs DOT net>
+    # @author Zachary Patten <zachary AT jovelabs DOT com>
     class DSLError < Error; end
 
     autoload :Base, "ztk/dsl/base"

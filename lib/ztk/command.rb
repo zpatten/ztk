@@ -1,6 +1,6 @@
 ################################################################################
 #
-#      Author: Zachary Patten <zachary AT jovelabs DOT net>
+#      Author: Zachary Patten <zachary AT jovelabs DOT com>
 #   Copyright: Copyright (c) Zachary Patten
 #     License: Apache License, Version 2.0
 #
@@ -23,7 +23,7 @@ require "timeout"
 module ZTK
 
   # ZTK::Command Error Class
-  # @author Zachary Patten <zachary AT jovelabs DOT net>
+  # @author Zachary Patten <zachary AT jovelabs DOT com>
   class CommandError < Error; end
 
   # Command Execution Class
@@ -38,7 +38,7 @@ module ZTK
   #     ui = ZTK::UI.new(:stdout => std_combo, :stderr => std_combo)
   #     cmd = ZTK::Command.new(:ui => ui)
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT net>
+  # @author Zachary Patten <zachary AT jovelabs DOT com>
   class Command < ZTK::Base
 
     def initialize(configuration={})

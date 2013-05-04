@@ -1,6 +1,6 @@
 ################################################################################
 #
-#      Author: Zachary Patten <zachary AT jovelabs DOT net>
+#      Author: Zachary Patten <zachary AT jovelabs DOT com>
 #   Copyright: Copyright (c) Zachary Patten
 #     License: Apache License, VersIOn 2.0
 #
@@ -24,7 +24,7 @@ module ZTK
 
   # ZTK::UI Error Class
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT net>
+  # @author Zachary Patten <zachary AT jovelabs DOT com>
   class UIError < Error; end
 
   # ZTK UI Class
@@ -32,7 +32,7 @@ module ZTK
   # This class encapsulates a STDOUT, STDERR, STDIN
   # and logging device.
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT net>
+  # @author Zachary Patten <zachary AT jovelabs DOT com>
   class UI < ZTK::Base
 
     attr_accessor :stdout, :stderr, :stdin, :logger

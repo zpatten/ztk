@@ -1,6 +1,6 @@
 ################################################################################
 #
-#      Author: Zachary Patten <zachary AT jovelabs DOT net>
+#      Author: Zachary Patten <zachary AT jovelabs DOT com>
 #   Copyright: Copyright (c) Zachary Patten
 #     License: Apache License, Version 2.0
 #
@@ -24,7 +24,7 @@ module ZTK
 
   # ZTK::Report Error Class
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT net>
+  # @author Zachary Patten <zachary AT jovelabs DOT com>
   class ReportError < Error; end
 
   # ZTK Report Class
@@ -36,7 +36,7 @@ module ZTK
   #
   # The idea here is that everything is auto-sized and simply displayed.
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT net>
+  # @author Zachary Patten <zachary AT jovelabs DOT com>
   class Report < ZTK::Base
 
     # @param [Hash] configuration Configuration options hash.
