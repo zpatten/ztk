@@ -32,3 +32,5 @@ mkdir -p $HOME/.ssh
 ssh-keygen -N '' -f $HOME/.ssh/id_rsa
 ssh-add $HOME/.ssh/id_rsa
 ssh-add -L
+
+exit 1
