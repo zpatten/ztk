@@ -7,10 +7,18 @@ module ZTK
       #
       # @param [String] command The command to execute.
       # @param [Hash] options The options hash for executing the command.
-      # @option options [Boolean] :silence Squelch output to STDOUT and STDERR.
-      #   If the log level is :debug, STDOUT and STDERR will go to the log file
-      #   regardless of this setting.  STDOUT and STDERR are always returned in
-      #   the output return value regardless of this setting.
+      # @option options [Integer] :timeout (600) How long in seconds before
+      #   the command will timeout.
+      # @option options [Boolean] :ignore_exit_status (false) Whether or not
+      #   we should ignore the exit status of the the process we spawn.  By
+      #   default we do not ignore the exit status and throw an exception if it is
+      #   non-zero.
+      # @option options [Integer] :exit_code (0) The exit code we expect the
+      #   process to return.  This is ignore if *ignore_exit_status* is true.
+      # @option options [Boolean] :silence (false) Whether or not we should
+      #   squelch the output of the process.  The output will always go to the
+      #   logging device supplied in the ZTK::UI object.  The output is always
+      #   available in the return value from the method additionally.
       #
       # @return [OpenStruct#output] The output of the command, both STDOUT and
       #   STDERR.
@@ -25,7 +33,7 @@ module ZTK
       #   end
       #   puts ssh.exec("hostname").inspect
       def exec(command, options={})
-        options = OpenStruct.new({ :exit_code => 0, :silence => false }.merge(config.send(:table)).merge(options))
+        options = OpenStruct.new(config.send(:table).merge(options))
 
         options.ui.logger.debug { "config=#{options.send(:table).inspect}" }
         options.ui.logger.debug { "options=#{options.send(:table).inspect}" }

@@ -4,6 +4,7 @@ require 'timeout'
 module ZTK
 
   # Command Error Class
+  #
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   class CommandError < Error; end
 
@@ -35,11 +36,14 @@ module ZTK
     #   process to return.  This is ignore if *ignore_exit_status* is true.
     # @option configuration [Boolean] :silence (false) Whether or not we should
     #   squelch the output of the process.  The output will always go to the
-    #   logging device supplied in the ZTK::UI object.
+    #   logging device supplied in the ZTK::UI object.  The output is always
+    #   available in the return value from the method additionally.
     def initialize(configuration={})
       super({
         :timeout => 600,
-        :ignore_exit_status => false
+        :ignore_exit_status => false,
+        :exit_code => 0,
+        :silence => false
       }.merge(configuration))
       config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
     end
@@ -62,13 +66,14 @@ module ZTK
     #   process to return.  This is ignore if *ignore_exit_status* is true.
     # @option options [Boolean] :silence (false) Whether or not we should
     #   squelch the output of the process.  The output will always go to the
-    #   logging device supplied in the ZTK::UI object.
+    #   logging device supplied in the ZTK::UI object.  The output is always
+    #   available in the return value from the method additionally.
     #
     # @return [OpenStruct#output] The output of the command, both STDOUT and
     #   STDERR combined.
     # @return [OpenStruct#exit_code] The exit code of the process.
     def exec(command, options={})
-      options = OpenStruct.new({ :exit_code => 0, :silence => false }.merge(config.send(:table)).merge(options))
+      options = OpenStruct.new(config.send(:table).merge(options))
 
       options.ui.logger.debug { "config=#{options.send(:table).inspect}" }
       options.ui.logger.debug { "options=#{options.send(:table).inspect}" }

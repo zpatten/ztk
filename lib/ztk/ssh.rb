@@ -134,6 +134,16 @@ module ZTK
     #   enable SSH agent forwarding.
     # @option configuration [String, Array<String>] :proxy_keys A single or
     #   series of identity files to use for authentication with the proxy.
+    # @option options [Boolean] :ignore_exit_status (false) Whether or not
+    #   we should ignore the exit status of the the process we spawn.  By
+    #   default we do not ignore the exit status and throw an exception if it is
+    #   non-zero.
+    # @option options [Integer] :exit_code (0) The exit code we expect the
+    #   process to return.  This is ignore if *ignore_exit_status* is true.
+    # @option options [Boolean] :silence (false) Whether or not we should
+    #   squelch the output of the process.  The output will always go to the
+    #   logging device supplied in the ZTK::UI object.  The output is always
+    #   available in the return value from the method additionally.
     def initialize(configuration={})
       super({
         :forward_agent => true,
@@ -141,7 +151,9 @@ module ZTK
         :user_known_hosts_file => '/dev/null',
         :timeout => 60,
         :ignore_exit_status => false,
-        :request_pty => true
+        :request_pty => true,
+        :exit_code => 0,
+        :silence => false
       }.merge(configuration))
       config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
     end

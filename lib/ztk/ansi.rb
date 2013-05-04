@@ -1,6 +1,7 @@
 module ZTK
 
   # ANSI Error Class
+  #
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   class ANSIError < Error; end
 
