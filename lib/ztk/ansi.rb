@@ -31,49 +31,49 @@ module ZTK
 
     # @!method black(string=nil, &block)
     #   Sets the foreground color to black for the supplied string.
-    #   @param [String] string (nil) The string to operate on.
+    #   @param [String] string The string to operate on.
     #   @yieldreturn [String] The string to operate on.
     #   @return [String] The colored string.
     #
     # @!method red(string=nil, &block)
     #   Sets the foreground color to red for the supplied string.
-    #   @param [String] string (nil) The string to operate on.
+    #   @param [String] string The string to operate on.
     #   @yieldreturn [String] The string to operate on.
     #   @return [String] The colored string.
     #
     # @!method green(string=nil, &block)
     #   Sets the foreground color to green for the supplied string.
-    #   @param [String] string (nil) The string to operate on.
+    #   @param [String] string The string to operate on.
     #   @yieldreturn [String] The string to operate on.
     #   @return [String] The colored string.
     #
     # @!method yellow(string=nil, &block)
     #   Sets the foreground color to yellow for the supplied string.
-    #   @param [String] string (nil) The string to operate on.
+    #   @param [String] string The string to operate on.
     #   @yieldreturn [String] The string to operate on.
     #   @return [String] The colored string.
     #
     # @!method blue(string=nil, &block)
     #   Sets the foreground color to blue for the supplied string.
-    #   @param [String] string (nil) The string to operate on.
+    #   @param [String] string The string to operate on.
     #   @yieldreturn [String] The string to operate on.
     #   @return [String] The colored string.
     #
     # @!method magenta(string=nil, &block)
     #   Sets the foreground color to magenta for the supplied string.
-    #   @param [String] string (nil) The string to operate on.
+    #   @param [String] string The string to operate on.
     #   @yieldreturn [String] The string to operate on.
     #   @return [String] The colored string.
     #
     # @!method cyan(string=nil, &block)
     #   Sets the foreground color to cyan for the supplied string.
-    #   @param [String] string (nil) The string to operate on.
+    #   @param [String] string The string to operate on.
     #   @yieldreturn [String] The string to operate on.
     #   @return [String] The colored string.
     #
     # @!method white(string=nil, &block)
     #   Sets the foreground color to white for the supplied string.
-    #   @param [String] string (nil) The string to operate on.
+    #   @param [String] string The string to operate on.
     #   @yieldreturn [String] The string to operate on.
     #   @return [String] The colored string.
 
@@ -85,13 +85,13 @@ module ZTK
 
     # @!method normal(string=nil, &block)
     #   Sets the foreground color to normal for the supplied string.
-    #   @param [String] string (nil) The string to operate on.
+    #   @param [String] string The string to operate on.
     #   @yieldreturn [String] The string to operate on.
     #   @return [String] The colored string.
     #
     # @!method bold(string=nil, &block)
     #   Sets the foreground color to bold for the supplied string.
-    #   @param [String] string (nil) The string to operate on.
+    #   @param [String] string The string to operate on.
     #   @yieldreturn [String] The string to operate on.
     #   @return [String] The colored string.
 
@@ -134,7 +134,7 @@ module ZTK
     #
     # Removes ANSI code sequences from a string.
     #
-    # @param [String] string (nil) The string to operate on.
+    # @param [String] string The string to operate on.
     # @yieldreturn [String] The string to operate on.
     # @return [String] The supplied string stripped of ANSI codes.
     def uncolor(string=nil, &block)
