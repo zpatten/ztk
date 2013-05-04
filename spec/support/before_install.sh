@@ -21,13 +21,11 @@
 set -x
 
 apt-get -qq update
+
 ssh -V
+cat /etc/ssh/sshd_config
+
 mkdir -p $HOME/.ssh
 ssh-keygen -N '' -f $HOME/.ssh/id_rsa
-
-# cat <<EOF | tee /usr/sbin/policy-rc.d
-# #!/bin/sh
-# exit 101
-# EOF
-# chmod 755 /usr/sbin/policy-rc.d
-# apt-get -qq install lxc
+ssh-add -L
+ssh-add
