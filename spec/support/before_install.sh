@@ -34,3 +34,5 @@ ls -la $HOME/.ssh
 
 ssh-add $HOME/.ssh/id_rsa
 ssh-add -L
+cat $HOME/.ssh/id_rsa.pub > $HOME/.ssh/authorized_keys
+cat $HOME/.ssh/id_rsa.pub > $HOME/.ssh/authorized_keys2
