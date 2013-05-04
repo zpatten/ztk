@@ -105,23 +105,31 @@
   <div class="discussion">
     <p>Command Execution Class</p>
 
-<p>We can get a new instance of Command like so:</p>
-
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_cmd'>cmd</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Command</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
-</code></pre>
-
-<p>If we wanted to redirect STDOUT and STDERR to a StringIO we can do this:</p>
-
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_std_combo'>std_combo</span> <span class='op'>=</span> <span class='const'>StringIO</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
-<span class='id identifier rubyid_ui'>ui</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='symbol'>:stdout</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_std_combo'>std_combo</span><span class='comma'>,</span> <span class='symbol'>:stderr</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_std_combo'>std_combo</span><span class='rparen'>)</span>
-<span class='id identifier rubyid_cmd'>cmd</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Command</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='symbol'>:ui</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_ui'>ui</span><span class='rparen'>)</span>
-</code></pre>
-
 
   </div>
 </div>
 <div class="tags">
   
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>We can get a new instance of Command like so:</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_cmd'>cmd</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Command</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>If we wanted to redirect STDOUT and STDERR to a StringIO we can do this:</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_std_combo'>std_combo</span> <span class='op'>=</span> <span class='const'>StringIO</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+<span class='id identifier rubyid_ui'>ui</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='symbol'>:stdout</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_std_combo'>std_combo</span><span class='comma'>,</span> <span class='symbol'>:stderr</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_std_combo'>std_combo</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_cmd'>cmd</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Command</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='symbol'>:ui</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_ui'>ui</span><span class='comma'>,</span> <span class='symbol'>:silence</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_cmd'>cmd</span><span class='period'>.</span><span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hostname</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:silence</span> <span class='op'>=&gt;</span> <span class='kw'>false</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span></code></pre>
+    
+  </div>
+
 <p class="tag_title">Author:</p>
 <ul class="author">
   
@@ -193,7 +201,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Executes a local command.</p>
+    <span class="summary_desc"><div class='inline'><p>Execute Command.</p>
 </div></span>
   
 </li>
@@ -281,7 +289,108 @@
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>configuration</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Sets the overall default configuration for the
+class.  For example, all calls to <em>exec</em> against this instance will use
+the configuration options specified here by default.  These options can
+be overriden on a per call basis as well.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  
+    
+    
+    <p class="tag_title">Options Hash (<tt>configuration</tt>):</p>
+    <ul class="option">
+      
+        <li>
+          <span class="name">:timeout</span>
+          <span class="type">(<tt>Integer</tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>600</tt>
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>How long in seconds before
+the command will timeout.</p>
+</div>
+          
+        </li>
+      
+        <li>
+          <span class="name">:ignore_exit_status</span>
+          <span class="type">(<tt>Boolean</tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>false</tt>
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>Whether or not
+we should ignore the exit status of the the process we spawn.  By
+default we do not ignore the exit status and throw an exception if it is
+non-zero.</p>
+</div>
+          
+        </li>
+      
+        <li>
+          <span class="name">:exit_code</span>
+          <span class="type">(<tt>Integer</tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>0</tt>
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>The exit code we expect the
+process to return.  This is ignore if <em>ignore_exit_status</em> is true.</p>
+</div>
+          
+        </li>
+      
+        <li>
+          <span class="name">:silence</span>
+          <span class="type">(<tt>Boolean</tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>false</tt>
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>Whether or not we should
+squelch the output of the process.  The output will always go to the
+logging device supplied in the ZTK::UI object.  The output is always
+available in the return value from the method additionally.</p>
+</div>
+          
+        </li>
+      
+    </ul>
+  
+
 
 </div><table class="source_code">
   <tr>
@@ -289,21 +398,25 @@
       <pre class="lines">
 
 
-25
-26
-27
-28
-29
-30
-31</pre>
+41
+42
+43
+44
+45
+46
+47
+48
+49</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/command.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/command.rb', line 41</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_configuration'>configuration</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='lbrace'>{</span>
     <span class='symbol'>:timeout</span> <span class='op'>=&gt;</span> <span class='int'>600</span><span class='comma'>,</span>
-    <span class='symbol'>:ignore_exit_status</span> <span class='op'>=&gt;</span> <span class='kw'>false</span>
+    <span class='symbol'>:ignore_exit_status</span> <span class='op'>=&gt;</span> <span class='kw'>false</span><span class='comma'>,</span>
+    <span class='symbol'>:exit_code</span> <span class='op'>=&gt;</span> <span class='int'>0</span><span class='comma'>,</span>
+    <span class='symbol'>:silence</span> <span class='op'>=&gt;</span> <span class='kw'>false</span>
   <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_configuration'>configuration</span><span class='rparen'>)</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>config=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:table</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
@@ -361,12 +474,12 @@
       <pre class="lines">
 
 
-153
-154
-155</pre>
+181
+182
+183</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/command.rb', line 153</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/command.rb', line 181</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_download'>download</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_log_and_raise'>log_and_raise</span><span class='lparen'>(</span><span class='const'>CommandError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Not Supported</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -387,7 +500,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Executes a local command.</p>
+    <p>Execute Command</p>
 
 
   </div>
@@ -401,9 +514,8 @@
         <p class="example_title"><div class='inline'><p>Execute a command:</p>
 </div></p>
       
-      <pre class="example code"><code>
-<span class='id identifier rubyid_cmd'>cmd</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Command</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
-<span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_cmd'>cmd</span><span class='period'>.</span><span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hostname</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span></code></pre>
+      <pre class="example code"><code><span class='id identifier rubyid_cmd'>cmd</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Command</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='symbol'>:silence</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_cmd'>cmd</span><span class='period'>.</span><span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hostname</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:silence</span> <span class='op'>=&gt;</span> <span class='kw'>false</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -443,6 +555,85 @@
   
 </ul>
 
+  
+    
+    
+    
+    
+    <p class="tag_title">Options Hash (<tt>options</tt>):</p>
+    <ul class="option">
+      
+        <li>
+          <span class="name">:timeout</span>
+          <span class="type">(<tt>Integer</tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>600</tt>
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>How long in seconds before
+the command will timeout.</p>
+</div>
+          
+        </li>
+      
+        <li>
+          <span class="name">:ignore_exit_status</span>
+          <span class="type">(<tt>Boolean</tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>false</tt>
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>Whether or not
+we should ignore the exit status of the the process we spawn.  By
+default we do not ignore the exit status and throw an exception if it is
+non-zero.</p>
+</div>
+          
+        </li>
+      
+        <li>
+          <span class="name">:exit_code</span>
+          <span class="type">(<tt>Integer</tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>0</tt>
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>The exit code we expect the
+process to return.  This is ignore if <em>ignore_exit_status</em> is true.</p>
+</div>
+          
+        </li>
+      
+        <li>
+          <span class="name">:silence</span>
+          <span class="type">(<tt>Boolean</tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>false</tt>
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>Whether or not we should
+squelch the output of the process.  The output will always go to the
+logging device supplied in the ZTK::UI object.  The output is always
+available in the return value from the method additionally.</p>
+</div>
+          
+        </li>
+      
+    </ul>
+  
+
 <p class="tag_title">Returns:</p>
 <ul class="return">
   
@@ -481,34 +672,6 @@ STDERR combined.</p>
       <pre class="lines">
 
 
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
 75
 76
 77
@@ -577,13 +740,41 @@ STDERR combined.</p>
 140
 141
 142
-143</pre>
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/command.rb', line 47</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/command.rb', line 75</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='id identifier rubyid_command'>command</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='const'>OpenStruct</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='lbrace'>{</span> <span class='symbol'>:exit_code</span> <span class='op'>=&gt;</span> <span class='int'>0</span><span class='comma'>,</span> <span class='symbol'>:silence</span> <span class='op'>=&gt;</span> <span class='kw'>false</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:table</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='const'>OpenStruct</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:table</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>config=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:table</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
   <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>options=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:table</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -726,12 +917,12 @@ STDERR combined.</p>
       <pre class="lines">
 
 
-147
-148
-149</pre>
+175
+176
+177</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/command.rb', line 147</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/command.rb', line 175</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_upload'>upload</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_log_and_raise'>log_and_raise</span><span class='lparen'>(</span><span class='const'>CommandError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Not Supported</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -746,7 +937,7 @@ STDERR combined.</p>
 </div>
 
     <div id="footer">
-  Generated on Fri May  3 22:45:48 2013 by
+  Generated on Sat May  4 01:02:57 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.6.1 (ruby-1.9.3).
 </div>

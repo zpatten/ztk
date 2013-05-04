@@ -384,7 +384,7 @@ fact.  That is not shown in this example.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#inspect-instance_method" title="#inspect (instance method)">- (Object) <strong>inspect</strong> </a>
+      <a href="#inspect-instance_method" title="#inspect (instance method)">- (String) <strong>inspect</strong> </a>
     
 
     
@@ -398,7 +398,8 @@ fact.  That is not shown in this example.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'><p>Instance Inspect.</p>
+</div></span>
   
 </li>
 
@@ -639,28 +640,58 @@ fact.  That is not shown in this example.</p>
       <div class="method_details first">
   <h3 class="signature first" id="inspect-instance_method">
   
-    - (<tt>Object</tt>) <strong>inspect</strong> 
+    - (<tt>String</tt>) <strong>inspect</strong> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Instance Inspect</p>
+
+<p>Inspect the DSL object&#39;s instance, returning a concise string
+representation of the instance.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>A concise string representation of the instance.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-167
-168
-169
-170
-171
-172
-173</pre>
+173
+174
+175
+176
+177
+178
+179</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/base.rb', line 167</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/base.rb', line 173</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
   <span class='id identifier rubyid_details'>details</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -679,7 +710,7 @@ fact.  That is not shown in this example.</p>
 </div>
 
     <div id="footer">
-  Generated on Fri May  3 22:45:48 2013 by
+  Generated on Sat May  4 01:02:57 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.6.1 (ruby-1.9.3).
 </div>
