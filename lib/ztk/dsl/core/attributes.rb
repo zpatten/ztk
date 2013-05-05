@@ -18,6 +18,9 @@ module ZTK::DSL::Core
     module ClassMethods
 
       def attribute(key, options={})
+        @attributes ||= {}
+        @attributes[key] = options[:default]
+
         send(:define_method, key) do |*args|
           if args.count == 0
             attributes[key]
