@@ -84,7 +84,7 @@
   
     <dt class="r2 last">Defined in:</dt>
     <dd class="r2 last">lib/ztk/dsl/core.rb<span class="defines">,<br />
-  lib/ztk/dsl/core/io.rb,<br /> lib/ztk/dsl/core/actions.rb,<br /> lib/ztk/dsl/core/dataset.rb,<br /> lib/ztk/dsl/core/relations.rb,<br /> lib/ztk/dsl/core/attributes.rb</span>
+  lib/ztk/dsl/core/io.rb,<br /> lib/ztk/dsl/core/dataset.rb,<br /> lib/ztk/dsl/core/options.rb,<br /> lib/ztk/dsl/core/actions.rb,<br /> lib/ztk/dsl/core/relations.rb,<br /> lib/ztk/dsl/core/attributes.rb</span>
 </dd>
   
 </dl>
@@ -123,7 +123,7 @@
 <p class="children">
   
     
-      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Core/Actions.html" title="ZTK::DSL::Core::Actions (module)">Actions</a></span>, <span class='object_link'><a href="Core/Attributes.html" title="ZTK::DSL::Core::Attributes (module)">Attributes</a></span>, <span class='object_link'><a href="Core/ClassMethods.html" title="ZTK::DSL::Core::ClassMethods (module)">ClassMethods</a></span>, <span class='object_link'><a href="Core/Dataset.html" title="ZTK::DSL::Core::Dataset (module)">Dataset</a></span>, <span class='object_link'><a href="Core/IO.html" title="ZTK::DSL::Core::IO (module)">IO</a></span>, <span class='object_link'><a href="Core/Relations.html" title="ZTK::DSL::Core::Relations (module)">Relations</a></span>
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Core/Actions.html" title="ZTK::DSL::Core::Actions (module)">Actions</a></span>, <span class='object_link'><a href="Core/Attributes.html" title="ZTK::DSL::Core::Attributes (module)">Attributes</a></span>, <span class='object_link'><a href="Core/ClassMethods.html" title="ZTK::DSL::Core::ClassMethods (module)">ClassMethods</a></span>, <span class='object_link'><a href="Core/Dataset.html" title="ZTK::DSL::Core::Dataset (module)">Dataset</a></span>, <span class='object_link'><a href="Core/IO.html" title="ZTK::DSL::Core::IO (module)">IO</a></span>, <span class='object_link'><a href="Core/Options.html" title="ZTK::DSL::Core::Options (module)">Options</a></span>, <span class='object_link'><a href="Core/Relations.html" title="ZTK::DSL::Core::Relations (module)">Relations</a></span>
     
   
     
@@ -203,7 +203,6 @@
       <pre class="lines">
 
 
-14
 15
 16
 17
@@ -216,10 +215,12 @@
 24
 25
 26
-27</pre>
+27
+28
+29</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core.rb', line 14</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core.rb', line 15</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_included'>included</span><span class='lparen'>(</span><span class='id identifier rubyid_base'>base</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_class_eval'>class_eval</span> <span class='kw'>do</span>
@@ -232,6 +233,7 @@
     <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:include</span><span class='comma'>,</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Core</span><span class='op'>::</span><span class='const'>Actions</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:include</span><span class='comma'>,</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Core</span><span class='op'>::</span><span class='const'>Dataset</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:include</span><span class='comma'>,</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Core</span><span class='op'>::</span><span class='const'>IO</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:include</span><span class='comma'>,</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Core</span><span class='op'>::</span><span class='const'>Options</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:include</span><span class='comma'>,</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Core</span><span class='op'>::</span><span class='const'>Relations</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -245,7 +247,7 @@
 </div>
 
     <div id="footer">
-  Generated on Sat May  4 20:37:26 2013 by
+  Generated on Sat May  4 21:14:13 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.6.1 (ruby-1.9.3).
 </div>

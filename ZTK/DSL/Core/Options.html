@@ -4,7 +4,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>
-  Module: ZTK::DSL::Core::Attributes
+  Module: ZTK::DSL::Core::Options
   
     &mdash; Documentation by YARD 0.8.6.1
   
@@ -31,10 +31,10 @@
     <div id="header">
       <div id="menu">
   
-    <a href="../../../_index.html">Index (A)</a> &raquo;
+    <a href="../../../_index.html">Index (O)</a> &raquo;
     <span class='title'><span class='object_link'><a href="../../../ZTK.html" title="ZTK (module)">ZTK</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../DSL.html" title="ZTK::DSL (module)">DSL</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Core.html" title="ZTK::DSL::Core (module)">Core</a></span></span>
      &raquo; 
-    <span class="title">Attributes</span>
+    <span class="title">Options</span>
   
 
   <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
@@ -63,7 +63,7 @@
 
     <iframe id="search_frame"></iframe>
 
-    <div id="content"><h1>Module: ZTK::DSL::Core::Attributes
+    <div id="content"><h1>Module: ZTK::DSL::Core::Options
   
   
   <span class="private note title">Private</span>
@@ -79,7 +79,7 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">lib/ztk/dsl/core/attributes.rb</dd>
+    <dd class="r1 last">lib/ztk/dsl/core/options.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -116,7 +116,7 @@
 <p class="children">
   
     
-      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Attributes/ClassMethods.html" title="ZTK::DSL::Core::Attributes::ClassMethods (module)">ClassMethods</a></span>
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Options/ClassMethods.html" title="ZTK::DSL::Core::Options::ClassMethods (module)">ClassMethods</a></span>
     
   
     
@@ -141,37 +141,6 @@
   <span class="summary_signature">
     
       <a href="#included-class_method" title="included (class method)">+ (Object) <strong>included</strong>(base) </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  <span class="private note title">private</span>
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-    </ul>
-  
-    <h2>
-      Instance Method Summary
-      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
-    </h2>
-
-    <ul class="summary">
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#attributes-instance_method" title="#attributes (instance method)">- (Object) <strong>attributes</strong> </a>
     
 
     
@@ -231,68 +200,15 @@
 8
 9
 10
-11
-12
-13</pre>
+11</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/attributes.rb', line 7</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/options.rb', line 7</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_included'>included</span><span class='lparen'>(</span><span class='id identifier rubyid_base'>base</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_class_eval'>class_eval</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:extend</span><span class='comma'>,</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Core</span><span class='op'>::</span><span class='const'>Options</span><span class='op'>::</span><span class='const'>ClassMethods</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_add_option'>add_option</span><span class='lparen'>(</span><span class='symbol'>:attribute</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:extend</span><span class='comma'>,</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Core</span><span class='op'>::</span><span class='const'>Attributes</span><span class='op'>::</span><span class='const'>ClassMethods</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-  </div>
-
-  <div id="instance_method_details" class="method_details_list">
-    <h2>Instance Method Details</h2>
-
-    
-      <div class="method_details first">
-  <h3 class="signature first" id="attributes-instance_method">
-  
-    - (<tt>Object</tt>) <strong>attributes</strong> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p class="note private">
-  <strong>This method is part of a private API.</strong>
-  You should avoid using this method if possible, as it may be removed or be changed in the future.
-</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-15
-16
-17</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/attributes.rb', line 15</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_attributes'>attributes</span>
-  <span class='ivar'>@attributes</span> <span class='op'>||=</span> <span class='const'>Hash</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
