@@ -64,6 +64,17 @@ describe ZTK::DSL do
       dsl_test.name.should == data
     end
 
+    it "should allow setting a default value for an attribute" do
+      data = "Hello World"
+      class DSLTest < ZTK::DSL::Base
+        attribute :name, :default => "Hello World"
+      end
+
+      dsl_test = DSLTest.new
+
+      dsl_test.name.should == data
+    end
+
     it "should throw an exception when setting an invalid attribute" do
       data = "Hello World @ #{Time.now.utc}"
       class DSLTest < ZTK::DSL::Base
