@@ -58,34 +58,35 @@ module ZTK
       else
         rows << block.call(dataset)
       end
+      rows.compact!
 
-      max_lengths = max_spreadsheet_lengths(headers, rows)
-      header_line = headers.collect { |header| "%-#{max_lengths.send(header)}s" % header.to_s.upcase }
-      header_line = format_row(header_line)
+      if rows.count > 0
+        max_lengths = max_spreadsheet_lengths(headers, rows)
+        header_line = headers.collect { |header| "%-#{max_lengths.send(header)}s" % header.to_s.upcase }
+        header_line = format_row(header_line)
 
-      config.ui.stdout.puts(format_header(headers, max_lengths))
-      config.ui.stdout.puts(header_line)
-      config.ui.stdout.puts(format_header(headers, max_lengths))
+        config.ui.stdout.puts(format_header(headers, max_lengths))
+        config.ui.stdout.puts(header_line)
+        config.ui.stdout.puts(format_header(headers, max_lengths))
 
-      rows.each do |row|
-        row_line = headers.collect do |header|
-          header_length = max_lengths.send(header)
-          content = row.send(header)
+        rows.each do |row|
+          row_line = headers.collect do |header|
+            header_length = max_lengths.send(header)
+            content = row.send(header)
 
-          "%-#{header_length}s" % content
+            "%-#{header_length}s" % content
+          end
+
+          row_line = format_row(row_line)
+          config.ui.stdout.puts(row_line)
         end
 
-        row_line = format_row(row_line)
-        config.ui.stdout.puts(row_line)
+        config.ui.stdout.puts(format_header(headers, max_lengths))
+        OpenStruct.new(:rows => rows, :max_lengths => max_lengths, :width => calculate_spreadsheet_width(headers, max_lengths))
+      else
+        OpenStruct.new(:rows => rows, :max_lengths => 0, :width => 0)
       end
 
-      config.ui.stdout.puts(format_header(headers, max_lengths))
-
-      OpenStruct.new(
-        :rows => rows,
-        :max_lengths => max_lengths,
-        :width => calculate_spreadsheet_width(headers, max_lengths)
-      )
     end
 
     # Displays data in a key-value list style.
@@ -123,22 +124,26 @@ module ZTK
       else
         rows << block.call(dataset)
       end
+      rows.compact!
 
-      max_key_length = headers.collect{ |header| header.length }.max
-      max_value_length = rows.collect{ |row| headers.collect{ |header| row.send(header).to_s.length }.max }.max
+      if rows.count > 0
+        max_key_length = headers.collect{ |header| header.length }.max
+        max_value_length = rows.collect{ |row| headers.collect{ |header| row.send(header).to_s.length }.max }.max
 
-      width = (max_key_length + max_value_length + 2 + 2 + 2)
+        width = (max_key_length + max_value_length + 2 + 2 + 2)
 
-      rows.each do |row|
-        config.ui.stdout.puts("+#{"-" * width}+")
-        headers.each do |header|
-          entry_line = format_entry(header, max_key_length, row.send(header), max_value_length)
-          config.ui.stdout.puts(entry_line)
+        rows.each do |row|
+          config.ui.stdout.puts("+#{"-" * width}+")
+          headers.each do |header|
+            entry_line = format_entry(header, max_key_length, row.send(header), max_value_length)
+            config.ui.stdout.puts(entry_line)
+          end
         end
+        config.ui.stdout.puts("+#{"-" * width}+")
+        OpenStruct.new(:rows => rows, :max_key_length => max_key_length, :max_value_length => max_value_length, :width => width)
+      else
+        OpenStruct.new(:rows => rows, :max_key_length => 0, :max_value_length => 0, :width => 0)
       end
-      config.ui.stdout.puts("+#{"-" * width}+")
-
-      OpenStruct.new(:rows => rows, :max_key_length => max_key_length, :max_value_length => max_value_length, :width => width)
     end
 
 
