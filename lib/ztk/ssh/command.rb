@@ -8,7 +8,9 @@ module ZTK
       def console_command
         verbosity = ((ENV['LOG_LEVEL'] == "DEBUG") ? '-vv' : '-q')
 
-        command = [ "/usr/bin/env ssh" ]
+        command = Array.new
+        command << [ %(sshpass -p '#{config.password}') ] if config.password
+        command << [ %(ssh) ]
         command << [ verbosity ]
         command << [ "-x" ]
         command << [ "-a" ]
@@ -32,7 +34,9 @@ module ZTK
 
         verbosity = ((ENV['LOG_LEVEL'] == "DEBUG") ? '-vv' : '-q')
 
-        command = ["/usr/bin/env ssh"]
+        command = Array.new
+        command << [ %(sshpass -p '#{config.proxy_password}') ] if config.proxy_password
+        command << [ %(ssh) ]
         command << [ verbosity ]
         command << [ "-x" ]
         command << [ "-a" ]
