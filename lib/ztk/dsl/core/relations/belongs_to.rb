@@ -53,36 +53,102 @@ module ZTK::DSL::Core::Relations
           :key => key
         }.merge(options)
 
-        define_method(key) do |*args|
-          if args.count == 0
-            get_belongs_to_reference(key)
-          else
-            send("#{key}=", *args)
+################################################################################
+
+        # Ruby-1.8.7 Logic:
+        ####################
+        module_eval <<-CODE, __FILE__, __LINE__ + 1
+          def #{key}(*args)
+            if args.count == 0
+              get_belongs_to_reference(#{key.inspect})
+            else
+              send("#{key}=", *args)
+            end
           end
-        end
+        CODE
 
-        define_method("#{key}=") do |value|
-          set_belongs_to_reference(key, value)
-        end
+        # > Ruby-1.8.7 Logic:
+        ######################
+        # define_method(key) do |*args|
+        #   if args.count == 0
+        #     get_belongs_to_reference(key)
+        #   else
+        #     send("#{key}=", *args)
+        #   end
+        # end
 
-        define_method("#{key}_id") do |*args|
-          if args.count == 0
-            attributes["#{key}_id".to_sym]
-          else
-            send("#{key}_id=".to_sym, args.first)
+################################################################################
+
+        # Ruby-1.8.7 Logic:
+        ####################
+        module_eval <<-CODE, __FILE__, __LINE__ + 1
+          def #{key}=(value)
+            set_belongs_to_reference(#{key.inspect}, value)
           end
+        CODE
 
-        end
+        # > Ruby-1.8.7 Logic:
+        ######################
+        # define_method("#{key}=") do |value|
+        #   set_belongs_to_reference(key, value)
+        # end
 
-        define_method("#{key}_id=") do |value|
-          options = self.class.belongs_to_relations[key]
-          if value != attributes["#{key}_id".to_sym]
-            item = options[:class_name].constantize.find(value).first
-            set_belongs_to_reference(key, item)
-          else
-            value
+################################################################################
+
+        # Ruby-1.8.7 Logic:
+        ####################
+        module_eval <<-CODE, __FILE__, __LINE__ + 1
+          def #{key}_id(*args)
+            if args.count == 0
+              attributes["#{key}_id".to_sym]
+            else
+              send("#{key}_id=".to_sym, args.first)
+            end
           end
-        end
+        CODE
+
+        # > Ruby-1.8.7 Logic:
+        ######################
+        # define_method("#{key}_id") do |*args|
+        #   if args.count == 0
+        #     attributes["#{key}_id".to_sym]
+        #   else
+        #     send("#{key}_id=".to_sym, args.first)
+        #   end
+        # end
+
+################################################################################
+
+        # Ruby-1.8.7 Logic:
+        ####################
+        module_eval <<-CODE, __FILE__, __LINE__ + 1
+          def #{key}_id=(value)
+            options = self.class.belongs_to_relations[#{key.inspect}]
+            if value != attributes["#{key}_id".to_sym]
+              item = options[:class_name].constantize.find(value).first
+              set_belongs_to_reference(#{key.inspect}, item)
+            else
+              value
+            end
+          end
+        CODE
+
+        # > Ruby-1.8.7 Logic:
+        ######################
+        # define_method("#{key}_id=") do |value|
+        #   options = self.class.belongs_to_relations[key]
+        #   if value != attributes["#{key}_id".to_sym]
+        #     item = options[:class_name].constantize.find(value).first
+        #     set_belongs_to_reference(key, item)
+        #   else
+        #     value
+        #   end
+        # end
+
+################################################################################
+
+        # OLD CODE
+        ###########
 
         # define_method(singularize(key)) do |value|
         #   set_belongs_to_reference(key, value)

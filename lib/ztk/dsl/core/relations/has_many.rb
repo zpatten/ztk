@@ -46,28 +46,75 @@ module ZTK::DSL::Core::Relations
           :key => key
         }.merge(options)
 
-        define_method(key) do |*args|
-          if args.count == 0
-            get_has_many_reference(key)
-          else
-            send("#{key}=", *args)
+################################################################################
+
+        # Ruby-1.8.7 Logic:
+        ####################
+        module_eval <<-CODE, __FILE__, __LINE__ + 1
+          def #{key}(*args)
+            if args.count == 0
+              get_has_many_reference(#{key.inspect})
+            else
+              send("#{key}=", *args)
+            end
           end
-        end
+        CODE
 
-        define_method("#{key}=") do |value|
-          set_has_many_reference(key, value)
-        end
+        # > Ruby-1.8.7 Logic:
+        ######################
+        # define_method(key) do |*args|
+        #   if args.count == 0
+        #     get_has_many_reference(key)
+        #   else
+        #     send("#{key}=", *args)
+        #   end
+        # end
 
-        define_method(key.to_s.singularize) do |id=nil, &block|
-          options = self.class.has_many_relations[key]
-          data = options[:class_name].constantize.new(id, &block)
-          get_has_many_reference(key) << data
+################################################################################
 
-          klass = self.class.to_s.demodulize.singularize.downcase
+        # Ruby-1.8.7 Logic:
+        ####################
+        module_eval <<-CODE, __FILE__, __LINE__ + 1
+          def #{key}=(value)
+            set_has_many_reference(#{key.inspect}, value)
+          end
+        CODE
 
-          data.send("#{klass}=", self)
-          data
-        end
+        # > Ruby-1.8.7 Logic:
+        ######################
+        # define_method("#{key}=") do |value|
+        #   set_has_many_reference(key, value)
+        # end
+
+################################################################################
+
+        # Ruby-1.8.7 Logic:
+        ####################
+        module_eval <<-CODE, __FILE__, __LINE__ + 1
+          def #{key.to_s.singularize}(id=nil, &block)
+            options = self.class.has_many_relations[#{key.inspect}]
+            data = options[:class_name].constantize.new(id, &block)
+            get_has_many_reference(#{key.inspect}) << data
+
+            klass = self.class.to_s.demodulize.singularize.downcase + '='
+
+            data.send(klass, self)
+            data
+          end
+        CODE
+
+        # > Ruby-1.8.7 Logic:
+        ######################
+        # define_method(key.to_s.singularize) do |id=nil, &block|
+        #   options = self.class.has_many_relations[key]
+        #   data = options[:class_name].constantize.new(id, &block)
+        #   get_has_many_reference(key) << data
+
+        #   klass = self.class.to_s.demodulize.singularize.downcase
+
+        #   data.send("#{klass}=", self)
+        #   data
+        # end
       end
 
     end
