@@ -160,18 +160,24 @@ describe ZTK::DSL do
       end
 
       it "can has_many via direct object id assignment" do
-        env = Environment.new do
+        env = Environment.new :env do
           name "environment"
         end
-        con0 = Container.new do
+        con0 = Container.new :con0 do
           name "container0"
         end
-        con1 = Container.new do
+        con1 = Container.new :con1 do
           name "container1"
         end
-        con2 = Container.new do
+        con2 = Container.new :con2 do
           name "container2"
         end
+
+        env.id.should == :env
+        con0.id.should == :con0
+        con1.id.should == :con1
+        con2.id.should == :con2
+
         con0.environment_id = env.id
         con1.environment_id = env.id
         con2.environment_id = env.id
