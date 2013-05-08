@@ -49,7 +49,7 @@ module ZTK
 
       rows = Array.new
       max_lengths = OpenStruct.new
-      headers = headers.map(&:downcase).map(&:to_sym)
+      headers = headers.map(&:to_s).map(&:downcase).map(&:to_sym)
 
       if dataset.is_a?(Array)
         dataset.each do |data|
@@ -62,7 +62,7 @@ module ZTK
 
       if rows.count > 0
         max_lengths = max_spreadsheet_lengths(headers, rows)
-        header_line = headers.collect { |header| "%-#{max_lengths.send(header)}s" % header.to_s.upcase }
+        header_line = headers.collect { |header| "%-#{max_lengths.send(:table)[header]}s" % header.to_s.upcase }
         header_line = format_row(header_line)
 
         config.ui.stdout.puts(format_header(headers, max_lengths))
@@ -71,8 +71,8 @@ module ZTK
 
         rows.each do |row|
           row_line = headers.collect do |header|
-            header_length = max_lengths.send(header)
-            content = row.send(header)
+            header_length = max_lengths.send(:table)[header]
+            content = row.send(:table)[header]
 
             "%-#{header_length}s" % content
           end
@@ -115,7 +115,7 @@ module ZTK
 
       rows = Array.new
       max_lengths = OpenStruct.new
-      headers = headers.map(&:downcase).map(&:to_sym)
+      headers = headers.map(&:to_s).map(&:downcase).map(&:to_sym)
 
       if dataset.is_a?(Array)
         dataset.each do |data|
@@ -127,15 +127,15 @@ module ZTK
       rows.compact!
 
       if rows.count > 0
-        max_key_length = headers.collect{ |header| header.length }.max
-        max_value_length = rows.collect{ |row| headers.collect{ |header| row.send(header).to_s.length }.max }.max
+        max_key_length = headers.collect{ |header| header.to_s.length }.max
+        max_value_length = rows.collect{ |row| headers.collect{ |header| row.send(:table)[header].to_s.length }.max }.max
 
         width = (max_key_length + max_value_length + 2 + 2 + 2)
 
         rows.each do |row|
           config.ui.stdout.puts("+#{"-" * width}+")
           headers.each do |header|
-            entry_line = format_entry(header, max_key_length, row.send(header), max_value_length)
+            entry_line = format_entry(header, max_key_length, row.send(:table)[header], max_value_length)
             config.ui.stdout.puts(entry_line)
           end
         end
@@ -152,10 +152,11 @@ module ZTK
     def max_spreadsheet_lengths(headers, rows)
       max_lengths = OpenStruct.new
       headers.each do |header|
-        collection = [header, rows.map(&header)].flatten
+        collection = [header, rows.collect{|r| r.send(:table)[header] } ].flatten
         maximum = collection.map(&:to_s).map(&:length).max
-        max_lengths.send("#{header}=", maximum)
+        max_lengths.send(:table)[header] = maximum
       end
+
       max_lengths
     end
 
@@ -167,8 +168,9 @@ module ZTK
 
     def format_header(headers, lengths)
       line = headers.collect do |header|
-        "-" * lengths.send(header)
+        "-" * lengths.send(:table)[header]
       end
+
       ["+-", line.join("-+-"), "-+"].join.strip
     end
 
