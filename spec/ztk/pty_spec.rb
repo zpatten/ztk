@@ -41,28 +41,32 @@ describe ZTK::PTY do
       end.should_not raise_error
     end
 
-    it "should spawn a command without a block" do
-      lambda do
+    it "should not spawn a command without a block" do
+      lambda {
         r, w, p = subject.spawn("hostname")
-      end.should_not raise_error
+      }.should raise_error
     end
 
     describe "spawn" do
 
       it "should be able to spawn the command \"hostname\"" do
         data = %x(hostname).chomp
+        output = nil
 
-        reader, writer, pid = subject.spawn("hostname")
-        output = reader.readpartial(READ_PARTIAL_CHUNK).chomp
+        subject.spawn("hostname") do |r, w, p|
+          output = r.readpartial(READ_PARTIAL_CHUNK).chomp
+        end
 
         output.should == data
       end
 
       it "should return the output of spawned commands" do
         data = "Hello World @ #{Time.now.utc}"
+        output = nil
 
-        reader, writer, pid = subject.spawn(%(echo "#{data}"))
-        output = reader.readpartial(READ_PARTIAL_CHUNK).chomp
+        subject.spawn(%(echo "#{data}")) do |r, w, p|
+          output = r.readpartial(READ_PARTIAL_CHUNK).chomp
+        end
 
         output.should == data
       end
@@ -71,9 +75,11 @@ describe ZTK::PTY do
 
         it "should capture stdout and send it to the reader" do
           data = "Hello World @ #{Time.now.utc}"
+          output = nil
 
-          reader, writer, pid = subject.spawn(%(echo "#{data}" >&1))
-          output = reader.readpartial(READ_PARTIAL_CHUNK).chomp
+          subject.spawn(%(echo "#{data}" >&1)) do |r, w, p|
+            output = r.readpartial(READ_PARTIAL_CHUNK).chomp
+          end
 
           output.should == data
         end
@@ -84,9 +90,11 @@ describe ZTK::PTY do
 
         it "should capture stderr and send it to the reader" do
           data = "Hello World @ #{Time.now.utc}"
+          output = nil
 
-          reader, writer, pid = subject.spawn(%(echo "#{data}" >&2))
-          output = reader.readpartial(READ_PARTIAL_CHUNK).chomp
+          subject.spawn(%(echo "#{data}" >&2)) do |r, w, p|
+            output = r.readpartial(READ_PARTIAL_CHUNK).chomp
+          end
 
           output.should == data
         end
