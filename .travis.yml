@@ -11,7 +11,3 @@ before_install: ./spec/support/before_install.sh
 
 notifications:
   irc: "irc.freenode.net#jovelabs"
-
-# matrix:
-#   allow_failures:
-#     - rvm: ree
