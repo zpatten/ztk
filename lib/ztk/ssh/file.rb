@@ -28,7 +28,7 @@ module ZTK
         !block_given? and raise SSHError, "You must supply a block!"
 
         tempfile = Tempfile.new("tempfile")
-        ::File.open(tempfile, 'w') do |file|
+        ::File.open(tempfile.path, 'w') do |file|
           yield(file)
         end
 

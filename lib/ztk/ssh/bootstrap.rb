@@ -24,7 +24,7 @@ module ZTK
       def bootstrap(content, use_sudo=true)
         tempfile = Tempfile.new("bootstrap")
 
-        ::File.open(tempfile, 'w') do |file|
+        ::File.open(tempfile.path, 'w') do |file|
           file.puts(content)
           file.respond_to?(:flush) and file.flush
         end
