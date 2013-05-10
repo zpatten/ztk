@@ -28,14 +28,18 @@ module ZTK
         !block_given? and raise SSHError, "You must supply a block!"
 
         tempfile = Tempfile.new("tempfile")
-        ::File.open(tempfile.path, 'w') do |file|
+
+        local_tempfile = tempfile.path
+        remote_tempfile = ::File.join("/tmp", ::File.basename(local_tempfile))
+
+        ::File.open(local_tempfile, 'w') do |file|
           yield(file)
         end
 
         ZTK::RescueRetry.try(:tries => 2, :on_retry => method(:on_retry)) do
-          upload(tempfile.path, tempfile.path)
+          upload(local_tempfile, remote_tempfile)
 
-          exec(%(sudo mv -v #{tempfile.path} #{target}), :silence => true)
+          exec(%(sudo mv -v #{remote_tempfile} #{target}), :silence => true)
 
           exec(%(sudo chown -v #{chown} #{target}), :silence => true) if !chown.nil?
           exec(%(sudo chmod -v #{chmod} #{target}), :silence => true) if !chmod.nil?

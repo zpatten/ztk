@@ -24,17 +24,20 @@ module ZTK
       def bootstrap(content, use_sudo=true)
         tempfile = Tempfile.new("bootstrap")
 
-        ::File.open(tempfile.path, 'w') do |file|
+        local_tempfile = tempfile.path
+        remote_tempfile = ::File.join("/tmp", ::File.basename(local_tempfile))
+
+        ::File.open(local_tempfile, 'w') do |file|
           file.puts(content)
           file.respond_to?(:flush) and file.flush
         end
 
-        self.upload(tempfile.path, tempfile.path)
+        self.upload(local_tempfile, remote_tempfile)
 
         command = Array.new
         command << %(sudo) if (use_sudo == true)
         command << %(/bin/bash)
-        command << tempfile.path
+        command << remote_tempfile
         command = command.join(' ')
 
         self.exec(command, :silence => true)
