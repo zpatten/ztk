@@ -8,6 +8,14 @@
 
 Zachary's (DevOp) Tool Kit is a general purpose utility gem, featuring a collection of classes meant to simplify development of complex systems in Ruby.
 
+# RUBIES TESTED AGAINST
+
+* Ruby 1.8.7 (REE)
+* Ruby 1.8.7 (MBARI)
+* Ruby 1.9.2
+* Ruby 1.9.3
+* Ruby 2.0.0
+
 # RESOURCES
 
 IRC:
