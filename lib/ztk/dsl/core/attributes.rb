@@ -24,7 +24,9 @@ module ZTK::DSL::Core
 
         send(:define_method, key) do |*args|
           if args.count == 0
-            attributes[key] ||= self.class.attribute_options[key][:default].dup
+            if (self.class.attribute_options[key] && self.class.attribute_options[key][:default])
+              attributes[key] ||= self.class.attribute_options[key][:default].dup
+            end
             attributes[key]
           else
             send("#{key}=", *args)
