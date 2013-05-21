@@ -46,16 +46,18 @@ module ZTK
         !block_given? and Base.log_and_raise(options.ui.logger, SpinnerError, "You must supply a block!")
 
         count = 0
+
         spinner = Thread.new do
-          while count do
+          while (count >= 0) do
             options.ui.stdout.print(CHARSET[(count += 1) % CHARSET.length])
             options.ui.stdout.print("\b")
             options.ui.stdout.respond_to?(:flush) and options.ui.stdout.flush
             sleep(options.step)
           end
         end
+
         yield.tap do
-          count = false
+          count = -100
           spinner.join
         end
       end
