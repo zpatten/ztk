@@ -248,39 +248,25 @@
 34
 35
 36
-37
-38
-39
-40
-41
-42
-43
-44</pre>
+37</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/pty.rb', line 23</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_spawn'>spawn</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_reader'>reader</span><span class='comma'>,</span> <span class='id identifier rubyid_writer'>writer</span><span class='comma'>,</span> <span class='id identifier rubyid_pid'>pid</span> <span class='op'>=</span> <span class='kw'>nil</span>
-
   <span class='kw'>begin</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
-      <span class='op'>::</span><span class='const'>PTY</span><span class='period'>.</span><span class='id identifier rubyid_spawn'>spawn</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_reader'>reader</span><span class='comma'>,</span> <span class='id identifier rubyid_writer'>writer</span><span class='comma'>,</span> <span class='id identifier rubyid_pid'>pid</span><span class='op'>|</span>
-        <span class='kw'>begin</span>
-          <span class='kw'>yield</span><span class='lparen'>(</span><span class='id identifier rubyid_reader'>reader</span><span class='comma'>,</span> <span class='id identifier rubyid_writer'>writer</span><span class='comma'>,</span> <span class='id identifier rubyid_pid'>pid</span><span class='rparen'>)</span>
-        <span class='kw'>rescue</span> <span class='const'>Errno</span><span class='op'>::</span><span class='const'>EIO</span>
-        <span class='kw'>ensure</span>
-          <span class='op'>::</span><span class='const'>Process</span><span class='period'>.</span><span class='id identifier rubyid_wait'>wait</span><span class='lparen'>(</span><span class='id identifier rubyid_pid'>pid</span><span class='rparen'>)</span>
-        <span class='kw'>end</span>
+    <span class='op'>::</span><span class='const'>PTY</span><span class='period'>.</span><span class='id identifier rubyid_spawn'>spawn</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_reader'>reader</span><span class='comma'>,</span> <span class='id identifier rubyid_writer'>writer</span><span class='comma'>,</span> <span class='id identifier rubyid_pid'>pid</span><span class='op'>|</span>
+      <span class='kw'>begin</span>
+        <span class='id identifier rubyid_block_given?'>block_given?</span> <span class='kw'>and</span> <span class='kw'>yield</span><span class='lparen'>(</span><span class='id identifier rubyid_reader'>reader</span><span class='comma'>,</span> <span class='id identifier rubyid_writer'>writer</span><span class='comma'>,</span> <span class='id identifier rubyid_pid'>pid</span><span class='rparen'>)</span>
+      <span class='kw'>rescue</span> <span class='const'>Errno</span><span class='op'>::</span><span class='const'>EIO</span>
+      <span class='kw'>ensure</span>
+        <span class='op'>::</span><span class='const'>Process</span><span class='period'>.</span><span class='id identifier rubyid_wait'>wait</span><span class='lparen'>(</span><span class='id identifier rubyid_pid'>pid</span><span class='rparen'>)</span>
       <span class='kw'>end</span>
-    <span class='kw'>else</span>
-      <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>You must supply a block!</span><span class='tstring_end'>&quot;</span></span>
-      <span class='comment'># reader, writer, pid = ::PTY.spawn(*args)
-</span>    <span class='kw'>end</span>
+    <span class='kw'>end</span>
   <span class='kw'>rescue</span> <span class='op'>::</span><span class='const'>PTY</span><span class='op'>::</span><span class='const'>ChildExited</span>
   <span class='kw'>end</span>
 
-  <span class='lbracket'>[</span><span class='id identifier rubyid_reader'>reader</span><span class='comma'>,</span> <span class='id identifier rubyid_writer'>writer</span><span class='comma'>,</span> <span class='id identifier rubyid_pid'>pid</span><span class='rbracket'>]</span>
+  <span class='kw'>true</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -292,7 +278,7 @@
 </div>
 
     <div id="footer">
-  Generated on Thu May 23 09:48:29 2013 by
+  Generated on Tue Jun  4 11:04:00 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.6.1 (ruby-1.9.3).
 </div>
