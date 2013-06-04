@@ -21,26 +21,19 @@ module ZTK
       #
       # @return [Object] Returns the $? object.
       def spawn(*args, &block)
-        reader, writer, pid = nil
-
         begin
-          if block_given?
-            ::PTY.spawn(*args) do |reader, writer, pid|
-              begin
-                yield(reader, writer, pid)
-              rescue Errno::EIO
-              ensure
-                ::Process.wait(pid)
-              end
+          ::PTY.spawn(*args) do |reader, writer, pid|
+            begin
+              block_given? and yield(reader, writer, pid)
+            rescue Errno::EIO
+            ensure
+              ::Process.wait(pid)
             end
-          else
-            raise "You must supply a block!"
-            # reader, writer, pid = ::PTY.spawn(*args)
           end
         rescue ::PTY::ChildExited
         end
 
-        [reader, writer, pid]
+        true
       end
 
     end

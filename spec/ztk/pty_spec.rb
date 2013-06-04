@@ -35,16 +35,16 @@ describe ZTK::PTY do
   describe "behaviour" do
 
     it "should spawn a command with a block" do
-      lambda do
+      lambda {
         subject.spawn("hostname") do |r, w, p|
         end
-      end.should_not raise_error
+      }.should_not raise_error
     end
 
-    it "should not spawn a command without a block" do
+    it "should spawn a command without a block" do
       lambda {
         r, w, p = subject.spawn("hostname")
-      }.should raise_error
+      }.should_not raise_error
     end
 
     describe "spawn" do
