@@ -36,10 +36,11 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
+  spec.add_dependency("activesupport")
+  spec.add_dependency("childprocess", "0.3.6")
   spec.add_dependency("erubis")
   spec.add_dependency("net-ssh")
   spec.add_dependency("net-sftp")
-  spec.add_dependency("activesupport")
 
   spec.add_development_dependency("pry")
   spec.add_development_dependency("rake")

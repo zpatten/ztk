@@ -1,5 +1,6 @@
 require 'ostruct'
 require 'timeout'
+require 'childprocess'
 
 module ZTK
 
@@ -46,6 +47,8 @@ module ZTK
         :silence => false
       }.merge(configuration))
       config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
+
+      ChildProcess.posix_spawn = false
     end
 
     # Execute Command
@@ -94,19 +97,11 @@ module ZTK
 
       start_time = Time.now.utc
 
-      pid = Process.fork do
-        parent_stdout_reader.close
-        parent_stderr_reader.close
+      proc = ChildProcess.build(*command)
+      proc.io.stdout = child_stdout_writer
+      proc.io.stderr = child_stderr_writer
+      proc.start
 
-        STDOUT.reopen(child_stdout_writer)
-        STDERR.reopen(child_stderr_writer)
-        STDIN.reopen("/dev/null")
-
-        child_stdout_writer.close
-        child_stderr_writer.close
-
-        Kernel.exec(command)
-      end
       child_stdout_writer.close
       child_stderr_writer.close
 
@@ -153,10 +148,11 @@ module ZTK
       rescue Timeout::Error => e
         direct_log(:fatal) { log_header("TIMEOUT") }
         log_and_raise(CommandError, "Process timed out after #{options.timeout} seconds!")
+        proc.stop
       end
 
-      Process.waitpid(pid)
-      exit_code = $?.exitstatus
+      proc.wait
+      exit_code = proc.exit_code
       direct_log(:info) { log_header("STOPPED") }
 
       parent_stdout_reader.close
