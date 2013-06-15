@@ -64,7 +64,6 @@ describe ZTK::Background do
         subject.wait
         subject.result.should be_kind_of Integer
         subject.result.should > 0
-        subject.result.should == WAIT_SMALL
       end
 
       it "should respond false when the process is no longer running" do
