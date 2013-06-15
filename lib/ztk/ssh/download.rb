@@ -25,23 +25,27 @@ module ZTK
       #   remote = File.expand_path(File.join(ENV["HOME"], ".ssh", "id_rsa.pub"))
       #   ssh.download(remote, local)
       def download(remote, local, options={})
-        config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
-        config.ui.logger.info { "download(#{remote.inspect}, #{local.inspect})" }
         options = {:recursive => ::File.directory?(local) }.merge(options)
+        options = OpenStruct.new(config.send(:table).merge(options))
+
+        options.ui.logger.debug { "config=#{config.send(:table).inspect}" }
+        options.ui.logger.debug { "options=#{options.send(:table).inspect}" }
+        options.ui.logger.info { "download(#{remote.inspect}, #{local.inspect})" }
 
         ZTK::RescueRetry.try(:tries => 3, :on => EOFError, :on_retry => method(:on_retry)) do
-          sftp.download!(remote.to_s, local.to_s, options) do |event, downloader, *args|
+          sftp.download!(remote.to_s, local.to_s, options.send(:table)) do |event, downloader, *args|
             case event
             when :open
-              config.ui.logger.debug { "download(#{args[0].remote} -> #{args[0].local})" }
+              options.ui.logger.debug { "download(#{args[0].remote} -> #{args[0].local})" }
             when :close
-              config.ui.logger.debug { "close(#{args[0].local})" }
+              options.ui.logger.debug { "close(#{args[0].local})" }
             when :mkdir
-              config.ui.logger.debug { "mkdir(#{args[0]})" }
+              options.ui.logger.debug { "mkdir(#{args[0]})" }
             when :get
-              config.ui.logger.debug { "get(#{args[0].remote}, size #{args[2].size} bytes, offset #{args[1]})" }
+              options.ui.logger.debug { "get(#{args[0].remote}, size #{args[2].size} bytes, offset #{args[1]})" }
+              options.on_progress.nil? or options.on_progress.call
             when :finish
-              config.ui.logger.debug { "finish" }
+              options.ui.logger.debug { "finish" }
             end
           end
         end

@@ -36,7 +36,7 @@ module ZTK
       def exec(command, options={})
         options = OpenStruct.new(config.send(:table).merge(options))
 
-        options.ui.logger.debug { "config=#{options.send(:table).inspect}" }
+        options.ui.logger.debug { "config=#{config.send(:table).inspect}" }
         options.ui.logger.debug { "options=#{options.send(:table).inspect}" }
         options.ui.logger.info { "exec(#{command.inspect})" }
 
@@ -78,6 +78,8 @@ module ZTK
 
                     options.ui.stdout.print(data) unless options.silence
                     output += data
+
+                    options.on_progress.nil? or options.on_progress.call
                   end
 
                   ch.on_extended_data do |c, type, data|
@@ -90,6 +92,8 @@ module ZTK
 
                     options.ui.stderr.print(data) unless options.silence
                     output += data
+
+                    options.on_progress.nil? or options.on_progress.call
                   end
 
                   ch.on_request("exit-status") do |c, data|

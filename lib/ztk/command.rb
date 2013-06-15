@@ -145,6 +145,8 @@ module ZTK
               end
 
               output += data
+
+              options.on_progress.nil? or options.on_progress.call
             end
             break if reader_writer_map.keys.all?{ |reader| reader.eof? }
           end
