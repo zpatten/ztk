@@ -19,6 +19,11 @@
 ################################################################################
 
 require "spec_helper"
+require "os"
+
+def shell(command)
+  return OS.windows? && "cmd /c #{command}" || "/bin/bash -c '#{command}'"
+end
 
 describe ZTK::Command do
 
@@ -61,21 +66,21 @@ describe ZTK::Command do
           config.timeout = WAIT_SMALL
         end
         hostname = %x(hostname).chomp
-        lambda { subject.exec("hostname ; sleep 10") }.should raise_error ZTK::CommandError
+        lambda { subject.exec(shell("hostname; sleep 10")) }.should raise_error ZTK::CommandError
       end
 
       it "should throw an exception if the exit status is not as expected" do
         subject.config do |config|
           config.ui = @ui
         end
-        lambda { subject.exec("/bin/bash -c 'exit 64'") }.should raise_error ZTK::CommandError
+        lambda { subject.exec(shell("exit 64")) }.should raise_error ZTK::CommandError
       end
 
       it "should return a instance of an OpenStruct object" do
         subject.config do |config|
           config.ui = @ui
         end
-        result = subject.exec(%q{echo "Hello World"})
+        result = subject.exec(shell("echo 'Hello World'"))
         result.should be_an_instance_of OpenStruct
       end
 
@@ -85,7 +90,7 @@ describe ZTK::Command do
         end
         data = 64
 
-        result = subject.exec(%Q{/bin/bash -c 'exit #{data}'}, :exit_code => data)
+        result = subject.exec(shell("exit #{data}"), :exit_code => data)
         result.exit_code.should == data
       end
 
@@ -95,7 +100,7 @@ describe ZTK::Command do
         end
         data = "Hello World @ #{Time.now.utc}"
 
-        result = subject.exec(%Q{echo "#{data}"})
+        result = subject.exec(shell("echo #{data}"))
         result.output.match(data).should_not be nil
       end
 
@@ -104,7 +109,7 @@ describe ZTK::Command do
           config.ui = @ui
         end
         data = 32
-        result = subject.exec(%Q{/bin/bash -c 'exit #{data}'}, :exit_code => data)
+        result = subject.exec(shell("exit #{data}"), :exit_code => data)
       end
 
       describe "stdout" do
@@ -115,7 +120,7 @@ describe ZTK::Command do
           end
           data = "Hello World @ #{Time.now.utc}"
 
-          subject.exec(%Q{echo "#{data}" >&1})
+          subject.exec("echo \"#{data}\" >&1")
 
           @ui.stdout.rewind
           @ui.stdout.read.match(data).should_not be nil

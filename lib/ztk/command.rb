@@ -95,10 +95,12 @@ module ZTK
 
       parent_stdout_reader, child_stdout_writer = IO.pipe
       parent_stderr_reader, child_stderr_writer = IO.pipe
-
       start_time = Time.now.utc
 
-      proc = ChildProcess.build(*command)
+      # don't split quoted argument
+      cmd = command.scan(/(?:"")|(?:"(.*[^\\])")|([\w[:punct:]]+)/).flatten.compact
+
+      proc = ChildProcess.build(*cmd)
       proc.io.stdout = child_stdout_writer
       proc.io.stderr = child_stderr_writer
       proc.start
