@@ -1,6 +1,7 @@
 require 'ostruct'
 require 'timeout'
 require 'childprocess'
+require 'socket'
 
 module ZTK
 
@@ -187,7 +188,7 @@ module ZTK
     # Returns a string in the format of "user@hostname" for the current
     # shell.
     def tag
-      @@hostname ||= %x(hostname).split('.').first.strip
+      @@hostname ||= Socket.gethostname.split('.').first.strip
       "#{ENV['USER']}@#{@@hostname}"
     end
 
