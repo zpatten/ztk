@@ -117,7 +117,11 @@ module ZTK
           loop do
             reader_writer_map.keys.each do |pipe|
               data = (pipe.readpartial(1024) rescue nil)
-              next if (data.nil? || data.empty?)
+
+              if (data.nil? || data.empty?)
+                sleep(0.1)
+                next
+              end
 
               case reader_writer_key[pipe]
               when :stdout then
@@ -142,7 +146,6 @@ module ZTK
               output += data
             end
             break if reader_writer_map.keys.all?{ |reader| reader.eof? }
-            sleep(0.1)
           end
         end
       rescue Timeout::Error => e
