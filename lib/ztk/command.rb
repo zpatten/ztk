@@ -115,9 +115,8 @@ module ZTK
       begin
         Timeout.timeout(options.timeout) do
           loop do
-            pipes = IO.select(reader_writer_map.keys, [], reader_writer_map.keys).first
-            pipes.each do |pipe|
-              data = pipe.read
+            reader_writer_map.keys.each do |pipe|
+              data = (pipe.readpartial(1024) rescue nil)
               next if (data.nil? || data.empty?)
 
               case reader_writer_key[pipe]
@@ -143,6 +142,7 @@ module ZTK
               output += data
             end
             break if reader_writer_map.keys.all?{ |reader| reader.eof? }
+            sleep(0.1)
           end
         end
       rescue Timeout::Error => e
@@ -184,8 +184,8 @@ module ZTK
     # Returns a string in the format of "user@hostname" for the current
     # shell.
     def tag
-      @@hostname ||= %x(hostname).chomp
-      "#{ENV['USER']}@#{@hostname}"
+      @@hostname ||= %x(hostname).split('.').first.strip
+      "#{ENV['USER']}@#{@@hostname}"
     end
 
     # Formats a header suitable for writing to the direct logger when logging
