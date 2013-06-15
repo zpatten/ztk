@@ -98,11 +98,13 @@ module ZTK
       start_time = Time.now.utc
 
       # don't split quoted argument
-      cmd = command.scan(/(?:"")|(?:"(.*[^\\])")|([\w[:punct:]]+)/).flatten.compact
+      cmd = command.scan(/(?:"")|(?:["'](.*[^\\])["'])|([\w[:punct:]]+)/).flatten.compact
+      direct_log(:info) { "#{cmd.inspect}\n" }      
 
       proc = ChildProcess.build(*cmd)
       proc.io.stdout = child_stdout_writer
       proc.io.stderr = child_stderr_writer
+      proc.environment['PATH'] = ENV['PATH']
       proc.start
 
       child_stdout_writer.close
