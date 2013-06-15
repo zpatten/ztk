@@ -125,7 +125,7 @@ describe ZTK::Command do
           end
           data = "Hello World @ #{Time.now.utc}"
 
-          subject.exec("echo \"#{data}\" >&1")
+          subject.exec(shell("echo \"#{data}\" >&1", {:windows => true}))
 
           @ui.stdout.rewind
           @ui.stdout.read.match(data).should_not be nil
@@ -147,7 +147,7 @@ describe ZTK::Command do
           end
           data = "Hello World @ #{Time.now.utc}"
 
-          subject.exec("echo \"#{data}\" >&2")
+          subject.exec(shell("echo \"#{data}\" >&2", {:windows => true}))
 
           @ui.stdout.rewind
           @ui.stdout.read.match(data).should be nil

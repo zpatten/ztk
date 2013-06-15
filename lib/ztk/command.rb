@@ -101,6 +101,7 @@ module ZTK
       cmd = command.scan(/(?:"")|(?:["'](.*[^\\])["'])|([\w[:punct:]]+)/).flatten.compact
       direct_log(:info) { "#{cmd.inspect}\n" }      
 
+      redirection = [">&1", ">&2"].include?(cmd[-1]) && cmd.pop || ""
       proc = ChildProcess.build(*cmd)
       proc.io.stdout = child_stdout_writer
       proc.io.stderr = child_stderr_writer
@@ -112,6 +113,12 @@ module ZTK
 
       reader_writer_key = {parent_stdout_reader => :stdout, parent_stderr_reader => :stderr}
       reader_writer_map = {parent_stdout_reader => options.ui.stdout, parent_stderr_reader => options.ui.stderr}
+
+      if redirection == ">&1"
+        reader_writer_key[parent_stderr_reader] = options.ui.stdout
+      elsif redirection == ">&2"
+        reader_writer_key[parent_stdout_reader] = options.ui.stderr
+      end
 
       direct_log(:info) { log_header("COMMAND") }
       direct_log(:info) { "#{command}\n" }
