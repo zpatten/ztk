@@ -1,6 +1,5 @@
 require 'ostruct'
 require 'timeout'
-require 'childprocess'
 require 'socket'
 
 module ZTK
@@ -48,8 +47,6 @@ module ZTK
         :silence => false
       }.merge(configuration))
       config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
-
-      ChildProcess.posix_spawn = false
     end
 
     # Execute Command
@@ -98,11 +95,19 @@ module ZTK
 
       start_time = Time.now.utc
 
-      proc = ChildProcess.build(*command)
-      proc.io.stdout = child_stdout_writer
-      proc.io.stderr = child_stderr_writer
-      proc.start
+      pid = Process.fork do
+        parent_stdout_reader.close
+        parent_stderr_reader.close
 
+        STDOUT.reopen(child_stdout_writer)
+        STDERR.reopen(child_stderr_writer)
+        STDIN.reopen("/dev/null")
+
+        child_stdout_writer.close
+        child_stderr_writer.close
+
+        Kernel.exec(command)
+      end
       child_stdout_writer.close
       child_stderr_writer.close
 
@@ -110,14 +115,15 @@ module ZTK
       reader_writer_map = {parent_stdout_reader => options.ui.stdout, parent_stderr_reader => options.ui.stderr}
 
       direct_log(:info) { log_header("COMMAND") }
-      direct_log(:info) { "#{command}\n" }
+      direct_log(:info) { "#{command.inspect}\n" }
       direct_log(:info) { log_header("STARTED") }
 
       begin
         Timeout.timeout(options.timeout) do
           loop do
-            reader_writer_map.keys.each do |pipe|
-              data = (pipe.readpartial(1024) rescue nil)
+            pipes = IO.select(reader_writer_map.keys, [], reader_writer_map.keys).first
+            pipes.each do |pipe|
+              data = pipe.read
 
               if (data.nil? || data.empty?)
                 sleep(0.1)
@@ -148,17 +154,17 @@ module ZTK
 
               options.on_progress.nil? or options.on_progress.call
             end
+
             break if reader_writer_map.keys.all?{ |reader| reader.eof? }
           end
         end
       rescue Timeout::Error => e
         direct_log(:fatal) { log_header("TIMEOUT") }
         log_and_raise(CommandError, "Process timed out after #{options.timeout} seconds!")
-        proc.stop
       end
 
-      proc.wait
-      exit_code = proc.exit_code
+      Process.waitpid(pid)
+      exit_code = $?.exitstatus
       direct_log(:info) { log_header("STOPPED") }
 
       parent_stdout_reader.close
