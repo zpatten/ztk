@@ -19,7 +19,9 @@ module ZTK
         command << [ "-o", "KeepAlive=yes" ]
         command << [ "-o", "ServerAliveInterval=60" ]
         command << [ "-o", %(ProxyCommand="#{proxy_command}") ] if config.proxy_host_name
-        command << [ "-i", config.keys ] if config.keys
+        !config.keys.nil? and !config.keys.empty? and [config.keys].flatten.compact.each do |key|
+          command << [ "-i", key ]
+        end
         command << [ "-p", config.port ] if config.port
         command << "#{config.user}@#{config.host_name}"
         command = command.flatten.compact.join(' ')
@@ -44,7 +46,9 @@ module ZTK
         command << [ "-o", "StrictHostKeyChecking=no" ]
         command << [ "-o", "KeepAlive=yes" ]
         command << [ "-o", "ServerAliveInterval=60" ]
-        command << [ "-i", config.proxy_keys ] if config.proxy_keys
+        !config.proxy_keys.nil? and !config.proxy_keys.empty? and [config.proxy_keys].flatten.compact.each do |proxy_key|
+          command << [ "-i", proxy_key ]
+        end
         command << [ "-p", config.proxy_port ] if config.proxy_port
         command << "#{config.proxy_user}@#{config.proxy_host_name}"
         command << "'/usr/bin/env nc %h %p'"
