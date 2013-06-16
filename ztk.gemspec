@@ -41,6 +41,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency("erubis")
   spec.add_dependency("net-ssh")
   spec.add_dependency("net-sftp")
+  spec.add_dependency("os")
 
   spec.add_development_dependency("pry")
   spec.add_development_dependency("rake")
