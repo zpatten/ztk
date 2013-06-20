@@ -30,19 +30,20 @@ module ZTK
         tempfile = Tempfile.new("tempfile")
 
         local_tempfile = tempfile.path
-        remote_tempfile = ::File.join("/tmp", ::File.basename(local_tempfile))
+        remote_tempfile = ::File.join("/", "tmp", ::File.basename(local_tempfile))
 
         ::File.open(local_tempfile, 'w') do |file|
           yield(file)
+          file.respond_to?(:flush) and file.flush
         end
 
-        ZTK::RescueRetry.try(:tries => 2, :on_retry => method(:on_retry)) do
-          upload(local_tempfile, remote_tempfile)
+        ZTK::RescueRetry.try(:tries => 3, :on_retry => method(:on_retry)) do
+          self.upload(local_tempfile, remote_tempfile)
 
-          exec(%(sudo mv -v #{remote_tempfile} #{target}), :silence => true)
+          self.exec(%(sudo mv -fv #{remote_tempfile} #{target}), :silence => true)
 
-          exec(%(sudo chown -v #{chown} #{target}), :silence => true) if !chown.nil?
-          exec(%(sudo chmod -v #{chmod} #{target}), :silence => true) if !chmod.nil?
+          chown.nil? or self.exec(%(sudo chown -v #{chown} #{target}), :silence => true)
+          chmod.nil? or self.exec(%(sudo chmod -v #{chmod} #{target}), :silence => true)
         end
 
         true

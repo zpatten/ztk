@@ -19,13 +19,20 @@ module ZTK
       #
       # @param [String] content What to render out to the bootstrap file we will
       #   execute.
-      # @param [Boolean] use_sudo Whether or not we should prefix *sudo*
-      #   on our command.
-      def bootstrap(content, use_sudo=true)
+      # @param [Hash] options The options hash.  This will also accept options
+      #   for #exec in order to better control the bootstrapping execution.
+      # @option options [String] :use_sudo True if we should execute the
+      #   bootstrap via sudo; False to execute it as the defined user.
+      def bootstrap(content, options={})
+        options = {
+          :silence => true,
+          :use_sudo => true
+        }.merge(options)
+
         tempfile = Tempfile.new("bootstrap")
 
         local_tempfile = tempfile.path
-        remote_tempfile = ::File.join("/tmp", ::File.basename(local_tempfile))
+        remote_tempfile = ::File.join("/", "tmp", ::File.basename(local_tempfile))
 
         ::File.open(local_tempfile, 'w') do |file|
           file.puts(content)
@@ -35,12 +42,13 @@ module ZTK
         self.upload(local_tempfile, remote_tempfile)
 
         command = Array.new
-        command << %(sudo) if (use_sudo == true)
+        command << %(sudo) if (options[:use_sudo] == true)
         command << %(/bin/bash)
         command << remote_tempfile
         command = command.join(' ')
 
-        self.exec(command, :silence => true)
+        result = self.exec(command, options)
+        result
       end
 
     end
