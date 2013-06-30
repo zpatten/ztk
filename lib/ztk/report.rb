@@ -19,6 +19,13 @@ module ZTK
     require 'socket'
     require 'timeout'
 
+    require 'ztk/report/list'
+    require 'ztk/report/private'
+    require 'ztk/report/spreadsheet'
+
+    include ZTK::Report::List
+    include ZTK::Report::Spreadsheet
+
     # @param [Hash] configuration Configuration options hash.
     def initialize(configuration={})
       super({
@@ -27,12 +34,6 @@ module ZTK
       config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
     end
 
-    require 'ztk/report/list'
-    require 'ztk/report/private'
-    require 'ztk/report/spreadsheet'
-
-    include ZTK::Report::List
-    include ZTK::Report::Spreadsheet
 
   private
 
