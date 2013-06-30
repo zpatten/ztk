@@ -32,7 +32,7 @@ module ZTK
         tempfile = Tempfile.new("bootstrap")
 
         local_tempfile = tempfile.path
-        remote_tempfile = ::File.join("/", "tmp", ::File.basename(local_tempfile))
+        remote_tempfile = ::File.join(ZTK::Locator.root, "tmp", ::File.basename(local_tempfile))
 
         ::File.open(local_tempfile, 'w') do |file|
           file.puts(content)

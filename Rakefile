@@ -39,7 +39,7 @@ require 'yard'
 require 'yard/rake/yardoc_task'
 
 GEM_NAME = File.basename(Dir.pwd)
-DOC_PATH = File.expand_path(File.join("..", "/", "#{GEM_NAME}.doc"))
+DOC_PATH = File.expand_path(File.join("..", "", "#{GEM_NAME}.doc"))
 
 namespace :doc do
   YARD::Rake::YardocTask.new(:pages) do |t|

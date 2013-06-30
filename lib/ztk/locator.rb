@@ -31,6 +31,12 @@ module ZTK
         raise LocatorError, "Could not locate '#{File.join(args)}'!"
       end
 
+      # Returns the root for the filesystem we are operating on.  Ignores
+      # mount boundries on *nix.
+      def root
+        Dir.pwd.split(File::SEPARATOR).first
+      end
+
     end
 
   end

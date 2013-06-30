@@ -14,7 +14,7 @@ module ZTK
       #     config.host_name = "127.0.0.1"
       #   end
       #   local = File.expand_path(File.join(ENV["HOME"], ".ssh", "id_rsa.pub"))
-      #   remote = File.expand_path(File.join("/tmp", "id_rsa.pub"))
+      #   remote = File.expand_path(File.join(ZTK::Locator.root, "tmp", "id_rsa.pub"))
       #   ssh.upload(local, remote)
       #
       # @param [String] local The local file/path you wish to upload from.
