@@ -33,6 +33,13 @@ module ZTK
 
       # Returns the root for the filesystem we are operating on.  Ignores
       # mount boundries on *nix.
+      #
+      # For all flavors of *nix this should always return "/".
+      #
+      # Windows should expect something similar to "C:\".
+      #
+      # @return [String] The root path of the file-system.  For unix this should
+      #   always be "/".  For windows this should be something like "C:\".
       def root
         Dir.pwd.split(File::SEPARATOR).first
       end
