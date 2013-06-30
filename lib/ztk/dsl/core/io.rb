@@ -15,7 +15,7 @@ module ZTK::DSL::Core
 
       def load(rb_file)
         new do
-          instance_eval(::IO.read(rb_file))
+          instance_eval(::IO.read(rb_file), rb_file)
         end
       end
 
