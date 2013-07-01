@@ -209,11 +209,12 @@ representation of the class.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/dsl/base.rb', line 188</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
-  <span class='id identifier rubyid_details'>details</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
-  <span class='id identifier rubyid_details'>details</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>count=</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>&gt;</span> <span class='int'>0</span>
-  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#&lt;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rbrace'>}</span><span class='tstring_content'>:</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_details'>details</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>, </span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='tstring_content'>&gt;</span><span class='tstring_end'>&quot;</span></span>
-<span class='kw'>end</span></pre>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_inspect identifier id'>inspect</span>
+  <span class='rubyid_details identifier id'>details</span> <span class='assign token'>=</span> <span class='rubyid_Array constant id'>Array</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span>
+  <span class='rubyid_details identifier id'>details</span> <span class='lshft op'>&lt;&lt;</span> <span class='dstring node'>&quot;count=#{self.all.count}&quot;</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_all identifier id'>all</span><span class='dot token'>.</span><span class='rubyid_count identifier id'>count</span> <span class='gt op'>&gt;</span> <span class='integer val'>0</span>
+  <span class='dstring node'>&quot;#&lt;#{self.class.to_s}:#{self.id} #{details.join(', ')}&gt;&quot;</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -224,9 +225,9 @@ representation of the class.</p>
 </div>
 
     <div id="footer">
-  Generated on Sun Jun 30 17:38:10 2013 by
+  Generated on Sun Jun 30 18:24:21 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6.2 (ruby-1.9.3).
+  0.8.6.2 (ruby-1.8.7).
 </div>
 
   </body>

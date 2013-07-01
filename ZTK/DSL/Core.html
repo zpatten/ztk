@@ -77,13 +77,9 @@
     
   
   
-    <dt class="r1">Included in:</dt>
-    <dd class="r1"><span class='object_link'><a href="Base.html" title="ZTK::DSL::Base (class)">Base</a></span></dd>
-    
   
-  
-    <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">lib/ztk/dsl/core.rb<span class="defines">,<br />
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/ztk/dsl/core.rb<span class="defines">,<br />
   lib/ztk/dsl/core/io.rb,<br /> lib/ztk/dsl/core/options.rb,<br /> lib/ztk/dsl/core/dataset.rb,<br /> lib/ztk/dsl/core/actions.rb,<br /> lib/ztk/dsl/core/relations.rb,<br /> lib/ztk/dsl/core/attributes.rb</span>
 </dd>
   
@@ -222,21 +218,22 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core.rb', line 15</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_included'>included</span><span class='lparen'>(</span><span class='id identifier rubyid_base'>base</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_class_eval'>class_eval</span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:extend</span><span class='comma'>,</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Core</span><span class='op'>::</span><span class='const'>ClassMethods</span><span class='rparen'>)</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_included identifier id'>included</span><span class='lparen token'>(</span><span class='rubyid_base identifier id'>base</span><span class='rparen token'>)</span>
+  <span class='rubyid_base identifier id'>base</span><span class='dot token'>.</span><span class='rubyid_class_eval identifier id'>class_eval</span> <span class='rubyid_do do kw'>do</span>
+    <span class='rubyid_base identifier id'>base</span><span class='dot token'>.</span><span class='rubyid_send identifier id'>send</span><span class='lparen token'>(</span><span class='symbol val'>:extend</span><span class='comma token'>,</span> <span class='rubyid_ZTK constant id'>ZTK</span><span class='colon2 op'>::</span><span class='rubyid_DSL constant id'>DSL</span><span class='colon2 op'>::</span><span class='rubyid_Core constant id'>Core</span><span class='colon2 op'>::</span><span class='rubyid_ClassMethods constant id'>ClassMethods</span><span class='rparen token'>)</span>
 
-    <span class='comment'># base.send(:extend, ZTK::DSL::Core::DualMethods)
-</span>    <span class='comment'># base.send(:include, ZTK::DSL::Core::DualMethods)
-</span>
-    <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:include</span><span class='comma'>,</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Core</span><span class='op'>::</span><span class='const'>Attributes</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:include</span><span class='comma'>,</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Core</span><span class='op'>::</span><span class='const'>Actions</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:include</span><span class='comma'>,</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Core</span><span class='op'>::</span><span class='const'>Dataset</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:include</span><span class='comma'>,</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Core</span><span class='op'>::</span><span class='const'>IO</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:include</span><span class='comma'>,</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Core</span><span class='op'>::</span><span class='const'>Options</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:include</span><span class='comma'>,</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Core</span><span class='op'>::</span><span class='const'>Relations</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
+    <span class='comment val'># base.send(:extend, ZTK::DSL::Core::DualMethods)</span>
+    <span class='comment val'># base.send(:include, ZTK::DSL::Core::DualMethods)</span>
+
+    <span class='rubyid_base identifier id'>base</span><span class='dot token'>.</span><span class='rubyid_send identifier id'>send</span><span class='lparen token'>(</span><span class='symbol val'>:include</span><span class='comma token'>,</span> <span class='rubyid_ZTK constant id'>ZTK</span><span class='colon2 op'>::</span><span class='rubyid_DSL constant id'>DSL</span><span class='colon2 op'>::</span><span class='rubyid_Core constant id'>Core</span><span class='colon2 op'>::</span><span class='rubyid_Attributes constant id'>Attributes</span><span class='rparen token'>)</span>
+    <span class='rubyid_base identifier id'>base</span><span class='dot token'>.</span><span class='rubyid_send identifier id'>send</span><span class='lparen token'>(</span><span class='symbol val'>:include</span><span class='comma token'>,</span> <span class='rubyid_ZTK constant id'>ZTK</span><span class='colon2 op'>::</span><span class='rubyid_DSL constant id'>DSL</span><span class='colon2 op'>::</span><span class='rubyid_Core constant id'>Core</span><span class='colon2 op'>::</span><span class='rubyid_Actions constant id'>Actions</span><span class='rparen token'>)</span>
+    <span class='rubyid_base identifier id'>base</span><span class='dot token'>.</span><span class='rubyid_send identifier id'>send</span><span class='lparen token'>(</span><span class='symbol val'>:include</span><span class='comma token'>,</span> <span class='rubyid_ZTK constant id'>ZTK</span><span class='colon2 op'>::</span><span class='rubyid_DSL constant id'>DSL</span><span class='colon2 op'>::</span><span class='rubyid_Core constant id'>Core</span><span class='colon2 op'>::</span><span class='rubyid_Dataset constant id'>Dataset</span><span class='rparen token'>)</span>
+    <span class='rubyid_base identifier id'>base</span><span class='dot token'>.</span><span class='rubyid_send identifier id'>send</span><span class='lparen token'>(</span><span class='symbol val'>:include</span><span class='comma token'>,</span> <span class='rubyid_ZTK constant id'>ZTK</span><span class='colon2 op'>::</span><span class='rubyid_DSL constant id'>DSL</span><span class='colon2 op'>::</span><span class='rubyid_Core constant id'>Core</span><span class='colon2 op'>::</span><span class='rubyid_IO constant id'>IO</span><span class='rparen token'>)</span>
+    <span class='rubyid_base identifier id'>base</span><span class='dot token'>.</span><span class='rubyid_send identifier id'>send</span><span class='lparen token'>(</span><span class='symbol val'>:include</span><span class='comma token'>,</span> <span class='rubyid_ZTK constant id'>ZTK</span><span class='colon2 op'>::</span><span class='rubyid_DSL constant id'>DSL</span><span class='colon2 op'>::</span><span class='rubyid_Core constant id'>Core</span><span class='colon2 op'>::</span><span class='rubyid_Options constant id'>Options</span><span class='rparen token'>)</span>
+    <span class='rubyid_base identifier id'>base</span><span class='dot token'>.</span><span class='rubyid_send identifier id'>send</span><span class='lparen token'>(</span><span class='symbol val'>:include</span><span class='comma token'>,</span> <span class='rubyid_ZTK constant id'>ZTK</span><span class='colon2 op'>::</span><span class='rubyid_DSL constant id'>DSL</span><span class='colon2 op'>::</span><span class='rubyid_Core constant id'>Core</span><span class='colon2 op'>::</span><span class='rubyid_Relations constant id'>Relations</span><span class='rparen token'>)</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -247,9 +244,9 @@
 </div>
 
     <div id="footer">
-  Generated on Sun Jun 30 17:38:10 2013 by
+  Generated on Sun Jun 30 18:24:21 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6.2 (ruby-1.9.3).
+  0.8.6.2 (ruby-1.8.7).
 </div>
 
   </body>

@@ -110,13 +110,15 @@
         <p class="example_title"><div class='inline'><p>Mix this module into String to enable easy ANSI coloring methods like:</p>
 </div></p>
       
-      <pre class="example code"><code><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bold red</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_red'>red</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span></code></pre>
+      <pre class="example code"><code><span class='string val'>&quot;bold red&quot;</span><span class='dot token'>.</span><span class='rubyid_red identifier id'>red</span><span class='dot token'>.</span><span class='rubyid_bold identifier id'>bold</span>
+</code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Or</p>
 </div></p>
       
-      <pre class="example code"><code><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>green</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_green'>green</span></code></pre>
+      <pre class="example code"><code><span class='string val'>&quot;green&quot;</span><span class='dot token'>.</span><span class='rubyid_green identifier id'>green</span>
+</code></pre>
     
   </div>
 
@@ -154,16 +156,17 @@
 
 </div>
         </dt>
-        <dd><pre class="code"><span class='lbrace'>{</span>
-  <span class='symbol'>:black</span>   <span class='op'>=&gt;</span> <span class='int'>30</span><span class='comma'>,</span>
-  <span class='symbol'>:red</span>     <span class='op'>=&gt;</span> <span class='int'>31</span><span class='comma'>,</span>
-  <span class='symbol'>:green</span>   <span class='op'>=&gt;</span> <span class='int'>32</span><span class='comma'>,</span>
-  <span class='symbol'>:yellow</span>  <span class='op'>=&gt;</span> <span class='int'>33</span><span class='comma'>,</span>
-  <span class='symbol'>:blue</span>    <span class='op'>=&gt;</span> <span class='int'>34</span><span class='comma'>,</span>
-  <span class='symbol'>:magenta</span> <span class='op'>=&gt;</span> <span class='int'>35</span><span class='comma'>,</span>
-  <span class='symbol'>:cyan</span>    <span class='op'>=&gt;</span> <span class='int'>36</span><span class='comma'>,</span>
-  <span class='symbol'>:white</span>   <span class='op'>=&gt;</span> <span class='int'>37</span>
-<span class='rbrace'>}</span></pre></dd>
+        <dd><pre class="code"><span class='lbrace token'>{</span>
+  <span class='symbol val'>:black</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>30</span><span class='comma token'>,</span>
+  <span class='symbol val'>:red</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>31</span><span class='comma token'>,</span>
+  <span class='symbol val'>:green</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>32</span><span class='comma token'>,</span>
+  <span class='symbol val'>:yellow</span>  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>33</span><span class='comma token'>,</span>
+  <span class='symbol val'>:blue</span>    <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>34</span><span class='comma token'>,</span>
+  <span class='symbol val'>:magenta</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>35</span><span class='comma token'>,</span>
+  <span class='symbol val'>:cyan</span>    <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>36</span><span class='comma token'>,</span>
+  <span class='symbol val'>:white</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>37</span>
+<span class='rbrace token'>}</span>
+</pre></dd>
       
         <dt id="ANSI_ATTRIBUTES-constant" class="">ANSI_ATTRIBUTES =
           <div class="docstring">
@@ -178,10 +181,11 @@
 
 </div>
         </dt>
-        <dd><pre class="code"><span class='lbrace'>{</span>
-  <span class='symbol'>:normal</span> <span class='op'>=&gt;</span> <span class='int'>0</span><span class='comma'>,</span>
-  <span class='symbol'>:bold</span>   <span class='op'>=&gt;</span> <span class='int'>1</span>
-<span class='rbrace'>}</span></pre></dd>
+        <dd><pre class="code"><span class='lbrace token'>{</span>
+  <span class='symbol val'>:normal</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>0</span><span class='comma token'>,</span>
+  <span class='symbol val'>:bold</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>1</span>
+<span class='rbrace token'>}</span>
+</pre></dd>
       
         <dt id="ANSI_REGEX-constant" class="">ANSI_REGEX =
           <div class="docstring">
@@ -197,7 +201,8 @@ ANSI_REGEX = /\e[(?:(?:[349]|10)[0-7]|[0-9]|[34]8;5;\d1,3)?m/</p>
 
 </div>
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\e\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]</span><span class='regexp_end'>/</span></span></pre></dd>
+        <dd><pre class="code"><span class='regexp val'>/\e\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]/</span>
+</pre></dd>
       
     </dl>
   
@@ -581,11 +586,104 @@ ANSI_REGEX = /\e[(?:(?:[349]|10)[0-7]|[0-9]|[34]8;5;\d1,3)?m/</p>
       <pre class="lines">
 
 
-</pre>
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/ansi.rb', line 33</span>
 
+<span class='comment val'># @!method black(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to black for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method red(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to red for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method green(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to green for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method yellow(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to yellow for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method blue(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to blue for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method magenta(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to magenta for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method cyan(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to cyan for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method white(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to white for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
 </pre>
     </td>
   </tr>
@@ -672,11 +770,104 @@ ANSI_REGEX = /\e[(?:(?:[349]|10)[0-7]|[0-9]|[34]8;5;\d1,3)?m/</p>
       <pre class="lines">
 
 
-</pre>
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/ansi.rb', line 33</span>
 
+<span class='comment val'># @!method black(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to black for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method red(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to red for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method green(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to green for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method yellow(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to yellow for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method blue(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to blue for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method magenta(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to magenta for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method cyan(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to cyan for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method white(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to white for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
 </pre>
     </td>
   </tr>
@@ -763,11 +954,32 @@ ANSI_REGEX = /\e[(?:(?:[349]|10)[0-7]|[0-9]|[34]8;5;\d1,3)?m/</p>
       <pre class="lines">
 
 
-</pre>
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/ansi.rb', line 87</span>
 
+<span class='comment val'># @!method normal(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to normal for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method bold(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to bold for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
 </pre>
     </td>
   </tr>
@@ -868,77 +1080,42 @@ the values are the ANSI codes.</p>
 137
 138
 139
-140
-141
-142
-143
-144
-145
-146
-147
-148
-149
-150
-151
-152
-153
-154
-155
-156
-157
-158</pre>
+140</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/ansi.rb', line 111</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_build_ansi_methods'>build_ansi_methods</span><span class='lparen'>(</span><span class='id identifier rubyid_hash'>hash</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_build_ansi_methods identifier id'>build_ansi_methods</span><span class='lparen token'>(</span><span class='rubyid_hash identifier id'>hash</span><span class='rparen token'>)</span>
+  <span class='rubyid_hash identifier id'>hash</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_key identifier id'>key</span><span class='comma token'>,</span> <span class='rubyid_value identifier id'>value</span><span class='bitor op'>|</span>
 
-    <span class='comment'># Ruby-1.8.7 Logic:
-</span>    <span class='comment'>####################
-</span>    <span class='id identifier rubyid_module_eval'>module_eval</span> <span class='heredoc_beg'>&lt;&lt;-CODE</span><span class='comma'>,</span> <span class='kw'>__FILE__</span><span class='comma'>,</span> <span class='kw'>__LINE__</span> <span class='op'>+</span> <span class='int'>1</span>
-<span class='tstring_content'>      def </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='rbrace'>}</span><span class='tstring_content'>(string=nil, &amp;block)
-        result = Array.new
+    <span class='comment val'># Ruby-1.8.7 Logic:</span>
+    <span class='comment val'>####################</span>
+    <span class='rubyid_module_eval identifier id'>module_eval</span> <span class='string val'>&quot;def \#{key}(string=nil, &amp;block)\nresult = Array.new\n\nresult &lt;&lt; %(\\e[\#{value}m)\nif block_given?\nresult &lt;&lt; block.call\nelsif string.respond_to?(:to_str)\nresult &lt;&lt; string.to_str\nelsif respond_to?(:to_str)\nresult &lt;&lt; to_str\nelse\nreturn result\nend\nresult &lt;&lt; %(\\e[0m)\n\nresult.join\nend\n&quot;</span><span class='comma token'>,</span> <span class='rubyid___FILE__ __file__ kw'>__FILE__</span><span class='comma token'>,</span> <span class='rubyid___LINE__ __line__ kw'>__LINE__</span> <span class='plus op'>+</span> <span class='integer val'>1</span>
 
-        result &lt;&lt; %(\e[</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_value'>value</span><span class='rbrace'>}</span><span class='tstring_content'>m)
-        if block_given?
-          result &lt;&lt; block.call
-        elsif string.respond_to?(:to_str)
-          result &lt;&lt; string.to_str
-        elsif respond_to?(:to_str)
-          result &lt;&lt; to_str
-        else
-          return result
-        end
-        result &lt;&lt; %(\e[0m)
+    <span class='comment val'># &gt; Ruby-1.8.7 Logic:</span>
+    <span class='comment val'>######################</span>
+    <span class='comment val'># define_method(key) do |string=nil, &amp;block|</span>
+    <span class='comment val'>#   result = Array.new</span>
 
-        result.join
-      end
-</span><span class='heredoc_end'>    CODE
-</span>
-    <span class='comment'># &gt; Ruby-1.8.7 Logic:
-</span>    <span class='comment'>######################
-</span>    <span class='comment'># define_method(key) do |string=nil, &amp;block|
-</span>    <span class='comment'>#   result = Array.new
-</span>
-    <span class='comment'>#   result &lt;&lt; %(\e[#{value}m)
-</span>    <span class='comment'>#   if block_given?
-</span>    <span class='comment'>#     result &lt;&lt; block.call
-</span>    <span class='comment'>#   elsif string.respond_to?(:to_str)
-</span>    <span class='comment'>#     result &lt;&lt; string.to_str
-</span>    <span class='comment'>#   elsif respond_to?(:to_str)
-</span>    <span class='comment'>#     result &lt;&lt; to_str
-</span>    <span class='comment'>#   else
-</span>    <span class='comment'>#     return result
-</span>    <span class='comment'>#   end
-</span>    <span class='comment'>#   result &lt;&lt; %(\e[0m)
-</span>
-    <span class='comment'>#   result.join
-</span>    <span class='comment'># end
-</span>  <span class='kw'>end</span>
+    <span class='comment val'>#   result &lt;&lt; %(\e[#{value}m)</span>
+    <span class='comment val'>#   if block_given?</span>
+    <span class='comment val'>#     result &lt;&lt; block.call</span>
+    <span class='comment val'>#   elsif string.respond_to?(:to_str)</span>
+    <span class='comment val'>#     result &lt;&lt; string.to_str</span>
+    <span class='comment val'>#   elsif respond_to?(:to_str)</span>
+    <span class='comment val'>#     result &lt;&lt; to_str</span>
+    <span class='comment val'>#   else</span>
+    <span class='comment val'>#     return result</span>
+    <span class='comment val'>#   end</span>
+    <span class='comment val'>#   result &lt;&lt; %(\e[0m)</span>
 
-  <span class='kw'>true</span>
-<span class='kw'>end</span></pre>
+    <span class='comment val'>#   result.join</span>
+    <span class='comment val'># end</span>
+  <span class='rubyid_end end kw'>end</span>
+
+  <span class='rubyid_true true kw'>true</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -1024,11 +1201,104 @@ the values are the ANSI codes.</p>
       <pre class="lines">
 
 
-</pre>
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/ansi.rb', line 33</span>
 
+<span class='comment val'># @!method black(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to black for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method red(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to red for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method green(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to green for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method yellow(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to yellow for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method blue(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to blue for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method magenta(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to magenta for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method cyan(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to cyan for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method white(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to white for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
 </pre>
     </td>
   </tr>
@@ -1115,11 +1385,104 @@ the values are the ANSI codes.</p>
       <pre class="lines">
 
 
-</pre>
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/ansi.rb', line 33</span>
 
+<span class='comment val'># @!method black(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to black for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method red(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to red for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method green(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to green for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method yellow(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to yellow for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method blue(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to blue for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method magenta(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to magenta for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method cyan(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to cyan for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method white(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to white for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
 </pre>
     </td>
   </tr>
@@ -1206,11 +1569,104 @@ the values are the ANSI codes.</p>
       <pre class="lines">
 
 
-</pre>
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/ansi.rb', line 33</span>
 
+<span class='comment val'># @!method black(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to black for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method red(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to red for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method green(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to green for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method yellow(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to yellow for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method blue(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to blue for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method magenta(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to magenta for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method cyan(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to cyan for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method white(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to white for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
 </pre>
     </td>
   </tr>
@@ -1297,11 +1753,32 @@ the values are the ANSI codes.</p>
       <pre class="lines">
 
 
-</pre>
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/ansi.rb', line 87</span>
 
+<span class='comment val'># @!method normal(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to normal for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method bold(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to bold for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
 </pre>
     </td>
   </tr>
@@ -1388,11 +1865,104 @@ the values are the ANSI codes.</p>
       <pre class="lines">
 
 
-</pre>
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/ansi.rb', line 33</span>
 
+<span class='comment val'># @!method black(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to black for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method red(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to red for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method green(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to green for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method yellow(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to yellow for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method blue(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to blue for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method magenta(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to magenta for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method cyan(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to cyan for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method white(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to white for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
 </pre>
     </td>
   </tr>
@@ -1481,7 +2051,6 @@ the values are the ANSI codes.</p>
       <pre class="lines">
 
 
-167
 168
 169
 170
@@ -1491,22 +2060,24 @@ the values are the ANSI codes.</p>
 174
 175
 176
-177</pre>
+177
+178</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ansi.rb', line 167</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/ansi.rb', line 168</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_uncolor'>uncolor</span><span class='lparen'>(</span><span class='id identifier rubyid_string'>string</span><span class='op'>=</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
-    <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='period'>.</span><span class='id identifier rubyid_to_str'>to_str</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='const'>ANSI_REGEX</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
-  <span class='kw'>elsif</span> <span class='id identifier rubyid_string'>string</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:to_str</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_string'>string</span><span class='period'>.</span><span class='id identifier rubyid_to_str'>to_str</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='const'>ANSI_REGEX</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
-  <span class='kw'>elsif</span> <span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:to_str</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_to_str'>to_str</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='const'>ANSI_REGEX</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
-  <span class='kw'>else</span>
-    <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_uncolor identifier id'>uncolor</span><span class='lparen token'>(</span><span class='rubyid_string identifier id'>string</span><span class='assign token'>=</span><span class='rubyid_nil nil kw'>nil</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='rubyid_if if kw'>if</span> <span class='rubyid_block_given? fid id'>block_given?</span>
+    <span class='rubyid_block identifier id'>block</span><span class='dot token'>.</span><span class='rubyid_call identifier id'>call</span><span class='dot token'>.</span><span class='rubyid_to_str identifier id'>to_str</span><span class='dot token'>.</span><span class='rubyid_gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='rubyid_ANSI_REGEX constant id'>ANSI_REGEX</span><span class='comma token'>,</span> <span class='string val'>''</span><span class='rparen token'>)</span>
+  <span class='rubyid_elsif elsif kw'>elsif</span> <span class='rubyid_string identifier id'>string</span><span class='dot token'>.</span><span class='rubyid_respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:to_str</span><span class='rparen token'>)</span>
+    <span class='rubyid_string identifier id'>string</span><span class='dot token'>.</span><span class='rubyid_to_str identifier id'>to_str</span><span class='dot token'>.</span><span class='rubyid_gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='rubyid_ANSI_REGEX constant id'>ANSI_REGEX</span><span class='comma token'>,</span> <span class='string val'>''</span><span class='rparen token'>)</span>
+  <span class='rubyid_elsif elsif kw'>elsif</span> <span class='rubyid_respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:to_str</span><span class='rparen token'>)</span>
+    <span class='rubyid_to_str identifier id'>to_str</span><span class='dot token'>.</span><span class='rubyid_gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='rubyid_ANSI_REGEX constant id'>ANSI_REGEX</span><span class='comma token'>,</span> <span class='string val'>''</span><span class='rparen token'>)</span>
+  <span class='rubyid_else else kw'>else</span>
+    <span class='string val'>''</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -1592,11 +2163,104 @@ the values are the ANSI codes.</p>
       <pre class="lines">
 
 
-</pre>
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/ansi.rb', line 33</span>
 
+<span class='comment val'># @!method black(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to black for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method red(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to red for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method green(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to green for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method yellow(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to yellow for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method blue(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to blue for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method magenta(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to magenta for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method cyan(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to cyan for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method white(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to white for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
 </pre>
     </td>
   </tr>
@@ -1683,11 +2347,104 @@ the values are the ANSI codes.</p>
       <pre class="lines">
 
 
-</pre>
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/ansi.rb', line 33</span>
 
+<span class='comment val'># @!method black(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to black for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method red(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to red for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method green(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to green for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method yellow(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to yellow for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method blue(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to blue for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method magenta(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to magenta for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method cyan(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to cyan for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
+<span class='comment val'># </span>
+<span class='comment val'># @!method white(string=nil, &amp;block)</span>
+<span class='comment val'>#   Sets the foreground color to white for the supplied string.</span>
+<span class='comment val'>#   @param [String] string The string to operate on.</span>
+<span class='comment val'>#   @yieldreturn [String] The string to operate on.</span>
+<span class='comment val'>#   @return [String] The colored string.</span>
 </pre>
     </td>
   </tr>
@@ -1699,9 +2456,9 @@ the values are the ANSI codes.</p>
 </div>
 
     <div id="footer">
-  Generated on Sun Jun 30 17:38:10 2013 by
+  Generated on Sun Jun 30 18:24:21 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6.2 (ruby-1.9.3).
+  0.8.6.2 (ruby-1.8.7).
 </div>
 
   </body>

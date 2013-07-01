@@ -269,155 +269,96 @@
 130
 131
 132
-133
-134
-135
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145
-146
-147
-148
-149
-150
-151
-152
-153
-154
-155
-156
-157
-158
-159
-160
-161
-162
-163</pre>
+133</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/relations/belongs_to.rb', line 50</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_belongs_to'>belongs_to</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_belongs_to_relations'>belongs_to_relations</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbrace'>{</span>
-    <span class='symbol'>:class_name</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_classify'>classify</span><span class='comma'>,</span>
-    <span class='symbol'>:key</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_key'>key</span>
-  <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_belongs_to identifier id'>belongs_to</span><span class='lparen token'>(</span><span class='rubyid_key identifier id'>key</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='rubyid_belongs_to_relations identifier id'>belongs_to_relations</span><span class='lbrack token'>[</span><span class='rubyid_key identifier id'>key</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span>
+    <span class='symbol val'>:class_name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_key identifier id'>key</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='rubyid_classify identifier id'>classify</span><span class='comma token'>,</span>
+    <span class='symbol val'>:key</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_key identifier id'>key</span>
+  <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='rubyid_merge identifier id'>merge</span><span class='lparen token'>(</span><span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span>
 
-<span class='comment'>################################################################################
-</span>
-  <span class='comment'># Ruby-1.8.7 Logic:
-</span>  <span class='comment'>####################
-</span>  <span class='id identifier rubyid_module_eval'>module_eval</span> <span class='heredoc_beg'>&lt;&lt;-CODE</span><span class='comma'>,</span> <span class='kw'>__FILE__</span><span class='comma'>,</span> <span class='kw'>__LINE__</span> <span class='op'>+</span> <span class='int'>1</span>
-<span class='tstring_content'>    def </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='rbrace'>}</span><span class='tstring_content'>(*args)
-      if args.count == 0
-        get_belongs_to_reference(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>)
-      else
-        send(&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='rbrace'>}</span><span class='tstring_content'>=&quot;, *args)
-      end
-    end
-</span><span class='heredoc_end'>  CODE
-</span>
-  <span class='comment'># &gt; Ruby-1.8.7 Logic:
-</span>  <span class='comment'>######################
-</span>  <span class='comment'># define_method(key) do |*args|
-</span>  <span class='comment'>#   if args.count == 0
-</span>  <span class='comment'>#     get_belongs_to_reference(key)
-</span>  <span class='comment'>#   else
-</span>  <span class='comment'>#     send(&quot;#{key}=&quot;, *args)
-</span>  <span class='comment'>#   end
-</span>  <span class='comment'># end
-</span>
-<span class='comment'>################################################################################
-</span>
-  <span class='comment'># Ruby-1.8.7 Logic:
-</span>  <span class='comment'>####################
-</span>  <span class='id identifier rubyid_module_eval'>module_eval</span> <span class='heredoc_beg'>&lt;&lt;-CODE</span><span class='comma'>,</span> <span class='kw'>__FILE__</span><span class='comma'>,</span> <span class='kw'>__LINE__</span> <span class='op'>+</span> <span class='int'>1</span>
-<span class='tstring_content'>    def </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='rbrace'>}</span><span class='tstring_content'>=(value)
-      set_belongs_to_reference(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>, value)
-    end
-</span><span class='heredoc_end'>  CODE
-</span>
-  <span class='comment'># &gt; Ruby-1.8.7 Logic:
-</span>  <span class='comment'>######################
-</span>  <span class='comment'># define_method(&quot;#{key}=&quot;) do |value|
-</span>  <span class='comment'>#   set_belongs_to_reference(key, value)
-</span>  <span class='comment'># end
-</span>
-<span class='comment'>################################################################################
-</span>
-  <span class='comment'># Ruby-1.8.7 Logic:
-</span>  <span class='comment'>####################
-</span>  <span class='id identifier rubyid_module_eval'>module_eval</span> <span class='heredoc_beg'>&lt;&lt;-CODE</span><span class='comma'>,</span> <span class='kw'>__FILE__</span><span class='comma'>,</span> <span class='kw'>__LINE__</span> <span class='op'>+</span> <span class='int'>1</span>
-<span class='tstring_content'>    def </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='rbrace'>}</span><span class='tstring_content'>_id(*args)
-      if args.count == 0
-        attributes[&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='rbrace'>}</span><span class='tstring_content'>_id&quot;.to_sym]
-      else
-        send(&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='rbrace'>}</span><span class='tstring_content'>_id=&quot;.to_sym, args.first)
-      end
-    end
-</span><span class='heredoc_end'>  CODE
-</span>
-  <span class='comment'># &gt; Ruby-1.8.7 Logic:
-</span>  <span class='comment'>######################
-</span>  <span class='comment'># define_method(&quot;#{key}_id&quot;) do |*args|
-</span>  <span class='comment'>#   if args.count == 0
-</span>  <span class='comment'>#     attributes[&quot;#{key}_id&quot;.to_sym]
-</span>  <span class='comment'>#   else
-</span>  <span class='comment'>#     send(&quot;#{key}_id=&quot;.to_sym, args.first)
-</span>  <span class='comment'>#   end
-</span>  <span class='comment'># end
-</span>
-<span class='comment'>################################################################################
-</span>
-  <span class='comment'># Ruby-1.8.7 Logic:
-</span>  <span class='comment'>####################
-</span>  <span class='id identifier rubyid_module_eval'>module_eval</span> <span class='heredoc_beg'>&lt;&lt;-CODE</span><span class='comma'>,</span> <span class='kw'>__FILE__</span><span class='comma'>,</span> <span class='kw'>__LINE__</span> <span class='op'>+</span> <span class='int'>1</span>
-<span class='tstring_content'>    def </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='rbrace'>}</span><span class='tstring_content'>_id=(value)
-      options = self.class.belongs_to_relations[</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>]
-      if value != attributes[&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='rbrace'>}</span><span class='tstring_content'>_id&quot;.to_sym]
-        item = options[:class_name].constantize.find(value).first
-        set_belongs_to_reference(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>, item)
-      else
-        value
-      end
-    end
-</span><span class='heredoc_end'>  CODE
-</span>
-  <span class='comment'># &gt; Ruby-1.8.7 Logic:
-</span>  <span class='comment'>######################
-</span>  <span class='comment'># define_method(&quot;#{key}_id=&quot;) do |value|
-</span>  <span class='comment'>#   options = self.class.belongs_to_relations[key]
-</span>  <span class='comment'>#   if value != attributes[&quot;#{key}_id&quot;.to_sym]
-</span>  <span class='comment'>#     item = options[:class_name].constantize.find(value).first
-</span>  <span class='comment'>#     set_belongs_to_reference(key, item)
-</span>  <span class='comment'>#   else
-</span>  <span class='comment'>#     value
-</span>  <span class='comment'>#   end
-</span>  <span class='comment'># end
-</span>
-<span class='comment'>################################################################################
-</span>
-  <span class='comment'># OLD CODE
-</span>  <span class='comment'>###########
-</span>
-  <span class='comment'># define_method(singularize(key)) do |value|
-</span>  <span class='comment'>#   set_belongs_to_reference(key, value)
-</span>  <span class='comment'># end
-</span>
-  <span class='comment'># define_method(singularize(key)) do |&amp;block|
-</span>  <span class='comment'>#   puts get_belongs_to_reference(key).inspect
-</span>  <span class='comment'>#   data = constantize(classify(key.to_s)).new(&amp;block)
-</span>  <span class='comment'>#   get_belongs_to_reference(key) &lt;&lt; data
-</span>  <span class='comment'>#   data
-</span>  <span class='comment'># end
-</span><span class='kw'>end</span></pre>
+<span class='comment val'>################################################################################</span>
+
+  <span class='comment val'># Ruby-1.8.7 Logic:</span>
+  <span class='comment val'>####################</span>
+  <span class='rubyid_module_eval identifier id'>module_eval</span> <span class='string val'>&quot;def \#{key}(*args)\nif args.count == 0\nget_belongs_to_reference(\#{key.inspect})\nelse\nsend(\&quot;\#{key}=\&quot;, *args)\nend\nend\n&quot;</span><span class='comma token'>,</span> <span class='rubyid___FILE__ __file__ kw'>__FILE__</span><span class='comma token'>,</span> <span class='rubyid___LINE__ __line__ kw'>__LINE__</span> <span class='plus op'>+</span> <span class='integer val'>1</span>
+
+  <span class='comment val'># &gt; Ruby-1.8.7 Logic:</span>
+  <span class='comment val'>######################</span>
+  <span class='comment val'># define_method(key) do |*args|</span>
+  <span class='comment val'>#   if args.count == 0</span>
+  <span class='comment val'>#     get_belongs_to_reference(key)</span>
+  <span class='comment val'>#   else</span>
+  <span class='comment val'>#     send(&quot;#{key}=&quot;, *args)</span>
+  <span class='comment val'>#   end</span>
+  <span class='comment val'># end</span>
+
+<span class='comment val'>################################################################################</span>
+
+  <span class='comment val'># Ruby-1.8.7 Logic:</span>
+  <span class='comment val'>####################</span>
+  <span class='rubyid_module_eval identifier id'>module_eval</span> <span class='string val'>&quot;def \#{key}=(value)\nset_belongs_to_reference(\#{key.inspect}, value)\nend\n&quot;</span><span class='comma token'>,</span> <span class='rubyid___FILE__ __file__ kw'>__FILE__</span><span class='comma token'>,</span> <span class='rubyid___LINE__ __line__ kw'>__LINE__</span> <span class='plus op'>+</span> <span class='integer val'>1</span>
+
+  <span class='comment val'># &gt; Ruby-1.8.7 Logic:</span>
+  <span class='comment val'>######################</span>
+  <span class='comment val'># define_method(&quot;#{key}=&quot;) do |value|</span>
+  <span class='comment val'>#   set_belongs_to_reference(key, value)</span>
+  <span class='comment val'># end</span>
+
+<span class='comment val'>################################################################################</span>
+
+  <span class='comment val'># Ruby-1.8.7 Logic:</span>
+  <span class='comment val'>####################</span>
+  <span class='rubyid_module_eval identifier id'>module_eval</span> <span class='string val'>&quot;def \#{key}_id(*args)\nif args.count == 0\nattributes[\&quot;\#{key}_id\&quot;.to_sym]\nelse\nsend(\&quot;\#{key}_id=\&quot;.to_sym, args.first)\nend\nend\n&quot;</span><span class='comma token'>,</span> <span class='rubyid___FILE__ __file__ kw'>__FILE__</span><span class='comma token'>,</span> <span class='rubyid___LINE__ __line__ kw'>__LINE__</span> <span class='plus op'>+</span> <span class='integer val'>1</span>
+
+  <span class='comment val'># &gt; Ruby-1.8.7 Logic:</span>
+  <span class='comment val'>######################</span>
+  <span class='comment val'># define_method(&quot;#{key}_id&quot;) do |*args|</span>
+  <span class='comment val'>#   if args.count == 0</span>
+  <span class='comment val'>#     attributes[&quot;#{key}_id&quot;.to_sym]</span>
+  <span class='comment val'>#   else</span>
+  <span class='comment val'>#     send(&quot;#{key}_id=&quot;.to_sym, args.first)</span>
+  <span class='comment val'>#   end</span>
+  <span class='comment val'># end</span>
+
+<span class='comment val'>################################################################################</span>
+
+  <span class='comment val'># Ruby-1.8.7 Logic:</span>
+  <span class='comment val'>####################</span>
+  <span class='rubyid_module_eval identifier id'>module_eval</span> <span class='string val'>&quot;def \#{key}_id=(value)\noptions = self.class.belongs_to_relations[\#{key.inspect}]\nif value != attributes[\&quot;\#{key}_id\&quot;.to_sym]\nitem = options[:class_name].constantize.find(value).first\nset_belongs_to_reference(\#{key.inspect}, item)\nelse\nvalue\nend\nend\n&quot;</span><span class='comma token'>,</span> <span class='rubyid___FILE__ __file__ kw'>__FILE__</span><span class='comma token'>,</span> <span class='rubyid___LINE__ __line__ kw'>__LINE__</span> <span class='plus op'>+</span> <span class='integer val'>1</span>
+
+  <span class='comment val'># &gt; Ruby-1.8.7 Logic:</span>
+  <span class='comment val'>######################</span>
+  <span class='comment val'># define_method(&quot;#{key}_id=&quot;) do |value|</span>
+  <span class='comment val'>#   options = self.class.belongs_to_relations[key]</span>
+  <span class='comment val'>#   if value != attributes[&quot;#{key}_id&quot;.to_sym]</span>
+  <span class='comment val'>#     item = options[:class_name].constantize.find(value).first</span>
+  <span class='comment val'>#     set_belongs_to_reference(key, item)</span>
+  <span class='comment val'>#   else</span>
+  <span class='comment val'>#     value</span>
+  <span class='comment val'>#   end</span>
+  <span class='comment val'># end</span>
+
+<span class='comment val'>################################################################################</span>
+
+  <span class='comment val'># OLD CODE</span>
+  <span class='comment val'>###########</span>
+
+  <span class='comment val'># define_method(singularize(key)) do |value|</span>
+  <span class='comment val'>#   set_belongs_to_reference(key, value)</span>
+  <span class='comment val'># end</span>
+
+  <span class='comment val'># define_method(singularize(key)) do |&amp;block|</span>
+  <span class='comment val'>#   puts get_belongs_to_reference(key).inspect</span>
+  <span class='comment val'>#   data = constantize(classify(key.to_s)).new(&amp;block)</span>
+  <span class='comment val'>#   get_belongs_to_reference(key) &lt;&lt; data</span>
+  <span class='comment val'>#   data</span>
+  <span class='comment val'># end</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -428,9 +369,9 @@
 </div>
 
     <div id="footer">
-  Generated on Sun Jun 30 17:38:11 2013 by
+  Generated on Sun Jun 30 18:24:24 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6.2 (ruby-1.9.3).
+  0.8.6.2 (ruby-1.8.7).
 </div>
 
   </body>

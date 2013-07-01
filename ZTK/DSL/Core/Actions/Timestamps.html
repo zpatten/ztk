@@ -209,15 +209,16 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/actions/timestamps.rb', line 7</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_included'>included</span><span class='lparen'>(</span><span class='id identifier rubyid_base'>base</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_class_eval'>class_eval</span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:extend</span><span class='comma'>,</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Core</span><span class='op'>::</span><span class='const'>Actions</span><span class='op'>::</span><span class='const'>Timestamps</span><span class='op'>::</span><span class='const'>ClassMethods</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-  <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_instance_eval'>instance_eval</span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_attribute'>attribute</span> <span class='symbol'>:created_at</span>
-    <span class='id identifier rubyid_attribute'>attribute</span> <span class='symbol'>:updated_at</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_included identifier id'>included</span><span class='lparen token'>(</span><span class='rubyid_base identifier id'>base</span><span class='rparen token'>)</span>
+  <span class='rubyid_base identifier id'>base</span><span class='dot token'>.</span><span class='rubyid_class_eval identifier id'>class_eval</span> <span class='rubyid_do do kw'>do</span>
+    <span class='rubyid_base identifier id'>base</span><span class='dot token'>.</span><span class='rubyid_send identifier id'>send</span><span class='lparen token'>(</span><span class='symbol val'>:extend</span><span class='comma token'>,</span> <span class='rubyid_ZTK constant id'>ZTK</span><span class='colon2 op'>::</span><span class='rubyid_DSL constant id'>DSL</span><span class='colon2 op'>::</span><span class='rubyid_Core constant id'>Core</span><span class='colon2 op'>::</span><span class='rubyid_Actions constant id'>Actions</span><span class='colon2 op'>::</span><span class='rubyid_Timestamps constant id'>Timestamps</span><span class='colon2 op'>::</span><span class='rubyid_ClassMethods constant id'>ClassMethods</span><span class='rparen token'>)</span>
+  <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_base identifier id'>base</span><span class='dot token'>.</span><span class='rubyid_instance_eval identifier id'>instance_eval</span> <span class='rubyid_do do kw'>do</span>
+    <span class='rubyid_attribute identifier id'>attribute</span> <span class='symbol val'>:created_at</span>
+    <span class='rubyid_attribute identifier id'>attribute</span> <span class='symbol val'>:updated_at</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -228,9 +229,9 @@
 </div>
 
     <div id="footer">
-  Generated on Sun Jun 30 17:38:11 2013 by
+  Generated on Sun Jun 30 18:24:24 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6.2 (ruby-1.9.3).
+  0.8.6.2 (ruby-1.8.7).
 </div>
 
   </body>

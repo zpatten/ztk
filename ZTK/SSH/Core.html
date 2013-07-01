@@ -247,10 +247,11 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/ssh/core.rb', line 22</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_close'>close</span>
-  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>close</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
-  <span class='id identifier rubyid_ssh'>ssh</span> <span class='kw'>and</span> <span class='op'>!</span><span class='id identifier rubyid_ssh'>ssh</span><span class='period'>.</span><span class='id identifier rubyid_closed?'>closed?</span> <span class='kw'>and</span> <span class='id identifier rubyid_ssh'>ssh</span><span class='period'>.</span><span class='id identifier rubyid_close'>close</span>
-<span class='kw'>end</span></pre>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_close identifier id'>close</span>
+  <span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_ui identifier id'>ui</span><span class='dot token'>.</span><span class='rubyid_logger identifier id'>logger</span><span class='dot token'>.</span><span class='rubyid_debug identifier id'>debug</span> <span class='lbrace token'>{</span> <span class='string val'>&quot;close&quot;</span> <span class='rbrace token'>}</span>
+  <span class='rubyid_ssh identifier id'>ssh</span> <span class='rubyid_and and kw'>and</span> <span class='notop op'>!</span><span class='rubyid_ssh identifier id'>ssh</span><span class='dot token'>.</span><span class='rubyid_closed? fid id'>closed?</span> <span class='rubyid_and and kw'>and</span> <span class='rubyid_ssh identifier id'>ssh</span><span class='dot token'>.</span><span class='rubyid_close identifier id'>close</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -290,11 +291,12 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/ssh/core.rb', line 28</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_on_retry'>on_retry</span><span class='lparen'>(</span><span class='id identifier rubyid_exception'>exception</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_close'>close</span>
-  <span class='ivar'>@ssh</span> <span class='op'>=</span> <span class='kw'>nil</span>
-  <span class='ivar'>@sftp</span> <span class='op'>=</span> <span class='kw'>nil</span>
-<span class='kw'>end</span></pre>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_on_retry identifier id'>on_retry</span><span class='lparen token'>(</span><span class='rubyid_exception identifier id'>exception</span><span class='rparen token'>)</span>
+  <span class='rubyid_close identifier id'>close</span>
+  <span class='rubyid_@ssh ivar id'>@ssh</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span>
+  <span class='rubyid_@sftp ivar id'>@sftp</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -334,9 +336,10 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/ssh/core.rb', line 17</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_sftp'>sftp</span>
-  <span class='ivar'>@sftp</span> <span class='op'>||=</span> <span class='const'>Net</span><span class='op'>::</span><span class='const'>SFTP</span><span class='period'>.</span><span class='id identifier rubyid_start'>start</span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_host_name'>host_name</span><span class='comma'>,</span> <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_ssh_options'>ssh_options</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_sftp identifier id'>sftp</span>
+  <span class='rubyid_@sftp ivar id'>@sftp</span> <span class='opasgn op'>||=</span> <span class='rubyid_Net constant id'>Net</span><span class='colon2 op'>::</span><span class='rubyid_SFTP constant id'>SFTP</span><span class='dot token'>.</span><span class='rubyid_start identifier id'>start</span><span class='lparen token'>(</span><span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_host_name identifier id'>host_name</span><span class='comma token'>,</span> <span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_user identifier id'>user</span><span class='comma token'>,</span> <span class='rubyid_ssh_options identifier id'>ssh_options</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -376,9 +379,10 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/ssh/core.rb', line 10</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_ssh'>ssh</span>
-  <span class='ivar'>@ssh</span> <span class='op'>||=</span> <span class='const'>Net</span><span class='op'>::</span><span class='const'>SSH</span><span class='period'>.</span><span class='id identifier rubyid_start'>start</span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_host_name'>host_name</span><span class='comma'>,</span> <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_ssh_options'>ssh_options</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_ssh identifier id'>ssh</span>
+  <span class='rubyid_@ssh ivar id'>@ssh</span> <span class='opasgn op'>||=</span> <span class='rubyid_Net constant id'>Net</span><span class='colon2 op'>::</span><span class='rubyid_SSH constant id'>SSH</span><span class='dot token'>.</span><span class='rubyid_start identifier id'>start</span><span class='lparen token'>(</span><span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_host_name identifier id'>host_name</span><span class='comma token'>,</span> <span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_user identifier id'>user</span><span class='comma token'>,</span> <span class='rubyid_ssh_options identifier id'>ssh_options</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -389,9 +393,9 @@
 </div>
 
     <div id="footer">
-  Generated on Sun Jun 30 17:38:10 2013 by
+  Generated on Sun Jun 30 18:24:21 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6.2 (ruby-1.9.3).
+  0.8.6.2 (ruby-1.8.7).
 </div>
 
   </body>

@@ -253,21 +253,22 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/pty.rb', line 23</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_spawn'>spawn</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='kw'>begin</span>
-    <span class='op'>::</span><span class='const'>PTY</span><span class='period'>.</span><span class='id identifier rubyid_spawn'>spawn</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_reader'>reader</span><span class='comma'>,</span> <span class='id identifier rubyid_writer'>writer</span><span class='comma'>,</span> <span class='id identifier rubyid_pid'>pid</span><span class='op'>|</span>
-      <span class='kw'>begin</span>
-        <span class='id identifier rubyid_block_given?'>block_given?</span> <span class='kw'>and</span> <span class='kw'>yield</span><span class='lparen'>(</span><span class='id identifier rubyid_reader'>reader</span><span class='comma'>,</span> <span class='id identifier rubyid_writer'>writer</span><span class='comma'>,</span> <span class='id identifier rubyid_pid'>pid</span><span class='rparen'>)</span>
-      <span class='kw'>rescue</span> <span class='const'>Errno</span><span class='op'>::</span><span class='const'>EIO</span>
-      <span class='kw'>ensure</span>
-        <span class='op'>::</span><span class='const'>Process</span><span class='period'>.</span><span class='id identifier rubyid_wait'>wait</span><span class='lparen'>(</span><span class='id identifier rubyid_pid'>pid</span><span class='rparen'>)</span>
-      <span class='kw'>end</span>
-    <span class='kw'>end</span>
-  <span class='kw'>rescue</span> <span class='op'>::</span><span class='const'>PTY</span><span class='op'>::</span><span class='const'>ChildExited</span>
-  <span class='kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_spawn identifier id'>spawn</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='rubyid_begin begin kw'>begin</span>
+    <span class='colon3 op'>::</span><span class='rubyid_PTY constant id'>PTY</span><span class='dot token'>.</span><span class='rubyid_spawn identifier id'>spawn</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_reader identifier id'>reader</span><span class='comma token'>,</span> <span class='rubyid_writer identifier id'>writer</span><span class='comma token'>,</span> <span class='rubyid_pid identifier id'>pid</span><span class='bitor op'>|</span>
+      <span class='rubyid_begin begin kw'>begin</span>
+        <span class='rubyid_block_given? fid id'>block_given?</span> <span class='rubyid_and and kw'>and</span> <span class='rubyid_yield yield kw'>yield</span><span class='lparen token'>(</span><span class='rubyid_reader identifier id'>reader</span><span class='comma token'>,</span> <span class='rubyid_writer identifier id'>writer</span><span class='comma token'>,</span> <span class='rubyid_pid identifier id'>pid</span><span class='rparen token'>)</span>
+      <span class='rubyid_rescue rescue kw'>rescue</span> <span class='rubyid_Errno constant id'>Errno</span><span class='colon2 op'>::</span><span class='rubyid_EIO constant id'>EIO</span>
+      <span class='rubyid_ensure ensure kw'>ensure</span>
+        <span class='colon3 op'>::</span><span class='rubyid_Process constant id'>Process</span><span class='dot token'>.</span><span class='rubyid_wait identifier id'>wait</span><span class='lparen token'>(</span><span class='rubyid_pid identifier id'>pid</span><span class='rparen token'>)</span>
+      <span class='rubyid_end end kw'>end</span>
+    <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_rescue rescue kw'>rescue</span> <span class='colon2 op'>::</span><span class='rubyid_PTY constant id'>PTY</span><span class='colon2 op'>::</span><span class='rubyid_ChildExited constant id'>ChildExited</span>
+  <span class='rubyid_end end kw'>end</span>
 
-  <span class='kw'>true</span>
-<span class='kw'>end</span></pre>
+  <span class='rubyid_true true kw'>true</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -278,9 +279,9 @@
 </div>
 
     <div id="footer">
-  Generated on Sun Jun 30 17:38:12 2013 by
+  Generated on Sun Jun 30 18:24:24 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6.2 (ruby-1.9.3).
+  0.8.6.2 (ruby-1.8.7).
 </div>
 
   </body>

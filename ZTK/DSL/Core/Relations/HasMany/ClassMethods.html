@@ -238,110 +238,65 @@
 92
 93
 94
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118</pre>
+95</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/relations/has_many.rb', line 43</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_has_many'>has_many</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_has_many_relations'>has_many_relations</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbrace'>{</span>
-    <span class='symbol'>:class_name</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_classify'>classify</span><span class='comma'>,</span>
-    <span class='symbol'>:key</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_key'>key</span>
-  <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_has_many identifier id'>has_many</span><span class='lparen token'>(</span><span class='rubyid_key identifier id'>key</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='rubyid_has_many_relations identifier id'>has_many_relations</span><span class='lbrack token'>[</span><span class='rubyid_key identifier id'>key</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span>
+    <span class='symbol val'>:class_name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_key identifier id'>key</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='rubyid_classify identifier id'>classify</span><span class='comma token'>,</span>
+    <span class='symbol val'>:key</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_key identifier id'>key</span>
+  <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='rubyid_merge identifier id'>merge</span><span class='lparen token'>(</span><span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span>
 
-<span class='comment'>################################################################################
-</span>
-  <span class='comment'># Ruby-1.8.7 Logic:
-</span>  <span class='comment'>####################
-</span>  <span class='id identifier rubyid_module_eval'>module_eval</span> <span class='heredoc_beg'>&lt;&lt;-CODE</span><span class='comma'>,</span> <span class='kw'>__FILE__</span><span class='comma'>,</span> <span class='kw'>__LINE__</span> <span class='op'>+</span> <span class='int'>1</span>
-<span class='tstring_content'>    def </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='rbrace'>}</span><span class='tstring_content'>(*args)
-      if args.count == 0
-        get_has_many_reference(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>)
-      else
-        send(&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='rbrace'>}</span><span class='tstring_content'>=&quot;, *args)
-      end
-    end
-</span><span class='heredoc_end'>  CODE
-</span>
-  <span class='comment'># &gt; Ruby-1.8.7 Logic:
-</span>  <span class='comment'>######################
-</span>  <span class='comment'># define_method(key) do |*args|
-</span>  <span class='comment'>#   if args.count == 0
-</span>  <span class='comment'>#     get_has_many_reference(key)
-</span>  <span class='comment'>#   else
-</span>  <span class='comment'>#     send(&quot;#{key}=&quot;, *args)
-</span>  <span class='comment'>#   end
-</span>  <span class='comment'># end
-</span>
-<span class='comment'>################################################################################
-</span>
-  <span class='comment'># Ruby-1.8.7 Logic:
-</span>  <span class='comment'>####################
-</span>  <span class='id identifier rubyid_module_eval'>module_eval</span> <span class='heredoc_beg'>&lt;&lt;-CODE</span><span class='comma'>,</span> <span class='kw'>__FILE__</span><span class='comma'>,</span> <span class='kw'>__LINE__</span> <span class='op'>+</span> <span class='int'>1</span>
-<span class='tstring_content'>    def </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='rbrace'>}</span><span class='tstring_content'>=(value)
-      set_has_many_reference(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>, value)
-    end
-</span><span class='heredoc_end'>  CODE
-</span>
-  <span class='comment'># &gt; Ruby-1.8.7 Logic:
-</span>  <span class='comment'>######################
-</span>  <span class='comment'># define_method(&quot;#{key}=&quot;) do |value|
-</span>  <span class='comment'>#   set_has_many_reference(key, value)
-</span>  <span class='comment'># end
-</span>
-<span class='comment'>################################################################################
-</span>
-  <span class='comment'># Ruby-1.8.7 Logic:
-</span>  <span class='comment'>####################
-</span>  <span class='id identifier rubyid_module_eval'>module_eval</span> <span class='heredoc_beg'>&lt;&lt;-CODE</span><span class='comma'>,</span> <span class='kw'>__FILE__</span><span class='comma'>,</span> <span class='kw'>__LINE__</span> <span class='op'>+</span> <span class='int'>1</span>
-<span class='tstring_content'>    def </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_singularize'>singularize</span><span class='rbrace'>}</span><span class='tstring_content'>(id=nil, &amp;block)
-      options = self.class.has_many_relations[</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>]
-      data = options[:class_name].constantize.new(id, &amp;block)
-      get_has_many_reference(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>) &lt;&lt; data
+<span class='comment val'>################################################################################</span>
 
-      klass = self.class.to_s.demodulize.singularize.downcase + '='
+  <span class='comment val'># Ruby-1.8.7 Logic:</span>
+  <span class='comment val'>####################</span>
+  <span class='rubyid_module_eval identifier id'>module_eval</span> <span class='string val'>&quot;def \#{key}(*args)\nif args.count == 0\nget_has_many_reference(\#{key.inspect})\nelse\nsend(\&quot;\#{key}=\&quot;, *args)\nend\nend\n&quot;</span><span class='comma token'>,</span> <span class='rubyid___FILE__ __file__ kw'>__FILE__</span><span class='comma token'>,</span> <span class='rubyid___LINE__ __line__ kw'>__LINE__</span> <span class='plus op'>+</span> <span class='integer val'>1</span>
 
-      data.send(klass, self)
-      data
-    end
-</span><span class='heredoc_end'>  CODE
-</span>
-  <span class='comment'># &gt; Ruby-1.8.7 Logic:
-</span>  <span class='comment'>######################
-</span>  <span class='comment'># define_method(key.to_s.singularize) do |id=nil, &amp;block|
-</span>  <span class='comment'>#   options = self.class.has_many_relations[key]
-</span>  <span class='comment'>#   data = options[:class_name].constantize.new(id, &amp;block)
-</span>  <span class='comment'>#   get_has_many_reference(key) &lt;&lt; data
-</span>
-  <span class='comment'>#   klass = self.class.to_s.demodulize.singularize.downcase
-</span>
-  <span class='comment'>#   data.send(&quot;#{klass}=&quot;, self)
-</span>  <span class='comment'>#   data
-</span>  <span class='comment'># end
-</span><span class='kw'>end</span></pre>
+  <span class='comment val'># &gt; Ruby-1.8.7 Logic:</span>
+  <span class='comment val'>######################</span>
+  <span class='comment val'># define_method(key) do |*args|</span>
+  <span class='comment val'>#   if args.count == 0</span>
+  <span class='comment val'>#     get_has_many_reference(key)</span>
+  <span class='comment val'>#   else</span>
+  <span class='comment val'>#     send(&quot;#{key}=&quot;, *args)</span>
+  <span class='comment val'>#   end</span>
+  <span class='comment val'># end</span>
+
+<span class='comment val'>################################################################################</span>
+
+  <span class='comment val'># Ruby-1.8.7 Logic:</span>
+  <span class='comment val'>####################</span>
+  <span class='rubyid_module_eval identifier id'>module_eval</span> <span class='string val'>&quot;def \#{key}=(value)\nset_has_many_reference(\#{key.inspect}, value)\nend\n&quot;</span><span class='comma token'>,</span> <span class='rubyid___FILE__ __file__ kw'>__FILE__</span><span class='comma token'>,</span> <span class='rubyid___LINE__ __line__ kw'>__LINE__</span> <span class='plus op'>+</span> <span class='integer val'>1</span>
+
+  <span class='comment val'># &gt; Ruby-1.8.7 Logic:</span>
+  <span class='comment val'>######################</span>
+  <span class='comment val'># define_method(&quot;#{key}=&quot;) do |value|</span>
+  <span class='comment val'>#   set_has_many_reference(key, value)</span>
+  <span class='comment val'># end</span>
+
+<span class='comment val'>################################################################################</span>
+
+  <span class='comment val'># Ruby-1.8.7 Logic:</span>
+  <span class='comment val'>####################</span>
+  <span class='rubyid_module_eval identifier id'>module_eval</span> <span class='string val'>&quot;def \#{key.to_s.singularize}(id=nil, &amp;block)\noptions = self.class.has_many_relations[\#{key.inspect}]\ndata = options[:class_name].constantize.new(id, &amp;block)\nget_has_many_reference(\#{key.inspect}) &lt;&lt; data\n\nklass = self.class.to_s.demodulize.singularize.downcase + '='\n\ndata.send(klass, self)\ndata\nend\n&quot;</span><span class='comma token'>,</span> <span class='rubyid___FILE__ __file__ kw'>__FILE__</span><span class='comma token'>,</span> <span class='rubyid___LINE__ __line__ kw'>__LINE__</span> <span class='plus op'>+</span> <span class='integer val'>1</span>
+
+  <span class='comment val'># &gt; Ruby-1.8.7 Logic:</span>
+  <span class='comment val'>######################</span>
+  <span class='comment val'># define_method(key.to_s.singularize) do |id=nil, &amp;block|</span>
+  <span class='comment val'>#   options = self.class.has_many_relations[key]</span>
+  <span class='comment val'>#   data = options[:class_name].constantize.new(id, &amp;block)</span>
+  <span class='comment val'>#   get_has_many_reference(key) &lt;&lt; data</span>
+
+  <span class='comment val'>#   klass = self.class.to_s.demodulize.singularize.downcase</span>
+
+  <span class='comment val'>#   data.send(&quot;#{klass}=&quot;, self)</span>
+  <span class='comment val'>#   data</span>
+  <span class='comment val'># end</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -352,9 +307,9 @@
 </div>
 
     <div id="footer">
-  Generated on Sun Jun 30 17:38:11 2013 by
+  Generated on Sun Jun 30 18:24:23 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6.2 (ruby-1.9.3).
+  0.8.6.2 (ruby-1.8.7).
 </div>
 
   </body>

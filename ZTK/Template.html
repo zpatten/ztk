@@ -105,9 +105,9 @@
 
 <p>Given a template like this (i.e. &quot;template.erb&quot;):</p>
 
-<pre class="code ruby"><code class="ruby">This is a test template!
-&lt;%= @variable %&gt;
-</code></pre>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_This constant id'>This</span> <span class='rubyid_is identifier id'>is</span> <span class='rubyid_a identifier id'>a</span> <span class='rubyid_test identifier id'>test</span> <span class='rubyid_template! fid id'>template!</span>
+<span class='lt op'>&lt;</span><span class='string val'>%= @variable %&gt;
+</span></code></pre>
 
 <p>We can do this:</p>
 
@@ -115,8 +115,8 @@
 
 <p>And get:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='const'>This</span> <span class='id identifier rubyid_is'>is</span> <span class='id identifier rubyid_a'>a</span> <span class='id identifier rubyid_test'>test</span> <span class='id identifier rubyid_template!'>template!</span>
-<span class='const'>Hello</span> <span class='const'>World</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_This constant id'>This</span> <span class='rubyid_is identifier id'>is</span> <span class='rubyid_a identifier id'>a</span> <span class='rubyid_test identifier id'>test</span> <span class='rubyid_template! fid id'>template!</span>
+<span class='rubyid_Hello constant id'>Hello</span> <span class='rubyid_World constant id'>World</span>
 </code></pre>
 
 
@@ -327,23 +327,24 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/template.rb', line 48</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_do_not_edit_notice'>do_not_edit_notice</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:message</span><span class='rbracket'>]</span>
-  <span class='id identifier rubyid_char'>char</span>    <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:char</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>#</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_notice'>notice</span>  <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_do_not_edit_notice identifier id'>do_not_edit_notice</span><span class='lparen token'>(</span><span class='rubyid_options identifier id'>options</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='rubyid_message identifier id'>message</span> <span class='assign token'>=</span> <span class='rubyid_options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:message</span><span class='rbrack token'>]</span>
+  <span class='rubyid_char identifier id'>char</span>    <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='rubyid_options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:char</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='string val'>'#'</span><span class='rparen token'>)</span>
+  <span class='rubyid_notice identifier id'>notice</span>  <span class='assign token'>=</span> <span class='rubyid_Array constant id'>Array</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span>
 
-  <span class='id identifier rubyid_notice'>notice</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_char'>char</span>
-  <span class='id identifier rubyid_notice'>notice</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_char'>char</span><span class='rbrace'>}</span><span class='tstring_content'> WARNING: AUTOMATICALLY GENERATED FILE; DO NOT EDIT!</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
-    <span class='id identifier rubyid_notice'>notice</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_char'>char</span>
-    <span class='id identifier rubyid_notice'>notice</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_char'>char</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_message'>message</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>end</span>
-  <span class='id identifier rubyid_notice'>notice</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_char'>char</span>
-  <span class='id identifier rubyid_notice'>notice</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_char'>char</span><span class='rbrace'>}</span><span class='tstring_content'> Generated @ </span><span class='embexpr_beg'>#{</span><span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='period'>.</span><span class='id identifier rubyid_utc'>utc</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
-  <span class='id identifier rubyid_notice'>notice</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_char'>char</span>
+  <span class='rubyid_notice identifier id'>notice</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_char identifier id'>char</span>
+  <span class='rubyid_notice identifier id'>notice</span> <span class='lshft op'>&lt;&lt;</span> <span class='dstring node'>&quot;#{char} WARNING: AUTOMATICALLY GENERATED FILE; DO NOT EDIT!&quot;</span>
+  <span class='rubyid_if if kw'>if</span> <span class='notop op'>!</span><span class='rubyid_message identifier id'>message</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span>
+    <span class='rubyid_notice identifier id'>notice</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_char identifier id'>char</span>
+    <span class='rubyid_notice identifier id'>notice</span> <span class='lshft op'>&lt;&lt;</span> <span class='dstring node'>&quot;#{char} #{message}&quot;</span>
+  <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_notice identifier id'>notice</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_char identifier id'>char</span>
+  <span class='rubyid_notice identifier id'>notice</span> <span class='lshft op'>&lt;&lt;</span> <span class='dstring node'>&quot;#{char} Generated @ #{Time.now.utc}&quot;</span>
+  <span class='rubyid_notice identifier id'>notice</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_char identifier id'>char</span>
 
-  <span class='id identifier rubyid_notice'>notice</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+  <span class='rubyid_notice identifier id'>notice</span><span class='dot token'>.</span><span class='rubyid_join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>&quot;\n&quot;</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -434,9 +435,10 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/template.rb', line 37</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_render'>render</span><span class='lparen'>(</span><span class='id identifier rubyid_template'>template</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_render_template'>render_template</span><span class='lparen'>(</span><span class='id identifier rubyid_load_template'>load_template</span><span class='lparen'>(</span><span class='id identifier rubyid_template'>template</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_render identifier id'>render</span><span class='lparen token'>(</span><span class='rubyid_template identifier id'>template</span><span class='comma token'>,</span> <span class='rubyid_context identifier id'>context</span><span class='assign token'>=</span><span class='rubyid_nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='rubyid_render_template identifier id'>render_template</span><span class='lparen token'>(</span><span class='rubyid_load_template identifier id'>load_template</span><span class='lparen token'>(</span><span class='rubyid_template identifier id'>template</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='rubyid_context identifier id'>context</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -447,9 +449,9 @@
 </div>
 
     <div id="footer">
-  Generated on Sun Jun 30 17:38:12 2013 by
+  Generated on Sun Jun 30 18:24:25 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6.2 (ruby-1.9.3).
+  0.8.6.2 (ruby-1.8.7).
 </div>
 
   </body>

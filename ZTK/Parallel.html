@@ -114,81 +114,81 @@ in the child process.</p>
 
 <p><em>example code</em>:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_a_callback'>a_callback</span> <span class='op'>=</span> <span class='const'>Proc</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_pid'>pid</span><span class='op'>|</span>
-  <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hello from After Callback - PID </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_pid'>pid</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
-<span class='kw'>end</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_a_callback identifier id'>a_callback</span> <span class='assign token'>=</span> <span class='rubyid_Proc constant id'>Proc</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_pid identifier id'>pid</span><span class='bitor op'>|</span>
+  <span class='rubyid_puts identifier id'>puts</span> <span class='dstring node'>&quot;Hello from After Callback - PID #{pid}&quot;</span>
+<span class='rubyid_end end kw'>end</span>
 
-<span class='id identifier rubyid_b_callback'>b_callback</span> <span class='op'>=</span> <span class='const'>Proc</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_pid'>pid</span><span class='op'>|</span>
-  <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hello from Before Callback - PID </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_pid'>pid</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
-<span class='kw'>end</span>
+<span class='rubyid_b_callback identifier id'>b_callback</span> <span class='assign token'>=</span> <span class='rubyid_Proc constant id'>Proc</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_pid identifier id'>pid</span><span class='bitor op'>|</span>
+  <span class='rubyid_puts identifier id'>puts</span> <span class='dstring node'>&quot;Hello from Before Callback - PID #{pid}&quot;</span>
+<span class='rubyid_end end kw'>end</span>
 
-<span class='id identifier rubyid_parallel'>parallel</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Parallel</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
-<span class='id identifier rubyid_parallel'>parallel</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_config'>config</span><span class='op'>|</span>
-  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_before_fork'>before_fork</span> <span class='op'>=</span> <span class='id identifier rubyid_b_callback'>b_callback</span>
-  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_after_fork'>after_fork</span> <span class='op'>=</span> <span class='id identifier rubyid_a_callback'>a_callback</span>
-<span class='kw'>end</span>
+<span class='rubyid_parallel identifier id'>parallel</span> <span class='assign token'>=</span> <span class='rubyid_ZTK constant id'>ZTK</span><span class='colon2 op'>::</span><span class='rubyid_Parallel constant id'>Parallel</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span>
+<span class='rubyid_parallel identifier id'>parallel</span><span class='dot token'>.</span><span class='rubyid_config identifier id'>config</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_config identifier id'>config</span><span class='bitor op'>|</span>
+  <span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_before_fork identifier id'>before_fork</span> <span class='assign token'>=</span> <span class='rubyid_b_callback identifier id'>b_callback</span>
+  <span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_after_fork identifier id'>after_fork</span> <span class='assign token'>=</span> <span class='rubyid_a_callback identifier id'>a_callback</span>
+<span class='rubyid_end end kw'>end</span>
 
-<span class='id identifier rubyid_puts'>puts</span> <span class='const'>Process</span><span class='period'>.</span><span class='id identifier rubyid_pid'>pid</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span>
+<span class='rubyid_puts identifier id'>puts</span> <span class='rubyid_Process constant id'>Process</span><span class='dot token'>.</span><span class='rubyid_pid identifier id'>pid</span><span class='dot token'>.</span><span class='rubyid_inspect identifier id'>inspect</span>
 
-<span class='int'>3</span><span class='period'>.</span><span class='id identifier rubyid_times'>times</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_x'>x</span><span class='op'>|</span>
-  <span class='id identifier rubyid_parallel'>parallel</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_x'>x</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span>
+<span class='float val'>3</span><span class='dot token'>.</span><span class='rubyid_times identifier id'>times</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_x identifier id'>x</span><span class='bitor op'>|</span>
+  <span class='rubyid_parallel identifier id'>parallel</span><span class='dot token'>.</span><span class='rubyid_process identifier id'>process</span> <span class='rubyid_do do kw'>do</span>
+    <span class='rubyid_x identifier id'>x</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 
-<span class='id identifier rubyid_parallel'>parallel</span><span class='period'>.</span><span class='id identifier rubyid_waitall'>waitall</span>
-<span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_parallel'>parallel</span><span class='period'>.</span><span class='id identifier rubyid_results'>results</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span>
+<span class='rubyid_parallel identifier id'>parallel</span><span class='dot token'>.</span><span class='rubyid_waitall identifier id'>waitall</span>
+<span class='rubyid_puts identifier id'>puts</span> <span class='rubyid_parallel identifier id'>parallel</span><span class='dot token'>.</span><span class='rubyid_results identifier id'>results</span><span class='dot token'>.</span><span class='rubyid_inspect identifier id'>inspect</span>
 </code></pre>
 
 <p><em>pry output</em>:</p>
 
-<pre class="code ruby"><code class="ruby">[1] pry(main)&gt; a_callback = Proc.new do |pid|
-[1] pry(main)*   puts &quot;Hello from After Callback - PID #{pid}&quot;
-[1] pry(main)* end
-=&gt; #&lt;Proc:0x000000015a8768@(pry):1&gt;
-[2] pry(main)&gt;
-[3] pry(main)&gt; b_callback = Proc.new do |pid|
-[3] pry(main)*   puts &quot;Hello from Before Callback - PID #{pid}&quot;
-[3] pry(main)* end
-=&gt; #&lt;Proc:0x000000012910e8@(pry):4&gt;
-[4] pry(main)&gt;
-[5] pry(main)&gt; parallel = ZTK::Parallel.new
-=&gt; #&lt;ZTK::Parallel:0x000000015a9d48
- @config=
-  #&lt;OpenStruct stdout=#&lt;IO:&lt;STDOUT&gt;&gt;, stderr=#&lt;IO:&lt;STDERR&gt;&gt;, stdin=#&lt;IO:&lt;STDIN&gt;&gt;, logger=#&lt;ZTK::Logger filename=&quot;/dev/null&quot;&gt;, max_forks=12&gt;,
- @forks=[],
- @results=[]&gt;
-[6] pry(main)&gt; parallel.config do |config|
-[6] pry(main)*   config.before_fork = b_callback
-[6] pry(main)*   config.after_fork = a_callback
-[6] pry(main)* end
-=&gt; #&lt;Proc:0x000000015a8768@(pry):1&gt;
-[7] pry(main)&gt;
-[8] pry(main)&gt; puts Process.pid.inspect
-24761
-=&gt; nil
-[9] pry(main)&gt;
-[10] pry(main)&gt; 3.times do |x|
-[10] pry(main)*   parallel.process do
-[10] pry(main)*     x
-[10] pry(main)*   end
-[10] pry(main)* end
-Hello from Before Callback - PID 24761
-Hello from After Callback - PID 24761
-Hello from Before Callback - PID 24761
-Hello from After Callback - PID 24776
-Hello from After Callback - PID 24761
-Hello from Before Callback - PID 24761
-Hello from After Callback - PID 24779
-Hello from After Callback - PID 24761
-Hello from After Callback - PID 24782
-=&gt; 3
-[11] pry(main)&gt;
-[12] pry(main)&gt; parallel.waitall
-=&gt; [0, 1, 2]
-[13] pry(main)&gt; puts parallel.results.inspect
-[0, 1, 2]
-=&gt; nil
+<pre class="code ruby"><code class="ruby"><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='gt op'>&gt;</span> <span class='rubyid_a_callback identifier id'>a_callback</span> <span class='assign token'>=</span> <span class='rubyid_Proc constant id'>Proc</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_pid identifier id'>pid</span><span class='bitor op'>|</span>
+<span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>   <span class='rubyid_puts identifier id'>puts</span> <span class='dstring node'>&quot;Hello from After Callback - PID #{pid}&quot;</span>
+<span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span> <span class='rubyid_end end kw'>end</span>
+<span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='comment val'>#&lt;Proc:0x000000015a8768@(pry):1&gt;</span>
+<span class='lbrack token'>[</span><span class='integer val'>2</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='gt op'>&gt;</span>
+<span class='lbrack token'>[</span><span class='integer val'>3</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='gt op'>&gt;</span> <span class='rubyid_b_callback identifier id'>b_callback</span> <span class='assign token'>=</span> <span class='rubyid_Proc constant id'>Proc</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_pid identifier id'>pid</span><span class='bitor op'>|</span>
+<span class='lbrack token'>[</span><span class='integer val'>3</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>   <span class='rubyid_puts identifier id'>puts</span> <span class='dstring node'>&quot;Hello from Before Callback - PID #{pid}&quot;</span>
+<span class='lbrack token'>[</span><span class='integer val'>3</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span> <span class='rubyid_end end kw'>end</span>
+<span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='comment val'>#&lt;Proc:0x000000012910e8@(pry):4&gt;</span>
+<span class='lbrack token'>[</span><span class='integer val'>4</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='gt op'>&gt;</span>
+<span class='lbrack token'>[</span><span class='integer val'>5</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='gt op'>&gt;</span> <span class='rubyid_parallel identifier id'>parallel</span> <span class='assign token'>=</span> <span class='rubyid_ZTK constant id'>ZTK</span><span class='colon2 op'>::</span><span class='rubyid_Parallel constant id'>Parallel</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span>
+<span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='comment val'>#&lt;ZTK::Parallel:0x000000015a9d48</span>
+ <span class='rubyid_@config ivar id'>@config</span><span class='assign token'>=</span>
+  <span class='comment val'>#&lt;OpenStruct stdout=#&lt;IO:&lt;STDOUT&gt;&gt;, stderr=#&lt;IO:&lt;STDERR&gt;&gt;, stdin=#&lt;IO:&lt;STDIN&gt;&gt;, logger=#&lt;ZTK::Logger filename=&quot;/dev/null&quot;&gt;, max_forks=12&gt;,</span>
+ <span class='rubyid_@forks ivar id'>@forks</span><span class='assign token'>=</span><span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+ <span class='rubyid_@results ivar id'>@results</span><span class='assign token'>=</span><span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='gt op'>&gt;</span>
+<span class='lbrack token'>[</span><span class='integer val'>6</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='gt op'>&gt;</span> <span class='rubyid_parallel identifier id'>parallel</span><span class='dot token'>.</span><span class='rubyid_config identifier id'>config</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_config identifier id'>config</span><span class='bitor op'>|</span>
+<span class='lbrack token'>[</span><span class='integer val'>6</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>   <span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_before_fork identifier id'>before_fork</span> <span class='assign token'>=</span> <span class='rubyid_b_callback identifier id'>b_callback</span>
+<span class='lbrack token'>[</span><span class='integer val'>6</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>   <span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_after_fork identifier id'>after_fork</span> <span class='assign token'>=</span> <span class='rubyid_a_callback identifier id'>a_callback</span>
+<span class='lbrack token'>[</span><span class='integer val'>6</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span> <span class='rubyid_end end kw'>end</span>
+<span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='comment val'>#&lt;Proc:0x000000015a8768@(pry):1&gt;</span>
+<span class='lbrack token'>[</span><span class='integer val'>7</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='gt op'>&gt;</span>
+<span class='lbrack token'>[</span><span class='integer val'>8</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='gt op'>&gt;</span> <span class='rubyid_puts identifier id'>puts</span> <span class='rubyid_Process constant id'>Process</span><span class='dot token'>.</span><span class='rubyid_pid identifier id'>pid</span><span class='dot token'>.</span><span class='rubyid_inspect identifier id'>inspect</span>
+<span class='integer val'>24761</span>
+<span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_nil nil kw'>nil</span>
+<span class='lbrack token'>[</span><span class='integer val'>9</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='gt op'>&gt;</span>
+<span class='lbrack token'>[</span><span class='integer val'>10</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='gt op'>&gt;</span> <span class='float val'>3</span><span class='dot token'>.</span><span class='rubyid_times identifier id'>times</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_x identifier id'>x</span><span class='bitor op'>|</span>
+<span class='lbrack token'>[</span><span class='integer val'>10</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>   <span class='rubyid_parallel identifier id'>parallel</span><span class='dot token'>.</span><span class='rubyid_process identifier id'>process</span> <span class='rubyid_do do kw'>do</span>
+<span class='lbrack token'>[</span><span class='integer val'>10</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>     <span class='rubyid_x identifier id'>x</span>
+<span class='lbrack token'>[</span><span class='integer val'>10</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>   <span class='rubyid_end end kw'>end</span>
+<span class='lbrack token'>[</span><span class='integer val'>10</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span> <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_Hello constant id'>Hello</span> <span class='rubyid_from identifier id'>from</span> <span class='rubyid_Before constant id'>Before</span> <span class='rubyid_Callback constant id'>Callback</span> <span class='minus op'>-</span> <span class='rubyid_PID constant id'>PID</span> <span class='integer val'>24761</span>
+<span class='rubyid_Hello constant id'>Hello</span> <span class='rubyid_from identifier id'>from</span> <span class='rubyid_After constant id'>After</span> <span class='rubyid_Callback constant id'>Callback</span> <span class='minus op'>-</span> <span class='rubyid_PID constant id'>PID</span> <span class='integer val'>24761</span>
+<span class='rubyid_Hello constant id'>Hello</span> <span class='rubyid_from identifier id'>from</span> <span class='rubyid_Before constant id'>Before</span> <span class='rubyid_Callback constant id'>Callback</span> <span class='minus op'>-</span> <span class='rubyid_PID constant id'>PID</span> <span class='integer val'>24761</span>
+<span class='rubyid_Hello constant id'>Hello</span> <span class='rubyid_from identifier id'>from</span> <span class='rubyid_After constant id'>After</span> <span class='rubyid_Callback constant id'>Callback</span> <span class='minus op'>-</span> <span class='rubyid_PID constant id'>PID</span> <span class='integer val'>24776</span>
+<span class='rubyid_Hello constant id'>Hello</span> <span class='rubyid_from identifier id'>from</span> <span class='rubyid_After constant id'>After</span> <span class='rubyid_Callback constant id'>Callback</span> <span class='minus op'>-</span> <span class='rubyid_PID constant id'>PID</span> <span class='integer val'>24761</span>
+<span class='rubyid_Hello constant id'>Hello</span> <span class='rubyid_from identifier id'>from</span> <span class='rubyid_Before constant id'>Before</span> <span class='rubyid_Callback constant id'>Callback</span> <span class='minus op'>-</span> <span class='rubyid_PID constant id'>PID</span> <span class='integer val'>24761</span>
+<span class='rubyid_Hello constant id'>Hello</span> <span class='rubyid_from identifier id'>from</span> <span class='rubyid_After constant id'>After</span> <span class='rubyid_Callback constant id'>Callback</span> <span class='minus op'>-</span> <span class='rubyid_PID constant id'>PID</span> <span class='integer val'>24779</span>
+<span class='rubyid_Hello constant id'>Hello</span> <span class='rubyid_from identifier id'>from</span> <span class='rubyid_After constant id'>After</span> <span class='rubyid_Callback constant id'>Callback</span> <span class='minus op'>-</span> <span class='rubyid_PID constant id'>PID</span> <span class='integer val'>24761</span>
+<span class='rubyid_Hello constant id'>Hello</span> <span class='rubyid_from identifier id'>from</span> <span class='rubyid_After constant id'>After</span> <span class='rubyid_Callback constant id'>Callback</span> <span class='minus op'>-</span> <span class='rubyid_PID constant id'>PID</span> <span class='integer val'>24782</span>
+<span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>3</span>
+<span class='lbrack token'>[</span><span class='integer val'>11</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='gt op'>&gt;</span>
+<span class='lbrack token'>[</span><span class='integer val'>12</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='gt op'>&gt;</span> <span class='rubyid_parallel identifier id'>parallel</span><span class='dot token'>.</span><span class='rubyid_waitall identifier id'>waitall</span>
+<span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='integer val'>0</span><span class='comma token'>,</span> <span class='integer val'>1</span><span class='comma token'>,</span> <span class='integer val'>2</span><span class='rbrack token'>]</span>
+<span class='lbrack token'>[</span><span class='integer val'>13</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='gt op'>&gt;</span> <span class='rubyid_puts identifier id'>puts</span> <span class='rubyid_parallel identifier id'>parallel</span><span class='dot token'>.</span><span class='rubyid_results identifier id'>results</span><span class='dot token'>.</span><span class='rubyid_inspect identifier id'>inspect</span>
+<span class='lbrack token'>[</span><span class='integer val'>0</span><span class='comma token'>,</span> <span class='integer val'>1</span><span class='comma token'>,</span> <span class='integer val'>2</span><span class='rbrack token'>]</span>
+<span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_nil nil kw'>nil</span>
 </code></pre>
 
 
@@ -230,12 +230,8 @@ Hello from After Callback - PID 24782
 
 </div>
         </dt>
-        <dd><pre class="code"><span class='kw'>case</span> <span class='const'>RUBY_PLATFORM</span>
-<span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>darwin</span><span class='regexp_end'>/</span></span> <span class='kw'>then</span>
-  <span class='backtick'>%x(</span><span class='tstring_content'> sysctl hw.ncpu </span><span class='tstring_end'>)</span></span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>:</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
-<span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>linux</span><span class='regexp_end'>/</span></span> <span class='kw'>then</span>
-  <span class='backtick'>%x(</span><span class='tstring_content'> grep -c processor /proc/cpuinfo </span><span class='tstring_end'>)</span></span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
-<span class='kw'>end</span></pre></dd>
+        <dd><pre class="code"><span class='rubyid_case case kw'>case</span> <span class='rubyid_RUBY_PLATFORM constant id'>RUBY_PLATFORM</span>
+</pre></dd>
       
         <dt id="MAX_MEMORY-constant" class="">MAX_MEMORY =
           <div class="docstring">
@@ -250,12 +246,8 @@ Hello from After Callback - PID 24782
 
 </div>
         </dt>
-        <dd><pre class="code"><span class='kw'>case</span> <span class='const'>RUBY_PLATFORM</span>
-<span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>darwin</span><span class='regexp_end'>/</span></span> <span class='kw'>then</span>
-  <span class='backtick'>%x(</span><span class='tstring_content'> sysctl hw.memsize </span><span class='tstring_end'>)</span></span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
-<span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>linux</span><span class='regexp_end'>/</span></span> <span class='kw'>then</span>
-  <span class='lparen'>(</span><span class='backtick'>%x(</span><span class='tstring_content'> grep MemTotal /proc/meminfo </span><span class='tstring_end'>)</span></span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>*</span> <span class='int'>1024</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre></dd>
+        <dd><pre class="code"><span class='rubyid_case case kw'>case</span> <span class='rubyid_RUBY_PLATFORM constant id'>RUBY_PLATFORM</span>
+</pre></dd>
       
     </dl>
   
@@ -520,18 +512,19 @@ Hello from After Callback - PID 24782
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/parallel.rb', line 122</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_configuration'>configuration</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='kw'>super</span><span class='lparen'>(</span><span class='lbrace'>{</span>
-    <span class='symbol'>:max_forks</span> <span class='op'>=&gt;</span> <span class='const'>MAX_FORKS</span>
-  <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_configuration'>configuration</span><span class='rparen'>)</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>config=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:table</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='rubyid_configuration identifier id'>configuration</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='rubyid_super super kw'>super</span><span class='lparen token'>(</span><span class='lbrace token'>{</span>
+    <span class='symbol val'>:max_forks</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_MAX_FORKS constant id'>MAX_FORKS</span>
+  <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='rubyid_merge identifier id'>merge</span><span class='lparen token'>(</span><span class='rubyid_configuration identifier id'>configuration</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_ui identifier id'>ui</span><span class='dot token'>.</span><span class='rubyid_logger identifier id'>logger</span><span class='dot token'>.</span><span class='rubyid_debug identifier id'>debug</span> <span class='lbrace token'>{</span> <span class='dstring node'>&quot;config=#{config.send(:table).inspect}&quot;</span> <span class='rbrace token'>}</span>
 
-  <span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_max_forks'>max_forks</span> <span class='op'>&lt;</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='id identifier rubyid_log_and_raise'>log_and_raise</span><span class='lparen'>(</span><span class='const'>ParallelError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>max_forks must be equal to or greater than one!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='lparen token'>(</span><span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_max_forks identifier id'>max_forks</span> <span class='lt op'>&lt;</span> <span class='integer val'>1</span><span class='rparen token'>)</span> <span class='rubyid_and and kw'>and</span> <span class='rubyid_log_and_raise identifier id'>log_and_raise</span><span class='lparen token'>(</span><span class='rubyid_ParallelError constant id'>ParallelError</span><span class='comma token'>,</span> <span class='string val'>&quot;max_forks must be equal to or greater than one!&quot;</span><span class='rparen token'>)</span>
 
-  <span class='ivar'>@forks</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
-  <span class='ivar'>@results</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
-  <span class='const'>GC</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:copy_on_write_friendly=</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='const'>GC</span><span class='period'>.</span><span class='id identifier rubyid_copy_on_write_friendly'>copy_on_write_friendly</span> <span class='op'>=</span> <span class='kw'>true</span>
-<span class='kw'>end</span></pre>
+  <span class='rubyid_@forks ivar id'>@forks</span> <span class='assign token'>=</span> <span class='rubyid_Array constant id'>Array</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span>
+  <span class='rubyid_@results ivar id'>@results</span> <span class='assign token'>=</span> <span class='rubyid_Array constant id'>Array</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span>
+  <span class='rubyid_GC constant id'>GC</span><span class='dot token'>.</span><span class='rubyid_respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:copy_on_write_friendly=</span><span class='rparen token'>)</span> <span class='rubyid_and and kw'>and</span> <span class='rubyid_GC constant id'>GC</span><span class='dot token'>.</span><span class='rubyid_copy_on_write_friendly identifier id'>copy_on_write_friendly</span> <span class='assign token'>=</span> <span class='rubyid_true true kw'>true</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -576,9 +569,10 @@ Hello from After Callback - PID 24782
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/parallel.rb', line 116</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_results'>results</span>
-  <span class='ivar'>@results</span>
-<span class='kw'>end</span></pre>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_results identifier id'>results</span>
+  <span class='rubyid_@results ivar id'>@results</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -641,10 +635,11 @@ Hello from After Callback - PID 24782
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/parallel.rb', line 219</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_count'>count</span>
-  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>count(</span><span class='embexpr_beg'>#{</span><span class='ivar'>@forks</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='rbrace'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
-  <span class='ivar'>@forks</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span>
-<span class='kw'>end</span></pre>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_count identifier id'>count</span>
+  <span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_ui identifier id'>ui</span><span class='dot token'>.</span><span class='rubyid_logger identifier id'>logger</span><span class='dot token'>.</span><span class='rubyid_debug identifier id'>debug</span> <span class='lbrace token'>{</span> <span class='dstring node'>&quot;count(#{@forks.count})&quot;</span> <span class='rbrace token'>}</span>
+  <span class='rubyid_@forks ivar id'>@forks</span><span class='dot token'>.</span><span class='rubyid_count identifier id'>count</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -764,49 +759,142 @@ the parent processes result set.</p>
 175
 176
 177
-178</pre>
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/parallel.rb', line 141</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='op'>!</span><span class='id identifier rubyid_block_given?'>block_given?</span> <span class='kw'>and</span> <span class='id identifier rubyid_log_and_raise'>log_and_raise</span><span class='lparen'>(</span><span class='const'>ParallelError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>You must supply a block to the process method!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_process identifier id'>process</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
+    <span class='notop op'>!</span><span class='rubyid_block_given? fid id'>block_given?</span> <span class='rubyid_and and kw'>and</span> <span class='rubyid_log_and_raise identifier id'>log_and_raise</span><span class='lparen token'>(</span><span class='rubyid_ParallelError constant id'>ParallelError</span><span class='comma token'>,</span> <span class='string val'>&quot;You must supply a block to the process method!&quot;</span><span class='rparen token'>)</span>
 
-  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>forks(</span><span class='embexpr_beg'>#{</span><span class='ivar'>@forks</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+    <span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_ui identifier id'>ui</span><span class='dot token'>.</span><span class='rubyid_logger identifier id'>logger</span><span class='dot token'>.</span><span class='rubyid_debug identifier id'>debug</span> <span class='lbrace token'>{</span> <span class='dstring node'>&quot;forks(#{@forks.inspect})&quot;</span> <span class='rbrace token'>}</span>
 
-  <span class='kw'>while</span> <span class='lparen'>(</span><span class='ivar'>@forks</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>&gt;=</span> <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_max_forks'>max_forks</span><span class='rparen'>)</span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_wait'>wait</span>
-  <span class='kw'>end</span>
+    <span class='rubyid_while while kw'>while</span> <span class='lparen token'>(</span><span class='rubyid_@forks ivar id'>@forks</span><span class='dot token'>.</span><span class='rubyid_count identifier id'>count</span> <span class='geq op'>&gt;=</span> <span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_max_forks identifier id'>max_forks</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span>
+      <span class='rubyid_wait identifier id'>wait</span>
+    <span class='rubyid_end end kw'>end</span>
 
-  <span class='id identifier rubyid_child_reader'>child_reader</span><span class='comma'>,</span> <span class='id identifier rubyid_parent_writer'>parent_writer</span> <span class='op'>=</span> <span class='const'>IO</span><span class='period'>.</span><span class='id identifier rubyid_pipe'>pipe</span>
-  <span class='id identifier rubyid_parent_reader'>parent_reader</span><span class='comma'>,</span> <span class='id identifier rubyid_child_writer'>child_writer</span> <span class='op'>=</span> <span class='const'>IO</span><span class='period'>.</span><span class='id identifier rubyid_pipe'>pipe</span>
+    <span class='rubyid_child_reader identifier id'>child_reader</span><span class='comma token'>,</span> <span class='rubyid_parent_writer identifier id'>parent_writer</span> <span class='assign token'>=</span> <span class='rubyid_IO constant id'>IO</span><span class='dot token'>.</span><span class='rubyid_pipe identifier id'>pipe</span>
+    <span class='rubyid_parent_reader identifier id'>parent_reader</span><span class='comma token'>,</span> <span class='rubyid_child_writer identifier id'>child_writer</span> <span class='assign token'>=</span> <span class='rubyid_IO constant id'>IO</span><span class='dot token'>.</span><span class='rubyid_pipe identifier id'>pipe</span>
 
-  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_before_fork'>before_fork</span> <span class='kw'>and</span> <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_before_fork'>before_fork</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='const'>Process</span><span class='period'>.</span><span class='id identifier rubyid_pid'>pid</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_pid'>pid</span> <span class='op'>=</span> <span class='const'>Process</span><span class='period'>.</span><span class='id identifier rubyid_fork'>fork</span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_after_fork'>after_fork</span> <span class='kw'>and</span> <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_after_fork'>after_fork</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='const'>Process</span><span class='period'>.</span><span class='id identifier rubyid_pid'>pid</span><span class='rparen'>)</span>
+    <span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_before_fork identifier id'>before_fork</span> <span class='rubyid_and and kw'>and</span> <span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_before_fork identifier id'>before_fork</span><span class='dot token'>.</span><span class='rubyid_call identifier id'>call</span><span class='lparen token'>(</span><span class='rubyid_Process constant id'>Process</span><span class='dot token'>.</span><span class='rubyid_pid identifier id'>pid</span><span class='rparen token'>)</span>
+    <span class='rubyid_pid identifier id'>pid</span> <span class='assign token'>=</span> <span class='rubyid_Process constant id'>Process</span><span class='dot token'>.</span><span class='rubyid_fork identifier id'>fork</span> <span class='rubyid_do do kw'>do</span>
+      <span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_after_fork identifier id'>after_fork</span> <span class='rubyid_and and kw'>and</span> <span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_after_fork identifier id'>after_fork</span><span class='dot token'>.</span><span class='rubyid_call identifier id'>call</span><span class='lparen token'>(</span><span class='rubyid_Process constant id'>Process</span><span class='dot token'>.</span><span class='rubyid_pid identifier id'>pid</span><span class='rparen token'>)</span>
 
-    <span class='id identifier rubyid_parent_writer'>parent_writer</span><span class='period'>.</span><span class='id identifier rubyid_close'>close</span>
-    <span class='id identifier rubyid_parent_reader'>parent_reader</span><span class='period'>.</span><span class='id identifier rubyid_close'>close</span>
+      <span class='rubyid_parent_writer identifier id'>parent_writer</span><span class='dot token'>.</span><span class='rubyid_close identifier id'>close</span>
+      <span class='rubyid_parent_reader identifier id'>parent_reader</span><span class='dot token'>.</span><span class='rubyid_close identifier id'>close</span>
 
-    <span class='kw'>if</span> <span class='op'>!</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
-      <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>write(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
-      <span class='id identifier rubyid_child_writer'>child_writer</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='const'>Base64</span><span class='period'>.</span><span class='id identifier rubyid_encode64'>encode64</span><span class='lparen'>(</span><span class='const'>Marshal</span><span class='period'>.</span><span class='id identifier rubyid_dump'>dump</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
+      <span class='rubyid_if if kw'>if</span> <span class='notop op'>!</span><span class='lparen token'>(</span><span class='rubyid_data identifier id'>data</span> <span class='assign token'>=</span> <span class='rubyid_block identifier id'>block</span><span class='dot token'>.</span><span class='rubyid_call identifier id'>call</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span>
+        <span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_ui identifier id'>ui</span><span class='dot token'>.</span><span class='rubyid_logger identifier id'>logger</span><span class='dot token'>.</span><span class='rubyid_debug identifier id'>debug</span> <span class='lbrace token'>{</span> <span class='dstring node'>&quot;write(#{data.inspect})&quot;</span> <span class='rbrace token'>}</span>
+        <span class='rubyid_child_writer identifier id'>child_writer</span><span class='dot token'>.</span><span class='rubyid_write identifier id'>write</span><span class='lparen token'>(</span><span class='rubyid_Base64 constant id'>Base64</span><span class='dot token'>.</span><span class='rubyid_encode64 identifier id'>encode64</span><span class='lparen token'>(</span><span class='rubyid_Marshal constant id'>Marshal</span><span class='dot token'>.</span><span class='rubyid_dump identifier id'>dump</span><span class='lparen token'>(</span><span class='rubyid_data identifier id'>data</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+      <span class='rubyid_end end kw'>end</span>
 
-    <span class='id identifier rubyid_child_reader'>child_reader</span><span class='period'>.</span><span class='id identifier rubyid_close'>close</span>
-    <span class='id identifier rubyid_child_writer'>child_writer</span><span class='period'>.</span><span class='id identifier rubyid_close'>close</span>
-    <span class='const'>Process</span><span class='period'>.</span><span class='id identifier rubyid_exit!'>exit!</span><span class='lparen'>(</span><span class='int'>0</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_after_fork'>after_fork</span> <span class='kw'>and</span> <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_after_fork'>after_fork</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='const'>Process</span><span class='period'>.</span><span class='id identifier rubyid_pid'>pid</span><span class='rparen'>)</span>
+      <span class='rubyid_child_reader identifier id'>child_reader</span><span class='dot token'>.</span><span class='rubyid_close identifier id'>close</span>
+      <span class='rubyid_child_writer identifier id'>child_writer</span><span class='dot token'>.</span><span class='rubyid_close identifier id'>close</span>
+      <span class='rubyid_Process constant id'>Process</span><span class='dot token'>.</span><span class='rubyid_exit! fid id'>exit!</span><span class='lparen token'>(</span><span class='integer val'>0</span><span class='rparen token'>)</span>
+    <span class='rubyid_end end kw'>end</span>
+    <span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_after_fork identifier id'>after_fork</span> <span class='rubyid_and and kw'>and</span> <span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_after_fork identifier id'>after_fork</span><span class='dot token'>.</span><span class='rubyid_call identifier id'>call</span><span class='lparen token'>(</span><span class='rubyid_Process constant id'>Process</span><span class='dot token'>.</span><span class='rubyid_pid identifier id'>pid</span><span class='rparen token'>)</span>
 
-  <span class='id identifier rubyid_child_reader'>child_reader</span><span class='period'>.</span><span class='id identifier rubyid_close'>close</span>
-  <span class='id identifier rubyid_child_writer'>child_writer</span><span class='period'>.</span><span class='id identifier rubyid_close'>close</span>
+    <span class='rubyid_child_reader identifier id'>child_reader</span><span class='dot token'>.</span><span class='rubyid_close identifier id'>close</span>
+    <span class='rubyid_child_writer identifier id'>child_writer</span><span class='dot token'>.</span><span class='rubyid_close identifier id'>close</span>
 
-  <span class='id identifier rubyid_fork'>fork</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='symbol'>:reader</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_parent_reader'>parent_reader</span><span class='comma'>,</span> <span class='symbol'>:writer</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_parent_writer'>parent_writer</span><span class='comma'>,</span> <span class='symbol'>:pid</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_pid'>pid</span><span class='rbrace'>}</span>
-  <span class='ivar'>@forks</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_fork'>fork</span>
+    <span class='rubyid_fork identifier id'>fork</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='symbol val'>:reader</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_parent_reader identifier id'>parent_reader</span><span class='comma token'>,</span> <span class='symbol val'>:writer</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_parent_writer identifier id'>parent_writer</span><span class='comma token'>,</span> <span class='symbol val'>:pid</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_pid identifier id'>pid</span><span class='rbrace token'>}</span>
+    <span class='rubyid_@forks ivar id'>@forks</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_fork identifier id'>fork</span>
 
-  <span class='id identifier rubyid_pid'>pid</span>
-<span class='kw'>end</span></pre>
+    <span class='rubyid_pid identifier id'>pid</span>
+  <span class='rubyid_end end kw'>end</span>
+
+  <span class='comment val'># Wait for a single fork to finish.</span>
+  <span class='comment val'>#</span>
+  <span class='comment val'># If a fork successfully finishes, it's return value from the *process*</span>
+  <span class='comment val'># block is stored into the main result set.</span>
+  <span class='comment val'>#</span>
+  <span class='comment val'># @return [Array&lt;pid, status, data&gt;] An array containing the pid,</span>
+  <span class='comment val'>#   status and data returned from the process block.  If wait2() fails nil</span>
+  <span class='comment val'>#   is returned.</span>
+  <span class='rubyid_def def kw'>def</span> <span class='rubyid_wait identifier id'>wait</span>
+    <span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_ui identifier id'>ui</span><span class='dot token'>.</span><span class='rubyid_logger identifier id'>logger</span><span class='dot token'>.</span><span class='rubyid_debug identifier id'>debug</span> <span class='lbrace token'>{</span> <span class='string val'>&quot;wait&quot;</span> <span class='rbrace token'>}</span>
+    <span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_ui identifier id'>ui</span><span class='dot token'>.</span><span class='rubyid_logger identifier id'>logger</span><span class='dot token'>.</span><span class='rubyid_debug identifier id'>debug</span> <span class='lbrace token'>{</span> <span class='dstring node'>&quot;forks(#{@forks.inspect})&quot;</span> <span class='rbrace token'>}</span>
+    <span class='rubyid_pid identifier id'>pid</span><span class='comma token'>,</span> <span class='rubyid_status identifier id'>status</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='rubyid_Process constant id'>Process</span><span class='dot token'>.</span><span class='rubyid_wait2 identifier id'>wait2</span><span class='lparen token'>(</span><span class='integer val'>-1</span><span class='rparen token'>)</span> <span class='rubyid_rescue rescue kw'>rescue</span> <span class='rubyid_nil nil kw'>nil</span><span class='rparen token'>)</span>
+    <span class='rubyid_if if kw'>if</span> <span class='notop op'>!</span><span class='rubyid_pid identifier id'>pid</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='rubyid_status identifier id'>status</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='lparen token'>(</span><span class='rubyid_fork identifier id'>fork</span> <span class='assign token'>=</span> <span class='rubyid_@forks ivar id'>@forks</span><span class='dot token'>.</span><span class='rubyid_select identifier id'>select</span><span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='rubyid_f identifier id'>f</span><span class='bitor op'>|</span> <span class='rubyid_f identifier id'>f</span><span class='lbrack token'>[</span><span class='symbol val'>:pid</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='rubyid_pid identifier id'>pid</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='rubyid_first identifier id'>first</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span>
+      <span class='rubyid_data identifier id'>data</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='rubyid_Marshal constant id'>Marshal</span><span class='dot token'>.</span><span class='rubyid_load identifier id'>load</span><span class='lparen token'>(</span><span class='rubyid_Base64 constant id'>Base64</span><span class='dot token'>.</span><span class='rubyid_decode64 identifier id'>decode64</span><span class='lparen token'>(</span><span class='rubyid_fork identifier id'>fork</span><span class='lbrack token'>[</span><span class='symbol val'>:reader</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_read identifier id'>read</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='rubyid_rescue rescue kw'>rescue</span> <span class='rubyid_nil nil kw'>nil</span><span class='rparen token'>)</span>
+      <span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_ui identifier id'>ui</span><span class='dot token'>.</span><span class='rubyid_logger identifier id'>logger</span><span class='dot token'>.</span><span class='rubyid_debug identifier id'>debug</span> <span class='lbrace token'>{</span> <span class='dstring node'>&quot;read(#{data.inspect})&quot;</span> <span class='rbrace token'>}</span>
+      <span class='notop op'>!</span><span class='rubyid_data identifier id'>data</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span> <span class='rubyid_and and kw'>and</span> <span class='rubyid_@results ivar id'>@results</span><span class='dot token'>.</span><span class='rubyid_push identifier id'>push</span><span class='lparen token'>(</span><span class='rubyid_data identifier id'>data</span><span class='rparen token'>)</span>
+      <span class='rubyid_fork identifier id'>fork</span><span class='lbrack token'>[</span><span class='symbol val'>:reader</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_close identifier id'>close</span>
+      <span class='rubyid_fork identifier id'>fork</span><span class='lbrack token'>[</span><span class='symbol val'>:writer</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_close identifier id'>close</span>
+
+      <span class='rubyid_@forks ivar id'>@forks</span> <span class='opasgn op'>-=</span> <span class='lbrack token'>[</span><span class='rubyid_fork identifier id'>fork</span><span class='rbrack token'>]</span>
+      <span class='rubyid_return return kw'>return</span> <span class='lbrack token'>[</span><span class='rubyid_pid identifier id'>pid</span><span class='comma token'>,</span> <span class='rubyid_status identifier id'>status</span><span class='comma token'>,</span> <span class='rubyid_data identifier id'>data</span><span class='rbrack token'>]</span>
+    <span class='rubyid_end end kw'>end</span>
+    <span class='rubyid_nil nil kw'>nil</span>
+  <span class='rubyid_end end kw'>end</span>
+
+  <span class='comment val'># Waits for all forks to finish.</span>
+  <span class='comment val'>#</span>
+  <span class='comment val'># @return [Array&lt;Object&gt;] The results from all of the *process* blocks.</span>
+  <span class='rubyid_def def kw'>def</span> <span class='rubyid_waitall identifier id'>waitall</span>
+    <span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_ui identifier id'>ui</span><span class='dot token'>.</span><span class='rubyid_logger identifier id'>logger</span><span class='dot token'>.</span><span class='rubyid_debug identifier id'>debug</span> <span class='lbrace token'>{</span> <span class='string val'>&quot;waitall&quot;</span> <span class='rbrace token'>}</span>
+    <span class='rubyid_while while kw'>while</span> <span class='rubyid_@forks ivar id'>@forks</span><span class='dot token'>.</span><span class='rubyid_count identifier id'>count</span> <span class='gt op'>&gt;</span> <span class='integer val'>0</span>
+      <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_wait identifier id'>wait</span>
+    <span class='rubyid_end end kw'>end</span>
+    <span class='rubyid_@results ivar id'>@results</span>
+  <span class='rubyid_end end kw'>end</span>
+
+  <span class='comment val'># Count of active forks.</span>
+  <span class='comment val'>#</span>
+  <span class='comment val'># @return [Integer] Current number of active forks.</span>
+  <span class='rubyid_def def kw'>def</span> <span class='rubyid_count identifier id'>count</span>
+    <span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_ui identifier id'>ui</span><span class='dot token'>.</span><span class='rubyid_logger identifier id'>logger</span><span class='dot token'>.</span><span class='rubyid_debug identifier id'>debug</span> <span class='lbrace token'>{</span> <span class='dstring node'>&quot;count(#{@forks.count})&quot;</span> <span class='rbrace token'>}</span>
+    <span class='rubyid_@forks ivar id'>@forks</span><span class='dot token'>.</span><span class='rubyid_count identifier id'>count</span>
+  <span class='rubyid_end end kw'>end</span>
+
+<span class='rubyid_end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -879,22 +967,23 @@ is returned.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/parallel.rb', line 188</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_wait'>wait</span>
-  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>wait</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
-  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>forks(</span><span class='embexpr_beg'>#{</span><span class='ivar'>@forks</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
-  <span class='id identifier rubyid_pid'>pid</span><span class='comma'>,</span> <span class='id identifier rubyid_status'>status</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='const'>Process</span><span class='period'>.</span><span class='id identifier rubyid_wait2'>wait2</span><span class='lparen'>(</span><span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span> <span class='kw'>rescue</span> <span class='kw'>nil</span><span class='rparen'>)</span>
-  <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_pid'>pid</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='lparen'>(</span><span class='id identifier rubyid_fork'>fork</span> <span class='op'>=</span> <span class='ivar'>@forks</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='id identifier rubyid_f'>f</span><span class='lbracket'>[</span><span class='symbol'>:pid</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='id identifier rubyid_pid'>pid</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
-    <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='const'>Marshal</span><span class='period'>.</span><span class='id identifier rubyid_load'>load</span><span class='lparen'>(</span><span class='const'>Base64</span><span class='period'>.</span><span class='id identifier rubyid_decode64'>decode64</span><span class='lparen'>(</span><span class='id identifier rubyid_fork'>fork</span><span class='lbracket'>[</span><span class='symbol'>:reader</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>rescue</span> <span class='kw'>nil</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>read(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
-    <span class='op'>!</span><span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='kw'>and</span> <span class='ivar'>@results</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_fork'>fork</span><span class='lbracket'>[</span><span class='symbol'>:reader</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_close'>close</span>
-    <span class='id identifier rubyid_fork'>fork</span><span class='lbracket'>[</span><span class='symbol'>:writer</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_close'>close</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_wait identifier id'>wait</span>
+  <span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_ui identifier id'>ui</span><span class='dot token'>.</span><span class='rubyid_logger identifier id'>logger</span><span class='dot token'>.</span><span class='rubyid_debug identifier id'>debug</span> <span class='lbrace token'>{</span> <span class='string val'>&quot;wait&quot;</span> <span class='rbrace token'>}</span>
+  <span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_ui identifier id'>ui</span><span class='dot token'>.</span><span class='rubyid_logger identifier id'>logger</span><span class='dot token'>.</span><span class='rubyid_debug identifier id'>debug</span> <span class='lbrace token'>{</span> <span class='dstring node'>&quot;forks(#{@forks.inspect})&quot;</span> <span class='rbrace token'>}</span>
+  <span class='rubyid_pid identifier id'>pid</span><span class='comma token'>,</span> <span class='rubyid_status identifier id'>status</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='rubyid_Process constant id'>Process</span><span class='dot token'>.</span><span class='rubyid_wait2 identifier id'>wait2</span><span class='lparen token'>(</span><span class='integer val'>-1</span><span class='rparen token'>)</span> <span class='rubyid_rescue rescue kw'>rescue</span> <span class='rubyid_nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='rubyid_if if kw'>if</span> <span class='notop op'>!</span><span class='rubyid_pid identifier id'>pid</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='rubyid_status identifier id'>status</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='lparen token'>(</span><span class='rubyid_fork identifier id'>fork</span> <span class='assign token'>=</span> <span class='rubyid_@forks ivar id'>@forks</span><span class='dot token'>.</span><span class='rubyid_select identifier id'>select</span><span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='rubyid_f identifier id'>f</span><span class='bitor op'>|</span> <span class='rubyid_f identifier id'>f</span><span class='lbrack token'>[</span><span class='symbol val'>:pid</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='rubyid_pid identifier id'>pid</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='rubyid_first identifier id'>first</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span>
+    <span class='rubyid_data identifier id'>data</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='rubyid_Marshal constant id'>Marshal</span><span class='dot token'>.</span><span class='rubyid_load identifier id'>load</span><span class='lparen token'>(</span><span class='rubyid_Base64 constant id'>Base64</span><span class='dot token'>.</span><span class='rubyid_decode64 identifier id'>decode64</span><span class='lparen token'>(</span><span class='rubyid_fork identifier id'>fork</span><span class='lbrack token'>[</span><span class='symbol val'>:reader</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_read identifier id'>read</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='rubyid_rescue rescue kw'>rescue</span> <span class='rubyid_nil nil kw'>nil</span><span class='rparen token'>)</span>
+    <span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_ui identifier id'>ui</span><span class='dot token'>.</span><span class='rubyid_logger identifier id'>logger</span><span class='dot token'>.</span><span class='rubyid_debug identifier id'>debug</span> <span class='lbrace token'>{</span> <span class='dstring node'>&quot;read(#{data.inspect})&quot;</span> <span class='rbrace token'>}</span>
+    <span class='notop op'>!</span><span class='rubyid_data identifier id'>data</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span> <span class='rubyid_and and kw'>and</span> <span class='rubyid_@results ivar id'>@results</span><span class='dot token'>.</span><span class='rubyid_push identifier id'>push</span><span class='lparen token'>(</span><span class='rubyid_data identifier id'>data</span><span class='rparen token'>)</span>
+    <span class='rubyid_fork identifier id'>fork</span><span class='lbrack token'>[</span><span class='symbol val'>:reader</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_close identifier id'>close</span>
+    <span class='rubyid_fork identifier id'>fork</span><span class='lbrack token'>[</span><span class='symbol val'>:writer</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_close identifier id'>close</span>
 
-    <span class='ivar'>@forks</span> <span class='op'>-=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fork'>fork</span><span class='rbracket'>]</span>
-    <span class='kw'>return</span> <span class='lbracket'>[</span><span class='id identifier rubyid_pid'>pid</span><span class='comma'>,</span> <span class='id identifier rubyid_status'>status</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='rbracket'>]</span>
-  <span class='kw'>end</span>
-  <span class='kw'>nil</span>
-<span class='kw'>end</span></pre>
+    <span class='rubyid_@forks ivar id'>@forks</span> <span class='opasgn op'>-=</span> <span class='lbrack token'>[</span><span class='rubyid_fork identifier id'>fork</span><span class='rbrack token'>]</span>
+    <span class='rubyid_return return kw'>return</span> <span class='lbrack token'>[</span><span class='rubyid_pid identifier id'>pid</span><span class='comma token'>,</span> <span class='rubyid_status identifier id'>status</span><span class='comma token'>,</span> <span class='rubyid_data identifier id'>data</span><span class='rbrack token'>]</span>
+  <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_nil nil kw'>nil</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -953,13 +1042,14 @@ is returned.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/parallel.rb', line 208</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_waitall'>waitall</span>
-  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>waitall</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
-  <span class='kw'>while</span> <span class='ivar'>@forks</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>&gt;</span> <span class='int'>0</span>
-    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_wait'>wait</span>
-  <span class='kw'>end</span>
-  <span class='ivar'>@results</span>
-<span class='kw'>end</span></pre>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_waitall identifier id'>waitall</span>
+  <span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_ui identifier id'>ui</span><span class='dot token'>.</span><span class='rubyid_logger identifier id'>logger</span><span class='dot token'>.</span><span class='rubyid_debug identifier id'>debug</span> <span class='lbrace token'>{</span> <span class='string val'>&quot;waitall&quot;</span> <span class='rbrace token'>}</span>
+  <span class='rubyid_while while kw'>while</span> <span class='rubyid_@forks ivar id'>@forks</span><span class='dot token'>.</span><span class='rubyid_count identifier id'>count</span> <span class='gt op'>&gt;</span> <span class='integer val'>0</span>
+    <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_wait identifier id'>wait</span>
+  <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_@results ivar id'>@results</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -970,9 +1060,9 @@ is returned.</p>
 </div>
 
     <div id="footer">
-  Generated on Sun Jun 30 17:38:12 2013 by
+  Generated on Sun Jun 30 18:24:26 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6.2 (ruby-1.9.3).
+  0.8.6.2 (ruby-1.8.7).
 </div>
 
   </body>
