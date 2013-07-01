@@ -303,13 +303,12 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/relations/has_many.rb', line 7</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_included identifier id'>included</span><span class='lparen token'>(</span><span class='rubyid_base identifier id'>base</span><span class='rparen token'>)</span>
-  <span class='rubyid_base identifier id'>base</span><span class='dot token'>.</span><span class='rubyid_class_eval identifier id'>class_eval</span> <span class='rubyid_do do kw'>do</span>
-    <span class='rubyid_base identifier id'>base</span><span class='dot token'>.</span><span class='rubyid_add_relation identifier id'>add_relation</span><span class='lparen token'>(</span><span class='symbol val'>:has_many</span><span class='rparen token'>)</span>
-    <span class='rubyid_base identifier id'>base</span><span class='dot token'>.</span><span class='rubyid_send identifier id'>send</span><span class='lparen token'>(</span><span class='symbol val'>:extend</span><span class='comma token'>,</span> <span class='rubyid_ZTK constant id'>ZTK</span><span class='colon2 op'>::</span><span class='rubyid_DSL constant id'>DSL</span><span class='colon2 op'>::</span><span class='rubyid_Core constant id'>Core</span><span class='colon2 op'>::</span><span class='rubyid_Relations constant id'>Relations</span><span class='colon2 op'>::</span><span class='rubyid_HasMany constant id'>HasMany</span><span class='colon2 op'>::</span><span class='rubyid_ClassMethods constant id'>ClassMethods</span><span class='rparen token'>)</span>
-  <span class='rubyid_end end kw'>end</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_included'>included</span><span class='lparen'>(</span><span class='id identifier rubyid_base'>base</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_class_eval'>class_eval</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_add_relation'>add_relation</span><span class='lparen'>(</span><span class='symbol'>:has_many</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:extend</span><span class='comma'>,</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Core</span><span class='op'>::</span><span class='const'>Relations</span><span class='op'>::</span><span class='const'>HasMany</span><span class='op'>::</span><span class='const'>ClassMethods</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -360,14 +359,13 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/relations/has_many.rb', line 18</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_get_has_many_reference identifier id'>get_has_many_reference</span><span class='lparen token'>(</span><span class='rubyid_key identifier id'>key</span><span class='rparen token'>)</span>
-  <span class='rubyid_if if kw'>if</span> <span class='rubyid_has_many_references identifier id'>has_many_references</span><span class='dot token'>.</span><span class='rubyid_key? fid id'>key?</span><span class='lparen token'>(</span><span class='rubyid_key identifier id'>key</span><span class='rparen token'>)</span>
-    <span class='rubyid_has_many_references identifier id'>has_many_references</span><span class='lbrack token'>[</span><span class='rubyid_key identifier id'>key</span><span class='rbrack token'>]</span>
-  <span class='rubyid_else else kw'>else</span>
-    <span class='rubyid_has_many_references identifier id'>has_many_references</span><span class='lbrack token'>[</span><span class='rubyid_key identifier id'>key</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
-  <span class='rubyid_end end kw'>end</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_get_has_many_reference'>get_has_many_reference</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_has_many_references'>has_many_references</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_has_many_references'>has_many_references</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_has_many_references'>has_many_references</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -408,10 +406,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/relations/has_many.rb', line 14</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_has_many_references identifier id'>has_many_references</span>
-  <span class='rubyid_@has_many_references ivar id'>@has_many_references</span> <span class='opasgn op'>||=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_has_many_references'>has_many_references</span>
+  <span class='ivar'>@has_many_references</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -456,14 +453,13 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/relations/has_many.rb', line 32</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_save_has_many_references identifier id'>save_has_many_references</span>
-  <span class='rubyid_has_many_references identifier id'>has_many_references</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_key identifier id'>key</span><span class='comma token'>,</span> <span class='rubyid_dataset identifier id'>dataset</span><span class='bitor op'>|</span>
-    <span class='rubyid_dataset identifier id'>dataset</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_data identifier id'>data</span><span class='bitor op'>|</span>
-      <span class='comment val'># do something to store the data somewhere</span>
-    <span class='rubyid_end end kw'>end</span>
-  <span class='rubyid_end end kw'>end</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_save_has_many_references'>save_has_many_references</span>
+  <span class='id identifier rubyid_has_many_references'>has_many_references</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_dataset'>dataset</span><span class='op'>|</span>
+    <span class='id identifier rubyid_dataset'>dataset</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_data'>data</span><span class='op'>|</span>
+      <span class='comment'># do something to store the data somewhere
+</span>    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -506,12 +502,11 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/relations/has_many.rb', line 26</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_set_has_many_reference identifier id'>set_has_many_reference</span><span class='lparen token'>(</span><span class='rubyid_key identifier id'>key</span><span class='comma token'>,</span> <span class='rubyid_value identifier id'>value</span><span class='rparen token'>)</span>
-  <span class='rubyid_dataset identifier id'>dataset</span> <span class='assign token'>=</span> <span class='rubyid_get_has_many_reference identifier id'>get_has_many_reference</span><span class='lparen token'>(</span><span class='rubyid_key identifier id'>key</span><span class='rparen token'>)</span>
-  <span class='rubyid_dataset identifier id'>dataset</span><span class='dot token'>.</span><span class='rubyid_clear identifier id'>clear</span>
-  <span class='rubyid_dataset identifier id'>dataset</span><span class='dot token'>.</span><span class='rubyid_concat identifier id'>concat</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='rparen token'>)</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_set_has_many_reference'>set_has_many_reference</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_dataset'>dataset</span> <span class='op'>=</span> <span class='id identifier rubyid_get_has_many_reference'>get_has_many_reference</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_dataset'>dataset</span><span class='period'>.</span><span class='id identifier rubyid_clear'>clear</span>
+  <span class='id identifier rubyid_dataset'>dataset</span><span class='period'>.</span><span class='id identifier rubyid_concat'>concat</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -522,9 +517,9 @@
 </div>
 
     <div id="footer">
-  Generated on Sun Jun 30 18:25:26 2013 by
+  Generated on Sun Jun 30 18:26:39 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6.2 (ruby-1.8.7).
+  0.8.6.2 (ruby-1.9.3).
 </div>
 
   </body>

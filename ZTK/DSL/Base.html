@@ -90,11 +90,15 @@
     
   
     
+      <dt class="r2">Includes:</dt>
+      <dd class="r2"><span class='object_link'><a href="Core.html" title="ZTK::DSL::Core (module)">Core</a></span></dd>
+      
+    
   
   
   
-    <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">lib/ztk/dsl/base.rb</dd>
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/ztk/dsl/base.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -132,103 +136,103 @@ fact.  That is not shown in this example.</p>
 
 <p><em>example code</em>:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='rubyid_class class kw'>class</span> <span class='rubyid_Network constant id'>Network</span> <span class='lt op'>&lt;</span> <span class='rubyid_ZTK constant id'>ZTK</span><span class='colon2 op'>::</span><span class='rubyid_DSL constant id'>DSL</span><span class='colon2 op'>::</span><span class='rubyid_Base constant id'>Base</span>
-  <span class='rubyid_has_many identifier id'>has_many</span> <span class='symbol val'>:servers</span>
+<pre class="code ruby"><code class="ruby"><span class='kw'>class</span> <span class='const'>Network</span> <span class='op'>&lt;</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Base</span>
+  <span class='id identifier rubyid_has_many'>has_many</span> <span class='symbol'>:servers</span>
 
-  <span class='rubyid_attribute identifier id'>attribute</span> <span class='symbol val'>:name</span>
-  <span class='rubyid_attribute identifier id'>attribute</span> <span class='symbol val'>:gw</span>
-  <span class='rubyid_attribute identifier id'>attribute</span> <span class='symbol val'>:network</span>
-  <span class='rubyid_attribute identifier id'>attribute</span> <span class='symbol val'>:netmask</span>
-<span class='rubyid_end end kw'>end</span>
+  <span class='id identifier rubyid_attribute'>attribute</span> <span class='symbol'>:name</span>
+  <span class='id identifier rubyid_attribute'>attribute</span> <span class='symbol'>:gw</span>
+  <span class='id identifier rubyid_attribute'>attribute</span> <span class='symbol'>:network</span>
+  <span class='id identifier rubyid_attribute'>attribute</span> <span class='symbol'>:netmask</span>
+<span class='kw'>end</span>
 
-<span class='rubyid_class class kw'>class</span> <span class='rubyid_Server constant id'>Server</span> <span class='lt op'>&lt;</span> <span class='rubyid_ZTK constant id'>ZTK</span><span class='colon2 op'>::</span><span class='rubyid_DSL constant id'>DSL</span><span class='colon2 op'>::</span><span class='rubyid_Base constant id'>Base</span>
-  <span class='rubyid_belongs_to identifier id'>belongs_to</span> <span class='symbol val'>:network</span>
+<span class='kw'>class</span> <span class='const'>Server</span> <span class='op'>&lt;</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Base</span>
+  <span class='id identifier rubyid_belongs_to'>belongs_to</span> <span class='symbol'>:network</span>
 
-  <span class='rubyid_attribute identifier id'>attribute</span> <span class='symbol val'>:name</span>
-<span class='rubyid_end end kw'>end</span>
+  <span class='id identifier rubyid_attribute'>attribute</span> <span class='symbol'>:name</span>
+<span class='kw'>end</span>
 
-<span class='rubyid_Network constant id'>Network</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span> <span class='rubyid_do do kw'>do</span>
-  <span class='rubyid_id identifier id'>id</span> <span class='symbol val'>:leet_net</span>
-  <span class='rubyid_name identifier id'>name</span> <span class='string val'>&quot;leet-net&quot;</span>
-  <span class='rubyid_gw identifier id'>gw</span> <span class='string val'>&quot;7.3.3.1&quot;</span>
-  <span class='rubyid_network identifier id'>network</span> <span class='string val'>&quot;7.3.3.0&quot;</span>
-  <span class='rubyid_netmask identifier id'>netmask</span> <span class='string val'>&quot;255.255.255.0&quot;</span>
+<span class='const'>Network</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_id'>id</span> <span class='symbol'>:leet_net</span>
+  <span class='id identifier rubyid_name'>name</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>leet-net</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_gw'>gw</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>7.3.3.1</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_network'>network</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>7.3.3.0</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_netmask'>netmask</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>255.255.255.0</span><span class='tstring_end'>&quot;</span></span>
 
-  <span class='rubyid_server identifier id'>server</span> <span class='rubyid_do do kw'>do</span>
-    <span class='rubyid_name identifier id'>name</span> <span class='string val'>&quot;leet-server&quot;</span>
-  <span class='rubyid_end end kw'>end</span>
+  <span class='id identifier rubyid_server'>server</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_name'>name</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>leet-server</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
 
-  <span class='rubyid_server identifier id'>server</span> <span class='rubyid_do do kw'>do</span>
-    <span class='rubyid_id identifier id'>id</span> <span class='symbol val'>:my_server</span>
-    <span class='rubyid_name identifier id'>name</span> <span class='string val'>&quot;my-server&quot;</span>
-  <span class='rubyid_end end kw'>end</span>
+  <span class='id identifier rubyid_server'>server</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_id'>id</span> <span class='symbol'>:my_server</span>
+    <span class='id identifier rubyid_name'>name</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>my-server</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
 
-  <span class='rubyid_server identifier id'>server</span> <span class='rubyid_do do kw'>do</span>
-    <span class='rubyid_name identifier id'>name</span> <span class='string val'>&quot;dev-server&quot;</span>
-  <span class='rubyid_end end kw'>end</span>
-<span class='rubyid_end end kw'>end</span>
+  <span class='id identifier rubyid_server'>server</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_name'>name</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>dev-server</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
 
-<span class='rubyid_Network constant id'>Network</span><span class='dot token'>.</span><span class='rubyid_count identifier id'>count</span>
-<span class='rubyid_Network constant id'>Network</span><span class='dot token'>.</span><span class='rubyid_all identifier id'>all</span>
-<span class='rubyid_Network constant id'>Network</span><span class='dot token'>.</span><span class='rubyid_find identifier id'>find</span><span class='lparen token'>(</span><span class='symbol val'>:leet_net</span><span class='rparen token'>)</span>
+<span class='const'>Network</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span>
+<span class='const'>Network</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span>
+<span class='const'>Network</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='symbol'>:leet_net</span><span class='rparen'>)</span>
 
-<span class='rubyid_Server constant id'>Server</span><span class='dot token'>.</span><span class='rubyid_count identifier id'>count</span>
-<span class='rubyid_Server constant id'>Server</span><span class='dot token'>.</span><span class='rubyid_all identifier id'>all</span>
-<span class='rubyid_Server constant id'>Server</span><span class='dot token'>.</span><span class='rubyid_find identifier id'>find</span><span class='lparen token'>(</span><span class='symbol val'>:my_server</span><span class='rparen token'>)</span>
+<span class='const'>Server</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span>
+<span class='const'>Server</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span>
+<span class='const'>Server</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='symbol'>:my_server</span><span class='rparen'>)</span>
 </code></pre>
 
 <p><em>pry output</em>:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='gt op'>&gt;</span> <span class='rubyid_class class kw'>class</span> <span class='rubyid_Network constant id'>Network</span> <span class='lt op'>&lt;</span> <span class='rubyid_ZTK constant id'>ZTK</span><span class='colon2 op'>::</span><span class='rubyid_DSL constant id'>DSL</span><span class='colon2 op'>::</span><span class='rubyid_Base constant id'>Base</span>
-<span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>   <span class='rubyid_has_many identifier id'>has_many</span> <span class='symbol val'>:servers</span>
-<span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>
-<span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>   <span class='rubyid_attribute identifier id'>attribute</span> <span class='symbol val'>:name</span>
-<span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>   <span class='rubyid_attribute identifier id'>attribute</span> <span class='symbol val'>:gw</span>
-<span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>   <span class='rubyid_attribute identifier id'>attribute</span> <span class='symbol val'>:network</span>
-<span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>   <span class='rubyid_attribute identifier id'>attribute</span> <span class='symbol val'>:netmask</span>
-<span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span> <span class='rubyid_end end kw'>end</span>
-<span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='comment val'>#&lt;Proc:0x0000000121f498@/home/zpatten/Dropbox/code/chef-repo/vendor/checkouts/ztk/lib/ztk/dsl/core/attributes.rb:45 (lambda)&gt;</span>
-<span class='lbrack token'>[</span><span class='integer val'>2</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='gt op'>&gt;</span> <span class='rubyid_class class kw'>class</span> <span class='rubyid_Server constant id'>Server</span> <span class='lt op'>&lt;</span> <span class='rubyid_ZTK constant id'>ZTK</span><span class='colon2 op'>::</span><span class='rubyid_DSL constant id'>DSL</span><span class='colon2 op'>::</span><span class='rubyid_Base constant id'>Base</span>
-<span class='lbrack token'>[</span><span class='integer val'>2</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>   <span class='rubyid_belongs_to identifier id'>belongs_to</span> <span class='symbol val'>:network</span>
-<span class='lbrack token'>[</span><span class='integer val'>2</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>
-<span class='lbrack token'>[</span><span class='integer val'>2</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>   <span class='rubyid_attribute identifier id'>attribute</span> <span class='symbol val'>:name</span>
-<span class='lbrack token'>[</span><span class='integer val'>2</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span> <span class='rubyid_end end kw'>end</span>
-<span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='comment val'>#&lt;Proc:0x00000001983108@/home/zpatten/Dropbox/code/chef-repo/vendor/checkouts/ztk/lib/ztk/dsl/core/attributes.rb:45 (lambda)&gt;</span>
-<span class='lbrack token'>[</span><span class='integer val'>3</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='gt op'>&gt;</span> <span class='rubyid_Network constant id'>Network</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span> <span class='rubyid_do do kw'>do</span>
-<span class='lbrack token'>[</span><span class='integer val'>3</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>   <span class='rubyid_id identifier id'>id</span> <span class='symbol val'>:leet_net</span>
-<span class='lbrack token'>[</span><span class='integer val'>3</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>   <span class='rubyid_name identifier id'>name</span> <span class='string val'>&quot;leet-net&quot;</span>
-<span class='lbrack token'>[</span><span class='integer val'>3</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>   <span class='rubyid_gw identifier id'>gw</span> <span class='string val'>&quot;7.3.3.1&quot;</span>
-<span class='lbrack token'>[</span><span class='integer val'>3</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>   <span class='rubyid_network identifier id'>network</span> <span class='string val'>&quot;7.3.3.0&quot;</span>
-<span class='lbrack token'>[</span><span class='integer val'>3</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>   <span class='rubyid_netmask identifier id'>netmask</span> <span class='string val'>&quot;255.255.255.0&quot;</span>
-<span class='lbrack token'>[</span><span class='integer val'>3</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>
-<span class='lbrack token'>[</span><span class='integer val'>3</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>   <span class='rubyid_server identifier id'>server</span> <span class='rubyid_do do kw'>do</span>
-<span class='lbrack token'>[</span><span class='integer val'>3</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>     <span class='rubyid_name identifier id'>name</span> <span class='string val'>&quot;leet-server&quot;</span>
-<span class='lbrack token'>[</span><span class='integer val'>3</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>   <span class='rubyid_end end kw'>end</span>
-<span class='lbrack token'>[</span><span class='integer val'>3</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>
-<span class='lbrack token'>[</span><span class='integer val'>3</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>   <span class='rubyid_server identifier id'>server</span> <span class='rubyid_do do kw'>do</span>
-<span class='lbrack token'>[</span><span class='integer val'>3</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>     <span class='rubyid_id identifier id'>id</span> <span class='symbol val'>:my_server</span>
-<span class='lbrack token'>[</span><span class='integer val'>3</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>     <span class='rubyid_name identifier id'>name</span> <span class='string val'>&quot;my-server&quot;</span>
-<span class='lbrack token'>[</span><span class='integer val'>3</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>   <span class='rubyid_end end kw'>end</span>
-<span class='lbrack token'>[</span><span class='integer val'>3</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>
-<span class='lbrack token'>[</span><span class='integer val'>3</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>   <span class='rubyid_server identifier id'>server</span> <span class='rubyid_do do kw'>do</span>
-<span class='lbrack token'>[</span><span class='integer val'>3</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>     <span class='rubyid_name identifier id'>name</span> <span class='string val'>&quot;dev-server&quot;</span>
-<span class='lbrack token'>[</span><span class='integer val'>3</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span>   <span class='rubyid_end end kw'>end</span>
-<span class='lbrack token'>[</span><span class='integer val'>3</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='mult op'>*</span> <span class='rubyid_end end kw'>end</span>
-<span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='comment val'>#&lt;Network id=:leet_net attributes={:id=&gt;:leet_net, :name=&gt;&quot;leet-net&quot;, :gw=&gt;&quot;7.3.3.1&quot;, :network=&gt;&quot;7.3.3.0&quot;, :netmask=&gt;&quot;255.255.255.0&quot;}, has_many_references=1&gt;</span>
-<span class='lbrack token'>[</span><span class='integer val'>4</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='gt op'>&gt;</span> <span class='rubyid_Network constant id'>Network</span><span class='dot token'>.</span><span class='rubyid_count identifier id'>count</span>
-<span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>1</span>
-<span class='lbrack token'>[</span><span class='integer val'>5</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='gt op'>&gt;</span> <span class='rubyid_Network constant id'>Network</span><span class='dot token'>.</span><span class='rubyid_all identifier id'>all</span>
-<span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='comment val'>#&lt;Network id=:leet_net attributes={:id=&gt;:leet_net, :name=&gt;&quot;leet-net&quot;, :gw=&gt;&quot;7.3.3.1&quot;, :network=&gt;&quot;7.3.3.0&quot;, :netmask=&gt;&quot;255.255.255.0&quot;}, has_many_references=1&gt;]</span>
-<span class='lbrack token'>[</span><span class='integer val'>6</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='gt op'>&gt;</span> <span class='rubyid_Network constant id'>Network</span><span class='dot token'>.</span><span class='rubyid_find identifier id'>find</span><span class='lparen token'>(</span><span class='symbol val'>:leet_net</span><span class='rparen token'>)</span>
-<span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='comment val'>#&lt;Network id=:leet_net attributes={:id=&gt;:leet_net, :name=&gt;&quot;leet-net&quot;, :gw=&gt;&quot;7.3.3.1&quot;, :network=&gt;&quot;7.3.3.0&quot;, :netmask=&gt;&quot;255.255.255.0&quot;}, has_many_references=1&gt;]</span>
-<span class='lbrack token'>[</span><span class='integer val'>7</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='gt op'>&gt;</span> <span class='rubyid_Server constant id'>Server</span><span class='dot token'>.</span><span class='rubyid_count identifier id'>count</span>
-<span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>3</span>
-<span class='lbrack token'>[</span><span class='integer val'>8</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='gt op'>&gt;</span> <span class='rubyid_Server constant id'>Server</span><span class='dot token'>.</span><span class='rubyid_all identifier id'>all</span>
-<span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='comment val'>#&lt;Server id=2 attributes={:id=&gt;2, :name=&gt;&quot;leet-server&quot;, :network_id=&gt;:leet_net}, belongs_to_references=1&gt;,</span>
- <span class='comment val'>#&lt;Server id=:my_server attributes={:id=&gt;:my_server, :name=&gt;&quot;my-server&quot;, :network_id=&gt;:leet_net}, belongs_to_references=1&gt;,</span>
- <span class='comment val'>#&lt;Server id=4 attributes={:id=&gt;4, :name=&gt;&quot;dev-server&quot;, :network_id=&gt;:leet_net}, belongs_to_references=1&gt;]</span>
-<span class='lbrack token'>[</span><span class='integer val'>9</span><span class='rbrack token'>]</span> <span class='rubyid_pry identifier id'>pry</span><span class='lparen token'>(</span><span class='rubyid_main identifier id'>main</span><span class='rparen token'>)</span><span class='gt op'>&gt;</span> <span class='rubyid_Server constant id'>Server</span><span class='dot token'>.</span><span class='rubyid_find identifier id'>find</span><span class='lparen token'>(</span><span class='symbol val'>:my_server</span><span class='rparen token'>)</span>
-<span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='comment val'>#&lt;Server id=:my_server attributes={:id=&gt;:my_server, :name=&gt;&quot;my-server&quot;, :network_id=&gt;:leet_net}, belongs_to_references=1&gt;]</span>
+<pre class="code ruby"><code class="ruby">[1] pry(main)&gt; class Network &lt; ZTK::DSL::Base
+[1] pry(main)*   has_many :servers
+[1] pry(main)*
+[1] pry(main)*   attribute :name
+[1] pry(main)*   attribute :gw
+[1] pry(main)*   attribute :network
+[1] pry(main)*   attribute :netmask
+[1] pry(main)* end
+=&gt; #&lt;Proc:0x0000000121f498@/home/zpatten/Dropbox/code/chef-repo/vendor/checkouts/ztk/lib/ztk/dsl/core/attributes.rb:45 (lambda)&gt;
+[2] pry(main)&gt; class Server &lt; ZTK::DSL::Base
+[2] pry(main)*   belongs_to :network
+[2] pry(main)*
+[2] pry(main)*   attribute :name
+[2] pry(main)* end
+=&gt; #&lt;Proc:0x00000001983108@/home/zpatten/Dropbox/code/chef-repo/vendor/checkouts/ztk/lib/ztk/dsl/core/attributes.rb:45 (lambda)&gt;
+[3] pry(main)&gt; Network.new do
+[3] pry(main)*   id :leet_net
+[3] pry(main)*   name &quot;leet-net&quot;
+[3] pry(main)*   gw &quot;7.3.3.1&quot;
+[3] pry(main)*   network &quot;7.3.3.0&quot;
+[3] pry(main)*   netmask &quot;255.255.255.0&quot;
+[3] pry(main)*
+[3] pry(main)*   server do
+[3] pry(main)*     name &quot;leet-server&quot;
+[3] pry(main)*   end
+[3] pry(main)*
+[3] pry(main)*   server do
+[3] pry(main)*     id :my_server
+[3] pry(main)*     name &quot;my-server&quot;
+[3] pry(main)*   end
+[3] pry(main)*
+[3] pry(main)*   server do
+[3] pry(main)*     name &quot;dev-server&quot;
+[3] pry(main)*   end
+[3] pry(main)* end
+=&gt; #&lt;Network id=:leet_net attributes={:id=&gt;:leet_net, :name=&gt;&quot;leet-net&quot;, :gw=&gt;&quot;7.3.3.1&quot;, :network=&gt;&quot;7.3.3.0&quot;, :netmask=&gt;&quot;255.255.255.0&quot;}, has_many_references=1&gt;
+[4] pry(main)&gt; Network.count
+=&gt; 1
+[5] pry(main)&gt; Network.all
+=&gt; [#&lt;Network id=:leet_net attributes={:id=&gt;:leet_net, :name=&gt;&quot;leet-net&quot;, :gw=&gt;&quot;7.3.3.1&quot;, :network=&gt;&quot;7.3.3.0&quot;, :netmask=&gt;&quot;255.255.255.0&quot;}, has_many_references=1&gt;]
+[6] pry(main)&gt; Network.find(:leet_net)
+=&gt; [#&lt;Network id=:leet_net attributes={:id=&gt;:leet_net, :name=&gt;&quot;leet-net&quot;, :gw=&gt;&quot;7.3.3.1&quot;, :network=&gt;&quot;7.3.3.0&quot;, :netmask=&gt;&quot;255.255.255.0&quot;}, has_many_references=1&gt;]
+[7] pry(main)&gt; Server.count
+=&gt; 3
+[8] pry(main)&gt; Server.all
+=&gt; [#&lt;Server id=2 attributes={:id=&gt;2, :name=&gt;&quot;leet-server&quot;, :network_id=&gt;:leet_net}, belongs_to_references=1&gt;,
+ #&lt;Server id=:my_server attributes={:id=&gt;:my_server, :name=&gt;&quot;my-server&quot;, :network_id=&gt;:leet_net}, belongs_to_references=1&gt;,
+ #&lt;Server id=4 attributes={:id=&gt;4, :name=&gt;&quot;dev-server&quot;, :network_id=&gt;:leet_net}, belongs_to_references=1&gt;]
+[9] pry(main)&gt; Server.find(:my_server)
+=&gt; [#&lt;Server id=:my_server attributes={:id=&gt;:my_server, :name=&gt;&quot;my-server&quot;, :network_id=&gt;:leet_net}, belongs_to_references=1&gt;]
 </code></pre>
 
 
@@ -403,7 +407,13 @@ fact.  That is not shown in this example.</p>
     </ul>
   
 
-<div id="constructor_details" class="method_details_list">
+
+  
+  
+  
+  
+  
+  <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
     <div class="method_details first">
@@ -446,18 +456,17 @@ fact.  That is not shown in this example.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/dsl/base.rb', line 153</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='rubyid_id identifier id'>id</span><span class='assign token'>=</span><span class='rubyid_nil nil kw'>nil</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_id identifier id'>id</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='rubyid_id identifier id'>id</span> <span class='orop op'>||</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_class identifier id'>class</span><span class='dot token'>.</span><span class='rubyid_id identifier id'>id</span><span class='rparen token'>)</span>
-  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_class identifier id'>class</span><span class='dot token'>.</span><span class='rubyid_dataset identifier id'>dataset</span><span class='dot token'>.</span><span class='rubyid_delete_if identifier id'>delete_if</span><span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='rubyid_d identifier id'>d</span><span class='bitor op'>|</span> <span class='rubyid_d identifier id'>d</span><span class='dot token'>.</span><span class='rubyid_id identifier id'>id</span> <span class='eq op'>==</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_id identifier id'>id</span> <span class='rbrace token'>}</span>
-  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_class identifier id'>class</span><span class='dot token'>.</span><span class='rubyid_dataset identifier id'>dataset</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_self self kw'>self</span>
-  <span class='rubyid_block_given? fid id'>block_given?</span> <span class='rubyid_and and kw'>and</span> <span class='lparen token'>(</span><span class='lparen token'>(</span><span class='rubyid_block identifier id'>block</span><span class='dot token'>.</span><span class='rubyid_arity identifier id'>arity</span> <span class='lt op'>&lt;</span> <span class='integer val'>1</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='rubyid_instance_eval identifier id'>instance_eval</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='rubyid_block identifier id'>block</span><span class='dot token'>.</span><span class='rubyid_call identifier id'>call</span><span class='lparen token'>(</span><span class='rubyid_self self kw'>self</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='op'>=</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span> <span class='op'>||</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_dataset'>dataset</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_d'>d</span><span class='op'>|</span> <span class='id identifier rubyid_d'>d</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span> <span class='op'>==</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span> <span class='rbrace'>}</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_dataset'>dataset</span> <span class='op'>&lt;&lt;</span> <span class='kw'>self</span>
+  <span class='id identifier rubyid_block_given?'>block_given?</span> <span class='kw'>and</span> <span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_arity'>arity</span> <span class='op'>&lt;</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_instance_eval'>instance_eval</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span><span class='rparen'>)</span>
 
-  <span class='comment val'># primary_key_count = self.class.dataset.count do |d|</span>
-  <span class='comment val'>#   d.id == self.id</span>
-  <span class='comment val'># end</span>
-  <span class='comment val'># raise StandardError, &quot;Primary key '#{self.id}' already exists!&quot; if (primary_key_count &gt; 1)</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
+  <span class='comment'># primary_key_count = self.class.dataset.count do |d|
+</span>  <span class='comment'>#   d.id == self.id
+</span>  <span class='comment'># end
+</span>  <span class='comment'># raise StandardError, &quot;Primary key '#{self.id}' already exists!&quot; if (primary_key_count &gt; 1)
+</span><span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -505,10 +514,9 @@ fact.  That is not shown in this example.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/dsl/base.rb', line 149</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_extended identifier id'>extended</span><span class='lparen token'>(</span><span class='rubyid_base identifier id'>base</span><span class='rparen token'>)</span>
-  <span class='comment val'># NOOP</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_extended'>extended</span><span class='lparen'>(</span><span class='id identifier rubyid_base'>base</span><span class='rparen'>)</span>
+  <span class='comment'># NOOP
+</span><span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -549,10 +557,9 @@ fact.  That is not shown in this example.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/dsl/base.rb', line 144</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_included identifier id'>included</span><span class='lparen token'>(</span><span class='rubyid_base identifier id'>base</span><span class='rparen token'>)</span>
-  <span class='comment val'># NOOP</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_included'>included</span><span class='lparen'>(</span><span class='id identifier rubyid_base'>base</span><span class='rparen'>)</span>
+  <span class='comment'># NOOP
+</span><span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -596,13 +603,12 @@ fact.  That is not shown in this example.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/dsl/base.rb', line 136</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_inherited identifier id'>inherited</span><span class='lparen token'>(</span><span class='rubyid_base identifier id'>base</span><span class='rparen token'>)</span>
-  <span class='rubyid_base identifier id'>base</span><span class='dot token'>.</span><span class='rubyid_send identifier id'>send</span><span class='lparen token'>(</span><span class='symbol val'>:extend</span><span class='comma token'>,</span> <span class='rubyid_ZTK constant id'>ZTK</span><span class='colon2 op'>::</span><span class='rubyid_DSL constant id'>DSL</span><span class='colon2 op'>::</span><span class='rubyid_Base constant id'>Base</span><span class='colon2 op'>::</span><span class='rubyid_ClassMethods constant id'>ClassMethods</span><span class='rparen token'>)</span>
-  <span class='rubyid_base identifier id'>base</span><span class='dot token'>.</span><span class='rubyid_instance_eval identifier id'>instance_eval</span> <span class='rubyid_do do kw'>do</span>
-    <span class='rubyid_attribute identifier id'>attribute</span> <span class='symbol val'>:id</span>
-  <span class='rubyid_end end kw'>end</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_inherited'>inherited</span><span class='lparen'>(</span><span class='id identifier rubyid_base'>base</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:extend</span><span class='comma'>,</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Base</span><span class='op'>::</span><span class='const'>ClassMethods</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_instance_eval'>instance_eval</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_attribute'>attribute</span> <span class='symbol'>:id</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -670,14 +676,13 @@ representation of the instance.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/dsl/base.rb', line 171</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_inspect identifier id'>inspect</span>
-  <span class='rubyid_details identifier id'>details</span> <span class='assign token'>=</span> <span class='rubyid_Array constant id'>Array</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span>
-  <span class='rubyid_details identifier id'>details</span> <span class='lshft op'>&lt;&lt;</span> <span class='dstring node'>&quot;attributes=#{attributes.inspect}&quot;</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_attributes identifier id'>attributes</span><span class='dot token'>.</span><span class='rubyid_count identifier id'>count</span> <span class='gt op'>&gt;</span> <span class='integer val'>0</span>
-  <span class='rubyid_details identifier id'>details</span> <span class='lshft op'>&lt;&lt;</span> <span class='dstring node'>&quot;has_many_references=#{@has_many_references.count}&quot;</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_@has_many_references ivar id'>@has_many_references</span>
-  <span class='rubyid_details identifier id'>details</span> <span class='lshft op'>&lt;&lt;</span> <span class='dstring node'>&quot;belongs_to_references=#{@belongs_to_references.count}&quot;</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_@belongs_to_references ivar id'>@belongs_to_references</span>
-  <span class='dstring node'>&quot;#&lt;#{self.class.to_s} id=#{self.id.inspect} #{details.join(', ')}&gt;&quot;</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
+  <span class='id identifier rubyid_details'>details</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_details'>details</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>attributes=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_attributes'>attributes</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_attributes'>attributes</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>&gt;</span> <span class='int'>0</span>
+  <span class='id identifier rubyid_details'>details</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>has_many_references=</span><span class='embexpr_beg'>#{</span><span class='ivar'>@has_many_references</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='ivar'>@has_many_references</span>
+  <span class='id identifier rubyid_details'>details</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>belongs_to_references=</span><span class='embexpr_beg'>#{</span><span class='ivar'>@belongs_to_references</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='ivar'>@belongs_to_references</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#&lt;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rbrace'>}</span><span class='tstring_content'> id=</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_details'>details</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>, </span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='tstring_content'>&gt;</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -688,9 +693,9 @@ representation of the instance.</p>
 </div>
 
     <div id="footer">
-  Generated on Sun Jun 30 18:25:29 2013 by
+  Generated on Sun Jun 30 18:26:40 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6.2 (ruby-1.8.7).
+  0.8.6.2 (ruby-1.9.3).
 </div>
 
   </body>

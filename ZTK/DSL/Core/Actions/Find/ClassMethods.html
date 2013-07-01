@@ -259,10 +259,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/actions/find.rb', line 16</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_all identifier id'>all</span>
-  <span class='rubyid_dataset identifier id'>dataset</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_all'>all</span>
+  <span class='id identifier rubyid_dataset'>dataset</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -303,10 +302,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/actions/find.rb', line 29</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_count identifier id'>count</span>
-  <span class='rubyid_all identifier id'>all</span><span class='dot token'>.</span><span class='rubyid_count identifier id'>count</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_count'>count</span>
+  <span class='id identifier rubyid_all'>all</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -348,11 +346,10 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/actions/find.rb', line 20</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_find identifier id'>find</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
-  <span class='rubyid_ids identifier id'>ids</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rubyid_args identifier id'>args</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_flatten identifier id'>flatten</span>
-  <span class='rubyid_all identifier id'>all</span><span class='dot token'>.</span><span class='rubyid_select identifier id'>select</span><span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='rubyid_data identifier id'>data</span><span class='bitor op'>|</span> <span class='rubyid_ids identifier id'>ids</span><span class='dot token'>.</span><span class='rubyid_include? fid id'>include?</span><span class='lparen token'>(</span><span class='rubyid_data identifier id'>data</span><span class='dot token'>.</span><span class='rubyid_id identifier id'>id</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_ids'>ids</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_args'>args</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
+  <span class='id identifier rubyid_all'>all</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_data'>data</span><span class='op'>|</span> <span class='id identifier rubyid_ids'>ids</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -393,10 +390,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/actions/find.rb', line 25</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_first identifier id'>first</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
-  <span class='rubyid_find identifier id'>find</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_first identifier id'>first</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_first'>first</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -407,9 +403,9 @@
 </div>
 
     <div id="footer">
-  Generated on Sun Jun 30 18:25:26 2013 by
+  Generated on Sun Jun 30 18:26:39 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6.2 (ruby-1.8.7).
+  0.8.6.2 (ruby-1.9.3).
 </div>
 
   </body>

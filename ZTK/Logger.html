@@ -115,13 +115,13 @@ use this library like so:
 
 <p>= Typical usage:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='rubyid_$logger gvar id'>$logger</span> <span class='assign token'>=</span> <span class='rubyid_ZTK constant id'>ZTK</span><span class='colon2 op'>::</span><span class='rubyid_Logger constant id'>Logger</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;/dev/null&quot;</span><span class='rparen token'>)</span>
+<pre class="code ruby"><code class="ruby"><span class='gvar'>$logger</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Logger</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/dev/null</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
-<span class='rubyid_$logger gvar id'>$logger</span><span class='dot token'>.</span><span class='rubyid_debug identifier id'>debug</span> <span class='lbrace token'>{</span> <span class='string val'>&quot;This is a debug message!&quot;</span> <span class='rbrace token'>}</span>
-<span class='rubyid_$logger gvar id'>$logger</span><span class='dot token'>.</span><span class='rubyid_info identifier id'>info</span> <span class='lbrace token'>{</span> <span class='string val'>&quot;This is a info message!&quot;</span> <span class='rbrace token'>}</span>
-<span class='rubyid_$logger gvar id'>$logger</span><span class='dot token'>.</span><span class='rubyid_warn identifier id'>warn</span> <span class='lbrace token'>{</span> <span class='string val'>&quot;This is a warn message!&quot;</span> <span class='rbrace token'>}</span>
-<span class='rubyid_$logger gvar id'>$logger</span><span class='dot token'>.</span><span class='rubyid_error identifier id'>error</span> <span class='lbrace token'>{</span> <span class='string val'>&quot;This is a error message!&quot;</span> <span class='rbrace token'>}</span>
-<span class='rubyid_$logger gvar id'>$logger</span><span class='dot token'>.</span><span class='rubyid_fatal identifier id'>fatal</span> <span class='lbrace token'>{</span> <span class='string val'>&quot;This is a fatal message!&quot;</span> <span class='rbrace token'>}</span>
+<span class='gvar'>$logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>This is a debug message!</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+<span class='gvar'>$logger</span><span class='period'>.</span><span class='id identifier rubyid_info'>info</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>This is a info message!</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+<span class='gvar'>$logger</span><span class='period'>.</span><span class='id identifier rubyid_warn'>warn</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>This is a warn message!</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+<span class='gvar'>$logger</span><span class='period'>.</span><span class='id identifier rubyid_error'>error</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>This is a error message!</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+<span class='gvar'>$logger</span><span class='period'>.</span><span class='id identifier rubyid_fatal'>fatal</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>This is a fatal message!</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 </code></pre>
 
 
@@ -163,8 +163,7 @@ use this library like so:
 
 </div>
         </dt>
-        <dd><pre class="code"><span class='rubyid_Severity constant id'>Severity</span><span class='dot token'>.</span><span class='rubyid_constants identifier id'>constants</span><span class='dot token'>.</span><span class='rubyid_inject identifier id'>inject</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span>
-</pre></dd>
+        <dd><pre class="code"><span class='const'>Severity</span><span class='period'>.</span><span class='id identifier rubyid_constants'>constants</span><span class='period'>.</span><span class='id identifier rubyid_inject'>inject</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_arr'>arr</span><span class='comma'>,</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span> <span class='id identifier rubyid_arr'>arr</span><span class='lbracket'>[</span><span class='const'>Severity</span><span class='period'>.</span><span class='id identifier rubyid_const_get'>const_get</span><span class='lparen'>(</span><span class='id identifier rubyid_c'>c</span><span class='rparen'>)</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_c'>c</span><span class='semicolon'>;</span> <span class='id identifier rubyid_arr'>arr</span><span class='rbrace'>}</span></pre></dd>
       
     </dl>
   
@@ -317,11 +316,10 @@ use this library like so:
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/logger.rb', line 31</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
-  <span class='rubyid_super super kw'>super</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
-  <span class='rubyid_set_log_level identifier id'>set_log_level</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='kw'>super</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_set_log_level'>set_log_level</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -366,10 +364,9 @@ use this library like so:
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/logger.rb', line 58</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_inspect identifier id'>inspect</span>
-  <span class='dstring node'>&quot;#&lt;#{self.class} filename=#{@logdev.filename.inspect}&gt;&quot;</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#&lt;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='rbrace'>}</span><span class='tstring_content'> filename=</span><span class='embexpr_beg'>#{</span><span class='ivar'>@logdev</span><span class='period'>.</span><span class='id identifier rubyid_filename'>filename</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>&gt;</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -407,10 +404,9 @@ use this library like so:
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/logger.rb', line 37</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_logdev identifier id'>logdev</span>
-  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_instance_variable_get identifier id'>instance_variable_get</span><span class='lparen token'>(</span><span class='symbol val'>:@logdev</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_instance_variable_get identifier id'>instance_variable_get</span><span class='lparen token'>(</span><span class='symbol val'>:@dev</span><span class='rparen token'>)</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_logdev'>logdev</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_instance_variable_get'>instance_variable_get</span><span class='lparen'>(</span><span class='symbol'>:@logdev</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_instance_variable_get'>instance_variable_get</span><span class='lparen'>(</span><span class='symbol'>:@dev</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -459,11 +455,10 @@ originated from.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/logger.rb', line 52</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_shift identifier id'>shift</span><span class='lparen token'>(</span><span class='rubyid_severity identifier id'>severity</span><span class='comma token'>,</span> <span class='rubyid_shift identifier id'>shift</span><span class='assign token'>=</span><span class='integer val'>0</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='rubyid_severity identifier id'>severity</span> <span class='assign token'>=</span> <span class='rubyid_ZTK constant id'>ZTK</span><span class='colon2 op'>::</span><span class='rubyid_Logger constant id'>Logger</span><span class='dot token'>.</span><span class='rubyid_const_get identifier id'>const_get</span><span class='lparen token'>(</span><span class='rubyid_severity identifier id'>severity</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='rubyid_upcase identifier id'>upcase</span><span class='rparen token'>)</span>
-  <span class='rubyid_add identifier id'>add</span><span class='lparen token'>(</span><span class='rubyid_severity identifier id'>severity</span><span class='comma token'>,</span> <span class='rubyid_nil nil kw'>nil</span><span class='comma token'>,</span> <span class='rubyid_nil nil kw'>nil</span><span class='comma token'>,</span> <span class='rubyid_shift identifier id'>shift</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_shift'>shift</span><span class='lparen'>(</span><span class='id identifier rubyid_severity'>severity</span><span class='comma'>,</span> <span class='id identifier rubyid_shift'>shift</span><span class='op'>=</span><span class='int'>0</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_severity'>severity</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Logger</span><span class='period'>.</span><span class='id identifier rubyid_const_get'>const_get</span><span class='lparen'>(</span><span class='id identifier rubyid_severity'>severity</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_upcase'>upcase</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_add'>add</span><span class='lparen'>(</span><span class='id identifier rubyid_severity'>severity</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_shift'>shift</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -474,9 +469,9 @@ originated from.</p>
 </div>
 
     <div id="footer">
-  Generated on Sun Jun 30 18:25:27 2013 by
+  Generated on Sun Jun 30 18:26:40 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6.2 (ruby-1.8.7).
+  0.8.6.2 (ruby-1.9.3).
 </div>
 
   </body>

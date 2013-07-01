@@ -238,14 +238,13 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/attributes.rb', line 7</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_included identifier id'>included</span><span class='lparen token'>(</span><span class='rubyid_base identifier id'>base</span><span class='rparen token'>)</span>
-  <span class='rubyid_base identifier id'>base</span><span class='dot token'>.</span><span class='rubyid_class_eval identifier id'>class_eval</span> <span class='rubyid_do do kw'>do</span>
-    <span class='rubyid_base identifier id'>base</span><span class='dot token'>.</span><span class='rubyid_send identifier id'>send</span><span class='lparen token'>(</span><span class='symbol val'>:extend</span><span class='comma token'>,</span> <span class='rubyid_ZTK constant id'>ZTK</span><span class='colon2 op'>::</span><span class='rubyid_DSL constant id'>DSL</span><span class='colon2 op'>::</span><span class='rubyid_Core constant id'>Core</span><span class='colon2 op'>::</span><span class='rubyid_Options constant id'>Options</span><span class='colon2 op'>::</span><span class='rubyid_ClassMethods constant id'>ClassMethods</span><span class='rparen token'>)</span>
-    <span class='rubyid_base identifier id'>base</span><span class='dot token'>.</span><span class='rubyid_add_option identifier id'>add_option</span><span class='lparen token'>(</span><span class='symbol val'>:attribute</span><span class='rparen token'>)</span>
-    <span class='rubyid_base identifier id'>base</span><span class='dot token'>.</span><span class='rubyid_send identifier id'>send</span><span class='lparen token'>(</span><span class='symbol val'>:extend</span><span class='comma token'>,</span> <span class='rubyid_ZTK constant id'>ZTK</span><span class='colon2 op'>::</span><span class='rubyid_DSL constant id'>DSL</span><span class='colon2 op'>::</span><span class='rubyid_Core constant id'>Core</span><span class='colon2 op'>::</span><span class='rubyid_Attributes constant id'>Attributes</span><span class='colon2 op'>::</span><span class='rubyid_ClassMethods constant id'>ClassMethods</span><span class='rparen token'>)</span>
-  <span class='rubyid_end end kw'>end</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_included'>included</span><span class='lparen'>(</span><span class='id identifier rubyid_base'>base</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_class_eval'>class_eval</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:extend</span><span class='comma'>,</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Core</span><span class='op'>::</span><span class='const'>Options</span><span class='op'>::</span><span class='const'>ClassMethods</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_add_option'>add_option</span><span class='lparen'>(</span><span class='symbol'>:attribute</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:extend</span><span class='comma'>,</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Core</span><span class='op'>::</span><span class='const'>Attributes</span><span class='op'>::</span><span class='const'>ClassMethods</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -292,10 +291,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/attributes.rb', line 15</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_attributes identifier id'>attributes</span>
-  <span class='rubyid_@attributes ivar id'>@attributes</span> <span class='opasgn op'>||=</span> <span class='rubyid_Hash constant id'>Hash</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_attributes'>attributes</span>
+  <span class='ivar'>@attributes</span> <span class='op'>||=</span> <span class='const'>Hash</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -306,9 +304,9 @@
 </div>
 
     <div id="footer">
-  Generated on Sun Jun 30 18:25:26 2013 by
+  Generated on Sun Jun 30 18:26:39 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6.2 (ruby-1.8.7).
+  0.8.6.2 (ruby-1.9.3).
 </div>
 
   </body>

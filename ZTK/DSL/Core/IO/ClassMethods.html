@@ -195,12 +195,11 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/io.rb', line 16</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_load identifier id'>load</span><span class='lparen token'>(</span><span class='rubyid_rb_file identifier id'>rb_file</span><span class='rparen token'>)</span>
-  <span class='rubyid_new identifier id'>new</span> <span class='rubyid_do do kw'>do</span>
-    <span class='rubyid_instance_eval identifier id'>instance_eval</span><span class='lparen token'>(</span><span class='colon3 op'>::</span><span class='rubyid_IO constant id'>IO</span><span class='dot token'>.</span><span class='rubyid_read identifier id'>read</span><span class='lparen token'>(</span><span class='rubyid_rb_file identifier id'>rb_file</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='rubyid_rb_file identifier id'>rb_file</span><span class='rparen token'>)</span>
-  <span class='rubyid_end end kw'>end</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_load'>load</span><span class='lparen'>(</span><span class='id identifier rubyid_rb_file'>rb_file</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_instance_eval'>instance_eval</span><span class='lparen'>(</span><span class='op'>::</span><span class='const'>IO</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='id identifier rubyid_rb_file'>rb_file</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_rb_file'>rb_file</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -211,9 +210,9 @@
 </div>
 
     <div id="footer">
-  Generated on Sun Jun 30 18:25:25 2013 by
+  Generated on Sun Jun 30 18:26:39 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6.2 (ruby-1.8.7).
+  0.8.6.2 (ruby-1.9.3).
 </div>
 
   </body>
