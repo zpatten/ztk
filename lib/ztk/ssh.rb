@@ -19,7 +19,7 @@ module ZTK
   #
   # If you want to specify SSH options you can:
   #
-  #     keys = File.expand_path(File.join(ENV['HOME'], '.ssh', 'id_rsa'))
+  #     keys = File.expand_path(File.join(Dir.home, '.ssh', 'id_rsa'))
   #     ssh = ZTK::SSH.new(:host_name => '127.0.0.1', :user => ENV['USER'], :keys => keys)
   #
   # = Configuration Examples:
@@ -36,8 +36,8 @@ module ZTK
   # Specify an identity file:
   #
   #     ssh.config do |config|
-  #       config.keys = File.expand_path(File.join(ENV['HOME'], '.ssh', 'id_rsa'))
-  #       config.proxy_keys = File.expand_path(File.join(ENV['HOME'], '.ssh', 'id_rsa'))
+  #       config.keys = File.expand_path(File.join(Dir.home, '.ssh', 'id_rsa'))
+  #       config.proxy_keys = File.expand_path(File.join(Dir.home, '.ssh', 'id_rsa'))
   #     end
   #
   # Specify a timeout:
