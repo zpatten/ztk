@@ -22,7 +22,7 @@ module ZTK
       #     config.host_name = "127.0.0.1"
       #   end
       #   local = File.expand_path(File.join(ZTK::Locator.root, "tmp", "id_rsa.pub"))
-      #   remote = File.expand_path(File.join(Dir.home, ".ssh", "id_rsa.pub"))
+      #   remote = File.expand_path(File.join(ENV['HOME'], ".ssh", "id_rsa.pub"))
       #   ssh.download(remote, local)
       def download(remote, local, options={})
         options = {:recursive => ::File.directory?(local) }.merge(options)
