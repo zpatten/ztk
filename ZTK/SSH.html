@@ -6,7 +6,7 @@
 <title>
   Class: ZTK::SSH
   
-    &mdash; Documentation by YARD 0.8.6.1
+    &mdash; Documentation by YARD 0.8.6.2
   
 </title>
 
@@ -93,7 +93,7 @@
   
     
       <dt class="r2">Includes:</dt>
-      <dd class="r2"><span class='object_link'><a href="SSH/Bootstrap.html" title="ZTK::SSH::Bootstrap (module)">Bootstrap</a></span>, <span class='object_link'><a href="SSH/Command.html" title="ZTK::SSH::Command (module)">Command</a></span>, <span class='object_link'><a href="SSH/Download.html" title="ZTK::SSH::Download (module)">Download</a></span>, <span class='object_link'><a href="SSH/Exec.html" title="ZTK::SSH::Exec (module)">Exec</a></span>, <span class='object_link'><a href="SSH/File.html" title="ZTK::SSH::File (module)">File</a></span>, <span class='object_link'><a href="SSH/Upload.html" title="ZTK::SSH::Upload (module)">Upload</a></span></dd>
+      <dd class="r2"><span class='object_link'><a href="SSH/Bootstrap.html" title="ZTK::SSH::Bootstrap (module)">Bootstrap</a></span>, <span class='object_link'><a href="SSH/Command.html" title="ZTK::SSH::Command (module)">Command</a></span>, <span class='object_link'><a href="SSH/Console.html" title="ZTK::SSH::Console (module)">Console</a></span>, <span class='object_link'><a href="SSH/Core.html" title="ZTK::SSH::Core (module)">Core</a></span>, <span class='object_link'><a href="SSH/Download.html" title="ZTK::SSH::Download (module)">Download</a></span>, <span class='object_link'><a href="SSH/Exec.html" title="ZTK::SSH::Exec (module)">Exec</a></span>, <span class='object_link'><a href="SSH/File.html" title="ZTK::SSH::File (module)">File</a></span>, <span class='object_link'><a href="SSH/Private.html" title="ZTK::SSH::Private (module)">Private</a></span>, <span class='object_link'><a href="SSH/Upload.html" title="ZTK::SSH::Upload (module)">Upload</a></span></dd>
       
     
   
@@ -101,7 +101,7 @@
   
     <dt class="r1 last">Defined in:</dt>
     <dd class="r1 last">lib/ztk/ssh.rb<span class="defines">,<br />
-  lib/ztk/ssh/exec.rb,<br /> lib/ztk/ssh/file.rb,<br /> lib/ztk/ssh/upload.rb,<br /> lib/ztk/ssh/command.rb,<br /> lib/ztk/ssh/download.rb,<br /> lib/ztk/ssh/bootstrap.rb</span>
+  lib/ztk/ssh/core.rb,<br /> lib/ztk/ssh/exec.rb,<br /> lib/ztk/ssh/file.rb,<br /> lib/ztk/ssh/upload.rb,<br /> lib/ztk/ssh/private.rb,<br /> lib/ztk/ssh/command.rb,<br /> lib/ztk/ssh/console.rb,<br /> lib/ztk/ssh/download.rb,<br /> lib/ztk/ssh/bootstrap.rb</span>
 </dd>
   
 </dl>
@@ -125,7 +125,7 @@
 
 <p>If you want to specify SSH options you can:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_keys'>keys</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>HOME</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>.ssh</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>id_rsa</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_keys'>keys</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_home'>home</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>.ssh</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>id_rsa</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
 <span class='id identifier rubyid_ssh'>ssh</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>SSH</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='symbol'>:host_name</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>127.0.0.1</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:user</span> <span class='op'>=&gt;</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>USER</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='symbol'>:keys</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_keys'>keys</span><span class='rparen'>)</span>
 </code></pre>
 
@@ -144,8 +144,8 @@
 <p>Specify an identity file:</p>
 
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_ssh'>ssh</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_config'>config</span><span class='op'>|</span>
-  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>HOME</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>.ssh</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>id_rsa</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_proxy_keys'>proxy_keys</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>HOME</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>.ssh</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>id_rsa</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_home'>home</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>.ssh</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>id_rsa</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_proxy_keys'>proxy_keys</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_home'>home</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>.ssh</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>id_rsa</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
 <span class='kw'>end</span>
 </code></pre>
 
@@ -195,7 +195,7 @@
 <p class="children">
   
     
-      <strong class="modules">Modules:</strong> <span class='object_link'><a href="SSH/Bootstrap.html" title="ZTK::SSH::Bootstrap (module)">Bootstrap</a></span>, <span class='object_link'><a href="SSH/Command.html" title="ZTK::SSH::Command (module)">Command</a></span>, <span class='object_link'><a href="SSH/Download.html" title="ZTK::SSH::Download (module)">Download</a></span>, <span class='object_link'><a href="SSH/Exec.html" title="ZTK::SSH::Exec (module)">Exec</a></span>, <span class='object_link'><a href="SSH/File.html" title="ZTK::SSH::File (module)">File</a></span>, <span class='object_link'><a href="SSH/Upload.html" title="ZTK::SSH::Upload (module)">Upload</a></span>
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="SSH/Bootstrap.html" title="ZTK::SSH::Bootstrap (module)">Bootstrap</a></span>, <span class='object_link'><a href="SSH/Command.html" title="ZTK::SSH::Command (module)">Command</a></span>, <span class='object_link'><a href="SSH/Console.html" title="ZTK::SSH::Console (module)">Console</a></span>, <span class='object_link'><a href="SSH/Core.html" title="ZTK::SSH::Core (module)">Core</a></span>, <span class='object_link'><a href="SSH/Download.html" title="ZTK::SSH::Download (module)">Download</a></span>, <span class='object_link'><a href="SSH/Exec.html" title="ZTK::SSH::Exec (module)">Exec</a></span>, <span class='object_link'><a href="SSH/File.html" title="ZTK::SSH::File (module)">File</a></span>, <span class='object_link'><a href="SSH/Private.html" title="ZTK::SSH::Private (module)">Private</a></span>, <span class='object_link'><a href="SSH/Upload.html" title="ZTK::SSH::Upload (module)">Upload</a></span>
     
   
     
@@ -269,53 +269,6 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#close-instance_method" title="#close (instance method)">- (Object) <strong>close</strong> </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>Close our session gracefully.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#console-instance_method" title="#console (instance method)">- (Object) <strong>console</strong> </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>Launches an SSH console, replacing the current process with the console
-process.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
       <a href="#initialize-instance_method" title="#initialize (instance method)">- (SSH) <strong>initialize</strong>(configuration = {}) </a>
     
 
@@ -338,78 +291,20 @@ process.</p>
 </li>
 
       
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#on_retry-instance_method" title="#on_retry (instance method)">- (Object) <strong>on_retry</strong>(exception) </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>The on_retry method we&#39;ll use with the RescueRetry class.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#sftp-instance_method" title="#sftp (instance method)">- (Object) <strong>sftp</strong> </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>Starts an SFTP session.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#ssh-instance_method" title="#ssh (instance method)">- (Object) <strong>ssh</strong> </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>Starts an SSH session.</p>
-</div></span>
-  
-</li>
-
-      
     </ul>
   
 
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="SSH/Private.html" title="ZTK::SSH::Private (module)">Private</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="SSH/Private.html#log_header-instance_method" title="ZTK::SSH::Private#log_header (method)">#log_header</a></span>, <span class='object_link'><a href="SSH/Private.html#ssh_options-instance_method" title="ZTK::SSH::Private#ssh_options (method)">#ssh_options</a></span>, <span class='object_link'><a href="SSH/Private.html#tag-instance_method" title="ZTK::SSH::Private#tag (method)">#tag</a></span></p>
 
   
   
@@ -454,6 +349,28 @@ process.</p>
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="SSH/Download.html" title="ZTK::SSH::Download (module)">Download</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="SSH/Download.html#download-instance_method" title="ZTK::SSH::Download#download (method)">#download</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="SSH/Core.html" title="ZTK::SSH::Core (module)">Core</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="SSH/Core.html#close-instance_method" title="ZTK::SSH::Core#close (method)">#close</a></span>, <span class='object_link'><a href="SSH/Core.html#on_retry-instance_method" title="ZTK::SSH::Core#on_retry (method)">#on_retry</a></span>, <span class='object_link'><a href="SSH/Core.html#sftp-instance_method" title="ZTK::SSH::Core#sftp (method)">#sftp</a></span>, <span class='object_link'><a href="SSH/Core.html#ssh-instance_method" title="ZTK::SSH::Core#ssh (method)">#ssh</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="SSH/Console.html" title="ZTK::SSH::Console (module)">Console</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="SSH/Console.html#console-instance_method" title="ZTK::SSH::Console#console (method)">#console</a></span></p>
 
   
   
@@ -741,11 +658,6 @@ series of identity files to use for authentication with the proxy.</p>
       <pre class="lines">
 
 
-147
-148
-149
-150
-151
 152
 153
 154
@@ -753,10 +665,16 @@ series of identity files to use for authentication with the proxy.</p>
 156
 157
 158
-159</pre>
+159
+160
+161
+162
+163
+164
+165</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 147</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 152</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_configuration'>configuration</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='lbrace'>{</span>
@@ -769,6 +687,7 @@ series of identity files to use for authentication with the proxy.</p>
     <span class='symbol'>:exit_code</span> <span class='op'>=&gt;</span> <span class='int'>0</span><span class='comma'>,</span>
     <span class='symbol'>:silence</span> <span class='op'>=&gt;</span> <span class='kw'>false</span>
   <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_configuration'>configuration</span><span class='rparen'>)</span><span class='rparen'>)</span>
+
   <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>config=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:table</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -778,254 +697,13 @@ series of identity files to use for authentication with the proxy.</p>
   
 </div>
 
-
-  <div id="instance_method_details" class="method_details_list">
-    <h2>Instance Method Details</h2>
-
-    
-      <div class="method_details first">
-  <h3 class="signature first" id="close-instance_method">
-  
-    - (<tt>Object</tt>) <strong>close</strong> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>Close our session gracefully.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-176
-177
-178
-179</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 176</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_close'>close</span>
-  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>close</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
-  <span class='id identifier rubyid_ssh'>ssh</span> <span class='kw'>and</span> <span class='op'>!</span><span class='id identifier rubyid_ssh'>ssh</span><span class='period'>.</span><span class='id identifier rubyid_closed?'>closed?</span> <span class='kw'>and</span> <span class='id identifier rubyid_ssh'>ssh</span><span class='period'>.</span><span class='id identifier rubyid_close'>close</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="console-instance_method">
-  
-    - (<tt>Object</tt>) <strong>console</strong> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>Launches an SSH console, replacing the current process with the console
-process.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-  <div class="examples">
-    <p class="tag_title">Examples:</p>
-    
-      
-        <p class="example_title"><div class='inline'><p>Launch a console:</p>
-</div></p>
-      
-      <pre class="example code"><code><span class='id identifier rubyid_ssh'>ssh</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>SSH</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
-<span class='id identifier rubyid_ssh'>ssh</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_config'>config</span><span class='op'>|</span>
-  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_user'>user</span> <span class='op'>=</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>USER</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
-  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_host_name'>host_name</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>127.0.0.1</span><span class='tstring_end'>&quot;</span></span>
-<span class='kw'>end</span>
-<span class='id identifier rubyid_ssh'>ssh</span><span class='period'>.</span><span class='id identifier rubyid_console'>console</span></code></pre>
-    
-  </div>
-
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-198
-199
-200
-201
-202
-203
-204</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 198</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_console'>console</span>
-  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>config=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:table</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
-  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_info'>info</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>console(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_console_command'>console_command</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
-
-  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_fatal'>fatal</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>REPLACING CURRENT PROCESS - GOODBYE!</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
-  <span class='const'>Kernel</span><span class='period'>.</span><span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='id identifier rubyid_console_command'>console_command</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="on_retry-instance_method">
-  
-    - (<tt>Object</tt>) <strong>on_retry</strong>(exception) 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>The on_retry method we&#39;ll use with the RescueRetry class.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-182
-183
-184
-185
-186</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 182</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_on_retry'>on_retry</span><span class='lparen'>(</span><span class='id identifier rubyid_exception'>exception</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_close'>close</span>
-  <span class='ivar'>@ssh</span> <span class='op'>=</span> <span class='kw'>nil</span>
-  <span class='ivar'>@sftp</span> <span class='op'>=</span> <span class='kw'>nil</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="sftp-instance_method">
-  
-    - (<tt>Object</tt>) <strong>sftp</strong> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>Starts an SFTP session.  Can also be used to get the Net::SFTP object.</p>
-
-<p>Primarily used internally.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-171
-172
-173</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 171</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_sftp'>sftp</span>
-  <span class='ivar'>@sftp</span> <span class='op'>||=</span> <span class='const'>Net</span><span class='op'>::</span><span class='const'>SFTP</span><span class='period'>.</span><span class='id identifier rubyid_start'>start</span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_host_name'>host_name</span><span class='comma'>,</span> <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_ssh_options'>ssh_options</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="ssh-instance_method">
-  
-    - (<tt>Object</tt>) <strong>ssh</strong> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>Starts an SSH session.  Can also be used to get the Net::SSH object.</p>
-
-<p>Primarily used internally.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-164
-165
-166</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 164</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_ssh'>ssh</span>
-  <span class='ivar'>@ssh</span> <span class='op'>||=</span> <span class='const'>Net</span><span class='op'>::</span><span class='const'>SSH</span><span class='period'>.</span><span class='id identifier rubyid_start'>start</span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_host_name'>host_name</span><span class='comma'>,</span> <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_ssh_options'>ssh_options</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-  </div>
 
 </div>
 
     <div id="footer">
-  Generated on Sat Jun 29 23:46:41 2013 by
+  Generated on Sun Jun 30 17:38:12 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6.1 (ruby-1.9.3).
+  0.8.6.2 (ruby-1.9.3).
 </div>
 
   </body>

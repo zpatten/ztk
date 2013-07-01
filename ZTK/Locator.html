@@ -6,7 +6,7 @@
 <title>
   Class: ZTK::Locator
   
-    &mdash; Documentation by YARD 0.8.6.1
+    &mdash; Documentation by YARD 0.8.6.2
   
 </title>
 
@@ -161,6 +161,29 @@
 </li>
 
       
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#root-class_method" title="root (class method)">+ (String) <strong>root</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the root for the filesystem we are operating on.</p>
+</div></span>
+  
+</li>
+
+      
     </ul>
   
 
@@ -278,14 +301,77 @@ attempt to locate.</p>
 </table>
 </div>
     
+      <div class="method_details ">
+  <h3 class="signature " id="root-class_method">
+  
+    + (<tt>String</tt>) <strong>root</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the root for the filesystem we are operating on.  Ignores
+mount boundries on *nix.</p>
+
+<p>For all flavors of *nix this should always return &quot;/&quot;.</p>
+
+<p>Windows should expect something similar to &quot;C:\&quot;.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The root path of the file-system.  For unix this should
+always be &quot;/&quot;.  For windows this should be something like &quot;C:\&quot;.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+43
+44
+45</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ztk/locator.rb', line 43</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_root'>root</span>
+  <span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_pwd'>pwd</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='const'>File</span><span class='op'>::</span><span class='const'>SEPARATOR</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
   </div>
 
 </div>
 
     <div id="footer">
-  Generated on Sat Jun 29 23:46:41 2013 by
+  Generated on Sun Jun 30 17:38:12 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6.1 (ruby-1.9.3).
+  0.8.6.2 (ruby-1.9.3).
 </div>
 
   </body>
