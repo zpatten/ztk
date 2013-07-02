@@ -27,10 +27,8 @@ module ZTK
         target.nil? and raise SSHError, "You must supply a target file!"
         !block_given? and raise SSHError, "You must supply a block!"
 
-        tempfile = Tempfile.new("tempfile")
-
-        local_tempfile = tempfile.path
-        remote_tempfile = ::File.join(ZTK::Locator.root, "tmp", ::File.basename(local_tempfile))
+        local_tempfile = Tempfile.new("tempfile-local").path
+        remote_tempfile = ::File.join("", "tmp", ::File.basename(Tempfile.new("tempfile-remote").path))
 
         ::File.open(local_tempfile, 'w') do |file|
           yield(file)
