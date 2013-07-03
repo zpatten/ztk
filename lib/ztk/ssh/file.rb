@@ -30,11 +30,6 @@ module ZTK
         local_tempfile  = Tempfile.new("tempfile-local")
         remote_tempfile = ::File.join("", "tmp", ::File.basename(Tempfile.new("tempfile-remote").path))
 
-        ::File.open(local_tempfile, 'w') do |file|
-          yield(file)
-          file.respond_to?(:flush) and file.flush
-        end
-
         !block.nil? and block.call(local_tempfile)
         local_tempfile.respond_to?(:flush) and local_tempfile.flush
 
