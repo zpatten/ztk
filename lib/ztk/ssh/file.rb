@@ -28,7 +28,7 @@ module ZTK
         !block_given? and raise SSHError, "You must supply a block!"
 
         local_tempfile  = Tempfile.new("tempfile-local")
-        remote_tempfile = ::File.join("", "tmp", ::File.basename(Tempfile.new("tempfile-remote").path))
+        remote_tempfile = ::File.join("", "tmp", ::File.basename(Tempfile.new("tempfile-remote").path.dup))
 
         !block.nil? and block.call(local_tempfile)
         local_tempfile.respond_to?(:flush) and local_tempfile.flush

@@ -30,7 +30,7 @@ module ZTK
         }.merge(options)
 
         local_tempfile  = Tempfile.new("tempfile-local")
-        remote_tempfile = ::File.join("", "tmp", ::File.basename(Tempfile.new("tempfile-remote").path))
+        remote_tempfile = ::File.join("", "tmp", ::File.basename(Tempfile.new("tempfile-remote").path.dup))
 
         local_tempfile.puts(content)
         local_tempfile.respond_to?(:flush) and local_tempfile.flush
