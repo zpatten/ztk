@@ -129,10 +129,10 @@ module ZTK
         log_and_raise(BaseError, "You must supply a block to the log method!")
       elsif (@config.ui.logger.level <= ZTK::Logger.const_get(log_level.to_s.upcase))
         if @config.ui.logger.respond_to?(:logdev)
-          @config.ui.logger.logdev.write(yield)
+          @config.ui.logger.logdev.write(ZTK::ANSI.uncolor(yield))
           @config.ui.logger.logdev.respond_to?(:flush) and @config.ui.logger.logdev.flush
         else
-          @config.ui.logger.instance_variable_get(:@logdev).instance_variable_get(:@dev).write(yield)
+          @config.ui.logger.instance_variable_get(:@logdev).instance_variable_get(:@dev).write(ZTK::ANSI.uncolor(yield))
           @config.ui.logger.instance_variable_get(:@logdev).instance_variable_get(:@dev).respond_to?(:flush) and @config.ui.logger.instance_variable_get(:@logdev).instance_variable_get(:@dev).flush
         end
       end

@@ -95,7 +95,7 @@ module ZTK
       message = [message, progname].flatten.compact.join(": ")
       message = "%19s.%06d|%05d|%5s|%s%s\n" % [Time.now.utc.strftime("%Y-%m-%d|%H:%M:%S"), Time.now.utc.usec, Process.pid, SEVERITIES[severity], called_by, message]
 
-      @logdev.write(message)
+      @logdev.write(ZTK::ANSI.uncolor(message))
       @logdev.respond_to?(:flush) and @logdev.flush
 
       true
