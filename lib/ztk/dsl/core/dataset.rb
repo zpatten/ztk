@@ -27,6 +27,7 @@ module ZTK::DSL::Core
         if !@@dataset.nil?
           klass = self.to_s.underscore.to_sym
           @@dataset[klass] = []
+          @@id[klass]      = 0
         end
       end
 
