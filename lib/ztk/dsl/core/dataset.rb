@@ -24,11 +24,15 @@ module ZTK::DSL::Core
       end
 
       def purge
-        if !@@dataset.nil?
-          klass = self.to_s.underscore.to_sym
-          @@dataset[klass] = []
-          @@id[klass]      = 0
-        end
+        klass = self.to_s.underscore.to_sym
+
+        @@dataset        ||= {}
+        @@dataset[klass]   = []
+
+        @@id             ||= {}
+        @@id[klass]        = 0
+
+        true
       end
 
       def next_id
