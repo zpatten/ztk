@@ -305,7 +305,7 @@ bootstrap via sudo; False to execute it as the defined user.</p>
   <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='kw'>nil</span>
 
   <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>RescueRetry</span><span class='period'>.</span><span class='id identifier rubyid_try'>try</span><span class='lparen'>(</span><span class='symbol'>:tries</span> <span class='op'>=&gt;</span> <span class='int'>3</span><span class='comma'>,</span> <span class='symbol'>:on_retry</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:on_retry</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>do</span>
-    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_upload'>upload</span><span class='lparen'>(</span><span class='id identifier rubyid_local_tempfile'>local_tempfile</span><span class='comma'>,</span> <span class='id identifier rubyid_remote_tempfile'>remote_tempfile</span><span class='rparen'>)</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_upload'>upload</span><span class='lparen'>(</span><span class='id identifier rubyid_local_tempfile'>local_tempfile</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_remote_tempfile'>remote_tempfile</span><span class='rparen'>)</span>
 
     <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='id identifier rubyid_command'>command</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
@@ -324,7 +324,7 @@ bootstrap via sudo; False to execute it as the defined user.</p>
 </div>
 
     <div id="footer">
-  Generated on Tue Jul  2 22:29:38 2013 by
+  Generated on Tue Jul  2 22:34:26 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.6.2 (ruby-1.9.3).
 </div>
