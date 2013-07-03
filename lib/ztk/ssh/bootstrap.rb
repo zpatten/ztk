@@ -29,7 +29,7 @@ module ZTK
           :use_sudo => true
         }.merge(options)
 
-        bootstrap_tempfile = ::File.basename(Tempfile.new("bootstrap"))
+        bootstrap_tempfile = Tempfile.new("bootstrap")
         remote_tempfile = ::File.join("", "tmp", ::File.basename(bootstrap_tempfile.path.dup))
         bootstrap_tempfile.close!
 

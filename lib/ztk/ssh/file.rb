@@ -27,7 +27,7 @@ module ZTK
         target.nil? and raise SSHError, "You must supply a target file!"
         !block_given? and raise SSHError, "You must supply a block!"
 
-        file_tempfile = ::File.basename(Tempfile.new("file"))
+        file_tempfile = Tempfile.new("file")
         remote_tempfile = ::File.join("", "tmp", ::File.basename(file_tempfile.path.dup))
         file_tempfile.close!
 
