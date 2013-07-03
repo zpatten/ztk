@@ -12,8 +12,6 @@ module ZTK::DSL::Core
 
     # @author Zachary Patten <zachary AT jovelabs DOT com>
     module ClassMethods
-      @@id ||= 0
-
       def dataset
         klass = self.to_s.underscore.to_sym
         @@dataset ||= {}
@@ -28,13 +26,13 @@ module ZTK::DSL::Core
         @@dataset = nil
       end
 
-      def id
-        @@id
-      end
-
       def next_id
-        @@id += 1
-        @@id
+        klass = self.to_s.underscore.to_sym
+        @@id ||= {}
+        @@id[klass] ||= 0
+
+        @@id[klass] += 1
+        @@id[klass]
       end
 
     end
