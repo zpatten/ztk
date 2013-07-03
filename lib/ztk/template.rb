@@ -38,6 +38,16 @@ module ZTK
         render_template(load_template(template), context)
       end
 
+      # Renders a string to a string.
+      #
+      # @param [String] template The ERB template to process.
+      # @param [Hash] context A hash containing key-pairs, for which the keys are turned into global variables with their respective values.
+      #
+      # @return [String] The evaulated template content.
+      def string(template, context=nil)
+        render_template(template, context)
+      end
+
       # Renders a "DO NOT EDIT" notice for placement in generated files.
       #
       # @param [Hash] options Options hash.
