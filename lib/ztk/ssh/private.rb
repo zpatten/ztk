@@ -55,7 +55,7 @@ module ZTK
       end
 
       def log_header(what)
-        count = 8
+        count = 12
         sep = ("=" * count)
         header = [sep, "[ #{what} ]", sep, "[ #{tag} ]", sep, "[ #{what} ]", sep].join
         "#{header}\n"
