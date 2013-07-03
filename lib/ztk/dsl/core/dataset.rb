@@ -12,6 +12,7 @@ module ZTK::DSL::Core
 
     # @author Zachary Patten <zachary AT jovelabs DOT com>
     module ClassMethods
+
       def dataset
         klass = self.to_s.underscore.to_sym
         @@dataset ||= {}
@@ -23,7 +24,10 @@ module ZTK::DSL::Core
       end
 
       def purge
-        @@dataset = nil
+        if !@@dataset.nil?
+          klass = self.to_s.underscore.to_sym
+          @@dataset[klass] = []
+        end
       end
 
       def next_id
