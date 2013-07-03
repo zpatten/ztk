@@ -285,17 +285,17 @@
       <pre class="lines">
 
 
-34
-35
-36
-37
 38
 39
 40
-41</pre>
+41
+42
+43
+44
+45</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/dataset.rb', line 34</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/dataset.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_next_id'>next_id</span>
   <span class='id identifier rubyid_klass'>klass</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_underscore'>underscore</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
@@ -344,17 +344,25 @@
 29
 30
 31
-32</pre>
+32
+33
+34
+35
+36</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/dataset.rb', line 26</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_purge'>purge</span>
-  <span class='kw'>if</span> <span class='op'>!</span><span class='cvar'>@@dataset</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
-    <span class='id identifier rubyid_klass'>klass</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_underscore'>underscore</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
-    <span class='cvar'>@@dataset</span><span class='lbracket'>[</span><span class='id identifier rubyid_klass'>klass</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-    <span class='cvar'>@@id</span><span class='lbracket'>[</span><span class='id identifier rubyid_klass'>klass</span><span class='rbracket'>]</span>      <span class='op'>=</span> <span class='int'>0</span>
-  <span class='kw'>end</span>
+  <span class='id identifier rubyid_klass'>klass</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_underscore'>underscore</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+
+  <span class='cvar'>@@dataset</span>        <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='cvar'>@@dataset</span><span class='lbracket'>[</span><span class='id identifier rubyid_klass'>klass</span><span class='rbracket'>]</span>   <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+
+  <span class='cvar'>@@id</span>             <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='cvar'>@@id</span><span class='lbracket'>[</span><span class='id identifier rubyid_klass'>klass</span><span class='rbracket'>]</span>        <span class='op'>=</span> <span class='int'>0</span>
+
+  <span class='kw'>true</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -366,7 +374,7 @@
 </div>
 
     <div id="footer">
-  Generated on Wed Jul  3 16:16:53 2013 by
+  Generated on Wed Jul  3 16:22:44 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.6.2 (ruby-1.9.3).
 </div>
