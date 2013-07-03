@@ -44,7 +44,7 @@ module ZTK
         result = nil
 
         ZTK::RescueRetry.try(:tries => 3, :on_retry => method(:on_retry)) do
-          self.upload(local_tempfile, remote_tempfile)
+          self.upload(local_tempfile.path, remote_tempfile)
 
           result = self.exec(command, options)
         end

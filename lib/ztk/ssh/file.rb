@@ -34,7 +34,7 @@ module ZTK
         local_tempfile.respond_to?(:flush) and local_tempfile.flush
 
         ZTK::RescueRetry.try(:tries => 3, :on_retry => method(:on_retry)) do
-          self.upload(local_tempfile, remote_tempfile)
+          self.upload(local_tempfile.path, remote_tempfile)
 
           self.exec(%(sudo mv -fv #{remote_tempfile} #{target}), :silence => true)
 
