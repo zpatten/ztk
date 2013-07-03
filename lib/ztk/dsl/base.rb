@@ -151,7 +151,7 @@ module ZTK::DSL
     end
 
     def initialize(id=nil, &block)
-      self.id = (id || self.class.id)
+      self.id = (id || self.class.next_id)
       self.class.dataset.delete_if{ |d| d.id == self.id }
       self.class.dataset << self
       block_given? and ((block.arity < 1) ? instance_eval(&block) : block.call(self))
