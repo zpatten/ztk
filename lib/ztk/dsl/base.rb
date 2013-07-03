@@ -152,14 +152,14 @@ module ZTK::DSL
 
     def initialize(id=nil, &block)
       self.id = (id || self.class.next_id)
-      self.class.dataset.delete_if{ |d| d.id == self.id }
       self.class.dataset << self
+
       block_given? and ((block.arity < 1) ? instance_eval(&block) : block.call(self))
 
-      # primary_key_count = self.class.dataset.count do |d|
-      #   d.id == self.id
-      # end
-      # raise StandardError, "Primary key '#{self.id}' already exists!" if (primary_key_count > 1)
+      primary_key_count = self.class.dataset.count do |d|
+        d.id == self.id
+      end
+      raise StandardError, "Primary key '#{self.id}' already exists!" if (primary_key_count > 1)
     end
 
     # Instance Inspect
