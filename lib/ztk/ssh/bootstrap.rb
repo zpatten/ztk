@@ -29,17 +29,11 @@ module ZTK
           :use_sudo => true
         }.merge(options)
 
-        tempfile = Tempfile.new("bootstrap")
-
-        local_tempfile = Tempfile.new("tempfile-local").path
+        local_tempfile  = Tempfile.new("tempfile-local")
         remote_tempfile = ::File.join("", "tmp", ::File.basename(Tempfile.new("tempfile-remote").path))
 
-        ::File.open(local_tempfile, 'w') do |file|
-          file.puts(content)
-          file.respond_to?(:flush) and file.flush
-        end
-
-        self.upload(local_tempfile, remote_tempfile)
+        local_tempfile.puts(content)
+        local_tempfile.respond_to?(:flush) and local_tempfile.flush
 
         command = Array.new
         command << %(sudo) if (options[:use_sudo] == true)
@@ -47,7 +41,16 @@ module ZTK
         command << remote_tempfile
         command = command.join(' ')
 
-        result = self.exec(command, options)
+        result = nil
+
+        ZTK::RescueRetry.try(:tries => 3, :on_retry => method(:on_retry)) do
+          self.upload(local_tempfile, remote_tempfile)
+
+          result = self.exec(command, options)
+        end
+
+        local_tempfile.close!
+
         result
       end
 

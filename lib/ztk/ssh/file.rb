@@ -27,13 +27,16 @@ module ZTK
         target.nil? and raise SSHError, "You must supply a target file!"
         !block_given? and raise SSHError, "You must supply a block!"
 
-        local_tempfile = Tempfile.new("tempfile-local").path
+        local_tempfile  = Tempfile.new("tempfile-local")
         remote_tempfile = ::File.join("", "tmp", ::File.basename(Tempfile.new("tempfile-remote").path))
 
         ::File.open(local_tempfile, 'w') do |file|
           yield(file)
           file.respond_to?(:flush) and file.flush
         end
+
+        !block.nil? and block.call(local_tempfile)
+        local_tempfile.respond_to?(:flush) and local_tempfile.flush
 
         ZTK::RescueRetry.try(:tries => 3, :on_retry => method(:on_retry)) do
           self.upload(local_tempfile, remote_tempfile)
@@ -43,6 +46,8 @@ module ZTK
           chown.nil? or self.exec(%(sudo chown -v #{chown} #{target}), :silence => true)
           chmod.nil? or self.exec(%(sudo chmod -v #{chmod} #{target}), :silence => true)
         end
+
+        local_tempfile.close!
 
         true
       end
