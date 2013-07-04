@@ -237,20 +237,18 @@
 20
 21
 22
-23
-24</pre>
+23</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/dataset.rb', line 16</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_dataset'>dataset</span>
   <span class='id identifier rubyid_klass'>klass</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_underscore'>underscore</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
-  <span class='cvar'>@@dataset</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
-  <span class='kw'>if</span> <span class='cvar'>@@dataset</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='id identifier rubyid_klass'>klass</span><span class='rparen'>)</span>
-    <span class='cvar'>@@dataset</span><span class='lbracket'>[</span><span class='id identifier rubyid_klass'>klass</span><span class='rbracket'>]</span>
-  <span class='kw'>else</span>
-    <span class='cvar'>@@dataset</span><span class='lbracket'>[</span><span class='id identifier rubyid_klass'>klass</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-  <span class='kw'>end</span>
+
+  <span class='cvar'>@@dataset</span>        <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='cvar'>@@dataset</span><span class='lbracket'>[</span><span class='id identifier rubyid_klass'>klass</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+
+  <span class='cvar'>@@dataset</span><span class='lbracket'>[</span><span class='id identifier rubyid_klass'>klass</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -285,6 +283,7 @@
       <pre class="lines">
 
 
+37
 38
 39
 40
@@ -292,17 +291,20 @@
 42
 43
 44
-45</pre>
+45
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/dataset.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/dataset.rb', line 37</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_next_id'>next_id</span>
   <span class='id identifier rubyid_klass'>klass</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_underscore'>underscore</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
-  <span class='cvar'>@@id</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+
+  <span class='cvar'>@@id</span>        <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
   <span class='cvar'>@@id</span><span class='lbracket'>[</span><span class='id identifier rubyid_klass'>klass</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='int'>0</span>
 
   <span class='cvar'>@@id</span><span class='lbracket'>[</span><span class='id identifier rubyid_klass'>klass</span><span class='rbracket'>]</span> <span class='op'>+=</span> <span class='int'>1</span>
+
   <span class='cvar'>@@id</span><span class='lbracket'>[</span><span class='id identifier rubyid_klass'>klass</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -338,6 +340,7 @@
       <pre class="lines">
 
 
+25
 26
 27
 28
@@ -347,11 +350,10 @@
 32
 33
 34
-35
-36</pre>
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/dataset.rb', line 26</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/core/dataset.rb', line 25</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_purge'>purge</span>
   <span class='id identifier rubyid_klass'>klass</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_underscore'>underscore</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
@@ -374,7 +376,7 @@
 </div>
 
     <div id="footer">
-  Generated on Wed Jul  3 16:22:44 2013 by
+  Generated on Wed Jul  3 17:16:02 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.6.2 (ruby-1.9.3).
 </div>
