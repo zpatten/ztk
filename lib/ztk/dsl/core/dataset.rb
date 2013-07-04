@@ -15,12 +15,11 @@ module ZTK::DSL::Core
 
       def dataset
         klass = self.to_s.underscore.to_sym
-        @@dataset ||= {}
-        if @@dataset.key?(klass)
-          @@dataset[klass]
-        else
-          @@dataset[klass] ||= []
-        end
+
+        @@dataset        ||= {}
+        @@dataset[klass] ||= []
+
+        @@dataset[klass]
       end
 
       def purge
@@ -37,10 +36,12 @@ module ZTK::DSL::Core
 
       def next_id
         klass = self.to_s.underscore.to_sym
-        @@id ||= {}
+
+        @@id        ||= {}
         @@id[klass] ||= 0
 
         @@id[klass] += 1
+
         @@id[klass]
       end
 
