@@ -21,14 +21,23 @@ module ZTK
       # Close our session gracefully.
       def close
         config.ui.logger.debug { "close" }
-        ssh and !ssh.closed? and ssh.close
+
+        if (ssh  && !ssh.closed?)
+          ssh.close
+        end
+        @ssh = nil
+
+        if (!sftp.nil? && !sftp.closed?)
+          sftp.close
+        end
+        @sftp = nil
+
+        true
       end
 
       # The on_retry method we'll use with the RescueRetry class.
       def on_retry(exception)
         close
-        @ssh = nil
-        @sftp = nil
       end
 
     end
