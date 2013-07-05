@@ -37,6 +37,8 @@ module ZTK
 
       # The on_retry method we'll use with the RescueRetry class.
       def on_retry(exception)
+        config.ui.logger.warn { "ZTK::SSH on_retry triggered!" }
+
         close
       end
 
