@@ -15,7 +15,7 @@ module ZTK
       #
       # Primarily used internally.
       def sftp
-        @sftp ||= Net::SFTP.start(config.host_name, config.user, ssh_options)
+        @sftp ||= self.ssh.sftp
       end
 
       # Close our session gracefully.
@@ -25,11 +25,8 @@ module ZTK
         if (ssh  && !ssh.closed?)
           ssh.close
         end
-        @ssh = nil
 
-        if (!sftp.nil? && !sftp.closed?)
-          sftp.close
-        end
+        @ssh = nil
         @sftp = nil
 
         true

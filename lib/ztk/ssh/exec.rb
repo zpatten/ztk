@@ -47,8 +47,8 @@ module ZTK
         stderr_header = false
 
         begin
-          Timeout.timeout(options.timeout) do
-            ZTK::RescueRetry.try(:tries => 3, :on_retry => method(:on_retry)) do
+          ZTK::RescueRetry.try(:ui => config.ui, :tries => 3, :raise => Timeout::Error, :on_retry => method(:on_retry)) do
+            Timeout.timeout(options.timeout) do
 
               channel = ssh.open_channel do |chan|
                 options.ui.logger.debug { "Channel opened." }
