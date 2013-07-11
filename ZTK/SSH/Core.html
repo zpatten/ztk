@@ -239,17 +239,39 @@
       <pre class="lines">
 
 
-22
 23
 24
-25</pre>
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ssh/core.rb', line 22</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/ssh/core.rb', line 23</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_close'>close</span>
   <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>close</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
-  <span class='id identifier rubyid_ssh'>ssh</span> <span class='kw'>and</span> <span class='op'>!</span><span class='id identifier rubyid_ssh'>ssh</span><span class='period'>.</span><span class='id identifier rubyid_closed?'>closed?</span> <span class='kw'>and</span> <span class='id identifier rubyid_ssh'>ssh</span><span class='period'>.</span><span class='id identifier rubyid_close'>close</span>
+
+  <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_ssh'>ssh</span>  <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_ssh'>ssh</span><span class='period'>.</span><span class='id identifier rubyid_closed?'>closed?</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_ssh'>ssh</span><span class='period'>.</span><span class='id identifier rubyid_close'>close</span>
+  <span class='kw'>end</span>
+  <span class='ivar'>@ssh</span> <span class='op'>=</span> <span class='kw'>nil</span>
+
+  <span class='comment'># if (!sftp.nil? &amp;&amp; !sftp.closed?)
+</span>  <span class='comment'>#   sftp.close
+</span>  <span class='comment'># end
+</span>  <span class='ivar'>@sftp</span> <span class='op'>=</span> <span class='kw'>nil</span>
+
+  <span class='kw'>true</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -281,19 +303,19 @@
       <pre class="lines">
 
 
-28
-29
-30
-31
-32</pre>
+40
+41
+42
+43
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ssh/core.rb', line 28</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/ssh/core.rb', line 40</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_on_retry'>on_retry</span><span class='lparen'>(</span><span class='id identifier rubyid_exception'>exception</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_warn'>warn</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ZTK::SSH on_retry triggered!</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+
   <span class='id identifier rubyid_close'>close</span>
-  <span class='ivar'>@ssh</span> <span class='op'>=</span> <span class='kw'>nil</span>
-  <span class='ivar'>@sftp</span> <span class='op'>=</span> <span class='kw'>nil</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -329,13 +351,15 @@
 
 17
 18
-19</pre>
+19
+20</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/ssh/core.rb', line 17</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sftp'>sftp</span>
-  <span class='ivar'>@sftp</span> <span class='op'>||=</span> <span class='const'>Net</span><span class='op'>::</span><span class='const'>SFTP</span><span class='period'>.</span><span class='id identifier rubyid_start'>start</span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_host_name'>host_name</span><span class='comma'>,</span> <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_ssh_options'>ssh_options</span><span class='rparen'>)</span>
+  <span class='comment'># @sftp ||= Net::SFTP.start(config.host_name, config.user, ssh_options)
+</span>  <span class='ivar'>@sftp</span> <span class='op'>||=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_ssh'>ssh</span><span class='period'>.</span><span class='id identifier rubyid_sftp'>sftp</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -389,7 +413,7 @@
 </div>
 
     <div id="footer">
-  Generated on Wed Jul  3 17:16:02 2013 by
+  Generated on Wed Jul 10 17:39:06 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.6.2 (ruby-1.9.3).
 </div>

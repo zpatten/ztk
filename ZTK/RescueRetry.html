@@ -293,7 +293,7 @@ optionally set this to 0, but this is generally a bad idea.</p>
       
         <li>
           <span class="name">:tries</span>
-          <span class="type">(<tt>String</tt>)</span>
+          <span class="type">(<tt>Integer</tt>)</span>
           <span class="default">
             
               &mdash; default:
@@ -309,7 +309,7 @@ block before we give up and surface the <em>Exception</em>.</p>
       
         <li>
           <span class="name">:on</span>
-          <span class="type">(<tt>String</tt>)</span>
+          <span class="type">(<tt>Exception</tt>, <tt>Array&lt;Exception&gt;</tt>)</span>
           <span class="default">
             
               &mdash; default:
@@ -317,8 +317,25 @@ block before we give up and surface the <em>Exception</em>.</p>
             
           </span>
           
-            &mdash; <div class='inline'><p>Watch for a specific exception
-instead of performing retry on all exceptions.</p>
+            &mdash; <div class='inline'><p>Watch for
+specific exceptions instead of performing retry on all exceptions.</p>
+</div>
+          
+        </li>
+      
+        <li>
+          <span class="name">:ignore</span>
+          <span class="type">(<tt>Exception</tt>, <tt>Array&lt;Exception&gt;</tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>Exception</tt>
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>Watch
+for specific exceptions and do not attempt to retry if they are
+raised.</p>
 </div>
           
         </li>
@@ -400,9 +417,6 @@ needed.</p>
       <pre class="lines">
 
 
-103
-104
-105
 106
 107
 108
@@ -428,25 +442,40 @@ needed.</p>
 128
 129
 130
-131</pre>
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/rescue_retry.rb', line 103</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/rescue_retry.rb', line 106</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_try'>try</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='const'>Base</span><span class='period'>.</span><span class='id identifier rubyid_build_config'>build_config</span><span class='lparen'>(</span><span class='lbrace'>{</span>
     <span class='symbol'>:tries</span> <span class='op'>=&gt;</span> <span class='int'>1</span><span class='comma'>,</span>
     <span class='symbol'>:on</span> <span class='op'>=&gt;</span> <span class='const'>Exception</span><span class='comma'>,</span>
-    <span class='symbol'>:delay</span> <span class='op'>=&gt;</span> <span class='int'>1</span>
+    <span class='symbol'>:delay</span> <span class='op'>=&gt;</span> <span class='int'>1</span><span class='comma'>,</span>
+    <span class='symbol'>:ignore</span> <span class='op'>=&gt;</span> <span class='kw'>nil</span>
   <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>options=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:table</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 
   <span class='op'>!</span><span class='id identifier rubyid_block_given?'>block_given?</span> <span class='kw'>and</span> <span class='const'>Base</span><span class='period'>.</span><span class='id identifier rubyid_log_and_raise'>log_and_raise</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='comma'>,</span> <span class='const'>RescueRetryError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>You must supply a block!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
+  <span class='id identifier rubyid_ignore_exceptions'>ignore_exceptions</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_ignore'>ignore</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span>
+
   <span class='kw'>begin</span>
     <span class='kw'>return</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span>
   <span class='kw'>rescue</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_on'>on</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
-    <span class='kw'>if</span> <span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_tries'>tries</span> <span class='op'>-=</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='op'>&gt;</span> <span class='int'>0</span><span class='rparen'>)</span>
+
+    <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_tries'>tries</span> <span class='op'>-=</span> <span class='int'>1</span>
+
+    <span class='kw'>if</span> <span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_tries'>tries</span> <span class='op'>&gt;</span> <span class='int'>0</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_ignore_exceptions'>ignore_exceptions</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='rparen'>)</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_warn'>warn</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Caught </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>, we will give it </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_tries'>tries</span><span class='rbrace'>}</span><span class='tstring_content'> more tr</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_tries'>tries</span> <span class='op'>&gt;</span> <span class='int'>1</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>ies</span><span class='tstring_end'>'</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>y</span><span class='tstring_end'>'</span></span><span class='rbrace'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 
       <span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_delay'>delay</span><span class='rparen'>)</span>
@@ -472,7 +501,7 @@ needed.</p>
 </div>
 
     <div id="footer">
-  Generated on Wed Jul  3 17:16:04 2013 by
+  Generated on Wed Jul 10 17:39:09 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.6.2 (ruby-1.9.3).
 </div>
