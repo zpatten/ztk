@@ -76,7 +76,7 @@ describe ZTK::RescueRetry do
     it "should call our lambda when it catches an exception and retries" do
       $counter = 0
       on_retry_m = lambda { |exception|
-        $counter +=1
+        $counter += 1
       }
       lambda {
         ZTK::RescueRetry.try(:tries => 3, :on => EOFError, :on_retry => on_retry_m) do
@@ -84,6 +84,19 @@ describe ZTK::RescueRetry do
         end
       }.should raise_error EOFError
       $counter.should == 2
+    end
+
+    it "should not retry exceptions that are ignored" do
+      $counter = 0
+
+      lambda {
+        ZTK::RescueRetry.try(:tries => 3, :raise => EOFError) do
+          $counter += 1
+          raise EOFError
+        end
+      }.should raise_error EOFError
+
+      $counter.should == 1
     end
 
   end

@@ -88,10 +88,13 @@ module ZTK
       # optionally set this to 0, but this is generally a bad idea.
       #
       # @param [Hash] options Configuration options hash.
-      # @option options [String] :tries (1) How many attempts at executing the
+      # @option options [Integer] :tries (1) How many attempts at executing the
       #   block before we give up and surface the *Exception*.
-      # @option options [String] :on (Exception) Watch for a specific exception
-      #   instead of performing retry on all exceptions.
+      # @option options [Exception,Array<Exception>] :on (Exception) Watch for
+      #   specific exceptions instead of performing retry on all exceptions.
+      # @option options [Exception,Array<Exception>] :raise (Exception) Watch
+      #   for specific exceptions and do not attempt to retry if they are
+      #   raised.
       # @option options [Float,Integer] :delay (1) How long to sleep for between
       #   each retry.
       # @option options [Lambda,Proc] :on_retry (nil) A proc or lambda to call
@@ -104,16 +107,24 @@ module ZTK
         options = Base.build_config({
           :tries => 1,
           :on => Exception,
-          :delay => 1
+          :delay => 1,
+          :raise => nil
         }.merge(options))
         options.ui.logger.debug { "options=#{options.send(:table).inspect}" }
 
         !block_given? and Base.log_and_raise(options.ui.logger, RescueRetryError, "You must supply a block!")
 
+        raise_exceptions = [options.raise].flatten.compact
+        retry_exceptions = [options.on].flatten.compact
+
         begin
           return block.call
-        rescue options.on => e
-          if ((options.tries -= 1) > 0)
+
+        rescue *retry_exceptions => e
+
+          options.tries -= 1
+
+          if ((options.tries > 0) && !raise_exceptions.include?(e.class))
             options.ui.logger.warn { "Caught #{e.inspect}, we will give it #{options.tries} more tr#{options.tries > 1 ? 'ies' : 'y'}." }
 
             sleep(options.delay)
