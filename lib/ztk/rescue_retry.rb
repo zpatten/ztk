@@ -133,7 +133,7 @@ module ZTK
 
             retry
           else
-            options.ui.logger.fatal { "Caught #{e.inspect} and we have no more tries left, sorry, we have to give up now." }
+            options.ui.logger.fatal { "Caught #{e.inspect} and we have no more tries left! We have to give up now!" }
 
             raise e
           end
