@@ -9,6 +9,7 @@ module ZTK
       # Primarily used internally.
       def ssh
         @ssh ||= Net::SSH.start(config.host_name, config.user, ssh_options)
+        @ssh
       end
 
       # Starts an SFTP session.  Can also be used to get the Net::SFTP object.
@@ -16,14 +17,15 @@ module ZTK
       # Primarily used internally.
       def sftp
         @sftp ||= self.ssh.sftp
+        @sftp
       end
 
       # Close our session gracefully.
       def close
         config.ui.logger.debug { "close" }
 
-        if (ssh  && !ssh.closed?)
-          ssh.close
+        if (@ssh && !@ssh.closed?)
+          @ssh.close
         end
 
         @ssh = nil
