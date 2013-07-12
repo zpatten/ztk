@@ -44,13 +44,9 @@ module ZTK
         command << remote_tempfile
         command = command.join(' ')
 
-        result = nil
+        self.upload(local_tempfile.path, remote_tempfile)
 
-        ZTK::RescueRetry.try(:ui => config.ui, :tries => 3, :on_retry => method(:on_retry)) do
-          self.upload(local_tempfile.path, remote_tempfile)
-
-          result = self.exec(command, options)
-        end
+        result = self.exec(command, options)
 
         local_tempfile.close!
 
