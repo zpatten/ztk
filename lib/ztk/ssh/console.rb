@@ -15,7 +15,7 @@ module ZTK
       #   end
       #   ssh.console
       def console(*arguments)
-        command = [console_command, *arguments].flatten.compact
+        command = [console_command, *arguments].flatten.compact.join(' ')
 
         config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
         config.ui.logger.info { "console(#{command.inspect})" }
