@@ -14,12 +14,15 @@ module ZTK
       #     config.host_name = "127.0.0.1"
       #   end
       #   ssh.console
-      def console
+      def console(*arguments)
+        command = [console_command, *arguments].flatten.compact
+
         config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
-        config.ui.logger.info { "console(#{console_command.inspect})" }
+        config.ui.logger.info { "console(#{command.inspect})" }
 
         config.ui.logger.fatal { "REPLACING CURRENT PROCESS - GOODBYE!" }
-        Kernel.exec(console_command)
+
+        Kernel.exec(command)
       end
 
     end
