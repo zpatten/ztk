@@ -63,14 +63,14 @@ module ZTK
 
                 direct_log(:info) { log_header("COMMAND") }
                 direct_log(:info) { "#{command}\n" }
-                direct_log(:info) { log_header("OPENED") }
+                direct_log(:info) { log_header("OPENED", "-") }
 
                 chan.exec(command) do |ch, success|
                   success or log_and_raise(SSHError, "Could not execute '#{command}'.")
 
                   ch.on_data do |c, data|
                     if !stdout_header
-                      direct_log(:info) { log_header("STDOUT") }
+                      direct_log(:info) { log_header("STDOUT", "-") }
                       stdout_header = true
                       stderr_header = false
                     end
@@ -84,7 +84,7 @@ module ZTK
 
                   ch.on_extended_data do |c, type, data|
                     if !stderr_header
-                      direct_log(:warn) { log_header("STDERR") }
+                      direct_log(:warn) { log_header("STDERR", "-") }
                       stderr_header = true
                       stdout_header = false
                     end

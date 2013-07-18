@@ -71,7 +71,7 @@ module ZTK
 
         direct_log(:info) { log_header("COMMAND") }
         direct_log(:info) { "#{command.inspect}\n" }
-        direct_log(:info) { log_header("STARTED") }
+        direct_log(:info) { log_header("STARTED", "-") }
 
         begin
           Timeout.timeout(options.timeout) do
@@ -88,7 +88,7 @@ module ZTK
                 case reader_writer_key[pipe]
                 when :stdout then
                   if !stdout_header
-                    direct_log(:info) { log_header("STDOUT") }
+                    direct_log(:info) { log_header("STDOUT", "-") }
                     stdout_header = true
                     stderr_header = false
                   end
@@ -97,7 +97,7 @@ module ZTK
 
                 when :stderr then
                   if !stderr_header
-                    direct_log(:warn) { log_header("STDERR") }
+                    direct_log(:warn) { log_header("STDERR", "-") }
                     stderr_header = true
                     stdout_header = false
                   end

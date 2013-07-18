@@ -13,10 +13,10 @@ module ZTK
 
       # Formats a header suitable for writing to the direct logger when logging
       # sessions.
-      def log_header(what)
-        count = 12
-        sep = ("=" * count)
-        header = [sep, "[ #{what} ]", sep, "[ #{tag} ]", sep, "[ #{what} ]", sep].join
+      def log_header(what, char="=")
+        count = 16
+        sep = (char * count)
+        header = [sep, "[ #{tag} >>> #{what} ]", sep].join
         "#{header}\n"
       end
 

@@ -40,24 +40,25 @@ module ZTK
       def tag
         tags = Array.new
 
-        if config.proxy_host_name
-          proxy_user_host = "#{config.proxy_user}@#{config.proxy_host_name}"
-          proxy_port = (config.proxy_port ? ":#{config.proxy_port}" : nil)
-          tags << [proxy_user_host, proxy_port].compact.join
-          tags << " >>> "
-        end
-
         user_host = "#{config.user}@#{config.host_name}"
         port = (config.port ? ":#{config.port}" : nil)
         tags << [user_host, port].compact.join
 
+        if config.proxy_host_name
+          tags << " via "
+
+          proxy_user_host = "#{config.proxy_user}@#{config.proxy_host_name}"
+          proxy_port = (config.proxy_port ? ":#{config.proxy_port}" : nil)
+          tags << [proxy_user_host, proxy_port].compact.join
+        end
+
         tags.join.strip
       end
 
-      def log_header(what)
-        count = 12
-        sep = ("=" * count)
-        header = [sep, "[ #{what} ]", sep, "[ #{tag} ]", sep, "[ #{what} ]", sep].join
+      def log_header(what, char='=')
+        count = 16
+        sep = (char * count)
+        header = [sep, "[ #{tag} >>> #{what} ]", sep].join
         "#{header}\n"
       end
 
