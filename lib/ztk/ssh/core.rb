@@ -25,7 +25,11 @@ module ZTK
         config.ui.logger.debug { "close" }
 
         if (@ssh && !@ssh.closed?)
-          @ssh.close
+          begin
+            @ssh.close
+          rescue EOFError
+            # NOOP
+          end
         end
 
         @ssh = nil
