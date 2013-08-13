@@ -24,12 +24,20 @@ module ZTK
       def close
         config.ui.logger.debug { "close" }
 
-        if (@ssh && !@ssh.closed?)
+        if (!@ssh.nil? && !@ssh.closed?)
+          config.ui.logger.debug { "SSH object is valid and not closed" }
+
           begin
+            config.ui.logger.debug { "attempting to close" }
             @ssh.close
-          rescue EOFError
-            # NOOP
+            config.ui.logger.debug { "closed" }
+
+          rescue Exception => e
+            config.ui.logger.fatal { "EXCEPTION: #{e.inspect}" }
           end
+
+        else
+          config.ui.logger.debug { "SSH object is NIL!" }
         end
 
         @ssh = nil
