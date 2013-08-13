@@ -6,7 +6,7 @@
 <title>
   Module: ZTK::SSH::Core
   
-    &mdash; Documentation by YARD 0.8.6.2
+    &mdash; Documentation by YARD 0.8.7
   
 </title>
 
@@ -317,7 +317,7 @@
 <span class='kw'>def</span> <span class='id identifier rubyid_on_retry'>on_retry</span><span class='lparen'>(</span><span class='id identifier rubyid_exception'>exception</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_warn'>warn</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ZTK::SSH on_retry triggered!</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 
-  <span class='id identifier rubyid_close'>close</span>
+  <span class='lparen'>(</span><span class='id identifier rubyid_close'>close</span> <span class='kw'>rescue</span> <span class='kw'>false</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -417,9 +417,9 @@
 </div>
 
     <div id="footer">
-  Generated on Sat Jul 20 15:23:57 2013 by
+  Generated on Mon Aug 12 22:10:11 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6.2 (ruby-1.9.3).
+  0.8.7 (ruby-1.9.3).
 </div>
 
   </body>
