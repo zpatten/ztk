@@ -452,7 +452,7 @@ STDERR.</p>
   <span class='id identifier rubyid_stderr_header'>stderr_header</span> <span class='op'>=</span> <span class='kw'>false</span>
 
   <span class='kw'>begin</span>
-    <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>RescueRetry</span><span class='period'>.</span><span class='id identifier rubyid_try'>try</span><span class='lparen'>(</span><span class='symbol'>:ui</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='comma'>,</span> <span class='symbol'>:tries</span> <span class='op'>=&gt;</span> <span class='int'>3</span><span class='comma'>,</span> <span class='symbol'>:raise</span> <span class='op'>=&gt;</span> <span class='const'>Timeout</span><span class='op'>::</span><span class='const'>Error</span><span class='comma'>,</span> <span class='symbol'>:on_retry</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:on_retry</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>do</span>
+    <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>RescueRetry</span><span class='period'>.</span><span class='id identifier rubyid_try'>try</span><span class='lparen'>(</span><span class='symbol'>:ui</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='comma'>,</span> <span class='symbol'>:tries</span> <span class='op'>=&gt;</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>SSH</span><span class='op'>::</span><span class='const'>RESCUE_RETRY_ATTEMPTS</span><span class='comma'>,</span> <span class='symbol'>:raise</span> <span class='op'>=&gt;</span> <span class='const'>Timeout</span><span class='op'>::</span><span class='const'>Error</span><span class='comma'>,</span> <span class='symbol'>:on_retry</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:on_retry</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>do</span>
       <span class='const'>Timeout</span><span class='period'>.</span><span class='id identifier rubyid_timeout'>timeout</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_timeout'>timeout</span><span class='rparen'>)</span> <span class='kw'>do</span>
 
         <span class='id identifier rubyid_channel'>channel</span> <span class='op'>=</span> <span class='id identifier rubyid_ssh'>ssh</span><span class='period'>.</span><span class='id identifier rubyid_open_channel'>open_channel</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_chan'>chan</span><span class='op'>|</span>
@@ -549,7 +549,7 @@ STDERR.</p>
 </div>
 
     <div id="footer">
-  Generated on Tue Aug 13 09:00:56 2013 by
+  Generated on Tue Aug 13 11:22:57 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7 (ruby-1.9.3).
 </div>

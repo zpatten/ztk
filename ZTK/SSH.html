@@ -101,7 +101,7 @@
   
     <dt class="r1 last">Defined in:</dt>
     <dd class="r1 last">lib/ztk/ssh.rb<span class="defines">,<br />
-  lib/ztk/ssh/core.rb,<br /> lib/ztk/ssh/exec.rb,<br /> lib/ztk/ssh/file.rb,<br /> lib/ztk/ssh/upload.rb,<br /> lib/ztk/ssh/private.rb,<br /> lib/ztk/ssh/command.rb,<br /> lib/ztk/ssh/console.rb,<br /> lib/ztk/ssh/download.rb,<br /> lib/ztk/ssh/bootstrap.rb</span>
+  lib/ztk/ssh/file.rb,<br /> lib/ztk/ssh/core.rb,<br /> lib/ztk/ssh/exec.rb,<br /> lib/ztk/ssh/upload.rb,<br /> lib/ztk/ssh/command.rb,<br /> lib/ztk/ssh/console.rb,<br /> lib/ztk/ssh/private.rb,<br /> lib/ztk/ssh/download.rb,<br /> lib/ztk/ssh/bootstrap.rb</span>
 </dd>
   
 </dl>
@@ -248,6 +248,11 @@
   <span class='int'>26</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SIGVTALRM</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
   <span class='int'>27</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SIGPROF</span><span class='tstring_end'>&quot;</span></span>
 <span class='rbrace'>}</span></pre></dd>
+      
+        <dt id="RESCUE_RETRY_ATTEMPTS-constant" class="">RESCUE_RETRY_ATTEMPTS =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>5</span></pre></dd>
       
     </dl>
   
@@ -658,8 +663,6 @@ series of identity files to use for authentication with the proxy.</p>
       <pre class="lines">
 
 
-152
-153
 154
 155
 156
@@ -671,10 +674,12 @@ series of identity files to use for authentication with the proxy.</p>
 162
 163
 164
-165</pre>
+165
+166
+167</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 152</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 154</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_configuration'>configuration</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='lbrace'>{</span>
@@ -701,7 +706,7 @@ series of identity files to use for authentication with the proxy.</p>
 </div>
 
     <div id="footer">
-  Generated on Tue Aug 13 09:00:57 2013 by
+  Generated on Tue Aug 13 11:22:58 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7 (ruby-1.9.3).
 </div>
