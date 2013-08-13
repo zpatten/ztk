@@ -32,7 +32,7 @@ module ZTK
         options.ui.logger.debug { "options=#{options.send(:table).inspect}" }
         options.ui.logger.info { "download(#{remote.inspect}, #{local.inspect})" }
 
-        ZTK::RescueRetry.try(:ui => config.ui, :tries => 3, :on_retry => method(:on_retry)) do
+        ZTK::RescueRetry.try(:ui => config.ui, :tries => ZTK::SSH::RESCUE_RETRY_ATTEMPTS, :on_retry => method(:on_retry)) do
           sftp.download!(remote.to_s, local.to_s, options.send(:table)) do |event, downloader, *args|
             case event
             when :open

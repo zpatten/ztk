@@ -96,6 +96,8 @@ module ZTK
       27 => "SIGPROF"
     }
 
+    RESCUE_RETRY_ATTEMPTS = 5
+
     require 'ztk/ssh/bootstrap'
     require 'ztk/ssh/command'
     require 'ztk/ssh/console'

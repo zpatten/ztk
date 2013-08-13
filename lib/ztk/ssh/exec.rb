@@ -47,7 +47,7 @@ module ZTK
         stderr_header = false
 
         begin
-          ZTK::RescueRetry.try(:ui => config.ui, :tries => 3, :raise => Timeout::Error, :on_retry => method(:on_retry)) do
+          ZTK::RescueRetry.try(:ui => config.ui, :tries => ZTK::SSH::RESCUE_RETRY_ATTEMPTS, :raise => Timeout::Error, :on_retry => method(:on_retry)) do
             Timeout.timeout(options.timeout) do
 
               channel = ssh.open_channel do |chan|
