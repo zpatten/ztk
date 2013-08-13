@@ -42,7 +42,7 @@ module ZTK
       def on_retry(exception)
         config.ui.logger.warn { "ZTK::SSH on_retry triggered!" }
 
-        close
+        (close rescue false)
       end
 
     end
