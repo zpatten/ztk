@@ -197,7 +197,7 @@ module ZTK::DSL
       def inspect
         details = Array.new
         details << "count=#{self.all.count}" if self.all.count > 0
-        "#<#{self.class.to_s}:#{self.id} #{details.join(', ')}>"
+        "#<#{self.to_s} #{details.join(', ')}>"
       end
 
     end
