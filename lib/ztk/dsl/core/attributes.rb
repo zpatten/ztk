@@ -35,6 +35,7 @@ module ZTK::DSL::Core
 
         send(:define_method, "#{key}=") do |value|
           attributes[key] = value
+          value
         end
       end
 
