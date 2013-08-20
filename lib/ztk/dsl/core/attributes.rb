@@ -37,6 +37,11 @@ module ZTK::DSL::Core
           attributes[key] = value
           value
         end
+
+        self.class.send(:define_method, "find_by_#{key}") do |value|
+          all.select{ |object| (object.send(key) == value) }
+        end
+
       end
 
     end
