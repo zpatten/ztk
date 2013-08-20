@@ -23,7 +23,11 @@ module ZTK::DSL::Core::Actions
       end
 
       def first(*args)
-        find(*args).first
+        if args.count == 0
+          all.first
+        else
+          find(*args).first
+        end
       end
 
       def count
