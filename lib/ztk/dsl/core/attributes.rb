@@ -23,10 +23,13 @@ module ZTK::DSL::Core
         attribute_options[key] = options
 
         send(:define_method, key) do |*args|
+          if (attributes[key].nil? && !self.class.attribute_options[key][:default].nil?)
+            default_value = (self.class.attribute_options[key][:default].dup rescue self.class.attribute_options[key][:default])
+
+            attributes[key] ||= default_value
+          end
+
           if args.count == 0
-            if (self.class.attribute_options[key] && self.class.attribute_options[key][:default])
-              attributes[key] ||= (self.class.attribute_options[key][:default].dup rescue self.class.attribute_options[key][:default])
-            end
             attributes[key]
           else
             send("#{key}=", *args)
