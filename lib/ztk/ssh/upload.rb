@@ -38,7 +38,7 @@ module ZTK
               options.ui.logger.debug { "mkdir(#{args[0]})" }
             when :put
               options.ui.logger.debug { "put(#{args[0].remote}, size #{args[2].size} bytes, offset #{args[1]})" }
-              options.on_progress.nil? or options.on_progress.call
+              options.on_progress.nil? or options.on_progress.call(args)
             when :finish
               options.ui.logger.debug { "finish" }
             end
