@@ -37,15 +37,19 @@ module ZTK
             case event
             when :open
               options.ui.logger.debug { "download(#{args[0].remote} -> #{args[0].local})" }
+              options.on_progress.nil? or options.on_progress.call(:open, args)
             when :close
               options.ui.logger.debug { "close(#{args[0].local})" }
+              options.on_progress.nil? or options.on_progress.call(:close, args)
             when :mkdir
               options.ui.logger.debug { "mkdir(#{args[0]})" }
+              options.on_progress.nil? or options.on_progress.call(:mkdir, args)
             when :get
               options.ui.logger.debug { "get(#{args[0].remote}, size #{args[2].size} bytes, offset #{args[1]})" }
-              options.on_progress.nil? or options.on_progress.call(args)
+              options.on_progress.nil? or options.on_progress.call(:get, args)
             when :finish
               options.ui.logger.debug { "finish" }
+              options.on_progress.nil? or options.on_progress.call(:finish, args)
             end
           end
         end
