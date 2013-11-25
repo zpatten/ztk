@@ -7,4 +7,8 @@ if (RUBY_VERSION < "1.9.3")
   gem "redcarpet", "< 3.0.0"
 end
 
+if (RUBY_VERSION < "1.9.2")
+  gem "mime-types", "< 2.0"
+end
+
 gemspec
