@@ -26,7 +26,9 @@ module ZTK
       def bootstrap(content, options={})
         options = {
           :silence => true,
-          :use_sudo => true
+          :use_sudo => true,
+          :set_x => true,
+          :set_e => false
         }.merge(options)
 
         bootstrap_tempfile = Tempfile.new("bootstrap")
@@ -41,6 +43,8 @@ module ZTK
         command = Array.new
         command << %(sudo) if (options[:use_sudo] == true)
         command << %(/bin/bash)
+        command << %(-x) if (options[:set_x] == true)
+        command << %(-e) if (options[:set_e] == true)
         command << remote_tempfile
         command = command.join(' ')
 
