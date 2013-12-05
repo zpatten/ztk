@@ -6,7 +6,7 @@
 <title>
   Module: ZTK::SSH::Bootstrap
   
-    &mdash; Documentation by YARD 0.8.7.1
+    &mdash; Documentation by YARD 0.8.7.3
   
 </title>
 
@@ -278,7 +278,11 @@ bootstrap via sudo; False to execute it as the defined user.</p>
 51
 52
 53
-54</pre>
+54
+55
+56
+57
+58</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/ssh/bootstrap.rb', line 26</span>
@@ -286,7 +290,9 @@ bootstrap via sudo; False to execute it as the defined user.</p>
 <span class='kw'>def</span> <span class='id identifier rubyid_bootstrap'>bootstrap</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span>
     <span class='symbol'>:silence</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
-    <span class='symbol'>:use_sudo</span> <span class='op'>=&gt;</span> <span class='kw'>true</span>
+    <span class='symbol'>:use_sudo</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
+    <span class='symbol'>:set_x</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
+    <span class='symbol'>:set_e</span> <span class='op'>=&gt;</span> <span class='kw'>false</span>
   <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_bootstrap_tempfile'>bootstrap_tempfile</span> <span class='op'>=</span> <span class='const'>Tempfile</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bootstrap</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -301,6 +307,8 @@ bootstrap via sudo; False to execute it as the defined user.</p>
   <span class='id identifier rubyid_command'>command</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
   <span class='id identifier rubyid_command'>command</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>sudo</span><span class='tstring_end'>)</span></span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:use_sudo</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_command'>command</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>/bin/bash</span><span class='tstring_end'>)</span></span>
+  <span class='id identifier rubyid_command'>command</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>-x</span><span class='tstring_end'>)</span></span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:set_x</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='kw'>true</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_command'>command</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>-e</span><span class='tstring_end'>)</span></span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:set_e</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_command'>command</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_remote_tempfile'>remote_tempfile</span>
   <span class='id identifier rubyid_command'>command</span> <span class='op'>=</span> <span class='id identifier rubyid_command'>command</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'> </span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
 
@@ -322,9 +330,9 @@ bootstrap via sudo; False to execute it as the defined user.</p>
 </div>
 
     <div id="footer">
-  Generated on Thu Oct 31 16:10:00 2013 by
+  Generated on Wed Dec  4 16:58:35 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.1 (ruby-1.9.3).
+  0.8.7.3 (ruby-1.9.3).
 </div>
 
   </body>
