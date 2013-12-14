@@ -20,6 +20,14 @@ module ZTK
         @sftp
       end
 
+      # Starts an SCP session.  Can also be used to get the Net::SCP object.
+      #
+      # Primarily used internally.
+      def scp
+        @scp ||= self.ssh.scp
+        @scp
+      end
+
       # Close our session gracefully.
       def close
         config.ui.logger.debug { "close" }

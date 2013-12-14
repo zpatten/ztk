@@ -64,6 +64,7 @@ module ZTK
     require 'net/ssh'
     require 'net/ssh/proxy/command'
     require 'net/sftp'
+    require 'net/scp'
 
     # Exit Signal Mappings
     EXIT_SIGNALS = {

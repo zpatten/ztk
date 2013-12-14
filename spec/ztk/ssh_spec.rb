@@ -231,68 +231,73 @@ describe ZTK::SSH do
 
     describe "upload" do
 
-      it "should be able to upload a file to 127.0.0.1 as the current user (your key must be in ssh-agent)" do
-        subject.config do |config|
-          config.ui = @ui
+      [true, false].each do |use_scp|
+        it "should be able to upload a file to 127.0.0.1 as the current user using #{use_scp ? 'scp' : 'sftp'} (your key must be in ssh-agent)" do
+          subject.config do |config|
+            config.ui = @ui
 
-          config.user = ENV["USER"]
-          config.host_name = "127.0.0.1"
-        end
-
-        data = "Hello World @ #{Time.now.utc}"
-
-        remote_file = File.join(ZTK::Locator.root, "tmp", "ssh-upload-remote")
-        File.exists?(remote_file) && File.delete(remote_file)
-
-        local_file = File.join(ZTK::Locator.root, "tmp", "ssh-upload-local")
-        if RUBY_VERSION < "1.9.3"
-          File.open(local_file, 'w') do |file|
-            file.puts(data)
+            config.user = ENV["USER"]
+            config.host_name = "127.0.0.1"
           end
-        else
-          IO.write(local_file, data)
+
+          data = "Hello World @ #{Time.now.utc}"
+
+          remote_file = File.join(ZTK::Locator.root, "tmp", "ssh-upload-remote")
+          File.exists?(remote_file) && File.delete(remote_file)
+
+          local_file = File.join(ZTK::Locator.root, "tmp", "ssh-upload-local")
+          if RUBY_VERSION < "1.9.3"
+            File.open(local_file, 'w') do |file|
+              file.puts(data)
+            end
+          else
+            IO.write(local_file, data)
+          end
+
+          File.exists?(remote_file).should == false
+          subject.upload(local_file, remote_file)
+          File.exists?(remote_file).should == true
+
+          File.exists?(remote_file) && File.delete(remote_file)
+          File.exists?(local_file) && File.delete(local_file)
         end
-
-        File.exists?(remote_file).should == false
-        subject.upload(local_file, remote_file)
-        File.exists?(remote_file).should == true
-
-        File.exists?(remote_file) && File.delete(remote_file)
-        File.exists?(local_file) && File.delete(local_file)
       end
 
     end
 
     describe "download" do
 
-      it "should be able to download a file from 127.0.0.1 as the current user (your key must be in ssh-agent)" do
-        subject.config do |config|
-          config.ui = @ui
+      [true, false].each do |use_scp|
+        it "should be able to download a file from 127.0.0.1 as the current user using #{use_scp ? 'scp' : 'sftp'} (your key must be in ssh-agent)" do
+          subject.config do |config|
+            config.ui = @ui
 
-          config.user = ENV["USER"]
-          config.host_name = "127.0.0.1"
-        end
-
-        data = "Hello World @ #{Time.now.utc}"
-
-        local_file = File.join(ZTK::Locator.root, "tmp", "ssh-download-local")
-        File.exists?(local_file) && File.delete(local_file)
-
-        remote_file = File.join(ZTK::Locator.root, "tmp", "ssh-download-remote")
-        if RUBY_VERSION < "1.9.3"
-          File.open(remote_file, 'w') do |file|
-            file.puts(data)
+            config.user = ENV["USER"]
+            config.host_name = "127.0.0.1"
+            config.use_scp = use_scp
           end
-        else
-          IO.write(remote_file, data)
+
+          data = "Hello World @ #{Time.now.utc}"
+
+          local_file = File.join(ZTK::Locator.root, "tmp", "ssh-download-local")
+          File.exists?(local_file) && File.delete(local_file)
+
+          remote_file = File.join(ZTK::Locator.root, "tmp", "ssh-download-remote")
+          if RUBY_VERSION < "1.9.3"
+            File.open(remote_file, 'w') do |file|
+              file.puts(data)
+            end
+          else
+            IO.write(remote_file, data)
+          end
+
+          File.exists?(local_file).should == false
+          subject.download(remote_file, local_file)
+          File.exists?(local_file).should == true
+
+          File.exists?(local_file) && File.delete(local_file)
+          File.exists?(remote_file) && File.delete(remote_file)
         end
-
-        File.exists?(local_file).should == false
-        subject.download(remote_file, local_file)
-        File.exists?(local_file).should == true
-
-        File.exists?(local_file) && File.delete(local_file)
-        File.exists?(remote_file) && File.delete(remote_file)
       end
 
     end
@@ -511,72 +516,76 @@ describe ZTK::SSH do
 
     describe "upload" do
 
-      it "should be able to upload a file to 127.0.0.1 as the current user (your key must be in ssh-agent)" do
-        subject.config do |config|
-          config.ui = @ui
+      [true, false].each do |use_scp|
+        it "should be able to upload a file to 127.0.0.1 as the current user #{use_scp ? 'scp' : 'sftp'} (your key must be in ssh-agent)" do
+          subject.config do |config|
+            config.ui = @ui
 
-          config.user = ENV["USER"]
-          config.host_name = "127.0.0.1"
-          config.proxy_user = ENV["USER"]
-          config.proxy_host_name = "127.0.0.1"
-        end
-
-        data = "Hello World @ #{Time.now.utc}"
-
-        remote_file = File.join(ZTK::Locator.root, "tmp", "ssh-upload-remote")
-        File.exists?(remote_file) && File.delete(remote_file)
-
-        local_file = File.join(ZTK::Locator.root, "tmp", "ssh-upload-local")
-        if RUBY_VERSION < "1.9.3"
-          File.open(local_file, 'w') do |file|
-            file.puts(data)
+            config.user = ENV["USER"]
+            config.host_name = "127.0.0.1"
+            config.proxy_user = ENV["USER"]
+            config.proxy_host_name = "127.0.0.1"
           end
-        else
-          IO.write(local_file, data)
+
+          data = "Hello World @ #{Time.now.utc}"
+
+          remote_file = File.join(ZTK::Locator.root, "tmp", "ssh-upload-remote")
+          File.exists?(remote_file) && File.delete(remote_file)
+
+          local_file = File.join(ZTK::Locator.root, "tmp", "ssh-upload-local")
+          if RUBY_VERSION < "1.9.3"
+            File.open(local_file, 'w') do |file|
+              file.puts(data)
+            end
+          else
+            IO.write(local_file, data)
+          end
+
+          File.exists?(remote_file).should == false
+          subject.upload(local_file, remote_file)
+          File.exists?(remote_file).should == true
+
+          File.exists?(remote_file) && File.delete(remote_file)
+          File.exists?(local_file) && File.delete(local_file)
         end
-
-        File.exists?(remote_file).should == false
-        subject.upload(local_file, remote_file)
-        File.exists?(remote_file).should == true
-
-        File.exists?(remote_file) && File.delete(remote_file)
-        File.exists?(local_file) && File.delete(local_file)
       end
 
     end
 
     describe "download" do
 
-      it "should be able to download a file from 127.0.0.1 as the current user (your key must be in ssh-agent)" do
-        subject.config do |config|
-          config.ui = @ui
+      [true, false].each do |use_scp|
+        it "should be able to download a file from 127.0.0.1 as the current user using #{use_scp ? 'scp' : 'sftp'} (your key must be in ssh-agent)" do
+          subject.config do |config|
+            config.ui = @ui
 
-          config.user = ENV["USER"]
-          config.host_name = "127.0.0.1"
-          config.proxy_user = ENV["USER"]
-          config.proxy_host_name = "127.0.0.1"
-        end
-
-        data = "Hello World @ #{Time.now.utc}"
-
-        local_file = File.join(ZTK::Locator.root, "tmp", "ssh-download-local")
-        File.exists?(local_file) && File.delete(local_file)
-
-        remote_file = File.join(ZTK::Locator.root, "tmp", "ssh-download-remote")
-        if RUBY_VERSION < "1.9.3"
-          File.open(remote_file, 'w') do |file|
-            file.puts(data)
+            config.user = ENV["USER"]
+            config.host_name = "127.0.0.1"
+            config.proxy_user = ENV["USER"]
+            config.proxy_host_name = "127.0.0.1"
           end
-        else
-          IO.write(remote_file, data)
+
+          data = "Hello World @ #{Time.now.utc}"
+
+          local_file = File.join(ZTK::Locator.root, "tmp", "ssh-download-local")
+          File.exists?(local_file) && File.delete(local_file)
+
+          remote_file = File.join(ZTK::Locator.root, "tmp", "ssh-download-remote")
+          if RUBY_VERSION < "1.9.3"
+            File.open(remote_file, 'w') do |file|
+              file.puts(data)
+            end
+          else
+            IO.write(remote_file, data)
+          end
+
+          File.exists?(local_file).should == false
+          subject.download(remote_file, local_file)
+          File.exists?(local_file).should == true
+
+          File.exists?(local_file) && File.delete(local_file)
+          File.exists?(remote_file) && File.delete(remote_file)
         end
-
-        File.exists?(local_file).should == false
-        subject.download(remote_file, local_file)
-        File.exists?(local_file).should == true
-
-        File.exists?(local_file) && File.delete(local_file)
-        File.exists?(remote_file) && File.delete(remote_file)
       end
 
     end
