@@ -97,7 +97,6 @@ module ZTK
     #   @return [String] The colored string.
 
     # Defines a RegEx for stripping ANSI codes from strings
-    #ANSI_REGEX = /\e\[(?:(?:[349]|10)[0-7]|[0-9]|[34]8;5;\d{1,3})?m/
     ANSI_REGEX = /\e\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]/
 
     # Build ANSI Methods
