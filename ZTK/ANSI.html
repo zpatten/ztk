@@ -186,8 +186,7 @@
         <dt id="ANSI_REGEX-constant" class="">ANSI_REGEX =
           <div class="docstring">
   <div class="discussion">
-    <p>Defines a RegEx for stripping ANSI codes from strings
-ANSI_REGEX = /\e[(?:(?:[349]|10)[0-7]|[0-9]|[34]8;5;\d1,3)?m/</p>
+    <p>Defines a RegEx for stripping ANSI codes from strings</p>
 
 
   </div>
@@ -839,6 +838,7 @@ the values are the ANSI codes.</p>
       <pre class="lines">
 
 
+110
 111
 112
 113
@@ -885,11 +885,10 @@ the values are the ANSI codes.</p>
 154
 155
 156
-157
-158</pre>
+157</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ansi.rb', line 111</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/ansi.rb', line 110</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_build_ansi_methods'>build_ansi_methods</span><span class='lparen'>(</span><span class='id identifier rubyid_hash'>hash</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
@@ -1481,6 +1480,7 @@ the values are the ANSI codes.</p>
       <pre class="lines">
 
 
+166
 167
 168
 169
@@ -1490,11 +1490,10 @@ the values are the ANSI codes.</p>
 173
 174
 175
-176
-177</pre>
+176</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ansi.rb', line 167</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/ansi.rb', line 166</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_uncolor'>uncolor</span><span class='lparen'>(</span><span class='id identifier rubyid_string'>string</span><span class='op'>=</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
@@ -1699,7 +1698,7 @@ the values are the ANSI codes.</p>
 </div>
 
     <div id="footer">
-  Generated on Sat Dec 14 14:42:25 2013 by
+  Generated on Sat Dec 14 14:44:57 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-1.9.3).
 </div>
