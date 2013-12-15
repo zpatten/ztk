@@ -8,7 +8,11 @@ module ZTK
       #
       # Primarily used internally.
       def ssh
-        @ssh ||= Net::SSH.start(config.host_name, config.user, ssh_options)
+        if do_proxy?
+          @ssh ||= self.gateway.ssh(config.host_name, config.user, ssh_options)
+        else
+          @ssh ||= Net::SSH.start(config.host_name, config.user, ssh_options)
+        end
         @ssh
       end
 
@@ -28,10 +32,22 @@ module ZTK
         @scp
       end
 
-      # Close our session gracefully.
-      def close
-        config.ui.logger.debug { "close" }
+      # Starts an SSH gateway session.  Can also be used to get the
+      # Net::SSH::Gateway object.
+      #
+      # Primarily used internally.
+      def gateway
+        @gateway ||= Net::SSH::Gateway.new(config.proxy_host_name, config.proxy_user, gateway_options)
+        @gateway
+      end
 
+      # Should we run a proxy?
+      def do_proxy?
+        ((!config.proxy_host_name.nil? && !config.proxy_host_name.empty?) && (!config.proxy_user.nil? && !config.proxy_user.empty?))
+      end
+
+      # Attempts to close the SSH session if it is valid.
+      def close_ssh
         if (!@ssh.nil? && !@ssh.closed?)
           config.ui.logger.debug { "SSH object is valid and not closed" }
 
@@ -47,11 +63,41 @@ module ZTK
         else
           config.ui.logger.debug { "SSH object is NIL!" }
         end
+      end
 
-        @ssh = nil
-        @sftp = nil
+      # Attempts to close the gateway session if it is valid.
+      def close_gateway
+        if (!@gateway.nil? && !@gateway.closed?)
+          config.ui.logger.debug { "gateway object is valid and not closed" }
+
+          begin
+            config.ui.logger.debug { "attempting to shutdown" }
+            @gateway.shutdown!
+            config.ui.logger.debug { "shutdown" }
+
+          rescue Exception => e
+            config.ui.logger.fatal { "EXCEPTION: #{e.inspect}" }
+          end
+
+        else
+          config.ui.logger.debug { "gateway object is NIL!" }
+        end
+      end
+
+      # Close our session gracefully.
+      def close
+        config.ui.logger.debug { "close" }
+
+        close_ssh
+        close_gateway
 
         true
+
+      ensure
+        @ssh     = nil
+        @gateway = nil
+        @sftp    = nil
+        @scp     = nil
       end
 
       # The on_retry method we'll use with the RescueRetry class.

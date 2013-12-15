@@ -62,6 +62,7 @@ module ZTK
   class SSH < ZTK::Base
     require 'ostruct'
     require 'net/ssh'
+    require 'net/ssh/gateway'
     require 'net/ssh/proxy/command'
     require 'net/sftp'
     require 'net/scp'

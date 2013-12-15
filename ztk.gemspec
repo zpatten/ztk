@@ -39,6 +39,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency("activesupport")
   spec.add_dependency("erubis")
   spec.add_dependency("net-ssh")
+  spec.add_dependency("net-ssh-gateway")
   spec.add_dependency("net-sftp")
   spec.add_dependency("net-scp")
 
