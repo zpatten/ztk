@@ -53,11 +53,11 @@ module ZTK
 
       # Iterate the keys and proxy_keys, converting them as needed.
       def process_keys
-        config.keys = config.keys.collect do |key|
+        config.keys = [config.keys].flatten.compact.collect do |key|
           process_key(key)
         end
 
-        config.proxy_keys = config.proxy_keys.collect do |proxy_key|
+        config.proxy_keys = [config.proxy_keys].flatten.compact.collect do |proxy_key|
           process_key(proxy_key)
         end
       end
