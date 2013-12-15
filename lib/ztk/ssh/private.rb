@@ -27,6 +27,7 @@ module ZTK
 
       # Builds our SSH options hash.
       def ssh_options
+        process_keys
         options = base_options
 
         config.port.nil? or     options.merge!(:port => config.port)
@@ -39,6 +40,7 @@ module ZTK
 
       # Builds our SSH gateway options hash.
       def gateway_options
+        process_keys
         options = base_options
 
         config.proxy_port.nil? or     options.merge!(:port => config.proxy_port)
@@ -47,6 +49,30 @@ module ZTK
 
         config.ui.logger.debug { "gateway_options(#{options.inspect})" }
         options
+      end
+
+      # Iterate the keys and proxy_keys, converting them as needed.
+      def process_keys
+        config.keys = config.keys.collect do |key|
+          process_key(key)
+        end
+
+        config.proxy_keys = config.proxy_keys.collect do |proxy_key|
+          process_key(proxy_key)
+        end
+      end
+
+      # Process a individual key, rendering it to a temporary file if needed.
+      def process_key(key)
+        if ::File.exists?(key)
+          key
+        else
+          tempfile = ::Tempfile.new('key')
+          tempfile.write(key)
+          tempfile.flush
+
+          tempfile.path
+        end
       end
 
       # Builds a human readable tag about our connection.  Used for internal

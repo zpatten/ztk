@@ -61,6 +61,7 @@ module ZTK
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   class SSH < ZTK::Base
     require 'ostruct'
+    require 'tempfile'
     require 'net/ssh'
     require 'net/ssh/gateway'
     require 'net/ssh/proxy/command'
@@ -123,7 +124,8 @@ module ZTK
     # @option configuration [String] :host_name Server hostname to connect to.
     # @option configuration [String] :user Username to use for authentication.
     # @option configuration [String, Array<String>] :keys A single or series of
-    #   identity files to use for authentication.
+    #   identity files to use for authentication.  You can also supply keys as
+    #   String blobs which will be rendered to temporary files automatically.
     # @option configuration [String] :password Password to use for authentication.
     # @option configuration [Integer] :timeout (60) SSH connection timeout in
     #   seconds to use.
@@ -162,7 +164,9 @@ module ZTK
         :ignore_exit_status => false,
         :request_pty => true,
         :exit_code => 0,
-        :silence => false
+        :silence => false,
+        :keys => Array.new,
+        :proxy_keys => Array.new
       }.merge(configuration))
 
       config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
