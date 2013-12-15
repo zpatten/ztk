@@ -39,3 +39,5 @@ cat $HOME/.ssh/id_rsa.pub | tee $HOME/.ssh/authorized_keys2
 
 ssh-add $HOME/.ssh/id_rsa
 ssh-add -L
+
+ps aux | grep -i ssh
