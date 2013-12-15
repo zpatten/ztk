@@ -29,10 +29,9 @@ module ZTK
       def ssh_options
         options = base_options
 
-        config.password.nil? or  options.merge!(:password => config.password)
-        config.keys.nil? or      options.merge!(:keys => config.keys)
-
-        config.port.nil? or      options.merge!(:port => config.port)
+        config.port.nil? or     options.merge!(:port => config.port)
+        config.password.nil? or options.merge!(:password => config.password)
+        config.keys.nil? or     options.merge!(:keys => config.keys)
 
         config.ui.logger.debug { "ssh_options(#{options.inspect})" }
         options
@@ -42,10 +41,9 @@ module ZTK
       def gateway_options
         options = base_options
 
-        config.proxy_password.nil? or  options.merge!(:password => config.proxy_password)
-        config.proxy_keys.nil? or      options.merge!(:keys => config.proxy_keys)
-
-        config.proxy_port.nil? or      options.merge!(:port => config.proxy_port)
+        config.proxy_port.nil? or     options.merge!(:port => config.proxy_port)
+        config.proxy_password.nil? or options.merge!(:password => config.proxy_password)
+        config.proxy_keys.nil? or     options.merge!(:keys => config.proxy_keys)
 
         config.ui.logger.debug { "gateway_options(#{options.inspect})" }
         options
