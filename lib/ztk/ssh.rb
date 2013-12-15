@@ -164,9 +164,7 @@ module ZTK
         :ignore_exit_status => false,
         :request_pty => true,
         :exit_code => 0,
-        :silence => false,
-        :keys => Array.new,
-        :proxy_keys => Array.new
+        :silence => false
       }.merge(configuration))
 
       config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
