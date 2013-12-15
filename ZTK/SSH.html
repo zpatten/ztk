@@ -309,7 +309,7 @@
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="SSH/Private.html" title="ZTK::SSH::Private (module)">Private</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="SSH/Private.html#log_header-instance_method" title="ZTK::SSH::Private#log_header (method)">#log_header</a></span>, <span class='object_link'><a href="SSH/Private.html#ssh_options-instance_method" title="ZTK::SSH::Private#ssh_options (method)">#ssh_options</a></span>, <span class='object_link'><a href="SSH/Private.html#tag-instance_method" title="ZTK::SSH::Private#tag (method)">#tag</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="SSH/Private.html#base_options-instance_method" title="ZTK::SSH::Private#base_options (method)">#base_options</a></span>, <span class='object_link'><a href="SSH/Private.html#gateway_options-instance_method" title="ZTK::SSH::Private#gateway_options (method)">#gateway_options</a></span>, <span class='object_link'><a href="SSH/Private.html#log_header-instance_method" title="ZTK::SSH::Private#log_header (method)">#log_header</a></span>, <span class='object_link'><a href="SSH/Private.html#process_key-instance_method" title="ZTK::SSH::Private#process_key (method)">#process_key</a></span>, <span class='object_link'><a href="SSH/Private.html#process_keys-instance_method" title="ZTK::SSH::Private#process_keys (method)">#process_keys</a></span>, <span class='object_link'><a href="SSH/Private.html#ssh_options-instance_method" title="ZTK::SSH::Private#ssh_options (method)">#ssh_options</a></span>, <span class='object_link'><a href="SSH/Private.html#tag-instance_method" title="ZTK::SSH::Private#tag (method)">#tag</a></span></p>
 
   
   
@@ -364,7 +364,7 @@
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="SSH/Core.html" title="ZTK::SSH::Core (module)">Core</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="SSH/Core.html#close-instance_method" title="ZTK::SSH::Core#close (method)">#close</a></span>, <span class='object_link'><a href="SSH/Core.html#on_retry-instance_method" title="ZTK::SSH::Core#on_retry (method)">#on_retry</a></span>, <span class='object_link'><a href="SSH/Core.html#scp-instance_method" title="ZTK::SSH::Core#scp (method)">#scp</a></span>, <span class='object_link'><a href="SSH/Core.html#sftp-instance_method" title="ZTK::SSH::Core#sftp (method)">#sftp</a></span>, <span class='object_link'><a href="SSH/Core.html#ssh-instance_method" title="ZTK::SSH::Core#ssh (method)">#ssh</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="SSH/Core.html#close-instance_method" title="ZTK::SSH::Core#close (method)">#close</a></span>, <span class='object_link'><a href="SSH/Core.html#close_gateway-instance_method" title="ZTK::SSH::Core#close_gateway (method)">#close_gateway</a></span>, <span class='object_link'><a href="SSH/Core.html#close_ssh-instance_method" title="ZTK::SSH::Core#close_ssh (method)">#close_ssh</a></span>, <span class='object_link'><a href="SSH/Core.html#do_proxy%3F-instance_method" title="ZTK::SSH::Core#do_proxy? (method)">#do_proxy?</a></span>, <span class='object_link'><a href="SSH/Core.html#gateway-instance_method" title="ZTK::SSH::Core#gateway (method)">#gateway</a></span>, <span class='object_link'><a href="SSH/Core.html#on_retry-instance_method" title="ZTK::SSH::Core#on_retry (method)">#on_retry</a></span>, <span class='object_link'><a href="SSH/Core.html#scp-instance_method" title="ZTK::SSH::Core#scp (method)">#scp</a></span>, <span class='object_link'><a href="SSH/Core.html#sftp-instance_method" title="ZTK::SSH::Core#sftp (method)">#sftp</a></span>, <span class='object_link'><a href="SSH/Core.html#ssh-instance_method" title="ZTK::SSH::Core#ssh (method)">#ssh</a></span></p>
 
   
   
@@ -504,7 +504,8 @@
           </span>
           
             &mdash; <div class='inline'><p>A single or series of
-identity files to use for authentication.</p>
+identity files to use for authentication.  You can also supply keys as
+String blobs which will be rendered to temporary files automatically.</p>
 </div>
           
         </li>
@@ -663,9 +664,6 @@ series of identity files to use for authentication with the proxy.</p>
       <pre class="lines">
 
 
-155
-156
-157
 158
 159
 160
@@ -676,10 +674,15 @@ series of identity files to use for authentication with the proxy.</p>
 165
 166
 167
-168</pre>
+168
+169
+170
+171
+172
+173</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 155</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/ssh.rb', line 158</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_configuration'>configuration</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='lbrace'>{</span>
@@ -690,7 +693,9 @@ series of identity files to use for authentication with the proxy.</p>
     <span class='symbol'>:ignore_exit_status</span> <span class='op'>=&gt;</span> <span class='kw'>false</span><span class='comma'>,</span>
     <span class='symbol'>:request_pty</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
     <span class='symbol'>:exit_code</span> <span class='op'>=&gt;</span> <span class='int'>0</span><span class='comma'>,</span>
-    <span class='symbol'>:silence</span> <span class='op'>=&gt;</span> <span class='kw'>false</span>
+    <span class='symbol'>:silence</span> <span class='op'>=&gt;</span> <span class='kw'>false</span><span class='comma'>,</span>
+    <span class='symbol'>:keys</span> <span class='op'>=&gt;</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='comma'>,</span>
+    <span class='symbol'>:proxy_keys</span> <span class='op'>=&gt;</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
   <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_configuration'>configuration</span><span class='rparen'>)</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>config=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:table</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -706,7 +711,7 @@ series of identity files to use for authentication with the proxy.</p>
 </div>
 
     <div id="footer">
-  Generated on Sat Dec 14 14:44:58 2013 by
+  Generated on Sun Dec 15 01:00:12 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-1.9.3).
 </div>
