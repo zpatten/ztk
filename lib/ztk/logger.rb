@@ -35,7 +35,7 @@ module ZTK
 
     # Provides access to the raw log device.
     def logdev
-      self.instance_variable_get(:@logdev).instance_variable_get(:@dev)
+      @logdev.instance_variable_get(:@dev)
     end
 
     # Specialized logging.  Logs messages in the same format, except has the
