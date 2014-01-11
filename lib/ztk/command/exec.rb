@@ -78,7 +78,7 @@ module ZTK
             loop do
               pipes = IO.select(reader_writer_map.keys, [], reader_writer_map.keys).first
               pipes.each do |pipe|
-                data = pipe.read
+                data = pipe.gets
 
                 if (data.nil? || data.empty?)
                   sleep(0.1)
