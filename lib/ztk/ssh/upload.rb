@@ -69,7 +69,7 @@ module ZTK
               opened or (options.on_progress.nil? or options.on_progress.call(:open, args) and (opened = true))
 
               options.ui.logger.debug { "put(#{args[0].remote}, sent #{args[1]}, total #{args[0].size})" }
-              options.on_progress.nil? or options.on_progress.call(:get, args)
+              options.on_progress.nil? or options.on_progress.call(:put, args)
             end
 
             options.ui.logger.debug { "finish" }
