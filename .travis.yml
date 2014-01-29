@@ -13,7 +13,5 @@ notifications:
   irc:
     channels:
       - "irc.freenode.net#jovelabs"
-    template:
-      - "%{repository}#%{build_number}: %{message} (%{author}) [%{build_url}]"
     use_notice: true
     skip_join: true
