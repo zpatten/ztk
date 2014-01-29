@@ -1,12 +1,19 @@
 language: ruby
-
 rvm:
   - ree
   - 1.9.2
   - 1.9.3
   - 2.0.0
-
+  - 2.1.0
+branches:
+  only:
+    - master
 before_install: ./spec/support/before_install.sh
-
 notifications:
-  irc: "irc.freenode.net#jovelabs"
+  irc:
+    channels:
+      - "irc.freenode.net#jovelabs"
+    template:
+      - "%{repository}#%{build_number}: %{message} (%{author}) [%{build_url}]"
+    use_notice: true
+    skip_join: true
