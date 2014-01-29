@@ -81,7 +81,7 @@ module ZTK
                 data = nil
                 begin
                   data = pipe.read_nonblock(4096)
-                rescue IO::WaitReadable, EOFError => e
+                rescue Errno::EWOULDBLOCK, Errno::EAGAIN, EOFError => e
                   config.ui.logger.debug { e.inspect }
                 end
 
