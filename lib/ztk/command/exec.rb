@@ -76,12 +76,16 @@ module ZTK
         begin
           Timeout.timeout(options.timeout) do
             loop do
-              pipes = IO.select(reader_writer_map.keys, [], reader_writer_map.keys).first
-              pipes.each do |pipe|
-                data = pipe.gets
+              read_pipes, error_pipes = IO.select(reader_writer_map.keys, [], reader_writer_map.keys, 1)
+              [read_pipes].flatten.compact.each do |pipe|
+                data = nil
+                begin
+                  data = pipe.read_nonblock(4096)
+                rescue IO::WaitReadable, EOFError => e
+                  config.ui.logger.debug { e.inspect }
+                end
 
                 if (data.nil? || data.empty?)
-                  sleep(0.1)
                   next
                 end
 
@@ -110,15 +114,17 @@ module ZTK
                 options.on_progress.nil? or options.on_progress.call
               end
 
-              break if reader_writer_map.keys.all?{ |reader| reader.eof? }
+              if !(Process.waitpid(pid, Process::WNOHANG) rescue nil).nil?
+                break
+              end
             end
+
           end
         rescue Timeout::Error => e
           direct_log(:fatal) { log_header("TIMEOUT") }
           log_and_raise(CommandError, "Process timed out after #{options.timeout} seconds!")
         end
 
-        Process.waitpid(pid)
         exit_code = $?.exitstatus
         direct_log(:info) { log_header("STOPPED") }
 
