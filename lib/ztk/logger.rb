@@ -24,6 +24,7 @@ module ZTK
   #
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   class Logger < ::Logger
+    attr_accessor :stdout_echo
 
     # Log Levels
     SEVERITIES = Severity.constants.inject([]) {|arr,c| arr[Severity.const_get(c)] = c; arr}
@@ -95,7 +96,9 @@ module ZTK
       message = [message, progname].flatten.compact.join(": ")
       message = "%19s.%06d|%05d|%5s|%s%s\n" % [Time.now.utc.strftime("%Y-%m-%d|%H:%M:%S"), Time.now.utc.usec, Process.pid, SEVERITIES[severity], called_by, message]
 
-      @logdev.write(ZTK::ANSI.uncolor(message))
+      statement = ZTK::ANSI.uncolor(message)
+      stdout_echo and $stdout.write(statement)
+      @logdev.write(statement)
       @logdev.respond_to?(:flush) and @logdev.flush
 
       true
