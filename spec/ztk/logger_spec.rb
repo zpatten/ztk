@@ -89,6 +89,19 @@ describe ZTK::Logger do
       IO.read(@logfile).match(data).should_not be nil
     end
 
+    it "should allow us to echo log statements to STDOUT" do
+      data = "Hello World"
+      stdout = StringIO.new
+
+      $stdout = stdout
+
+      subject.stdout_echo = true
+      subject.debug { data }
+
+      stdout.rewind
+      stdout.read.match(data).should_not be nil
+    end
+
   end
 
   describe "log message" do
