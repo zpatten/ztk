@@ -41,45 +41,56 @@ module ZTK
         options.ui.logger.info { "download(#{remote.inspect}, #{local.inspect})" }
 
         ZTK::RescueRetry.try(:ui => config.ui, :tries => ZTK::SSH::RESCUE_RETRY_ATTEMPTS, :on_retry => method(:on_retry)) do
-          if (options.use_scp == false)
-            sftp.download!(remote.to_s, local.to_s, options.send(:table)) do |event, downloader, *args|
-              case event
-              when :open
-                options.ui.logger.debug { "download(#{args[0].remote} -> #{args[0].local})" }
-                options.on_progress.nil? or options.on_progress.call(:open, args)
-              when :close
-                options.ui.logger.debug { "close(#{args[0].local})" }
-                options.on_progress.nil? or options.on_progress.call(:close, args)
-              when :mkdir
-                options.ui.logger.debug { "mkdir(#{args[0]})" }
-                options.on_progress.nil? or options.on_progress.call(:mkdir, args)
-              when :get
-                options.ui.logger.debug { "get(#{args[0].remote}, size #{args[2].size} bytes, offset #{args[1]})" }
-                options.on_progress.nil? or options.on_progress.call(:get, args)
-              when :finish
-                options.ui.logger.debug { "finish" }
-                options.on_progress.nil? or options.on_progress.call(:finish, args)
-              end
-            end
+          if (options.use_scp == true)
+            scp_download(remote, local, options)
           else
-            opened = false
-            args = []
-
-            scp.download!(remote.to_s, local.to_s, options.send(:table)) do |ch, name, sent, total|
-              args = [ OpenStruct.new(:size => total, :local => name, :remote => name), sent, '' ]
-
-              opened or (options.on_progress.nil? or options.on_progress.call(:open, args) and (opened = true))
-
-              options.ui.logger.debug { "get(#{args[0].remote}, sent #{args[1]}, total #{args[0].size})" }
-              options.on_progress.nil? or options.on_progress.call(:get, args)
-            end
-
-            options.ui.logger.debug { "finish" }
-            options.on_progress.nil? or options.on_progress.call(:finish, args)
+            sftp_download(remote, local, options)
           end
         end
 
         true
+      end
+
+
+    private
+
+      def sftp_download(remote, local, options={})
+        sftp.download!(remote.to_s, local.to_s, options.send(:table)) do |event, downloader, *args|
+          case event
+          when :open
+            options.ui.logger.debug { "download(#{args[0].remote} -> #{args[0].local})" }
+            options.on_progress.nil? or options.on_progress.call(:open, args)
+          when :close
+            options.ui.logger.debug { "close(#{args[0].local})" }
+            options.on_progress.nil? or options.on_progress.call(:close, args)
+          when :mkdir
+            options.ui.logger.debug { "mkdir(#{args[0]})" }
+            options.on_progress.nil? or options.on_progress.call(:mkdir, args)
+          when :get
+            options.ui.logger.debug { "get(#{args[0].remote}, size #{args[2].size} bytes, offset #{args[1]})" }
+            options.on_progress.nil? or options.on_progress.call(:get, args)
+          when :finish
+            options.ui.logger.debug { "finish" }
+            options.on_progress.nil? or options.on_progress.call(:finish, args)
+          end
+        end
+      end
+
+      def scp_download(remote, local, options={})
+        opened = false
+        args = []
+
+        scp.download!(remote.to_s, local.to_s, options.send(:table)) do |ch, name, sent, total|
+          args = [ OpenStruct.new(:size => total, :local => name, :remote => name), sent, '' ]
+
+          opened or (options.on_progress.nil? or options.on_progress.call(:open, args) and (opened = true))
+
+          options.ui.logger.debug { "get(#{args[0].remote}, sent #{args[1]}, total #{args[0].size})" }
+          options.on_progress.nil? or options.on_progress.call(:get, args)
+        end
+
+        options.ui.logger.debug { "finish" }
+        options.on_progress.nil? or options.on_progress.call(:finish, args)
       end
 
     end

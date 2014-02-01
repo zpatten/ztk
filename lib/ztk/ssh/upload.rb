@@ -39,45 +39,56 @@ module ZTK
         config.ui.logger.info { "upload(#{local.inspect}, #{remote.inspect})" }
 
         ZTK::RescueRetry.try(:ui => config.ui, :tries => ZTK::SSH::RESCUE_RETRY_ATTEMPTS, :on_retry => method(:on_retry)) do
-          if (options.use_scp == false)
-            sftp.upload!(local.to_s, remote.to_s) do |event, uploader, *args|
-              case event
-              when :open
-                options.ui.logger.debug { "upload(#{args[0].local} -> #{args[0].remote})" }
-                options.on_progress.nil? or options.on_progress.call(:open, args)
-              when :close
-                options.ui.logger.debug { "close(#{args[0].remote})" }
-                options.on_progress.nil? or options.on_progress.call(:close, args)
-              when :mkdir
-                options.ui.logger.debug { "mkdir(#{args[0]})" }
-                options.on_progress.nil? or options.on_progress.call(:mkdir, args)
-              when :put
-                options.ui.logger.debug { "put(#{args[0].remote}, size #{args[2].size} bytes, offset #{args[1]})" }
-                options.on_progress.nil? or options.on_progress.call(:put, args)
-              when :finish
-                options.ui.logger.debug { "finish" }
-                options.on_progress.nil? or options.on_progress.call(:finish, args)
-              end
-            end
+          if (options.use_scp == true)
+            scp_upload(local, remote, options)
           else
-            opened = false
-            args = []
-
-            scp.upload!(local.to_s, remote.to_s, options.send(:table)) do |ch, name, sent, total|
-              args = [ OpenStruct.new(:size => total, :local => name, :remote => name), sent, '' ]
-
-              opened or (options.on_progress.nil? or options.on_progress.call(:open, args) and (opened = true))
-
-              options.ui.logger.debug { "put(#{args[0].remote}, sent #{args[1]}, total #{args[0].size})" }
-              options.on_progress.nil? or options.on_progress.call(:put, args)
-            end
-
-            options.ui.logger.debug { "finish" }
-            options.on_progress.nil? or options.on_progress.call(:finish, args)
+            sftp_upload(local, remote, options)
           end
         end
 
         true
+      end
+
+
+    private
+
+      def sftp_upload(local, remote, options={})
+        sftp.upload!(local.to_s, remote.to_s) do |event, uploader, *args|
+          case event
+          when :open
+            options.ui.logger.debug { "upload(#{args[0].local} -> #{args[0].remote})" }
+            options.on_progress.nil? or options.on_progress.call(:open, args)
+          when :close
+            options.ui.logger.debug { "close(#{args[0].remote})" }
+            options.on_progress.nil? or options.on_progress.call(:close, args)
+          when :mkdir
+            options.ui.logger.debug { "mkdir(#{args[0]})" }
+            options.on_progress.nil? or options.on_progress.call(:mkdir, args)
+          when :put
+            options.ui.logger.debug { "put(#{args[0].remote}, size #{args[2].size} bytes, offset #{args[1]})" }
+            options.on_progress.nil? or options.on_progress.call(:put, args)
+          when :finish
+            options.ui.logger.debug { "finish" }
+            options.on_progress.nil? or options.on_progress.call(:finish, args)
+          end
+        end
+      end
+
+      def scp_upload(local, remote, options={})
+        opened = false
+        args = []
+
+        scp.upload!(local.to_s, remote.to_s, options.send(:table)) do |ch, name, sent, total|
+          args = [ OpenStruct.new(:size => total, :local => name, :remote => name), sent, '' ]
+
+          opened or (options.on_progress.nil? or options.on_progress.call(:open, args) and (opened = true))
+
+          options.ui.logger.debug { "put(#{args[0].remote}, sent #{args[1]}, total #{args[0].size})" }
+          options.on_progress.nil? or options.on_progress.call(:put, args)
+        end
+
+        options.ui.logger.debug { "finish" }
+        options.on_progress.nil? or options.on_progress.call(:finish, args)
       end
 
     end
