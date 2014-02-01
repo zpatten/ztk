@@ -46,10 +46,6 @@ describe ZTK::Logger do
       subject.should be_an_instance_of ZTK::Logger
     end
 
-    it "should provide access to the raw log file handle" do
-      subject.logdev.should be_an_instance_of File
-    end
-
   end
 
   describe "general logging functionality" do
@@ -85,17 +81,16 @@ describe ZTK::Logger do
 
     it "should allow writing directly to the log device" do
       data = "Hello World"
-      subject.logdev.write(data)
+      subject.instance_variable_get(:@logdev).write(data)
       IO.read(@logfile).match(data).should_not be nil
     end
 
     it "should allow us to echo log statements to STDOUT" do
       data = "Hello World"
       stdout = StringIO.new
-
       $stdout = stdout
+      subject.loggers = [ ::Logger.new($stdout) ]
 
-      subject.stdout_echo = true
       subject.debug { data }
 
       stdout.rewind

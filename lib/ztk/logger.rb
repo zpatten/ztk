@@ -4,9 +4,14 @@ module ZTK
 
   # Standard Logging Class
   #
-  # Supplies loggers the same as the base ruby logger class, except adds some
-  # extra spice to your log messages.  This includes uSec timestamping, PIDs and
-  # caller tree details.
+  # Allows chaining standard Ruby loggers as well as adding extra spice to your
+  # log messages.  This includes uSec timestamping, PIDs and caller tree
+  # details.
+  #
+  # This class accepts the same initialize arguments as the Ruby logger class.
+  # You can chain multiple loggers together, for example to get an effect of
+  # logging to STDOUT and a file simultaneously without having to modify your
+  # existing logging statements.
   #
   # One can override the logging level on the command line with programs that
   # use this library like so:
@@ -22,21 +27,68 @@ module ZTK
   #     $logger.error { "This is a error message!" }
   #     $logger.fatal { "This is a fatal message!" }
   #
+  # = Simple logger chain:
+  #
+  #     logger = ZTK::Logger.new
+  #     logger.loggers << ::Logger.new(STDOUT)
+  #     logger.loggers << ::Logger.new('test.log')
+  #
+  #     logger.debug { "This will be written to STDOUT as well as test.log!" }
+  #
+  # = Alternate logger chaining:
+  #
+  #     logger = ZTK::Logger.new(STDOUT)
+  #     logger.loggers << ::Logger.new('test.log')
+  #
+  #     logger.debug { "This will be written to STDOUT as well as test.log!" }
+  #
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   class Logger < ::Logger
-    attr_accessor :stdout_echo
 
     # Log Levels
     SEVERITIES = Severity.constants.inject([]) {|arr,c| arr[Severity.const_get(c)] = c; arr}
 
+    class LogDevice
+      attr_reader   :dev
+      attr_reader   :filename
+
+      def initialize(chain)
+        @chain = chain
+        @dev = nil
+      end
+
+      def write(message)
+        @chain.loggers.each do |logger|
+          logger << message
+        end
+      end
+
+      def close
+        @chain.loggers.each do |logger|
+          logger.instance_variable_get(:@logdev).close
+        end
+      end
+    end
+
+
+    attr_accessor :loggers
+
     def initialize(*args)
-      super(*args)
+      super(StringIO.new)
+
+      @loggers = Array.new
+      if args.count > 0
+        @loggers << ::Logger.new(*args)
+      end
+
+      @logdev = LogDevice.new(self)
+
       set_log_level
     end
 
-    # Provides access to the raw log device.
-    def logdev
-      @logdev.instance_variable_get(:@dev)
+    # Generates a human-readable string about the logger.
+    def inspect
+      "#<#{self.class} loggers=[#{@loggers.collect{|logger| logger.instance_variable_get(:@logdev).instance_variable_get(:@dev).inspect }.join(', ')}]>"
     end
 
     # Specialized logging.  Logs messages in the same format, except has the
@@ -55,9 +107,12 @@ module ZTK
       add(severity, nil, nil, shift, &block)
     end
 
-    # Generates a human-readable string about the logger.
-    def inspect
-      "#<#{self.class} filename=#{@logdev.filename.inspect}>"
+    def level=(value)
+      @level = value
+
+      @loggers.each { |logger| logger.level = @level }
+
+      value
     end
 
 
@@ -96,9 +151,7 @@ module ZTK
       message = [message, progname].flatten.compact.join(": ")
       message = "%19s.%06d|%05d|%5s|%s%s\n" % [Time.now.utc.strftime("%Y-%m-%d|%H:%M:%S"), Time.now.utc.usec, Process.pid, SEVERITIES[severity], called_by, message]
 
-      statement = ZTK::ANSI.uncolor(message)
-      (stdout_echo == true) and $stdout.write(statement)
-      @logdev.write(statement)
+      @logdev.write(ZTK::ANSI.uncolor(message))
       @logdev.respond_to?(:flush) and @logdev.flush
 
       true
