@@ -87,6 +87,7 @@ describe ZTK::Background do
       it "should respond false when the process is still running" do
         subject.process do
           sleep(WAIT_SMALL)
+          WAIT_SMALL
         end
         subject.dead?.should be false
 
