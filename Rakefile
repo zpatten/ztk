@@ -18,23 +18,22 @@
 #
 ################################################################################
 
-require 'bundler/gem_tasks'
+require 'rake/clean'
 
-################################################################################
+require 'bundler/gem_tasks'
 
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec)
-task :default => :spec
-task :test => :spec
-
-################################################################################
 
 require 'coveralls/rake/task'
 Coveralls::RakeTask.new
-task :coveralls => [:spec, 'coveralls:push']
+
+require 'ztk/rake/docs'
 
 ################################################################################
 
-require 'ztk/rake/docs'
+task :coveralls => [:spec, 'coveralls:push']
+task :default => [:spec]
+task :test => [:spec]
 
 ################################################################################
