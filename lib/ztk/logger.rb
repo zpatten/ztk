@@ -97,7 +97,7 @@ module ZTK
       message = "%19s.%06d|%05d|%5s|%s%s\n" % [Time.now.utc.strftime("%Y-%m-%d|%H:%M:%S"), Time.now.utc.usec, Process.pid, SEVERITIES[severity], called_by, message]
 
       statement = ZTK::ANSI.uncolor(message)
-      stdout_echo and $stdout.write(statement)
+      stdout_echo.nil? or $stdout.write(statement)
       @logdev.write(statement)
       @logdev.respond_to?(:flush) and @logdev.flush
 
