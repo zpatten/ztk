@@ -105,9 +105,14 @@
   <div class="discussion">
     <p>Standard Logging Class</p>
 
-<p>Supplies loggers the same as the base ruby logger class, except adds some
-extra spice to your log messages.  This includes uSec timestamping, PIDs and
-caller tree details.</p>
+<p>Allows chaining standard Ruby loggers as well as adding extra spice to your
+log messages.  This includes uSec timestamping, PIDs and caller tree
+details.</p>
+
+<p>This class accepts the same initialize arguments as the Ruby logger class.
+You can chain multiple loggers together, for example to get an effect of
+logging to STDOUT and a file simultaneously without having to modify your
+existing logging statements.</p>
 
 <p>One can override the logging level on the command line with programs that
 use this library like so:
@@ -122,6 +127,23 @@ use this library like so:
 <span class='gvar'>$logger</span><span class='period'>.</span><span class='id identifier rubyid_warn'>warn</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>This is a warn message!</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 <span class='gvar'>$logger</span><span class='period'>.</span><span class='id identifier rubyid_error'>error</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>This is a error message!</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 <span class='gvar'>$logger</span><span class='period'>.</span><span class='id identifier rubyid_fatal'>fatal</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>This is a fatal message!</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+</code></pre>
+
+<p>= Simple logger chain:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_logger'>logger</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Logger</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+<span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_loggers'>loggers</span> <span class='op'>&lt;&lt;</span> <span class='op'>::</span><span class='const'>Logger</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'>STDOUT</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_loggers'>loggers</span> <span class='op'>&lt;&lt;</span> <span class='op'>::</span><span class='const'>Logger</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>test.log</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+
+<span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>This will be written to STDOUT as well as test.log!</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+</code></pre>
+
+<p>= Alternate logger chaining:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_logger'>logger</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Logger</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'>STDOUT</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_loggers'>loggers</span> <span class='op'>&lt;&lt;</span> <span class='op'>::</span><span class='const'>Logger</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>test.log</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+
+<span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>This will be written to STDOUT as well as test.log!</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 </code></pre>
 
 
@@ -145,7 +167,17 @@ use this library like so:
   
 </ul>
 
-</div>
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Logger/LogDevice.html" title="ZTK::Logger::LogDevice (class)">LogDevice</a></span>
+    
+  
+</p>
+
   <h2>Constant Summary</h2>
   
     <dl class="constants">
@@ -177,7 +209,7 @@ use this library like so:
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#stdout_echo-instance_method" title="#stdout_echo (instance method)">- (Object) <strong>stdout_echo</strong> </a>
+      <a href="#loggers-instance_method" title="#loggers (instance method)">- (Object) <strong>loggers</strong> </a>
     
 
     
@@ -194,7 +226,7 @@ use this library like so:
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute stdout_echo.</p>
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute loggers.</p>
 </div></span>
   
 </li>
@@ -264,7 +296,7 @@ use this library like so:
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#logdev-instance_method" title="#logdev (instance method)">- (Object) <strong>logdev</strong> </a>
+      <a href="#level%3D-instance_method" title="#level= (instance method)">- (Object) <strong>level=</strong>(value) </a>
     
 
     
@@ -278,8 +310,7 @@ use this library like so:
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Provides access to the raw log device.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -339,16 +370,32 @@ use this library like so:
       <pre class="lines">
 
 
-32
-33
-34
-35</pre>
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/logger.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/logger.rb', line 77</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-  <span class='kw'>super</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='kw'>super</span><span class='lparen'>(</span><span class='const'>StringIO</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='rparen'>)</span>
+
+  <span class='ivar'>@loggers</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>&gt;</span> <span class='int'>0</span>
+    <span class='ivar'>@loggers</span> <span class='op'>&lt;&lt;</span> <span class='op'>::</span><span class='const'>Logger</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='ivar'>@logdev</span> <span class='op'>=</span> <span class='const'>LogDevice</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
+
   <span class='id identifier rubyid_set_log_level'>set_log_level</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -362,11 +409,11 @@ use this library like so:
     <h2>Instance Attribute Details</h2>
     
       
-      <span id="stdout_echo=-instance_method"></span>
+      <span id="loggers=-instance_method"></span>
       <div class="method_details first">
-  <h3 class="signature first" id="stdout_echo-instance_method">
+  <h3 class="signature first" id="loggers-instance_method">
   
-    - (<tt>Object</tt>) <strong>stdout_echo</strong> 
+    - (<tt>Object</tt>) <strong>loggers</strong> 
   
 
   
@@ -374,7 +421,7 @@ use this library like so:
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns the value of attribute stdout_echo</p>
+    <p>Returns the value of attribute loggers</p>
 
 
   </div>
@@ -388,15 +435,15 @@ use this library like so:
       <pre class="lines">
 
 
-27
-28
-29</pre>
+75
+76
+77</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/logger.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/logger.rb', line 75</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_stdout_echo'>stdout_echo</span>
-  <span class='ivar'>@stdout_echo</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_loggers'>loggers</span>
+  <span class='ivar'>@loggers</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -435,15 +482,17 @@ use this library like so:
       <pre class="lines">
 
 
-59
-60
-61</pre>
+91
+92
+93
+94</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/logger.rb', line 59</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/logger.rb', line 91</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
-  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#&lt;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='rbrace'>}</span><span class='tstring_content'> filename=</span><span class='embexpr_beg'>#{</span><span class='ivar'>@logdev</span><span class='period'>.</span><span class='id identifier rubyid_filename'>filename</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>&gt;</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_loggers_inspect'>loggers_inspect</span> <span class='op'>=</span> <span class='ivar'>@loggers</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_logger'>logger</span><span class='op'>|</span> <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_instance_variable_get'>instance_variable_get</span><span class='lparen'>(</span><span class='symbol'>:@logdev</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_instance_variable_get'>instance_variable_get</span><span class='lparen'>(</span><span class='symbol'>:@dev</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>, </span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#&lt;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='rbrace'>}</span><span class='tstring_content'> loggers=[</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_loggers_inspect'>loggers_inspect</span><span class='rbrace'>}</span><span class='tstring_content'>]&gt;</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -451,39 +500,37 @@ use this library like so:
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="logdev-instance_method">
+  <h3 class="signature " id="level=-instance_method">
   
-    - (<tt>Object</tt>) <strong>logdev</strong> 
-  
-
+    - (<tt>Object</tt>) <strong>level=</strong>(value) 
   
 
   
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>Provides access to the raw log device.</p>
 
-
-  </div>
-</div>
-<div class="tags">
   
-
-</div><table class="source_code">
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-38
-39
-40</pre>
+112
+113
+114
+115
+116
+117
+118</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/logger.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/logger.rb', line 112</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_logdev'>logdev</span>
-  <span class='ivar'>@logdev</span><span class='period'>.</span><span class='id identifier rubyid_instance_variable_get'>instance_variable_get</span><span class='lparen'>(</span><span class='symbol'>:@dev</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_level='>level=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+  <span class='ivar'>@level</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
+
+  <span class='ivar'>@loggers</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_logger'>logger</span><span class='op'>|</span> <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_level'>level</span> <span class='op'>=</span> <span class='ivar'>@level</span> <span class='rbrace'>}</span>
+
+  <span class='id identifier rubyid_value'>value</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -525,13 +572,13 @@ originated from.</p>
       <pre class="lines">
 
 
-53
-54
-55
-56</pre>
+107
+108
+109
+110</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/logger.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/logger.rb', line 107</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_shift'>shift</span><span class='lparen'>(</span><span class='id identifier rubyid_severity'>severity</span><span class='comma'>,</span> <span class='id identifier rubyid_shift'>shift</span><span class='op'>=</span><span class='int'>0</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_severity'>severity</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Logger</span><span class='period'>.</span><span class='id identifier rubyid_const_get'>const_get</span><span class='lparen'>(</span><span class='id identifier rubyid_severity'>severity</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_upcase'>upcase</span><span class='rparen'>)</span>
@@ -547,7 +594,7 @@ originated from.</p>
 </div>
 
     <div id="footer">
-  Generated on Sat Feb  1 01:31:29 2014 by
+  Generated on Sat Feb  1 14:46:46 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-1.9.3).
 </div>
