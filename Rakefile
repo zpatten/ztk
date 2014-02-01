@@ -35,41 +35,6 @@ task :coveralls => [:spec, 'coveralls:push']
 
 ################################################################################
 
-require 'yard'
-require 'yard/rake/yardoc_task'
-
-GEM_NAME = File.basename(Dir.pwd)
-DOC_PATH = File.expand_path(File.join("..", "", "#{GEM_NAME}.doc"))
-
-namespace :doc do
-  YARD::Rake::YardocTask.new(:pages) do |t|
-
-    # t.files = ['lib/**/*.rb']
-    t.options = ['--verbose', '-o', DOC_PATH]
-  end
-
-  namespace :pages do
-
-    desc 'Generate and publish YARD Documentation to GitHub pages'
-    task :publish => ['doc:pages'] do
-      describe = %x(git describe).chomp
-      stats = %x(bundle exec yard stats).chomp
-
-      commit_message = Array.new
-      commit_message << "Generated YARD Documentation for #{GEM_NAME.upcase} #{describe}\n\n"
-      commit_message << stats
-
-      Dir.chdir(DOC_PATH) do
-        puts(%x{git add -Av})
-        puts(%x{git commit -m"#{commit_message.join}"})
-        puts(%x{git push origin gh-pages})
-      end
-    end
-
-  end
-
-end
-desc 'Alias to doc:yard'
-task 'doc' => 'doc:yard'
+require 'ztk/rake/docs'
 
 ################################################################################
