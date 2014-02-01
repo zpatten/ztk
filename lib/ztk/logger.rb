@@ -89,7 +89,8 @@ module ZTK
 
     # Generates a human-readable string about the logger.
     def inspect
-      "#<#{self.class} loggers=[#{@loggers.collect{|logger| logger.instance_variable_get(:@logdev).instance_variable_get(:@dev).inspect }.join(', ')}]>"
+      loggers_inspect = @loggers.collect{|logger| logger.instance_variable_get(:@logdev).instance_variable_get(:@dev).inspect }.join(', ')
+      "#<#{self.class} loggers=[#{loggers_inspect}]>"
     end
 
     # Specialized logging.  Logs messages in the same format, except has the
