@@ -53,8 +53,9 @@ module ZTK
       attr_reader   :filename
 
       def initialize(chain)
-        @chain = chain
-        @dev = nil
+        @chain    = chain
+        @dev      = nil
+        @filename = nil
       end
 
       def write(message)
