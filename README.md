@@ -8,21 +8,25 @@
 
 Zachary's Tool Kit is a general purpose utility gem, featuring a collection of classes meant to simplify development of complex systems in Ruby.
 
-- **ZTK::Background**
-
-  Easily turn most iterative tasks into a parallel processes and easily leverage multiple cores to speed up processing large sets of data.
-
 - **ZTK::DSL**
 
   Create your own DSL in seconds by inheriting this DSL class.  Featuring ActiveRecord style associations where DSL objects can `belong_to` or `has_many` other DSL objects.
 
+- **ZTK::Background**
+
+  Easily run a processes in the background.  Read more at the [ZTK::Background](http://zpatten.github.io/ztk/ZTK/Background.html) documentation.
+
 - **ZTK::Logger**
 
-  Based off the core Ruby logger, this is meant to be a drop in replacement.  Features added logging information, including PID, uSec time resolution, method and line numbers of logging statements (i.e. the caller).  One can seamlessly chain Ruby loggers using ZTK:Logger, for example to output logs to both STDOUT and a log file on disk at the same time; all while maintaining compatibility with the core Ruby logger.
+  Based off the core Ruby logger, this is meant to be a drop in replacement.  Features added logging information, including PID, uSec time resolution, method and line numbers of logging statements (i.e. the caller).  One can seamlessly chain Ruby loggers using ZTK:Logger, for example to output logs to both STDOUT and a log file on disk at the same time; all while maintaining compatibility with the core Ruby logger.  Read more at the [ZTK::Logger](http://zpatten.github.io/ztk/ZTK/Logger.html) documentation.
+
+- **ZTK::Parallel**
+
+  Easily turn most iterative tasks into a parallel processes and easily leverage multiple cores to speed up processing large sets of data.  Read more at the [ZTK::Parallel](http://zpatten.github.io/ztk/ZTK/Parallel.html) documentation.
 
 - **ZTK::SSH**
 
-  An SSH class that nicely wraps up all of the SSH gems into a nice uniform interface, complete with transfer progress callbacks.  It is meant to function as a drop in replacement, but I admit this has not been heavily tested like in the case of the ZTK::Logger class.  It provides the ability to switch between SCP and SFTP for file transfers seamlessly.  Full SSH proxy support as well, plus methods to spawn up interactive SSH consoles via `Kernel.exec`.
+  An SSH class that nicely wraps up all of the SSH gems into a nice uniform interface, complete with transfer progress callbacks.  It is meant to function as a drop in replacement, but I admit this has not been heavily tested like in the case of the ZTK::Logger class.  It provides the ability to switch between SCP and SFTP for file transfers seamlessly.  Full SSH proxy support as well, plus methods to spawn up interactive SSH consoles via `Kernel.exec`.  Read more at the [ZTK::SSH](http://zpatten.github.io/ztk/ZTK/SSH.html) documentation.
 
 # RUBIES TESTED AGAINST
 
