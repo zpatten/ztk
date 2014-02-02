@@ -399,7 +399,7 @@ Hello from After Callback - PID 23578
   
   
   <h3 class="inherited">Methods inherited from <span class='object_link'><a href="Base.html" title="ZTK::Base (class)">Base</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Base.html#build_config-class_method" title="ZTK::Base.build_config (method)">build_config</a></span>, <span class='object_link'><a href="Base.html#config-instance_method" title="ZTK::Base#config (method)">#config</a></span>, <span class='object_link'><a href="Base.html#direct_log-instance_method" title="ZTK::Base#direct_log (method)">#direct_log</a></span>, <span class='object_link'><a href="Base.html#log_and_raise-instance_method" title="ZTK::Base#log_and_raise (method)">#log_and_raise</a></span>, <span class='object_link'><a href="Base.html#log_and_raise-class_method" title="ZTK::Base.log_and_raise (method)">log_and_raise</a></span>, <span class='object_link'><a href="Base.html#sanitize_config-class_method" title="ZTK::Base.sanitize_config (method)">sanitize_config</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="Base.html#build_config-class_method" title="ZTK::Base.build_config (method)">build_config</a></span>, <span class='object_link'><a href="Base.html#config-instance_method" title="ZTK::Base#config (method)">#config</a></span>, <span class='object_link'><a href="Base.html#direct_log-instance_method" title="ZTK::Base#direct_log (method)">#direct_log</a></span>, <span class='object_link'><a href="Base.html#hash_config-class_method" title="ZTK::Base.hash_config (method)">hash_config</a></span>, <span class='object_link'><a href="Base.html#log_and_raise-instance_method" title="ZTK::Base#log_and_raise (method)">#log_and_raise</a></span>, <span class='object_link'><a href="Base.html#log_and_raise-class_method" title="ZTK::Base.log_and_raise (method)">log_and_raise</a></span></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
@@ -454,17 +454,13 @@ Hello from After Callback - PID 23578
 93
 94
 95
-96
-97
-98</pre>
+96</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/background.rb', line 91</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_configuration'>configuration</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='kw'>super</span><span class='lparen'>(</span><span class='lbrace'>{</span>
-  <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_configuration'>configuration</span><span class='rparen'>)</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>config=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:table</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+  <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_configuration'>configuration</span><span class='rparen'>)</span>
 
   <span class='ivar'>@result</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='const'>GC</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:copy_on_write_friendly=</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='const'>GC</span><span class='period'>.</span><span class='id identifier rubyid_copy_on_write_friendly'>copy_on_write_friendly</span> <span class='op'>=</span> <span class='kw'>true</span>
@@ -607,12 +603,12 @@ Hello from After Callback - PID 23578
       <pre class="lines">
 
 
-170
-171
-172</pre>
+168
+169
+170</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/background.rb', line 170</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/background.rb', line 168</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_alive?'>alive?</span>
   <span class='lparen'>(</span><span class='const'>Process</span><span class='period'>.</span><span class='id identifier rubyid_getpgid'>getpgid</span><span class='lparen'>(</span><span class='ivar'>@pid</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Integer</span><span class='rparen'>)</span> <span class='kw'>rescue</span> <span class='kw'>false</span><span class='rparen'>)</span>
@@ -659,12 +655,12 @@ Hello from After Callback - PID 23578
       <pre class="lines">
 
 
-174
-175
-176</pre>
+172
+173
+174</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/background.rb', line 174</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/background.rb', line 172</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_dead?'>dead?</span>
   <span class='op'>!</span><span class='id identifier rubyid_alive?'>alive?</span>
@@ -751,6 +747,8 @@ the parent processes.</p>
       <pre class="lines">
 
 
+105
+106
 107
 108
 109
@@ -781,12 +779,10 @@ the parent processes.</p>
 134
 135
 136
-137
-138
-139</pre>
+137</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/background.rb', line 107</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/background.rb', line 105</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='op'>!</span><span class='id identifier rubyid_block_given?'>block_given?</span> <span class='kw'>and</span> <span class='id identifier rubyid_log_and_raise'>log_and_raise</span><span class='lparen'>(</span><span class='const'>BackgroundError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>You must supply a block to the process method!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -877,6 +873,8 @@ is returned.</p>
       <pre class="lines">
 
 
+152
+153
 154
 155
 156
@@ -889,12 +887,10 @@ is returned.</p>
 163
 164
 165
-166
-167
-168</pre>
+166</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/background.rb', line 154</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/background.rb', line 152</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_wait'>wait</span>
   <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>wait</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -921,7 +917,7 @@ is returned.</p>
 </div>
 
     <div id="footer">
-  Generated on Sat Feb  1 14:46:47 2014 by
+  Generated on Sat Feb  1 17:11:09 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-1.9.3).
 </div>

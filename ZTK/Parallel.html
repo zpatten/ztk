@@ -435,7 +435,7 @@ Hello from After Callback - PID 24782
   
   
   <h3 class="inherited">Methods inherited from <span class='object_link'><a href="Base.html" title="ZTK::Base (class)">Base</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Base.html#build_config-class_method" title="ZTK::Base.build_config (method)">build_config</a></span>, <span class='object_link'><a href="Base.html#config-instance_method" title="ZTK::Base#config (method)">#config</a></span>, <span class='object_link'><a href="Base.html#direct_log-instance_method" title="ZTK::Base#direct_log (method)">#direct_log</a></span>, <span class='object_link'><a href="Base.html#log_and_raise-instance_method" title="ZTK::Base#log_and_raise (method)">#log_and_raise</a></span>, <span class='object_link'><a href="Base.html#log_and_raise-class_method" title="ZTK::Base.log_and_raise (method)">log_and_raise</a></span>, <span class='object_link'><a href="Base.html#sanitize_config-class_method" title="ZTK::Base.sanitize_config (method)">sanitize_config</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="Base.html#build_config-class_method" title="ZTK::Base.build_config (method)">build_config</a></span>, <span class='object_link'><a href="Base.html#config-instance_method" title="ZTK::Base#config (method)">#config</a></span>, <span class='object_link'><a href="Base.html#direct_log-instance_method" title="ZTK::Base#direct_log (method)">#direct_log</a></span>, <span class='object_link'><a href="Base.html#hash_config-class_method" title="ZTK::Base.hash_config (method)">hash_config</a></span>, <span class='object_link'><a href="Base.html#log_and_raise-instance_method" title="ZTK::Base#log_and_raise (method)">#log_and_raise</a></span>, <span class='object_link'><a href="Base.html#log_and_raise-class_method" title="ZTK::Base.log_and_raise (method)">log_and_raise</a></span></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
@@ -514,8 +514,7 @@ Hello from After Callback - PID 24782
 129
 130
 131
-132
-133</pre>
+132</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/parallel.rb', line 122</span>
@@ -523,8 +522,7 @@ Hello from After Callback - PID 24782
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_configuration'>configuration</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='lbrace'>{</span>
     <span class='symbol'>:max_forks</span> <span class='op'>=&gt;</span> <span class='const'>MAX_FORKS</span>
-  <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_configuration'>configuration</span><span class='rparen'>)</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>config=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:table</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+  <span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_configuration'>configuration</span><span class='rparen'>)</span>
 
   <span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_max_forks'>max_forks</span> <span class='op'>&lt;</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='id identifier rubyid_log_and_raise'>log_and_raise</span><span class='lparen'>(</span><span class='const'>ParallelError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>max_forks must be equal to or greater than one!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
@@ -633,13 +631,13 @@ Hello from After Callback - PID 24782
       <pre class="lines">
 
 
+218
 219
 220
-221
-222</pre>
+221</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/parallel.rb', line 219</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/parallel.rb', line 218</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_count'>count</span>
   <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>count(</span><span class='embexpr_beg'>#{</span><span class='ivar'>@forks</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='rbrace'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -727,6 +725,7 @@ the parent processes result set.</p>
       <pre class="lines">
 
 
+140
 141
 142
 143
@@ -763,11 +762,10 @@ the parent processes result set.</p>
 174
 175
 176
-177
-178</pre>
+177</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/parallel.rb', line 141</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/parallel.rb', line 140</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='op'>!</span><span class='id identifier rubyid_block_given?'>block_given?</span> <span class='kw'>and</span> <span class='id identifier rubyid_log_and_raise'>log_and_raise</span><span class='lparen'>(</span><span class='const'>ParallelError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>You must supply a block to the process method!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -859,6 +857,7 @@ is returned.</p>
       <pre class="lines">
 
 
+187
 188
 189
 190
@@ -873,11 +872,10 @@ is returned.</p>
 199
 200
 201
-202
-203</pre>
+202</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/parallel.rb', line 188</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/parallel.rb', line 187</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_wait'>wait</span>
   <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>wait</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -942,16 +940,16 @@ is returned.</p>
       <pre class="lines">
 
 
+207
 208
 209
 210
 211
 212
-213
-214</pre>
+213</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/parallel.rb', line 208</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/parallel.rb', line 207</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_waitall'>waitall</span>
   <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>waitall</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -970,7 +968,7 @@ is returned.</p>
 </div>
 
     <div id="footer">
-  Generated on Sat Feb  1 14:46:47 2014 by
+  Generated on Sat Feb  1 17:11:09 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-1.9.3).
 </div>
