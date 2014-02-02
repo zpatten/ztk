@@ -28,10 +28,11 @@ module ZTK
       # @param [Hash] config Configuration options hash.
       # @option config [ZTK::UI] :ui Instance of ZTK:UI to be used for
       #   console IO and logging.
-      def build_config(config={}, options={})
+      # @param [Hash] override Override configuration hash.
+      def build_config(config={}, override={})
         config = OpenStruct.new({
           :ui => ::ZTK::UI.new
-        }.merge(hash_config(config)).merge(hash_config(options)))
+        }.merge(hash_config(config)).merge(hash_config(override)))
 
         config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
 
@@ -69,13 +70,10 @@ module ZTK
 
     end
 
-    # @param [Hash] config Configuration options hash.
-    # @option config [IO] :stdout Instance of IO to be used for STDOUT.
-    # @option config [IO] :stderr Instance of IO to be used for STDERR.
-    # @option config [IO] :stdin Instance of IO to be used for STDIN.
-    # @option config [Logger] :logger Instance of Logger to be used for logging.
-    def initialize(config={}, options={})
-      @config = Base.build_config(config, options)
+    # @param [Hash] config Initial configuration hash.
+    # @param [Hash] override Override configuration hash.
+    def initialize(config={}, override={})
+      @config = Base.build_config(config, override)
     end
 
     # Configuration OpenStruct accessor method.
@@ -123,7 +121,7 @@ module ZTK
 
       if !block_given?
         log_and_raise(BaseError, "You must supply a block to the log method!")
-      elsif (@config.ui.logger.level <= ZTK::Logger.const_get(log_level.to_s.upcase))
+      elsif (@config.ui.logger.level <= ::Logger.const_get(log_level.to_s.upcase))
         @config.ui.logger << ZTK::ANSI.uncolor(yield)
       end
     end
