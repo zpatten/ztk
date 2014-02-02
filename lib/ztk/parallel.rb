@@ -122,8 +122,7 @@ module ZTK
     def initialize(configuration={})
       super({
         :max_forks => MAX_FORKS
-      }.merge(configuration))
-      config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
+      }, configuration)
 
       (config.max_forks < 1) and log_and_raise(ParallelError, "max_forks must be equal to or greater than one!")
 

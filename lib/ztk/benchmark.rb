@@ -72,8 +72,7 @@ module ZTK
       def bench(options={}, &block)
         options = Base.build_config({
           :use_spinner => true
-        }.merge(options))
-        options.ui.logger.debug { "options=#{options.send(:table).inspect}" }
+        }, options)
 
         !block_given? and Base.log_and_raise(options.ui.logger, BenchmarkError, "You must supply a block!")
 
@@ -84,7 +83,7 @@ module ZTK
         benchmark = ::Benchmark.realtime do
           if (options.message && options.mark)
             if options.use_spinner
-              ZTK::Spinner.spin(Base.sanitize_config(options)) do
+              ZTK::Spinner.spin(options) do
                 yield
               end
             else

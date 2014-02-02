@@ -74,8 +74,7 @@ module ZTK
       super({
         :timeout => 5,
         :wait => 60
-      }.merge(configuration))
-      config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
+      }, configuration)
     end
 
     # Check to see if socket on the host and port specified is ready.  This

@@ -89,9 +89,7 @@ module ZTK
     # @param [Hash] configuration Configuration options hash.
     #
     def initialize(configuration={})
-      super({
-      }.merge(configuration))
-      config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
+      super(configuration)
 
       @result = nil
       GC.respond_to?(:copy_on_write_friendly=) and GC.copy_on_write_friendly = true

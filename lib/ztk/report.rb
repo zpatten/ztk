@@ -28,10 +28,7 @@ module ZTK
 
     # @param [Hash] configuration Configuration options hash.
     def initialize(configuration={})
-      super({
-      }.merge(configuration))
-
-      config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
+      super(configuration)
     end
 
 

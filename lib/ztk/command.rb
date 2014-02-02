@@ -53,9 +53,7 @@ module ZTK
         :ignore_exit_status => false,
         :exit_code => 0,
         :silence => false
-      }.merge(configuration))
-
-      config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
+      }, configuration)
     end
 
 

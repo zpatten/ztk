@@ -21,37 +21,33 @@ module ZTK
 
     class << self
 
-      # @param [Hash] configuration Configuration options hash.
+      # Builds Configuration Object
+      #
+      # Builds an OpenStruct backed configuration object.
+      #
+      # @param [Hash] config Configuration options hash.
       # @option config [ZTK::UI] :ui Instance of ZTK:UI to be used for
       #   console IO and logging.
-      def build_config(configuration={})
-        if configuration.is_a?(OpenStruct)
-          configuration = configuration.send(:table)
-        end
-
-        # FIXME: this needs to be refactored into the UI class
+      def build_config(config={}, options={})
         config = OpenStruct.new({
           :ui => ::ZTK::UI.new
-        }.merge(configuration))
+        }.merge(hash_config(config)).merge(hash_config(options)))
+
+        config.ui.logger.debug { "config=#{config.send(:table).inspect}" }
 
         config
       end
 
-      # Removes all key-value pairs which are not core so values do not bleed
-      # into classes they are not meant for.
+      # Hash Configuration
       #
-      # This method will leave :stdout, :stderr, :stdin and :logger key-values
-      # intact, while removing all other key-value pairs.
-      def sanitize_config(configuration={})
-        if configuration.is_a?(OpenStruct)
-          configuration = configuration.send(:table)
+      # Ensure a configuration is of object type Hash.  Since we use OpenStructs
+      # we need to convert back to hash from time to time.
+      def hash_config(config={})
+        if config.is_a?(OpenStruct)
+          config.send(:table)
+        else
+          config
         end
-
-        config = configuration.reject do |key,value|
-          !(%w(stdout stderr stdin logger).map(&:to_sym).include?(key))
-        end
-
-        config
       end
 
       # Logs an exception and then raises it.
@@ -78,8 +74,8 @@ module ZTK
     # @option config [IO] :stderr Instance of IO to be used for STDERR.
     # @option config [IO] :stdin Instance of IO to be used for STDIN.
     # @option config [Logger] :logger Instance of Logger to be used for logging.
-    def initialize(config={})
-      @config = Base.build_config(config)
+    def initialize(config={}, options={})
+      @config = Base.build_config(config, options)
     end
 
     # Configuration OpenStruct accessor method.

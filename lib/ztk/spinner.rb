@@ -40,8 +40,7 @@ module ZTK
       def spin(options={}, &block)
         options = Base.build_config({
           :step => 0.1
-        }.merge(options))
-        options.ui.logger.debug { "options(#{options.send(:table).inspect})" }
+        }, options)
 
         !block_given? and Base.log_and_raise(options.ui.logger, SpinnerError, "You must supply a block!")
 
