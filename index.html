@@ -72,18 +72,21 @@
 <p>Zachary&#39;s Tool Kit is a general purpose utility gem, featuring a collection of classes meant to simplify development of complex systems in Ruby.</p>
 
 <ul>
-<li><p><strong>ZTK::Background</strong></p>
-
-<p>Easily turn most iterative tasks into a parallel processes and easily leverage multiple cores to speed up processing large sets of data.</p></li>
 <li><p><strong>ZTK::DSL</strong></p>
 
 <p>Create your own DSL in seconds by inheriting this DSL class.  Featuring ActiveRecord style associations where DSL objects can <code>belong_to</code> or <code>has_many</code> other DSL objects.</p></li>
+<li><p><strong>ZTK::Background</strong></p>
+
+<p>Easily run a processes in the background.  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/Background.html">ZTK::Background</a> documentation.</p></li>
 <li><p><strong>ZTK::Logger</strong></p>
 
-<p>Based off the core Ruby logger, this is meant to be a drop in replacement.  Features added logging information, including PID, uSec time resolution, method and line numbers of logging statements (i.e. the caller).  One can seamlessly chain Ruby loggers using ZTK:Logger, for example to output logs to both STDOUT and a log file on disk at the same time; all while maintaining compatibility with the core Ruby logger.</p></li>
+<p>Based off the core Ruby logger, this is meant to be a drop in replacement.  Features added logging information, including PID, uSec time resolution, method and line numbers of logging statements (i.e. the caller).  One can seamlessly chain Ruby loggers using ZTK:Logger, for example to output logs to both STDOUT and a log file on disk at the same time; all while maintaining compatibility with the core Ruby logger.  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/Logger.html">ZTK::Logger</a> documentation.</p></li>
+<li><p><strong>ZTK::Parallel</strong></p>
+
+<p>Easily turn most iterative tasks into a parallel processes and easily leverage multiple cores to speed up processing large sets of data.  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/Parallel.html">ZTK::Parallel</a> documentation.</p></li>
 <li><p><strong>ZTK::SSH</strong></p>
 
-<p>An SSH class that nicely wraps up all of the SSH gems into a nice uniform interface, complete with transfer progress callbacks.  It is meant to function as a drop in replacement, but I admit this has not been heavily tested like in the case of the ZTK::Logger class.  It provides the ability to switch between SCP and SFTP for file transfers seamlessly.  Full SSH proxy support as well, plus methods to spawn up interactive SSH consoles via <code>Kernel.exec</code>.</p></li>
+<p>An SSH class that nicely wraps up all of the SSH gems into a nice uniform interface, complete with transfer progress callbacks.  It is meant to function as a drop in replacement, but I admit this has not been heavily tested like in the case of the ZTK::Logger class.  It provides the ability to switch between SCP and SFTP for file transfers seamlessly.  Full SSH proxy support as well, plus methods to spawn up interactive SSH consoles via <code>Kernel.exec</code>.  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/SSH.html">ZTK::SSH</a> documentation.</p></li>
 </ul>
 
 <h1>RUBIES TESTED AGAINST</h1>
@@ -147,7 +150,7 @@ limitations under the License.</p>
 </div></div>
 
     <div id="footer">
-  Generated on Sat Feb  1 20:57:51 2014 by
+  Generated on Sun Feb  2 15:35:09 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-1.9.3).
 </div>
