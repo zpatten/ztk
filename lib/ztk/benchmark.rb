@@ -76,17 +76,14 @@ module ZTK
 
         !block_given? and Base.log_and_raise(options.ui.logger, BenchmarkError, "You must supply a block!")
 
-        check = [options.message, options.mark]
-        (check.any?{ |z| !z.nil? } && !check.all?{ |z| !z.nil? }) and Base.log_and_raise(options.ui.logger, BenchmarkError, "You must supply both a message and a mark!")
+        if (!options.message.nil? && !options.message.empty?)
+          options.ui.stdout.print(options.message)
+          options.ui.logger.info { options.message }
+        end
 
-        (options.message && options.mark) and options.ui.stdout.print("#{options.message} ")
         benchmark = ::Benchmark.realtime do
-          if (options.message && options.mark)
-            if options.use_spinner
-              ZTK::Spinner.spin(options) do
-                yield
-              end
-            else
+          if options.use_spinner
+            ZTK::Spinner.spin(options) do
               yield
             end
           else
@@ -94,8 +91,10 @@ module ZTK
           end
         end
 
-        (options.message && options.mark) and options.ui.stdout.print("#{options.mark}\n" % benchmark)
-        options.ui.logger.info { "#{options.message} #{options.mark}" % benchmark }
+        if (!options.mark.nil? && !options.mark.empty?)
+          options.ui.stdout.print(options.mark % benchmark)
+          options.ui.logger.info { options.mark % benchmark }
+        end
 
         benchmark
       end
