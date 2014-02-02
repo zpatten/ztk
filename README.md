@@ -8,13 +8,16 @@
 
 Zachary's (DevOp) Tool Kit is a general purpose utility gem, featuring a collection of classes meant to simplify development of complex systems in Ruby.
 
-- ZTK::Background
-  Easily turn any iterative task into a parallel process and easily leverage multiple cores to speed up processing.
+- **ZTK::Background**
 
-- ZTK::Logger
+  Easily turn most iterative tasks into a parallel processes and easily leverage multiple cores to speed up processing large sets of data.
+
+- **ZTK::Logger**
+
   Based off the core Ruby logger, this is meant to be a drop in replacement.  Features added logging information, including PID, uSec time resolution, method and line numbers of logging statements (i.e. the caller).  One can seamlessly chain Ruby loggers using ZTK:Logger, for example to output logs to both STDOUT and a log file on disk at the same time; all while maintaining compatibility with the core Ruby logger.
 
-- ZTK::SSH
+- **ZTK::SSH**
+
   An SSH class that nicely wraps up all of the SSH gems into a nice uniform interface, complete with transfer progress callbacks.  It provides the ability to switch between SCP and SFTP for file transfers seamlessly.  Full SSH proxy support as well, plus methods to spawn up interactive SSH consoles via `Kernel.exec`.
 
 # RUBIES TESTED AGAINST
