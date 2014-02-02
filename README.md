@@ -6,11 +6,15 @@
 
 # ZTK
 
-Zachary's (DevOp) Tool Kit is a general purpose utility gem, featuring a collection of classes meant to simplify development of complex systems in Ruby.
+Zachary's Tool Kit is a general purpose utility gem, featuring a collection of classes meant to simplify development of complex systems in Ruby.
 
 - **ZTK::Background**
 
   Easily turn most iterative tasks into a parallel processes and easily leverage multiple cores to speed up processing large sets of data.
+
+- **ZTK::DSL**
+
+  Create your own DSL in seconds by inheriting this DSL class.  Featuring ActiveRecord style associations where DSL objects can `belong_to` or `has_many` other DSL objects.
 
 - **ZTK::Logger**
 
@@ -48,7 +52,7 @@ Issues:
 
 # LICENSE
 
-ZTK - Zachary's (DevOp) Tool Kit
+ZTK - Zachary's Tool Kit
 
 * Author: Zachary Patten <zachary AT jovelabs DOT com> [![endorse](http://api.coderwall.com/zpatten/endorsecount.png)](http://coderwall.com/zpatten)
 * Copyright: Copyright (c) Zachary Patten
