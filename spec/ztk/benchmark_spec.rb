@@ -55,20 +55,22 @@ describe ZTK::Benchmark do
       mark.should be_an_instance_of Float
     end
 
-    it "should throw an exception if executed with a message but without a mark" do
-      lambda {
-        ZTK::Benchmark.bench(:ui => @ui, :message => "Hello World")
-      }.should raise_error ZTK::BenchmarkError
+    it "should not throw an exception if executed with a message but without a mark" do
+      expect {
+        ZTK::Benchmark.bench(:ui => @ui, :message => "Hello World") do
+        end
+      }.not_to raise_error
     end
 
-    it "should throw an exception if executed without a message but with a mark" do
-      lambda {
-        ZTK::Benchmark.bench(:ui => @ui, :mark => "%0.4f")
-      }.should raise_error ZTK::BenchmarkError
+    it "should not throw an exception if executed without a message but with a mark" do
+      expect {
+        ZTK::Benchmark.bench(:ui => @ui, :mark => "%0.4f") do
+        end
+      }.not_to raise_error
     end
 
     it "should not write to STDOUT if not given a message or mark" do
-      ZTK::Benchmark.bench(:ui => @ui) do
+      ZTK::Benchmark.bench(:ui => @ui, :use_spinner => false) do
         sleep(0.1)
       end
       @ui.stdout.size.should == 0
