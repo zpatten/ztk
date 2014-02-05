@@ -22,7 +22,7 @@ Zachary's Tool Kit contains a collection of reusable classes meant to simplify d
 
 - **ZTK::Command**
 
-  Execute local commands controlling STDOUT, STDERR and STDIN as needed.  Read more at the [ZTK::Command](http://zpatten.github.io/ztk/ZTK/Command.html) documentation.
+  Execute local commands controlling STDOUT, STDERR and STDIN as needed plus enhanced Logger support.  Read more at the [ZTK::Command](http://zpatten.github.io/ztk/ZTK/Command.html) documentation.
 
 - **ZTK::Config**
 
@@ -58,7 +58,7 @@ Zachary's Tool Kit contains a collection of reusable classes meant to simplify d
 
 - **ZTK::SSH**
 
-  An SSH class that nicely wraps up all of the SSH gems into a nice uniform interface, complete with transfer progress callbacks.  It is meant to function as a drop in replacement, but I admit this has not been heavily tested like in the case of the ZTK::Logger class.  It provides the ability to switch between SCP and SFTP for file transfers seamlessly.  Full SSH proxy support as well, plus methods to spawn up interactive SSH consoles via `Kernel.exec`.  Read more at the [ZTK::SSH](http://zpatten.github.io/ztk/ZTK/SSH.html) documentation.
+  An SSH class that nicely wraps up all of the SSH gems into a nice uniform interface, complete with transfer progress callbacks and enhanced Logger support.  It is meant to function as a drop in replacement, but I admit this has not been heavily tested like in the case of the ZTK::Logger class.  It provides the ability to switch between SCP and SFTP for file transfers seamlessly.  Full SSH proxy support as well, plus methods to spawn up interactive SSH consoles via `Kernel.exec`.  Read more at the [ZTK::SSH](http://zpatten.github.io/ztk/ZTK/SSH.html) documentation.
 
 - **ZTK::TCPSocketCheck**
 
