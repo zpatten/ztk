@@ -22,10 +22,7 @@ require "spec_helper"
 
 describe ZTK::Parallel do
 
-  subject {
-    ui = ZTK::UI.new(:logger => $logger)
-    ZTK::Parallel.new(:ui => ui)
-  }
+  subject { ZTK::Parallel.new }
 
   describe "class" do
 
