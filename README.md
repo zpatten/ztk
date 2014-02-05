@@ -16,6 +16,10 @@ Zachary's Tool Kit containers a collection of reusable classes meant to simplify
 
   Easily run a processes in the background.  Read more at the [ZTK::Background](http://zpatten.github.io/ztk/ZTK/Background.html) documentation.
 
+- **ZTK::Benchmark**
+
+  Benchmark your code and optionally display messages and/or an "activity" indicator (i.e. spinning cursor).  Read more at [ZTK::Benchmark](http://zpatten.github.io/ztk/ZTK/Benchmark.html) documentation.
+
 - **ZTK::DSL**
 
   Create your own DSL in seconds by inheriting this DSL class.  Featuring ActiveRecord style associations where DSL objects can `belong_to` or `has_many` other DSL objects.  Read more at the [ZTK::DSL::Base](http://zpatten.github.io/ztk/ZTK/DSL/Base.html) documentation.
@@ -36,6 +40,10 @@ Zachary's Tool Kit containers a collection of reusable classes meant to simplify
 
   Certain cases warrant retries when exceptions occur.  With this class, you can wrap code easily allow retries, customized to your needs.  Read more at the [ZTK::RescueRetry](http://zpatten.github.io/ztk/ZTK/RescueRetry.html) documentation.
 
+- **ZTK::Spinner**
+
+  The spinner `ZTK::Benchmark` relies on.  With this class you can bend it to YOUR will!  Read more at [ZTK::Spinner](http://zpatten.github.io/ztk/ZTK/Spinner.html) documentation.
+
 - **ZTK::SSH**
 
   An SSH class that nicely wraps up all of the SSH gems into a nice uniform interface, complete with transfer progress callbacks.  It is meant to function as a drop in replacement, but I admit this has not been heavily tested like in the case of the ZTK::Logger class.  It provides the ability to switch between SCP and SFTP for file transfers seamlessly.  Full SSH proxy support as well, plus methods to spawn up interactive SSH consoles via `Kernel.exec`.  Read more at the [ZTK::SSH](http://zpatten.github.io/ztk/ZTK/SSH.html) documentation.
@@ -47,6 +55,10 @@ Zachary's Tool Kit containers a collection of reusable classes meant to simplify
 - **ZTK::Template**
 
   Easily create Erubis based content with this class.  Read more at the [ZTK::Template](http://zpatten.github.io/ztk/ZTK/Template.html) documentation.
+
+- **ZTK::UI**
+
+  UI management; this class encapsulates STDOUT, STDERR, STDIN and a Ruby logger; as well as some other helpful flags.  This allows you to easily present a unified UI interface and allows for easy redirection of that interface (really helpful when using StringIO's with rspec to test program output for example).  Read more at the [ZTK::UI](http://zpatten.github.io/ztk/ZTK/UI.html) documentation.
 
 # RUBIES TESTED AGAINST
 
