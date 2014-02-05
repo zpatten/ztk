@@ -6,7 +6,7 @@
 
 # ZTK
 
-Zachary's Tool Kit containers a collection of reusable classes meant to simplify development of complex systems in Ruby, specificially devops tooling.  These classes provide functionality I always find myself wanting from project to project; easy-bake DSLs, parallel processing, complex logging, templating and many other useful design patterns, for example are all contained in simple, reusable classes.
+Zachary's Tool Kit contains a collection of reusable classes meant to simplify development of complex systems in Ruby, especially devops tooling.  These classes provide functionality I often find myself needing from project to project.  Instead of reinventing the wheel each time, I've started building a collection of reusable classes.  Easy-bake DSLs, parallel processing, complex logging, templating and many other useful design patterns, for example are all contained in simple, reusable classes with a common interface and configuration style.
 
 - **ZTK::ANSI**
 
@@ -18,7 +18,15 @@ Zachary's Tool Kit containers a collection of reusable classes meant to simplify
 
 - **ZTK::Benchmark**
 
-  Benchmark your code and optionally display messages and/or an "activity" indicator (i.e. spinning cursor).  Read more at [ZTK::Benchmark](http://zpatten.github.io/ztk/ZTK/Benchmark.html) documentation.
+  Benchmark your code and optionally display messages and/or an "activity" indicator (i.e. spinning cursor).  Read more at the [ZTK::Benchmark](http://zpatten.github.io/ztk/ZTK/Benchmark.html) documentation.
+
+- **ZTK::Command**
+
+  Execute local commands controlling STDOUT, STDERR and STDIN as needed.  Read more at the [ZTK::Command](http://zpatten.github.io/ztk/ZTK/Command.html) documentation.
+
+- **ZTK::Config**
+
+  Use Ruby based configuration files with easy.  Inspired by Chef's mixlib-config.  Read more at the [ZTK::Config](http://zpatten.github.io/ztk/ZTK/Config.html) documentation.
 
 - **ZTK::DSL**
 
@@ -35,6 +43,10 @@ Zachary's Tool Kit containers a collection of reusable classes meant to simplify
 - **ZTK::Parallel**
 
   Easily turn linear iterative tasks into parallel tasks and leverage multiple cores to speed up processing of your large sets of data.  Read more at the [ZTK::Parallel](http://zpatten.github.io/ztk/ZTK/Parallel.html) documentation.
+
+- **ZTK::Report**
+
+  Console based reporting class which allows you to easily output either list or spreadsheet based reports from sets of data.  Read more at the [ZTK::Report](http://zpatten.github.io/ztk/ZTK/Report.html) documentation.
 
 - **ZTK::RescueRetry**
 
