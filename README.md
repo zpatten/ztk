@@ -50,7 +50,7 @@ Zachary's Tool Kit contains a collection of reusable classes meant to simplify d
 
 - **ZTK::RescueRetry**
 
-  Certain cases warrant retries when exceptions occur.  With this class, you can wrap code easily allow retries, customized to your needs.  Read more at the [ZTK::RescueRetry](http://zpatten.github.io/ztk/ZTK/RescueRetry.html) documentation.
+  Certain cases warrant retries when exceptions occur.  With this class you can wrap code allowing retries in certain scenarios.  The class allows for full customization so you can fit it easily to your needs.  Read more at the [ZTK::RescueRetry](http://zpatten.github.io/ztk/ZTK/RescueRetry.html) documentation.
 
 - **ZTK::Spinner**
 
