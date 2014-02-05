@@ -10,7 +10,7 @@ Zachary's Tool Kit is a general purpose utility gem, featuring a collection of c
 
 - **ZTK::DSL**
 
-  Create your own DSL in seconds by inheriting this DSL class.  Featuring ActiveRecord style associations where DSL objects can `belong_to` or `has_many` other DSL objects.
+  Create your own DSL in seconds by inheriting this DSL class.  Featuring ActiveRecord style associations where DSL objects can `belong_to` or `has_many` other DSL objects.  Read more at the [ZTK::DSL::Base](http://zpatten.github.io/ztk/ZTK/DSL/Base.html) documentation.
 
 - **ZTK::Background**
 
@@ -22,7 +22,7 @@ Zachary's Tool Kit is a general purpose utility gem, featuring a collection of c
 
 - **ZTK::Parallel**
 
-  Easily turn most iterative tasks into a parallel processes and easily leverage multiple cores to speed up processing large sets of data.  Read more at the [ZTK::Parallel](http://zpatten.github.io/ztk/ZTK/Parallel.html) documentation.
+  Easily turn linear iterative tasks into parallel tasks and leverage multiple cores to speed up processing of your large sets of data.  Read more at the [ZTK::Parallel](http://zpatten.github.io/ztk/ZTK/Parallel.html) documentation.
 
 - **ZTK::SSH**
 
