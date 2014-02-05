@@ -22,7 +22,10 @@ require "spec_helper"
 
 describe ZTK::Parallel do
 
-  subject { ZTK::Parallel.new }
+  subject {
+    ui = ZTK::UI.new(:logger => $logger)
+    ZTK::Parallel.new(:ui => ui)
+  }
 
   describe "class" do
 
@@ -56,6 +59,26 @@ describe ZTK::Parallel do
         subject.results.include?(Process.pid).should be false
       end
 
+      it "should stop all execution when the ZTK::Parallel::Break exception is raised" do
+        3.times do |x|
+          subject.process do
+            raise ZTK::Parallel::Break
+          end
+        end
+
+        lambda { subject.waitall }.should raise_error
+      end
+
+      it "should stop all execution when any exception is raised" do
+        3.times do |x|
+          subject.process do
+            raise "SomeException"
+          end
+        end
+
+        lambda { subject.waitall }.should raise_error
+      end
+
     end
 
     describe "#wait" do
@@ -67,7 +90,7 @@ describe ZTK::Parallel do
           end
         end
 
-        3.times do
+        while subject.count > 0 do
           subject.wait
         end
 

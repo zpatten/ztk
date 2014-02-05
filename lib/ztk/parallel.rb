@@ -96,6 +96,20 @@ module ZTK
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   class Parallel < ZTK::Base
 
+    class Break < ParallelError; end
+
+    # Tests if we can marshal an exception via the results; otherwise creates
+    # an exception we can marshal.
+    class ExceptionWrapper
+      attr_reader :exception
+
+      def initialize(exception)
+        dumpable = (Marshal.dump(exception) rescue nil)
+        dumpable.nil? and (exception = RuntimeError.new(exception.inspect))
+        @exception = exception
+      end
+    end
+
     # Default Maximum Number of Forks
     MAX_FORKS = case RUBY_PLATFORM
     when /darwin/ then
@@ -129,6 +143,15 @@ module ZTK
       @forks = Array.new
       @results = Array.new
       GC.respond_to?(:copy_on_write_friendly=) and GC.copy_on_write_friendly = true
+
+      %w( kill term int hup ).map(&:upcase).each do |signal|
+        Signal.trap(signal) do
+          $stderr.puts("SIG#{signal} received by PID##{Process.pid}; aborting parallel executing...")
+
+          signal_all(signal)
+          exit!(1)
+        end
+      end
     end
 
     # Process in parallel.
@@ -151,18 +174,27 @@ module ZTK
 
       config.before_fork and config.before_fork.call(Process.pid)
       pid = Process.fork do
+
         config.after_fork and config.after_fork.call(Process.pid)
 
         parent_writer.close
         parent_reader.close
 
-        if !(data = block.call).nil?
+        data = nil
+        begin
+          data = block.call
+        rescue Exception => e
+          data = ExceptionWrapper.new(e)
+        end
+
+        if !data.nil?
           config.ui.logger.debug { "write(#{data.inspect})" }
           child_writer.write(Base64.encode64(Marshal.dump(data)))
         end
 
         child_reader.close
         child_writer.close
+
         Process.exit!(0)
       end
       config.after_fork and config.after_fork.call(Process.pid)
@@ -188,10 +220,14 @@ module ZTK
       config.ui.logger.debug { "wait" }
       config.ui.logger.debug { "forks(#{@forks.inspect})" }
       pid, status = (Process.wait2(-1) rescue nil)
+
       if !pid.nil? && !status.nil? && !(fork = @forks.select{ |f| f[:pid] == pid }.first).nil?
         data = (Marshal.load(Base64.decode64(fork[:reader].read.to_s)) rescue nil)
         config.ui.logger.debug { "read(#{data.inspect})" }
+
+        process_exception_data(data)
         !data.nil? and @results.push(data)
+
         fork[:reader].close
         fork[:writer].close
 
@@ -212,12 +248,42 @@ module ZTK
       @results
     end
 
+    # Signals all forks.
+    #
+    # @return [Integer] The number of processes signaled.
+    def signal_all(signal="KILL")
+      signaled = 0
+      if (!@forks.nil? && (@forks.count > 0))
+        @forks.each do |fork|
+          begin
+            Process.kill(signal, fork[:pid])
+            signaled += 1
+          rescue
+            nil
+          end
+        end
+      end
+      signaled
+    end
+
     # Count of active forks.
     #
     # @return [Integer] Current number of active forks.
     def count
       config.ui.logger.debug { "count(#{@forks.count})" }
       @forks.count
+    end
+
+
+  private
+
+    def process_exception_data(data)
+      return if !(ZTK::Parallel::ExceptionWrapper === data)
+
+      config.ui.logger.fatal { "exception(#{data.exception.inspect})" }
+
+      signal_all
+      raise data.exception
     end
 
   end
