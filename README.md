@@ -6,7 +6,9 @@
 
 # ZTK
 
-Zachary's Tool Kit containers a collection of reusable classes meant to simplify development of complex systems in Ruby.  These classes provide functionality I always find myself wanting from project to project; DSLs, parallel processing and complex logging for example are all contained in simple, reusable classes.
+Zachary's Tool Kit containers a collection of reusable classes meant to simplify development of complex systems in Ruby, specificially devops tooling.  These classes provide functionality I always find myself wanting from project to project; DSLs, parallel processing, complex logging and many other useful design patterns, for example are all contained in simple, reusable classes.
+
+- **ZTK::ANSI**
 
 - **ZTK::Background**
 
@@ -24,9 +26,21 @@ Zachary's Tool Kit containers a collection of reusable classes meant to simplify
 
   Easily turn linear iterative tasks into parallel tasks and leverage multiple cores to speed up processing of your large sets of data.  Read more at the [ZTK::Parallel](http://zpatten.github.io/ztk/ZTK/Parallel.html) documentation.
 
+- **ZTK::RescueRetry**
+
+  Certain cases warrant retries when exceptions occur.  With this class, you can wrap code easily allow retries, customized to your needs.  Read more at the [ZTK::RescueRetry](http://zpatten.github.io/ztk/ZTK/RescueRetry.html) documentation.
+
 - **ZTK::SSH**
 
   An SSH class that nicely wraps up all of the SSH gems into a nice uniform interface, complete with transfer progress callbacks.  It is meant to function as a drop in replacement, but I admit this has not been heavily tested like in the case of the ZTK::Logger class.  It provides the ability to switch between SCP and SFTP for file transfers seamlessly.  Full SSH proxy support as well, plus methods to spawn up interactive SSH consoles via `Kernel.exec`.  Read more at the [ZTK::SSH](http://zpatten.github.io/ztk/ZTK/SSH.html) documentation.
+
+- **ZTK::TCPSocketCheck**
+
+  This class provides a convient way to test if something is listening on a TCP port.  One can test a varity of scenarios, including sending data across the socket and waiting for a response.  Read more at the [ZTK::TCPSocketCheck](http://zpatten.github.io/ztk/ZTK/TCPSocketCheck.html) documentation.
+
+- **ZTK::Template**
+
+  Easily create Erubis based content with this class.  Read more at the [ZTK::Template](http://zpatten.github.io/ztk/ZTK/Template.html) documentation.
 
 # RUBIES TESTED AGAINST
 
