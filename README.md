@@ -6,15 +6,15 @@
 
 # ZTK
 
-Zachary's Tool Kit is a general purpose utility gem, featuring a collection of classes meant to simplify development of complex systems in Ruby.
-
-- **ZTK::DSL**
-
-  Create your own DSL in seconds by inheriting this DSL class.  Featuring ActiveRecord style associations where DSL objects can `belong_to` or `has_many` other DSL objects.  Read more at the [ZTK::DSL::Base](http://zpatten.github.io/ztk/ZTK/DSL/Base.html) documentation.
+Zachary's Tool Kit containers a collection of reusable classes meant to simplify development of complex systems in Ruby.  These classes provide functionality I always find myself wanting from project to project; DSLs, parallel processing and complex logging for example are all contained in simple, reusable classes.
 
 - **ZTK::Background**
 
   Easily run a processes in the background.  Read more at the [ZTK::Background](http://zpatten.github.io/ztk/ZTK/Background.html) documentation.
+
+- **ZTK::DSL**
+
+  Create your own DSL in seconds by inheriting this DSL class.  Featuring ActiveRecord style associations where DSL objects can `belong_to` or `has_many` other DSL objects.  Read more at the [ZTK::DSL::Base](http://zpatten.github.io/ztk/ZTK/DSL/Base.html) documentation.
 
 - **ZTK::Logger**
 
