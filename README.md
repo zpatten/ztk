@@ -6,9 +6,11 @@
 
 # ZTK
 
-Zachary's Tool Kit containers a collection of reusable classes meant to simplify development of complex systems in Ruby, specificially devops tooling.  These classes provide functionality I always find myself wanting from project to project; DSLs, parallel processing, complex logging and many other useful design patterns, for example are all contained in simple, reusable classes.
+Zachary's Tool Kit containers a collection of reusable classes meant to simplify development of complex systems in Ruby, specificially devops tooling.  These classes provide functionality I always find myself wanting from project to project; easy-bake DSLs, parallel processing, complex logging, templating and many other useful design patterns, for example are all contained in simple, reusable classes.
 
 - **ZTK::ANSI**
+
+  This mixin module gives you the ability to easily add ANSI colors to strings.  Additionally it has a method for stripping all ANSI codes out of a string as well.  Read more at the [ZTK::ANSI](http://zpatten.github.io/ztk/ZTK/ANSI.html) documentation.
 
 - **ZTK::Background**
 
@@ -17,6 +19,10 @@ Zachary's Tool Kit containers a collection of reusable classes meant to simplify
 - **ZTK::DSL**
 
   Create your own DSL in seconds by inheriting this DSL class.  Featuring ActiveRecord style associations where DSL objects can `belong_to` or `has_many` other DSL objects.  Read more at the [ZTK::DSL::Base](http://zpatten.github.io/ztk/ZTK/DSL/Base.html) documentation.
+
+- **ZTK::Locator**
+
+  Search for files or directories backwards up the present working directory tree.  Read more at the [ZTK::Locator](http://zpatten.github.io/ztk/ZTK/Locator.html) documentation.
 
 - **ZTK::Logger**
 
