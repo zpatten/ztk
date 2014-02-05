@@ -10,7 +10,7 @@ Zachary's Tool Kit contains a collection of reusable classes meant to simplify d
 
 - **ZTK::ANSI**
 
-  This mixin module gives you the ability to easily add ANSI colors to strings.  Additionally it has a method for stripping all ANSI codes out of a string as well.  Read more at the [ZTK::ANSI](http://zpatten.github.io/ztk/ZTK/ANSI.html) documentation.
+  This mixin module gives you the ability to easily add ANSI colors to strings.  It also has a method for stripping all ANSI codes out of a string.  Read more at the [ZTK::ANSI](http://zpatten.github.io/ztk/ZTK/ANSI.html) documentation.
 
 - **ZTK::Background**
 
