@@ -75,7 +75,7 @@ module ZTK
     attr_accessor :loggers
 
     def initialize(*args)
-      super(StringIO.new)
+      super(::StringIO.new)
 
       @loggers = Array.new
       if args.count > 0
