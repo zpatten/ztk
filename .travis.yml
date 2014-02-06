@@ -9,7 +9,7 @@ branches:
   only:
     - master
 before_install:
-- "sudo ./spec/support/before_install.sh"
+- "./spec/support/before_install.sh"
 notifications:
   irc:
     channels:
