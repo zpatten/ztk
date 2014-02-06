@@ -8,7 +8,8 @@ rvm:
 branches:
   only:
     - master
-before_install: ./spec/support/before_install.sh
+before_install:
+- "sudo ./spec/support/before_install.sh"
 notifications:
   irc:
     channels:
