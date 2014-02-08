@@ -175,6 +175,10 @@ module ZTK
       end
     end
 
+    def goto(x=0, y=0)
+      %(\e[#{x};#{y}H)
+    end
+
     extend self
 
     build_ansi_methods(ANSI_COLORS)
