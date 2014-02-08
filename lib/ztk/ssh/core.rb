@@ -67,8 +67,8 @@ module ZTK
 
       # Attempts to close the gateway session if it is valid.
       def close_gateway
-        if (!@gateway.nil? && !@gateway.closed?)
-          config.ui.logger.debug { "gateway object is valid and not shutdown" }
+        if (!@gateway.nil?)
+          config.ui.logger.debug { "gateway object is valid" }
 
           begin
             config.ui.logger.debug { "attempting to shutdown" }
