@@ -438,8 +438,8 @@
       <pre class="code"><span class="info file"># File 'lib/ztk/ssh/core.rb', line 69</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_close_gateway'>close_gateway</span>
-  <span class='kw'>if</span> <span class='lparen'>(</span><span class='op'>!</span><span class='ivar'>@gateway</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='ivar'>@gateway</span><span class='period'>.</span><span class='id identifier rubyid_closed?'>closed?</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>gateway object is valid and not shutdown</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+  <span class='kw'>if</span> <span class='lparen'>(</span><span class='op'>!</span><span class='ivar'>@gateway</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>gateway object is valid</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 
     <span class='kw'>begin</span>
       <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>attempting to shutdown</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -814,7 +814,7 @@ Net::SSH::Gateway object.</p>
 </div>
 
     <div id="footer">
-  Generated on Fri Feb  7 21:14:27 2014 by
+  Generated on Sat Feb  8 15:17:08 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-1.9.3).
 </div>

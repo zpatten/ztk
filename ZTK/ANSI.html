@@ -333,6 +333,28 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#goto-instance_method" title="#goto (instance method)">- (Object) <strong>goto</strong>(x = 0, y = 0) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#green-instance_method" title="#green (instance method)">- (String) <strong>green</strong>(string = nil, &amp;block) </a>
     
 
@@ -418,6 +440,28 @@
   
     <span class="summary_desc"><div class='inline'><p>Sets the foreground color to red for the supplied string.</p>
 </div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#reset-instance_method" title="#reset (instance method)">- (Object) <strong>reset</strong>(string = nil, &amp;block) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -1035,6 +1079,36 @@ the values are the ANSI codes.</p>
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="goto-instance_method">
+  
+    - (<tt>Object</tt>) <strong>goto</strong>(x = 0, y = 0) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+195
+196
+197</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ztk/ansi.rb', line 195</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_goto'>goto</span><span class='lparen'>(</span><span class='id identifier rubyid_x'>x</span><span class='op'>=</span><span class='int'>0</span><span class='comma'>,</span> <span class='id identifier rubyid_y'>y</span><span class='op'>=</span><span class='int'>0</span><span class='rparen'>)</span>
+  <span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>\e[</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_x'>x</span><span class='rbrace'>}</span><span class='tstring_content'>;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_y'>y</span><span class='rbrace'>}</span><span class='tstring_content'>H</span><span class='tstring_end'>)</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="green-instance_method">
   
     - (<tt>String</tt>) <strong>green</strong>(string = nil, &amp;block) 
@@ -1399,6 +1473,62 @@ the values are the ANSI codes.</p>
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="reset-instance_method">
+  
+    - (<tt>Object</tt>) <strong>reset</strong>(string = nil, &amp;block) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ztk/ansi.rb', line 178</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_reset'>reset</span><span class='lparen'>(</span><span class='id identifier rubyid_string'>string</span><span class='op'>=</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+
+  <span class='id identifier rubyid_result'>result</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>\e[2J</span><span class='tstring_end'>)</span></span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
+    <span class='id identifier rubyid_result'>result</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_string'>string</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:to_str</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_result'>result</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_string'>string</span><span class='period'>.</span><span class='id identifier rubyid_to_str'>to_str</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:to_str</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_result'>result</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_to_str'>to_str</span>
+  <span class='kw'>else</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_result'>result</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="uncolor-instance_method">
   
     - (<tt>String</tt>) <strong>uncolor</strong>(string = nil, &amp;block) 
@@ -1698,7 +1828,7 @@ the values are the ANSI codes.</p>
 </div>
 
     <div id="footer">
-  Generated on Fri Feb  7 21:14:27 2014 by
+  Generated on Sat Feb  8 15:17:08 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-1.9.3).
 </div>
