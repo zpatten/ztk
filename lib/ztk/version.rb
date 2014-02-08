@@ -1,6 +1,6 @@
 module ZTK
 
   # ZTK Version String
-  VERSION = "1.17.4"
+  VERSION = "1.18.0"
 
 end
