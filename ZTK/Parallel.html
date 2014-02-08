@@ -366,6 +366,29 @@ Hello from After Callback - PID 24782
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#pids-instance_method" title="#pids (instance method)">- (Array&lt;Integer&gt;) <strong>pids</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Child PIDs.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#process-instance_method" title="#process (instance method)">- (Integer) <strong>process</strong> { ... }</a>
     
 
@@ -693,6 +716,63 @@ Hello from After Callback - PID 24782
 <span class='kw'>def</span> <span class='id identifier rubyid_count'>count</span>
   <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>count(</span><span class='embexpr_beg'>#{</span><span class='ivar'>@forks</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='rbrace'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
   <span class='ivar'>@forks</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="pids-instance_method">
+  
+    - (<tt>Array&lt;Integer&gt;</tt>) <strong>pids</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Child PIDs</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;Integer&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>An array of child PIDs, if any.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+280
+281
+282</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ztk/parallel.rb', line 280</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_pids'>pids</span>
+  <span class='ivar'>@forks</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_fork'>fork</span><span class='op'>|</span> <span class='id identifier rubyid_fork'>fork</span><span class='lbracket'>[</span><span class='symbol'>:pid</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1124,7 +1204,7 @@ is returned.</p>
 </div>
 
     <div id="footer">
-  Generated on Thu Feb  6 09:22:18 2014 by
+  Generated on Fri Feb  7 21:14:29 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-1.9.3).
 </div>
