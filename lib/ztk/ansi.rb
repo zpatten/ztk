@@ -175,6 +175,23 @@ module ZTK
       end
     end
 
+    def reset(string=nil, &block)
+      result = Array.new
+
+      result << %(\e[2J)
+      if block_given?
+        result << block.call
+      elsif string.respond_to?(:to_str)
+        result << string.to_str
+      elsif respond_to?(:to_str)
+        result << to_str
+      else
+        return result
+      end
+
+      result.join
+    end
+
     def goto(x=0, y=0)
       %(\e[#{x};#{y}H)
     end
