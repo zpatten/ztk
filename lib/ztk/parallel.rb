@@ -146,7 +146,7 @@ module ZTK
 
       %w( kill term int hup ).map(&:upcase).each do |signal|
         Signal.trap(signal) do
-          $stderr.puts("SIG#{signal} received by PID##{Process.pid}; aborting parallel executing...")
+          $stderr.puts("SIG#{signal} received by PID##{Process.pid}; signaling child processes...")
 
           signal_all(signal)
           exit!(1)
