@@ -274,6 +274,13 @@ module ZTK
       @forks.count
     end
 
+    # Child PIDs
+    #
+    # @return [Array<Integer>] An array of child PIDs, if any.
+    def pids
+      @forks.collect{ |fork| fork[:pid] }
+    end
+
 
   private
 
