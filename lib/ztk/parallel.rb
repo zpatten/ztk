@@ -216,10 +216,10 @@ module ZTK
     # @return [Array<pid, status, data>] An array containing the pid,
     #   status and data returned from the process block.  If wait2() fails nil
     #   is returned.
-    def wait
+    def wait(flags=0)
       config.ui.logger.debug { "wait" }
       config.ui.logger.debug { "forks(#{@forks.inspect})" }
-      pid, status = (Process.wait2(-1) rescue nil)
+      pid, status = (Process.wait2(-1, flags) rescue nil)
 
       if !pid.nil? && !status.nil? && !(fork = @forks.select{ |f| f[:pid] == pid }.first).nil?
         data = (Marshal.load(Base64.decode64(fork[:reader].read.to_s)) rescue nil)
