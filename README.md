@@ -26,7 +26,7 @@ Zachary's Tool Kit contains a collection of reusable classes meant to simplify d
 
 - **ZTK::Config**
 
-  Use Ruby based configuration files with easy.  Inspired by Chef's mixlib-config.  Read more at the [ZTK::Config](http://zpatten.github.io/ztk/ZTK/Config.html) documentation.
+  Use Ruby based configuration files with ease.  Inspired by Chef's mixlib-config.  Read more at the [ZTK::Config](http://zpatten.github.io/ztk/ZTK/Config.html) documentation.
 
 - **ZTK::DSL**
 
