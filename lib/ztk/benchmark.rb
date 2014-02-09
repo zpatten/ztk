@@ -78,7 +78,7 @@ module ZTK
 
         if (!options.message.nil? && !options.message.empty?)
           options.ui.stdout.print(options.message)
-          options.ui.logger.info { options.message }
+          options.ui.logger.info { options.message.strip }
         end
 
         benchmark = ::Benchmark.realtime do
@@ -93,7 +93,7 @@ module ZTK
 
         if (!options.mark.nil? && !options.mark.empty?)
           options.ui.stdout.print(options.mark % benchmark)
-          options.ui.logger.info { options.mark % benchmark }
+          options.ui.logger.info { options.mark.strip % benchmark }
         end
 
         benchmark
