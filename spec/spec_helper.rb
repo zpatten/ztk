@@ -21,6 +21,7 @@ require 'coveralls'
 Coveralls.wear!
 ################################################################################
 require 'tempfile'
+require 'yarjuf'
 require 'ztk'
 
 ENV['LOG_LEVEL'] = "DEBUG"

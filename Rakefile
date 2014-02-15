@@ -36,4 +36,10 @@ task :coveralls => [:spec, 'coveralls:push']
 task :default => [:spec]
 task :test => [:spec]
 
+namespace :test do
+  RSpec::Core::RakeTask.new(:jenkins) do |t|
+    t.rspec_opts = %w[-f JUnit -o results.xml]
+  end
+end
+
 ################################################################################
