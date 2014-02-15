@@ -57,23 +57,29 @@ describe ZTK::Parallel do
       end
 
       it "should stop all execution when the ZTK::Parallel::Break exception is raised" do
-        3.times do |x|
-          subject.process do
-            raise ZTK::Parallel::Break
-          end
-        end
+        lambda {
 
-        lambda { subject.waitall }.should raise_error
+          3.times do |x|
+            subject.process do
+              raise ZTK::Parallel::Break
+            end
+          end
+
+          subject.waitall
+
+          }.should raise_error
       end
 
       it "should stop all execution when any exception is raised" do
-        3.times do |x|
-          subject.process do
-            raise "SomeException"
+        lambda {
+          3.times do |x|
+            subject.process do
+              raise "SomeException"
+            end
           end
-        end
 
-        lambda { subject.waitall }.should raise_error
+          subject.waitall
+        }.should raise_error
       end
 
     end
@@ -119,11 +125,13 @@ describe ZTK::Parallel do
       it "should return the number of active forked processes" do
         3.times do |x|
           subject.process do
-            sleep(WAIT_SMALL)
+            Process.pid
           end
         end
 
-        subject.count.should == 3
+        expected_count = ((3 > ZTK::Parallel::MAX_FORKS) ? ZTK::Parallel::MAX_FORKS : 3)
+
+        subject.count.should == expected_count
         subject.waitall
       end
 
