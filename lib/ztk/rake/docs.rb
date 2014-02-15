@@ -1,7 +1,7 @@
 require 'yard'
 require 'yard/rake/yardoc_task'
 
-GEM_NAME    = File.basename(Dir.pwd)
+GEM_NAME    = (ENV['GEM_NAME'] || File.basename(Dir.pwd))
 VENDOR_PATH = File.expand_path(File.join(Dir.pwd, "vendor"))
 DOC_PATH    = File.join(VENDOR_PATH, "docs")
 
