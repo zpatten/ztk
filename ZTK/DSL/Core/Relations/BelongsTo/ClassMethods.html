@@ -315,11 +315,11 @@
   <span class='comment'># Ruby-1.8.7 Logic:
 </span>  <span class='comment'>####################
 </span>  <span class='id identifier rubyid_module_eval'>module_eval</span> <span class='heredoc_beg'>&lt;&lt;-CODE</span><span class='comma'>,</span> <span class='kw'>__FILE__</span><span class='comma'>,</span> <span class='kw'>__LINE__</span> <span class='op'>+</span> <span class='int'>1</span>
-<span class='tstring_content'>    def </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='rbrace'>}</span><span class='tstring_content'>(*args)
+<span class='tstring_content'>    def </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='embexpr_end'>}</span><span class='tstring_content'>(*args)
       if args.count == 0
-        get_belongs_to_reference(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>)
+        get_belongs_to_reference(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>)
       else
-        send(&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='rbrace'>}</span><span class='tstring_content'>=&quot;, *args)
+        send(&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='embexpr_end'>}</span><span class='tstring_content'>=&quot;, *args)
       end
     end
 </span><span class='heredoc_end'>  CODE
@@ -339,8 +339,8 @@
   <span class='comment'># Ruby-1.8.7 Logic:
 </span>  <span class='comment'>####################
 </span>  <span class='id identifier rubyid_module_eval'>module_eval</span> <span class='heredoc_beg'>&lt;&lt;-CODE</span><span class='comma'>,</span> <span class='kw'>__FILE__</span><span class='comma'>,</span> <span class='kw'>__LINE__</span> <span class='op'>+</span> <span class='int'>1</span>
-<span class='tstring_content'>    def </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='rbrace'>}</span><span class='tstring_content'>=(value)
-      set_belongs_to_reference(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>, value)
+<span class='tstring_content'>    def </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='embexpr_end'>}</span><span class='tstring_content'>=(value)
+      set_belongs_to_reference(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>, value)
     end
 </span><span class='heredoc_end'>  CODE
 </span>
@@ -355,11 +355,11 @@
   <span class='comment'># Ruby-1.8.7 Logic:
 </span>  <span class='comment'>####################
 </span>  <span class='id identifier rubyid_module_eval'>module_eval</span> <span class='heredoc_beg'>&lt;&lt;-CODE</span><span class='comma'>,</span> <span class='kw'>__FILE__</span><span class='comma'>,</span> <span class='kw'>__LINE__</span> <span class='op'>+</span> <span class='int'>1</span>
-<span class='tstring_content'>    def </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='rbrace'>}</span><span class='tstring_content'>_id(*args)
+<span class='tstring_content'>    def </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='embexpr_end'>}</span><span class='tstring_content'>_id(*args)
       if args.count == 0
-        attributes[&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='rbrace'>}</span><span class='tstring_content'>_id&quot;.to_sym]
+        attributes[&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='embexpr_end'>}</span><span class='tstring_content'>_id&quot;.to_sym]
       else
-        send(&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='rbrace'>}</span><span class='tstring_content'>_id=&quot;.to_sym, args.first)
+        send(&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='embexpr_end'>}</span><span class='tstring_content'>_id=&quot;.to_sym, args.first)
       end
     end
 </span><span class='heredoc_end'>  CODE
@@ -379,11 +379,11 @@
   <span class='comment'># Ruby-1.8.7 Logic:
 </span>  <span class='comment'>####################
 </span>  <span class='id identifier rubyid_module_eval'>module_eval</span> <span class='heredoc_beg'>&lt;&lt;-CODE</span><span class='comma'>,</span> <span class='kw'>__FILE__</span><span class='comma'>,</span> <span class='kw'>__LINE__</span> <span class='op'>+</span> <span class='int'>1</span>
-<span class='tstring_content'>    def </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='rbrace'>}</span><span class='tstring_content'>_id=(value)
-      options = self.class.belongs_to_relations[</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>]
-      if value != attributes[&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='rbrace'>}</span><span class='tstring_content'>_id&quot;.to_sym]
+<span class='tstring_content'>    def </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='embexpr_end'>}</span><span class='tstring_content'>_id=(value)
+      options = self.class.belongs_to_relations[</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>]
+      if value != attributes[&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='embexpr_end'>}</span><span class='tstring_content'>_id&quot;.to_sym]
         item = options[:class_name].constantize.find(value).first
-        set_belongs_to_reference(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>, item)
+        set_belongs_to_reference(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>, item)
       else
         value
       end
@@ -428,9 +428,9 @@
 </div>
 
     <div id="footer">
-  Generated on Sat Feb 15 09:21:17 2014 by
+  Generated on Sun Feb 16 03:57:11 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.3 (ruby-1.9.3).
+  0.8.7.3 (ruby-2.1.0).
 </div>
 
   </body>
