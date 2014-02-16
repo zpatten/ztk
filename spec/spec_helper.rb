@@ -18,19 +18,22 @@
 #
 ################################################################################
 require 'simplecov'
+require 'simplecov-rcov'
 ################################################################################
 require 'coveralls'
 Coveralls.wear!
 ################################################################################
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
   SimpleCov::Formatter::HTMLFormatter,
+  SimpleCov::Formatter::RcovFormatter,
   Coveralls::SimpleCov::Formatter
 ]
 SimpleCov.start
 ################################################################################
+require 'yarjuf'
+################################################################################
 
 require 'tempfile'
-require 'yarjuf'
 require 'ztk'
 
 ENV['LOG_LEVEL'] = "DEBUG"
