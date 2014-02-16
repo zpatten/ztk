@@ -23,7 +23,9 @@ require 'rake/clean'
 require 'bundler/gem_tasks'
 
 require 'rspec/core/rake_task'
-RSpec::Core::RakeTask.new(:spec)
+RSpec::Core::RakeTask.new(:spec) do |t|
+  t.rspec_opts = %w(--format JUnit --out vendor/reports/junit/test-results.xml --format html --out vendor/reports/html/test-results.html --format documentation)
+end
 
 require 'coveralls/rake/task'
 Coveralls::RakeTask.new
@@ -35,11 +37,5 @@ require 'ztk/rake/docs'
 task :coveralls => [:spec, 'coveralls:push']
 task :default => [:spec]
 task :test => [:spec]
-
-namespace :test do
-  RSpec::Core::RakeTask.new(:jenkins) do |t|
-    t.rspec_opts = %w[-f JUnit -o results.xml]
-  end
-end
 
 ################################################################################

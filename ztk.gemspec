@@ -50,6 +50,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency("redcarpet")
   spec.add_development_dependency("coveralls")
   spec.add_development_dependency("yarjuf")
+  spec.add_development_dependency("simplecov-rcov")
 
   spec.add_development_dependency("travis")
   spec.add_development_dependency("travis-artifacts")
