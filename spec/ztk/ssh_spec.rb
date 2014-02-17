@@ -242,10 +242,10 @@ describe ZTK::SSH do
 
           data = "Hello World @ #{Time.now.utc}"
 
-          remote_file = File.join(ZTK::Locator.root, "tmp", "ssh-upload-remote")
+          remote_file = File.join(ZTK::Locator.root, "tmp", File.basename(Tempfile.new('remote').path.dup))
           File.exists?(remote_file) && File.delete(remote_file)
 
-          local_file = File.join(ZTK::Locator.root, "tmp", "ssh-upload-local")
+          local_file = File.join(ZTK::Locator.root, "tmp", File.basename(Tempfile.new('local').path.dup))
           if RUBY_VERSION < "1.9.3"
             File.open(local_file, 'w') do |file|
               file.puts(data)
@@ -279,10 +279,10 @@ describe ZTK::SSH do
 
           data = "Hello World @ #{Time.now.utc}"
 
-          local_file = File.join(ZTK::Locator.root, "tmp", "ssh-download-local")
+          local_file = File.join(ZTK::Locator.root, "tmp", File.basename(Tempfile.new('local').path.dup))
           File.exists?(local_file) && File.delete(local_file)
 
-          remote_file = File.join(ZTK::Locator.root, "tmp", "ssh-download-remote")
+          remote_file = File.join(ZTK::Locator.root, "tmp", File.basename(Tempfile.new('remote').path.dup))
           if RUBY_VERSION < "1.9.3"
             File.open(remote_file, 'w') do |file|
               file.puts(data)
@@ -529,10 +529,10 @@ describe ZTK::SSH do
 
           data = "Hello World @ #{Time.now.utc}"
 
-          remote_file = File.join(ZTK::Locator.root, "tmp", "ssh-upload-remote")
+          remote_file = File.join(ZTK::Locator.root, "tmp", File.basename(Tempfile.new('remote').path.dup))
           File.exists?(remote_file) && File.delete(remote_file)
 
-          local_file = File.join(ZTK::Locator.root, "tmp", "ssh-upload-local")
+          local_file = File.join(ZTK::Locator.root, "tmp", File.basename(Tempfile.new('local').path.dup))
           if RUBY_VERSION < "1.9.3"
             File.open(local_file, 'w') do |file|
               file.puts(data)
@@ -567,10 +567,10 @@ describe ZTK::SSH do
 
           data = "Hello World @ #{Time.now.utc}"
 
-          local_file = File.join(ZTK::Locator.root, "tmp", "ssh-download-local")
+          local_file = File.join(ZTK::Locator.root, "tmp", File.basename(Tempfile.new('local').path.dup))
           File.exists?(local_file) && File.delete(local_file)
 
-          remote_file = File.join(ZTK::Locator.root, "tmp", "ssh-download-remote")
+          remote_file = File.join(ZTK::Locator.root, "tmp", File.basename(Tempfile.new('remote').path.dup))
           if RUBY_VERSION < "1.9.3"
             File.open(remote_file, 'w') do |file|
               file.puts(data)
