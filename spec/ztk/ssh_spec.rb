@@ -242,10 +242,14 @@ describe ZTK::SSH do
 
           data = "Hello World @ #{Time.now.utc}"
 
-          remote_file = File.join(ZTK::Locator.root, "tmp", File.basename(Tempfile.new('remote').path.dup))
+          remote_temp = Tempfile.new('remote')
+          remote_file = File.join(ZTK::Locator.root, "tmp", File.basename(remote_temp.path.dup))
+          remote_temp.close
           File.exists?(remote_file) && File.delete(remote_file)
 
-          local_file = File.join(ZTK::Locator.root, "tmp", File.basename(Tempfile.new('local').path.dup))
+          local_temp = Tempfile.new('local')
+          local_file = File.join(ZTK::Locator.root, "tmp", File.basename(local_temp.path.dup))
+          local_temp.close
           if RUBY_VERSION < "1.9.3"
             File.open(local_file, 'w') do |file|
               file.puts(data)
@@ -279,10 +283,14 @@ describe ZTK::SSH do
 
           data = "Hello World @ #{Time.now.utc}"
 
-          local_file = File.join(ZTK::Locator.root, "tmp", File.basename(Tempfile.new('local').path.dup))
+          local_temp = Tempfile.new('local')
+          local_file = File.join(ZTK::Locator.root, "tmp", File.basename(local_temp.path.dup))
+          local_temp.close
           File.exists?(local_file) && File.delete(local_file)
 
-          remote_file = File.join(ZTK::Locator.root, "tmp", File.basename(Tempfile.new('remote').path.dup))
+          remote_temp = Tempfile.new('remote')
+          remote_file = File.join(ZTK::Locator.root, "tmp", File.basename(remote_temp.path.dup))
+          remote_temp.close
           if RUBY_VERSION < "1.9.3"
             File.open(remote_file, 'w') do |file|
               file.puts(data)
@@ -529,10 +537,14 @@ describe ZTK::SSH do
 
           data = "Hello World @ #{Time.now.utc}"
 
-          remote_file = File.join(ZTK::Locator.root, "tmp", File.basename(Tempfile.new('remote').path.dup))
+          remote_temp = Tempfile.new('remote')
+          remote_file = File.join(ZTK::Locator.root, "tmp", File.basename(remote_temp.path.dup))
+          remote_temp.close
           File.exists?(remote_file) && File.delete(remote_file)
 
-          local_file = File.join(ZTK::Locator.root, "tmp", File.basename(Tempfile.new('local').path.dup))
+          local_temp = Tempfile.new('local')
+          local_file = File.join(ZTK::Locator.root, "tmp", File.basename(local_temp.path.dup))
+          local_temp.close
           if RUBY_VERSION < "1.9.3"
             File.open(local_file, 'w') do |file|
               file.puts(data)
@@ -567,10 +579,14 @@ describe ZTK::SSH do
 
           data = "Hello World @ #{Time.now.utc}"
 
-          local_file = File.join(ZTK::Locator.root, "tmp", File.basename(Tempfile.new('local').path.dup))
+          local_temp = Tempfile.new('local')
+          local_file = File.join(ZTK::Locator.root, "tmp", File.basename(local_temp.path.dup))
+          local_temp.close
           File.exists?(local_file) && File.delete(local_file)
 
-          remote_file = File.join(ZTK::Locator.root, "tmp", File.basename(Tempfile.new('remote').path.dup))
+          remote_temp = Tempfile.new('remote')
+          remote_file = File.join(ZTK::Locator.root, "tmp", File.basename(remote_temp.path.dup))
+          remote_temp.close
           if RUBY_VERSION < "1.9.3"
             File.open(remote_file, 'w') do |file|
               file.puts(data)
