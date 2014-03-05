@@ -1,4 +1,5 @@
 require 'logger'
+require 'stringio'
 
 module ZTK
 
