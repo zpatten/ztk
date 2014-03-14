@@ -579,14 +579,16 @@ Hello from After Callback - PID 24782
 152
 153
 154
-155</pre>
+155
+156</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/parallel.rb', line 136</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_configuration'>configuration</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='lbrace'>{</span>
-    <span class='symbol'>:max_forks</span> <span class='op'>=&gt;</span> <span class='const'>MAX_FORKS</span>
+    <span class='symbol'>:max_forks</span>        <span class='op'>=&gt;</span> <span class='const'>MAX_FORKS</span><span class='comma'>,</span>
+    <span class='symbol'>:raise_exceptions</span> <span class='op'>=&gt;</span> <span class='kw'>true</span>
   <span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_configuration'>configuration</span><span class='rparen'>)</span>
 
   <span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_max_forks'>max_forks</span> <span class='op'>&lt;</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='id identifier rubyid_log_and_raise'>log_and_raise</span><span class='lparen'>(</span><span class='const'>ParallelError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>max_forks must be equal to or greater than one!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -705,13 +707,13 @@ Hello from After Callback - PID 24782
       <pre class="lines">
 
 
-272
 273
 274
-275</pre>
+275
+276</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/parallel.rb', line 272</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/parallel.rb', line 273</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_count'>count</span>
   <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>count(</span><span class='embexpr_beg'>#{</span><span class='ivar'>@forks</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -764,12 +766,12 @@ Hello from After Callback - PID 24782
       <pre class="lines">
 
 
-280
 281
-282</pre>
+282
+283</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/parallel.rb', line 280</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/parallel.rb', line 281</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pids'>pids</span>
   <span class='ivar'>@forks</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_fork'>fork</span><span class='op'>|</span> <span class='id identifier rubyid_fork'>fork</span><span class='lbracket'>[</span><span class='symbol'>:pid</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
@@ -856,7 +858,6 @@ the parent processes result set.</p>
       <pre class="lines">
 
 
-163
 164
 165
 166
@@ -902,10 +903,11 @@ the parent processes result set.</p>
 206
 207
 208
-209</pre>
+209
+210</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/parallel.rb', line 163</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/parallel.rb', line 164</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='op'>!</span><span class='id identifier rubyid_block_given?'>block_given?</span> <span class='kw'>and</span> <span class='id identifier rubyid_log_and_raise'>log_and_raise</span><span class='lparen'>(</span><span class='const'>ParallelError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>You must supply a block to the process method!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -1001,7 +1003,6 @@ the parent processes result set.</p>
       <pre class="lines">
 
 
-254
 255
 256
 257
@@ -1014,10 +1015,11 @@ the parent processes result set.</p>
 264
 265
 266
-267</pre>
+267
+268</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/parallel.rb', line 254</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/parallel.rb', line 255</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_signal_all'>signal_all</span><span class='lparen'>(</span><span class='id identifier rubyid_signal'>signal</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>KILL</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='id identifier rubyid_signaled'>signaled</span> <span class='op'>=</span> <span class='int'>0</span>
@@ -1085,7 +1087,6 @@ is returned.</p>
       <pre class="lines">
 
 
-219
 220
 221
 222
@@ -1104,10 +1105,11 @@ is returned.</p>
 235
 236
 237
-238</pre>
+238
+239</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/parallel.rb', line 219</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/parallel.rb', line 220</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_wait'>wait</span><span class='lparen'>(</span><span class='id identifier rubyid_flags'>flags</span><span class='op'>=</span><span class='int'>0</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>wait</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -1118,7 +1120,7 @@ is returned.</p>
     <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='const'>Marshal</span><span class='period'>.</span><span class='id identifier rubyid_load'>load</span><span class='lparen'>(</span><span class='const'>Base64</span><span class='period'>.</span><span class='id identifier rubyid_decode64'>decode64</span><span class='lparen'>(</span><span class='id identifier rubyid_fork'>fork</span><span class='lbracket'>[</span><span class='symbol'>:reader</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>rescue</span> <span class='kw'>nil</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>read(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 
-    <span class='id identifier rubyid_process_exception_data'>process_exception_data</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='id identifier rubyid_process_data'>process_data</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
     <span class='op'>!</span><span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='kw'>and</span> <span class='ivar'>@results</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
 
     <span class='id identifier rubyid_fork'>fork</span><span class='lbracket'>[</span><span class='symbol'>:reader</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_close'>close</span>
@@ -1176,16 +1178,16 @@ is returned.</p>
       <pre class="lines">
 
 
-243
 244
 245
 246
 247
 248
-249</pre>
+249
+250</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/parallel.rb', line 243</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/parallel.rb', line 244</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_waitall'>waitall</span>
   <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>waitall</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -1204,9 +1206,9 @@ is returned.</p>
 </div>
 
     <div id="footer">
-  Generated on Fri Mar 14 01:28:54 2014 by
+  Generated on Fri Mar 14 15:58:49 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.3 (ruby-2.1.0).
+  0.8.7.3 (ruby-2.0.0).
 </div>
 
   </body>
