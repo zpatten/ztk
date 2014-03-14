@@ -135,7 +135,8 @@ module ZTK
     # @option config [Proc] :after_fork (nil) Proc to call after forking.
     def initialize(configuration={})
       super({
-        :max_forks => MAX_FORKS
+        :max_forks        => MAX_FORKS,
+        :raise_exceptions => true
       }, configuration)
 
       (config.max_forks < 1) and log_and_raise(ParallelError, "max_forks must be equal to or greater than one!")
@@ -285,6 +286,7 @@ module ZTK
   private
 
     def process_exception_data(data)
+      return if (config.raise_exceptions == false)
       return if !(ZTK::Parallel::ExceptionWrapper === data)
 
       config.ui.logger.fatal { "exception(#{data.exception.inspect})" }
