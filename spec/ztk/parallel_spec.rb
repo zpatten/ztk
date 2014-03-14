@@ -82,6 +82,20 @@ describe ZTK::Parallel do
         }.should raise_error
       end
 
+      it "should allow us to ignore exceptions" do
+        subject = ZTK::Parallel.new(:raise_exceptions => false)
+
+        lambda {
+          3.times do |x|
+            subject.process do
+              raise "SomeException"
+            end
+          end
+
+          subject.waitall
+        }.should_not raise_error
+      end
+
     end
 
     describe "#wait" do
