@@ -290,7 +290,7 @@ module ZTK
 
       config.ui.logger.fatal { "exception(#{data.exception.inspect})" }
 
-      if (config.raise_exceptions == true)
+      if ((config.raise_exceptions == true) || (ZTK::Parallel::Break === data.exception))
         signal_all
         raise data.exception
       end
