@@ -185,6 +185,11 @@ module ZTK
         begin
           data = block.call
         rescue Exception => e
+          config.ui.logger.fatal { e.message }
+          e.backtrace.each do |line|
+            config.ui.logger << line
+            config.ui.logger << "\n"
+          end
           data = ExceptionWrapper.new(e)
         end
 
