@@ -226,7 +226,7 @@ module ZTK
         data = (Marshal.load(Base64.decode64(fork[:reader].read.to_s)) rescue nil)
         config.ui.logger.debug { "read(#{data.inspect})" }
 
-        process_exception_data(data)
+        data = process_data(data)
         !data.nil? and @results.push(data)
 
         fork[:reader].close
@@ -285,14 +285,17 @@ module ZTK
 
   private
 
-    def process_exception_data(data)
-      return if (config.raise_exceptions == false)
-      return if !(ZTK::Parallel::ExceptionWrapper === data)
+    def process_data(data)
+      return data if !(ZTK::Parallel::ExceptionWrapper === data)
 
       config.ui.logger.fatal { "exception(#{data.exception.inspect})" }
 
-      signal_all
-      raise data.exception
+      if (config.raise_exceptions == true)
+        signal_all
+        raise data.exception
+      end
+
+      return data.exception
     end
 
   end
