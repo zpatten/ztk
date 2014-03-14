@@ -15,6 +15,8 @@ namespace :docs do
 
     desc "Clone GitHub pages under vendor"
     task :clone do
+      system(%(rm -rfv #{DOC_PATH}))
+
       if !File.exists?(DOC_PATH)
         remote = %x(git remote -v | grep 'origin').split[1].strip
 
