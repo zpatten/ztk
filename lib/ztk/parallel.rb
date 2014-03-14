@@ -288,13 +288,13 @@ module ZTK
     def process_data(data)
       return data if !(ZTK::Parallel::ExceptionWrapper === data)
 
-      config.ui.logger.fatal { "exception(#{data.exception.inspect})" }
-
       if ((config.raise_exceptions == true) || (ZTK::Parallel::Break === data.exception))
+        config.ui.logger.fatal { "exception(#{data.exception.inspect})" }
         signal_all
         raise data.exception
       end
 
+      config.ui.logger.warn { "exception(#{data.exception.inspect})" }
       return data.exception
     end
 
