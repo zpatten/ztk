@@ -110,47 +110,24 @@ module ZTK
     def build_ansi_methods(hash)
       hash.each do |key, value|
 
-        # Ruby-1.8.7 Logic:
-        ####################
-        module_eval <<-CODE, __FILE__, __LINE__ + 1
-          def #{key}(string=nil, &block)
-            result = Array.new
+        define_method(key) do |string=nil, &block|
+          result = Array.new
 
-            result << %(\e[#{value}m)
-            if block_given?
-              result << block.call
-            elsif string.respond_to?(:to_str)
-              result << string.to_str
-            elsif respond_to?(:to_str)
-              result << to_str
-            else
-              return result
-            end
-            result << %(\e[0m)
-
-            result.join
+          result << %(\e[#{value}m)
+          if block_given?
+            result << block.call
+          elsif string.respond_to?(:to_str)
+            result << string.to_str
+          elsif respond_to?(:to_str)
+            result << to_str
+          else
+            return result
           end
-        CODE
+          result << %(\e[0m)
 
-        # > Ruby-1.8.7 Logic:
-        ######################
-        # define_method(key) do |string=nil, &block|
-        #   result = Array.new
+          result.join
+        end
 
-        #   result << %(\e[#{value}m)
-        #   if block_given?
-        #     result << block.call
-        #   elsif string.respond_to?(:to_str)
-        #     result << string.to_str
-        #   elsif respond_to?(:to_str)
-        #     result << to_str
-        #   else
-        #     return result
-        #   end
-        #   result << %(\e[0m)
-
-        #   result.join
-        # end
       end
 
       true
