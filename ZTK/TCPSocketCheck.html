@@ -6,18 +6,18 @@
 <title>
   Class: ZTK::TCPSocketCheck
   
-    &mdash; Documentation by YARD 0.8.7.4
+    &mdash; Documentation by YARD 0.8.2.1
   
 </title>
 
-  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
 
-  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
   hasFrames = window.top.frames.main ? true : false;
   relpath = '../';
-  framesUrl = "../frames.html#!ZTK/TCPSocketCheck.html";
+  framesUrl = "../frames.html#!" + escape(window.location.href);
 </script>
 
 
@@ -132,12 +132,12 @@ success.</p>
 
 <p>Given a host and port we want to check, we can do something like this:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_sc'>sc</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>TCPSocketCheck</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='symbol'>:host</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>www.github.com</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:port</span> <span class='op'>=&gt;</span> <span class='int'>22</span><span class='rparen'>)</span>
+<pre class="code ruby"><code><span class='id identifier rubyid_sc'>sc</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>TCPSocketCheck</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='symbol'>:host</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>www.github.com</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:port</span> <span class='op'>=&gt;</span> <span class='int'>22</span><span class='rparen'>)</span>
 </code></pre>
 
 <p>Then if we want to check if this host is responding on the specified port:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_sc'>sc</span><span class='period'>.</span><span class='id identifier rubyid_ready?'>ready?</span> <span class='kw'>and</span> <span class='id identifier rubyid_puts'>puts</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>They are there!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<pre class="code ruby"><code><span class='id identifier rubyid_sc'>sc</span><span class='period'>.</span><span class='id identifier rubyid_ready?'>ready?</span> <span class='kw'>and</span> <span class='id identifier rubyid_puts'>puts</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>They are there!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 </code></pre>
 
 <p>This works well for protocols that spew forth some data right away for use
@@ -147,19 +147,19 @@ some data first before we get a response.</p>
 <p>Given we want to check a host and port that requires some giving before we
 can take:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_sc'>sc</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>TCPSocketCheck</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='symbol'>:host</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>www.google.com</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:port</span> <span class='op'>=&gt;</span> <span class='int'>80</span><span class='comma'>,</span> <span class='symbol'>:data</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>GET</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<pre class="code ruby"><code><span class='id identifier rubyid_sc'>sc</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>TCPSocketCheck</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='symbol'>:host</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>www.google.com</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:port</span> <span class='op'>=&gt;</span> <span class='int'>80</span><span class='comma'>,</span> <span class='symbol'>:data</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>GET</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 </code></pre>
 
 <p>Then if we want to check if this host is responding on the specified port:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_sc'>sc</span><span class='period'>.</span><span class='id identifier rubyid_ready?'>ready?</span> <span class='kw'>and</span> <span class='id identifier rubyid_puts'>puts</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>They are there!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<pre class="code ruby"><code><span class='id identifier rubyid_sc'>sc</span><span class='period'>.</span><span class='id identifier rubyid_ready?'>ready?</span> <span class='kw'>and</span> <span class='id identifier rubyid_puts'>puts</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>They are there!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 </code></pre>
 
 <p>The ready? methods timeout is bound to the configuration option <em>timeout</em>.</p>
 
 <p>If we are waiting for a service to come online, we can do this:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_sc'>sc</span><span class='period'>.</span><span class='id identifier rubyid_wait'>wait</span> <span class='kw'>and</span> <span class='id identifier rubyid_puts'>puts</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>They are there!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<pre class="code ruby"><code><span class='id identifier rubyid_sc'>sc</span><span class='period'>.</span><span class='id identifier rubyid_wait'>wait</span> <span class='kw'>and</span> <span class='id identifier rubyid_puts'>puts</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>They are there!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 </code></pre>
 
 <p>The wait methods timeout is bound to the configuration option <em>wait</em>.</p>
@@ -299,7 +299,7 @@ can take:</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of TCPSocketCheck</p>
+    <p>A new instance of TCPSocketCheck</p>
 
 
   </div>
@@ -560,9 +560,9 @@ became ready or not.</p>
 </div>
 
     <div id="footer">
-  Generated on Sat Apr 26 08:32:55 2014 by
+  Generated on Sat Apr 26 23:56:31 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.4 (ruby-2.0.0).
+  0.8.2.1 (ruby-2.1.0).
 </div>
 
   </body>
