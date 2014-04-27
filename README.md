@@ -82,7 +82,7 @@ Zachary's Tool Kit contains a collection of reusable classes meant to simplify d
 
 IRC:
 
-* #jovelabs on irc.freenode.net
+* #ztk on irc.freenode.net
 
 Documentation:
 
