@@ -74,11 +74,9 @@ Zachary's Tool Kit contains a collection of reusable classes meant to simplify d
 
 # RUBIES TESTED AGAINST
 
-* Ruby 1.8.7 (REE)
-* Ruby 1.8.7 (MBARI)
-* Ruby 1.9.2
 * Ruby 1.9.3
 * Ruby 2.0.0
+* Ruby 2.1.0
 
 # RESOURCES
 
