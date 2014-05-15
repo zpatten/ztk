@@ -5,12 +5,12 @@ module ZTK::DSL
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   # @api private
   module Core
-    autoload :Attributes, 'ztk/dsl/core/attributes'
-    autoload :Actions,    'ztk/dsl/core/actions'
-    autoload :Dataset,    'ztk/dsl/core/dataset'
-    autoload :IO,         'ztk/dsl/core/io'
-    autoload :Options,    'ztk/dsl/core/options'
-    autoload :Relations,  'ztk/dsl/core/relations'
+    require 'ztk/dsl/core/attributes'
+    require 'ztk/dsl/core/actions'
+    require 'ztk/dsl/core/dataset'
+    require 'ztk/dsl/core/io'
+    require 'ztk/dsl/core/options'
+    require 'ztk/dsl/core/relations'
 
     def self.included(base)
       base.class_eval do

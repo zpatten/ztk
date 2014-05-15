@@ -3,8 +3,8 @@ module ZTK::DSL::Core
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   # @api private
   module Relations
-    autoload :BelongsTo, "ztk/dsl/core/relations/belongs_to"
-    autoload :HasMany, "ztk/dsl/core/relations/has_many"
+    require 'ztk/dsl/core/relations/belongs_to'
+    require 'ztk/dsl/core/relations/has_many'
 
     def self.included(base)
       base.class_eval do

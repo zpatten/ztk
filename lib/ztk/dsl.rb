@@ -11,8 +11,8 @@ module ZTK
     # @author Zachary Patten <zachary AT jovelabs DOT com>
     class DSLError < Error; end
 
-    autoload :Base, "ztk/dsl/base"
-    autoload :Core, "ztk/dsl/core"
+    require 'ztk/dsl/core'
+    require 'ztk/dsl/base'
 
   end
 end

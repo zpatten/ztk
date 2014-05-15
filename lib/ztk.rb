@@ -14,24 +14,24 @@ module ZTK
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   class Error < StandardError; end
 
-  autoload :Base, "ztk/base"
-  autoload :DSL, "ztk/dsl"
+  require 'ztk/base'
+  require 'ztk/dsl'
 
-  autoload :ANSI, "ztk/ansi"
-  autoload :Background, "ztk/background"
-  autoload :Benchmark, "ztk/benchmark"
-  autoload :Command, "ztk/command"
-  autoload :Config, "ztk/config"
-  autoload :Locator, "ztk/locator"
-  autoload :Logger, "ztk/logger"
-  autoload :Parallel, "ztk/parallel"
-  autoload :PTY, "ztk/pty"
-  autoload :Report, "ztk/report"
-  autoload :RescueRetry, "ztk/rescue_retry"
-  autoload :Spinner, "ztk/spinner"
-  autoload :SSH, "ztk/ssh"
-  autoload :TCPSocketCheck, "ztk/tcp_socket_check"
-  autoload :Template, "ztk/template"
-  autoload :UI, "ztk/ui"
+  require 'ztk/ansi'
+  require 'ztk/background'
+  require 'ztk/benchmark'
+  require 'ztk/command'
+  require 'ztk/config'
+  require 'ztk/locator'
+  require 'ztk/logger'
+  require 'ztk/parallel'
+  require 'ztk/pty'
+  require 'ztk/report'
+  require 'ztk/rescue_retry'
+  require 'ztk/spinner'
+  require 'ztk/ssh'
+  require 'ztk/tcp_socket_check'
+  require 'ztk/template'
+  require 'ztk/ui'
 
 end

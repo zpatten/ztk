@@ -3,8 +3,8 @@ module ZTK::DSL::Core
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   # @api private
   module Actions
-    autoload :Find, "ztk/dsl/core/actions/find"
-    autoload :Timestamps, "ztk/dsl/core/actions/timestamps"
+    require 'ztk/dsl/core/actions/find'
+    require 'ztk/dsl/core/actions/timestamps'
 
     def self.included(base)
       base.class_eval do
