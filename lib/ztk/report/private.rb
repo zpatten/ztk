@@ -7,9 +7,9 @@ module ZTK
       def max_spreadsheet_lengths(headers, rows)
         max_lengths = OpenStruct.new
         headers.each do |header|
-          collection = [header, rows.collect{|r| r.send(:table)[header] } ].flatten
+          collection = [header, rows.collect{|r| (r.send(:table) rescue r)[header] } ].flatten
           maximum = collection.map(&:to_s).map(&:length).max
-          max_lengths.send(:table)[header] = maximum
+          (max_lengths.send(:table) rescue max_lengths)[header] = maximum
         end
 
         max_lengths
@@ -17,13 +17,13 @@ module ZTK
 
       def calculate_spreadsheet_width(headers, max_lengths)
         header_lengths = ((headers.count * 3) - 3)
-        max_length = max_lengths.send(:table).values.reduce(:+)
+        max_length = (max_lengths.send(:table) rescue max_lengths).values.reduce(:+)
         (2 + max_length + header_lengths + 2)
       end
 
       def format_header(headers, lengths)
         line = headers.collect do |header|
-          "-" * lengths.send(:table)[header]
+          "-" * (lengths.send(:table) rescue lengths)[header]
         end
 
         ["+-", line.join("-+-"), "-+"].join.strip

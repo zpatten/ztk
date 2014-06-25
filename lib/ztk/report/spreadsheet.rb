@@ -49,7 +49,7 @@ module ZTK
           rows.each do |row|
             row_line = headers.collect do |header|
               header_length = max_lengths.send(:table)[header]
-              content = row.send(:table)[header]
+              content = (row.send(:table) rescue row)[header]
 
               "%-#{header_length}s" % content
             end
