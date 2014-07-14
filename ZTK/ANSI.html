@@ -6,18 +6,18 @@
 <title>
   Module: ZTK::ANSI
   
-    &mdash; Documentation by YARD 0.8.7.4
+    &mdash; Documentation by YARD 0.8.2.1
   
 </title>
 
-  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
 
-  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
   hasFrames = window.top.frames.main ? true : false;
   relpath = '../';
-  framesUrl = "../frames.html#!ZTK/ANSI.html";
+  framesUrl = "../frames.html#!" + escape(window.location.href);
 </script>
 
 
@@ -110,13 +110,13 @@
         <p class="example_title"><div class='inline'><p>Mix this module into String to enable easy ANSI coloring methods like:</p>
 </div></p>
       
-      <pre class="example code"><code><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bold red</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_red'>red</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span></code></pre>
+      <pre class="example code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bold red</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_red'>red</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span></pre>
     
       
         <p class="example_title"><div class='inline'><p>Or</p>
 </div></p>
       
-      <pre class="example code"><code><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>green</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_green'>green</span></code></pre>
+      <pre class="example code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>green</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_green'>green</span></pre>
     
   </div>
 
@@ -447,7 +447,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#reset-instance_method" title="#reset (instance method)">- (Object) <strong>reset</strong>(string = nil, &amp;block) </a>
+      <a href="#reset-instance_method" title="#reset (instance method)">- (Object) <strong>reset</strong>(string = nil) </a>
     
 
     
@@ -469,7 +469,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#uncolor-instance_method" title="#uncolor (instance method)">- (String) <strong>uncolor</strong>(string = nil, &amp;block) </a>
+      <a href="#uncolor-instance_method" title="#uncolor (instance method)">- (String) <strong>uncolor</strong>(string = nil) </a>
     
 
     
@@ -547,7 +547,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="black-instance_method">
   
-    - (<tt>String</tt>) <strong>black</strong>(string = nil, &amp;block) 
+    - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>black</strong>(string = nil, &amp;block) 
   
 
   
@@ -569,10 +569,8 @@
         <span class='name'>string</span>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
-      
-        <em class="default">(defaults to: <tt>nil</tt>)</em>
       
       
         &mdash;
@@ -589,7 +587,7 @@
     <li>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
       
       
@@ -606,7 +604,7 @@
     <li>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
       
       
@@ -638,7 +636,7 @@
       <div class="method_details ">
   <h3 class="signature " id="blue-instance_method">
   
-    - (<tt>String</tt>) <strong>blue</strong>(string = nil, &amp;block) 
+    - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>blue</strong>(string = nil, &amp;block) 
   
 
   
@@ -660,10 +658,8 @@
         <span class='name'>string</span>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
-      
-        <em class="default">(defaults to: <tt>nil</tt>)</em>
       
       
         &mdash;
@@ -680,7 +676,7 @@
     <li>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
       
       
@@ -697,7 +693,7 @@
     <li>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
       
       
@@ -729,7 +725,7 @@
       <div class="method_details ">
   <h3 class="signature " id="bold-instance_method">
   
-    - (<tt>String</tt>) <strong>bold</strong>(string = nil, &amp;block) 
+    - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>bold</strong>(string = nil, &amp;block) 
   
 
   
@@ -751,10 +747,8 @@
         <span class='name'>string</span>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
-      
-        <em class="default">(defaults to: <tt>nil</tt>)</em>
       
       
         &mdash;
@@ -771,7 +765,7 @@
     <li>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
       
       
@@ -788,7 +782,7 @@
     <li>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
       
       
@@ -944,7 +938,7 @@ the values are the ANSI codes.</p>
       <div class="method_details ">
   <h3 class="signature " id="cyan-instance_method">
   
-    - (<tt>String</tt>) <strong>cyan</strong>(string = nil, &amp;block) 
+    - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>cyan</strong>(string = nil, &amp;block) 
   
 
   
@@ -966,10 +960,8 @@ the values are the ANSI codes.</p>
         <span class='name'>string</span>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
-      
-        <em class="default">(defaults to: <tt>nil</tt>)</em>
       
       
         &mdash;
@@ -986,7 +978,7 @@ the values are the ANSI codes.</p>
     <li>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
       
       
@@ -1003,7 +995,7 @@ the values are the ANSI codes.</p>
     <li>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
       
       
@@ -1065,7 +1057,7 @@ the values are the ANSI codes.</p>
       <div class="method_details ">
   <h3 class="signature " id="green-instance_method">
   
-    - (<tt>String</tt>) <strong>green</strong>(string = nil, &amp;block) 
+    - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>green</strong>(string = nil, &amp;block) 
   
 
   
@@ -1087,10 +1079,8 @@ the values are the ANSI codes.</p>
         <span class='name'>string</span>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
-      
-        <em class="default">(defaults to: <tt>nil</tt>)</em>
       
       
         &mdash;
@@ -1107,7 +1097,7 @@ the values are the ANSI codes.</p>
     <li>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
       
       
@@ -1124,7 +1114,7 @@ the values are the ANSI codes.</p>
     <li>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
       
       
@@ -1156,7 +1146,7 @@ the values are the ANSI codes.</p>
       <div class="method_details ">
   <h3 class="signature " id="magenta-instance_method">
   
-    - (<tt>String</tt>) <strong>magenta</strong>(string = nil, &amp;block) 
+    - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>magenta</strong>(string = nil, &amp;block) 
   
 
   
@@ -1178,10 +1168,8 @@ the values are the ANSI codes.</p>
         <span class='name'>string</span>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
-      
-        <em class="default">(defaults to: <tt>nil</tt>)</em>
       
       
         &mdash;
@@ -1198,7 +1186,7 @@ the values are the ANSI codes.</p>
     <li>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
       
       
@@ -1215,7 +1203,7 @@ the values are the ANSI codes.</p>
     <li>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
       
       
@@ -1247,7 +1235,7 @@ the values are the ANSI codes.</p>
       <div class="method_details ">
   <h3 class="signature " id="normal-instance_method">
   
-    - (<tt>String</tt>) <strong>normal</strong>(string = nil, &amp;block) 
+    - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>normal</strong>(string = nil, &amp;block) 
   
 
   
@@ -1269,10 +1257,8 @@ the values are the ANSI codes.</p>
         <span class='name'>string</span>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
-      
-        <em class="default">(defaults to: <tt>nil</tt>)</em>
       
       
         &mdash;
@@ -1289,7 +1275,7 @@ the values are the ANSI codes.</p>
     <li>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
       
       
@@ -1306,7 +1292,7 @@ the values are the ANSI codes.</p>
     <li>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
       
       
@@ -1338,7 +1324,7 @@ the values are the ANSI codes.</p>
       <div class="method_details ">
   <h3 class="signature " id="red-instance_method">
   
-    - (<tt>String</tt>) <strong>red</strong>(string = nil, &amp;block) 
+    - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>red</strong>(string = nil, &amp;block) 
   
 
   
@@ -1360,10 +1346,8 @@ the values are the ANSI codes.</p>
         <span class='name'>string</span>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
-      
-        <em class="default">(defaults to: <tt>nil</tt>)</em>
       
       
         &mdash;
@@ -1380,7 +1364,7 @@ the values are the ANSI codes.</p>
     <li>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
       
       
@@ -1397,7 +1381,7 @@ the values are the ANSI codes.</p>
     <li>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
       
       
@@ -1429,7 +1413,7 @@ the values are the ANSI codes.</p>
       <div class="method_details ">
   <h3 class="signature " id="reset-instance_method">
   
-    - (<tt>Object</tt>) <strong>reset</strong>(string = nil, &amp;block) 
+    - (<tt>Object</tt>) <strong>reset</strong>(string = nil) 
   
 
   
@@ -1485,7 +1469,7 @@ the values are the ANSI codes.</p>
       <div class="method_details ">
   <h3 class="signature " id="uncolor-instance_method">
   
-    - (<tt>String</tt>) <strong>uncolor</strong>(string = nil, &amp;block) 
+    - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>uncolor</strong>(string = nil) 
   
 
   
@@ -1509,7 +1493,7 @@ the values are the ANSI codes.</p>
         <span class='name'>string</span>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
       
         <em class="default">(defaults to: <tt>nil</tt>)</em>
@@ -1529,7 +1513,7 @@ the values are the ANSI codes.</p>
     <li>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
       
       
@@ -1546,7 +1530,7 @@ the values are the ANSI codes.</p>
     <li>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
       
       
@@ -1598,7 +1582,7 @@ the values are the ANSI codes.</p>
       <div class="method_details ">
   <h3 class="signature " id="white-instance_method">
   
-    - (<tt>String</tt>) <strong>white</strong>(string = nil, &amp;block) 
+    - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>white</strong>(string = nil, &amp;block) 
   
 
   
@@ -1620,10 +1604,8 @@ the values are the ANSI codes.</p>
         <span class='name'>string</span>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
-      
-        <em class="default">(defaults to: <tt>nil</tt>)</em>
       
       
         &mdash;
@@ -1640,7 +1622,7 @@ the values are the ANSI codes.</p>
     <li>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
       
       
@@ -1657,7 +1639,7 @@ the values are the ANSI codes.</p>
     <li>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
       
       
@@ -1689,7 +1671,7 @@ the values are the ANSI codes.</p>
       <div class="method_details ">
   <h3 class="signature " id="yellow-instance_method">
   
-    - (<tt>String</tt>) <strong>yellow</strong>(string = nil, &amp;block) 
+    - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>yellow</strong>(string = nil, &amp;block) 
   
 
   
@@ -1711,10 +1693,8 @@ the values are the ANSI codes.</p>
         <span class='name'>string</span>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
-      
-        <em class="default">(defaults to: <tt>nil</tt>)</em>
       
       
         &mdash;
@@ -1731,7 +1711,7 @@ the values are the ANSI codes.</p>
     <li>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
       
       
@@ -1748,7 +1728,7 @@ the values are the ANSI codes.</p>
     <li>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
       
       
@@ -1782,9 +1762,9 @@ the values are the ANSI codes.</p>
 </div>
 
     <div id="footer">
-  Generated on Sun Jul 13 08:30:54 2014 by
+  Generated on Sun Jul 13 22:32:21 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.4 (ruby-2.1.0).
+  0.8.2.1 (ruby-2.1.0).
 </div>
 
   </body>

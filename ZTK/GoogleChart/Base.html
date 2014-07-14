@@ -1,0 +1,556 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: ZTK::GoogleChart::Base
+  
+    &mdash; Documentation by YARD 0.8.2.1
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../../';
+  framesUrl = "../../frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../../_index.html">Index (B)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../ZTK.html" title="ZTK (module)">ZTK</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../GoogleChart.html" title="ZTK::GoogleChart (module)">GoogleChart</a></span></span>
+     &raquo; 
+    <span class="title">Base</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: ZTK::GoogleChart::Base
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><span class='object_link'><a href="../Base.html" title="ZTK::Base (class)">Base</a></span></span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next"><span class='object_link'><a href="../Base.html" title="ZTK::Base (class)">Base</a></span></li>
+          
+            <li class="next">ZTK::GoogleChart::Base</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+      <dt class="r2">Includes:</dt>
+      <dd class="r2"><span class='object_link'><a href="Base/ArrayToDataTable.html" title="ZTK::GoogleChart::Base::ArrayToDataTable (module)">ArrayToDataTable</a></span>, <span class='object_link'><a href="Base/DataTable.html" title="ZTK::GoogleChart::Base::DataTable (module)">DataTable</a></span>, <span class='object_link'><a href="Base/Dates.html" title="ZTK::GoogleChart::Base::Dates (module)">Dates</a></span>, <span class='object_link'><a href="Base/Options.html" title="ZTK::GoogleChart::Base::Options (module)">Options</a></span>, <span class='object_link'><a href="Base/Ticks.html" title="ZTK::GoogleChart::Base::Ticks (module)">Ticks</a></span></dd>
+      
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/ztk/google_chart/base.rb<span class="defines">,<br />
+  lib/ztk/google_chart/base/ticks.rb,<br /> lib/ztk/google_chart/base/dates.rb,<br /> lib/ztk/google_chart/base/options.rb,<br /> lib/ztk/google_chart/base/data_table.rb,<br /> lib/ztk/google_chart/base/array_to_data_table.rb</span>
+</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>GoogleChart Base Class</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><div id="subclasses">
+  <h2>Direct Known Subclasses</h2>
+  <p class="children"><span class='object_link'><a href="Annotation.html" title="ZTK::GoogleChart::Annotation (class)">Annotation</a></span>, <span class='object_link'><a href="Bar.html" title="ZTK::GoogleChart::Bar (class)">Bar</a></span>, <span class='object_link'><a href="Candlestick.html" title="ZTK::GoogleChart::Candlestick (class)">Candlestick</a></span>, <span class='object_link'><a href="Column.html" title="ZTK::GoogleChart::Column (class)">Column</a></span>, <span class='object_link'><a href="Combo.html" title="ZTK::GoogleChart::Combo (class)">Combo</a></span>, <span class='object_link'><a href="Line.html" title="ZTK::GoogleChart::Line (class)">Line</a></span>, <span class='object_link'><a href="Pie.html" title="ZTK::GoogleChart::Pie (class)">Pie</a></span>, <span class='object_link'><a href="Sankey.html" title="ZTK::GoogleChart::Sankey (class)">Sankey</a></span></p>
+</div>
+<h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Base/ArrayToDataTable.html" title="ZTK::GoogleChart::Base::ArrayToDataTable (module)">ArrayToDataTable</a></span>, <span class='object_link'><a href="Base/DataTable.html" title="ZTK::GoogleChart::Base::DataTable (module)">DataTable</a></span>, <span class='object_link'><a href="Base/Dates.html" title="ZTK::GoogleChart::Base::Dates (module)">Dates</a></span>, <span class='object_link'><a href="Base/Options.html" title="ZTK::GoogleChart::Base::Options (module)">Options</a></span>, <span class='object_link'><a href="Base/Ticks.html" title="ZTK::GoogleChart::Base::Ticks (module)">Ticks</a></span>
+    
+  
+    
+  
+</p>
+
+  <h2>Constant Summary</h2>
+  
+
+
+
+  <h2>Constant Summary</h2>
+  
+  <h3 class="inherited">Constants included
+     from <span class='object_link'><a href="Base/Dates.html" title="ZTK::GoogleChart::Base::Dates (module)">Dates</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Base/Dates.html#DATE_HELPERS-constant" title="ZTK::GoogleChart::Base::Dates::DATE_HELPERS (constant)">Dates::DATE_HELPERS</a></span></p>
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#body-instance_method" title="#body (instance method)">- (Object) <strong>body</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#generate_id-instance_method" title="#generate_id (instance method)">- (Object) <strong>generate_id</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Base) <strong>initialize</strong>(configuration = {}) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A new instance of Base.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#render-instance_method" title="#render (instance method)">- (Object) <strong>render</strong>(content = nil) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Base/Ticks.html" title="ZTK::GoogleChart::Base::Ticks (module)">Ticks</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Base/Ticks.html#tick_seed-instance_method" title="ZTK::GoogleChart::Base::Ticks#tick_seed (method)">#tick_seed</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Base/Options.html" title="ZTK::GoogleChart::Base::Options (module)">Options</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Base/Options.html#options-instance_method" title="ZTK::GoogleChart::Base::Options#options (method)">#options</a></span>, <span class='object_link'><a href="Base/Options.html#options%3D-instance_method" title="ZTK::GoogleChart::Base::Options#options= (method)">#options=</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Base/Dates.html" title="ZTK::GoogleChart::Base::Dates (module)">Dates</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Base/Dates.html#date_format-instance_method" title="ZTK::GoogleChart::Base::Dates#date_format (method)">#date_format</a></span>, <span class='object_link'><a href="Base/Dates.html#date_scale-instance_method" title="ZTK::GoogleChart::Base::Dates#date_scale (method)">#date_scale</a></span>, <span class='object_link'><a href="Base/Dates.html#date_seed-instance_method" title="ZTK::GoogleChart::Base::Dates#date_seed (method)">#date_seed</a></span>, <span class='object_link'><a href="Base/Dates.html#date_wrapper-instance_method" title="ZTK::GoogleChart::Base::Dates#date_wrapper (method)">#date_wrapper</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Base/DataTable.html" title="ZTK::GoogleChart::Base::DataTable (module)">DataTable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Base/DataTable.html#data_table-instance_method" title="ZTK::GoogleChart::Base::DataTable#data_table (method)">#data_table</a></span>, <span class='object_link'><a href="Base/DataTable.html#data_table_function-instance_method" title="ZTK::GoogleChart::Base::DataTable#data_table_function (method)">#data_table_function</a></span>, <span class='object_link'><a href="Base/DataTable.html#data_table_render-instance_method" title="ZTK::GoogleChart::Base::DataTable#data_table_render (method)">#data_table_render</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Base/ArrayToDataTable.html" title="ZTK::GoogleChart::Base::ArrayToDataTable (module)">ArrayToDataTable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Base/ArrayToDataTable.html#array_to_data_table-instance_method" title="ZTK::GoogleChart::Base::ArrayToDataTable#array_to_data_table (method)">#array_to_data_table</a></span>, <span class='object_link'><a href="Base/ArrayToDataTable.html#array_to_data_table_function-instance_method" title="ZTK::GoogleChart::Base::ArrayToDataTable#array_to_data_table_function (method)">#array_to_data_table_function</a></span>, <span class='object_link'><a href="Base/ArrayToDataTable.html#array_to_data_table_render-instance_method" title="ZTK::GoogleChart::Base::ArrayToDataTable#array_to_data_table_render (method)">#array_to_data_table_render</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="../Base.html" title="ZTK::Base (class)">Base</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Base.html#build_config-class_method" title="ZTK::Base.build_config (method)">build_config</a></span>, <span class='object_link'><a href="../Base.html#config-instance_method" title="ZTK::Base#config (method)">#config</a></span>, <span class='object_link'><a href="../Base.html#direct_log-instance_method" title="ZTK::Base#direct_log (method)">#direct_log</a></span>, <span class='object_link'><a href="../Base.html#hash_config-class_method" title="ZTK::Base.hash_config (method)">hash_config</a></span>, <span class='object_link'><a href="../Base.html#log_and_raise-instance_method" title="ZTK::Base#log_and_raise (method)">#log_and_raise</a></span>, <span class='object_link'><a href="../Base.html#log_and_raise-class_method" title="ZTK::Base.log_and_raise (method)">log_and_raise</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="ZTK::GoogleChart::Base (class)">Base</a></span></tt>) <strong>initialize</strong>(configuration = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>A new instance of Base</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>configuration</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Configuration options hash.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ztk/google_chart/base.rb', line 25</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_configuration'>configuration</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='kw'>super</span><span class='lparen'>(</span><span class='lbrace'>{</span> <span class='symbol'>:id</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_generate_id'>generate_id</span> <span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_configuration'>configuration</span><span class='rparen'>)</span>
+
+  <span class='ivar'>@id</span> <span class='op'>=</span> <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_underscore'>underscore</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'> </span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='ivar'>@chart_name_tag</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>chart_</span><span class='embexpr_beg'>#{</span><span class='ivar'>@id</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='ivar'>@chart_data_tag</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='ivar'>@chart_name_tag</span><span class='embexpr_end'>}</span><span class='tstring_content'>_data</span><span class='tstring_end'>&quot;</span></span>
+  <span class='ivar'>@chart_options_tag</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='ivar'>@chart_name_tag</span><span class='embexpr_end'>}</span><span class='tstring_content'>_options</span><span class='tstring_end'>&quot;</span></span>
+  <span class='ivar'>@chart_draw_tag</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='ivar'>@chart_name_tag</span><span class='embexpr_end'>}</span><span class='tstring_content'>_draw</span><span class='tstring_end'>&quot;</span></span>
+  <span class='ivar'>@chart_div_tag</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='ivar'>@chart_name_tag</span><span class='embexpr_end'>}</span><span class='tstring_content'>_div</span><span class='tstring_end'>&quot;</span></span>
+  <span class='ivar'>@chart_type_tag</span> <span class='op'>=</span> <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="body-instance_method">
+  
+    - (<tt>Object</tt>) <strong>body</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ztk/google_chart/base.rb', line 48</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_body'>body</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='heredoc_beg'>&lt;&lt;-EOCHART</span>
+<span class='tstring_content'>&lt;script type=&quot;text/javascript&quot; src=&quot;https://www.google.com/jsapi&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+  var </span><span class='embexpr_beg'>#{</span><span class='ivar'>@chart_data_tag</span><span class='embexpr_end'>}</span><span class='tstring_content'>;
+  var </span><span class='embexpr_beg'>#{</span><span class='ivar'>@chart_name_tag</span><span class='embexpr_end'>}</span><span class='tstring_content'>;
+
+  google.load(&#39;visualization&#39;, &#39;1&#39;, {&#39;packages&#39;:[&#39;corechart&#39;]});
+  google.load(&#39;visualization&#39;, &#39;1.1&#39;, {&#39;packages&#39;:[&#39;annotationchart&#39;]});
+  google.load(&#39;visualization&#39;, &#39;1.1&#39;, {&#39;packages&#39;:[&#39;sankey&#39;]});
+  google.setOnLoadCallback(</span><span class='embexpr_beg'>#{</span><span class='ivar'>@chart_draw_tag</span><span class='embexpr_end'>}</span><span class='tstring_content'>);
+
+</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span><span class='embexpr_end'>}</span><span class='tstring_content'>
+&lt;/script&gt;
+&lt;div id=&quot;</span><span class='embexpr_beg'>#{</span><span class='ivar'>@chart_div_tag</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot;&gt;&lt;/div&gt;
+</span><span class='heredoc_end'>EOCHART
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="generate_id-instance_method">
+  
+    - (<tt>Object</tt>) <strong>generate_id</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+66
+67
+68
+69
+70
+71
+72</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ztk/google_chart/base.rb', line 66</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_generate_id'>generate_id</span>
+  <span class='id identifier rubyid_generated_id'>generated_id</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+
+  <span class='id identifier rubyid_generated_id'>generated_id</span> <span class='op'>&lt;&lt;</span> <span class='const'>SecureRandom</span><span class='period'>.</span><span class='id identifier rubyid_hex'>hex</span><span class='lparen'>(</span><span class='int'>16</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_generated_id'>generated_id</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>_</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="render-instance_method">
+  
+    - (<tt>Object</tt>) <strong>render</strong>(content = nil) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ztk/google_chart/base.rb', line 37</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_render'>render</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='kw'>case</span> <span class='ivar'>@chart_method</span>
+  <span class='kw'>when</span> <span class='symbol'>:data_table</span>
+    <span class='id identifier rubyid_data_table_render'>data_table_render</span>
+  <span class='kw'>when</span> <span class='symbol'>:array_to_data_table</span>
+    <span class='id identifier rubyid_array_to_data_table_render'>array_to_data_table_render</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>You must supply chart data via DataTable or ArrayToDataTable!</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Sun Jul 13 22:32:23 2014 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.2.1 (ruby-2.1.0).
+</div>
+
+  </body>
+</html>
