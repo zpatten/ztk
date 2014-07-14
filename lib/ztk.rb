@@ -22,6 +22,7 @@ module ZTK
   require 'ztk/benchmark'
   require 'ztk/command'
   require 'ztk/config'
+  require 'ztk/google_chart'
   require 'ztk/locator'
   require 'ztk/logger'
   require 'ztk/parallel'
