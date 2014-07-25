@@ -47,10 +47,13 @@ module ZTK
         stderr_header = false
 
         begin
+          raise_on_exceptions = [Timeout::Error]
+          defined?(Resque) and raise_on_exceptions << Resque::TermException
+
           ZTK::RescueRetry.try(
             :ui => config.ui,
             :tries => ZTK::SSH::RESCUE_RETRY_ATTEMPTS,
-            :raise => [Timeout::Error, Resque::TermException],
+            :raise => raise_on_exceptions,
             :on_retry => method(:on_retry)
           ) do
             Timeout.timeout(options.timeout) do
