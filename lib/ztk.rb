@@ -26,6 +26,7 @@ module ZTK
   require 'ztk/locator'
   require 'ztk/logger'
   require 'ztk/parallel'
+  require 'ztk/profiler'
   require 'ztk/pty'
   require 'ztk/report'
   require 'ztk/rescue_retry'
