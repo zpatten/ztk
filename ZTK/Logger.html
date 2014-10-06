@@ -6,18 +6,18 @@
 <title>
   Class: ZTK::Logger
   
-    &mdash; Documentation by YARD 0.8.2.1
+    &mdash; Documentation by YARD 0.8.7.4
   
 </title>
 
-  <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
 
-  <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
   hasFrames = window.top.frames.main ? true : false;
   relpath = '../';
-  framesUrl = "../frames.html#!" + escape(window.location.href);
+  framesUrl = "../frames.html#!ZTK/Logger.html";
 </script>
 
 
@@ -120,7 +120,7 @@ use this library like so:
 
 <p><em>Typical usage</em>:</p>
 
-<pre class="code ruby"><code><span class='gvar'>$logger</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Logger</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/dev/null</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<pre class="code ruby"><code class="ruby"><span class='gvar'>$logger</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Logger</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/dev/null</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
 <span class='gvar'>$logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>This is a debug message!</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 <span class='gvar'>$logger</span><span class='period'>.</span><span class='id identifier rubyid_info'>info</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>This is a info message!</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -131,7 +131,7 @@ use this library like so:
 
 <p><em>Simple logger chain</em>:</p>
 
-<pre class="code ruby"><code><span class='id identifier rubyid_logger'>logger</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Logger</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_logger'>logger</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Logger</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
 <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_loggers'>loggers</span> <span class='op'>&lt;&lt;</span> <span class='op'>::</span><span class='const'>Logger</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'>STDOUT</span><span class='rparen'>)</span>
 <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_loggers'>loggers</span> <span class='op'>&lt;&lt;</span> <span class='op'>::</span><span class='const'>Logger</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>test.log</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
 
@@ -140,7 +140,7 @@ use this library like so:
 
 <p><em>Alternate logger chaining</em>:</p>
 
-<pre class="code ruby"><code><span class='id identifier rubyid_logger'>logger</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Logger</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'>STDOUT</span><span class='rparen'>)</span>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_logger'>logger</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Logger</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'>STDOUT</span><span class='rparen'>)</span>
 <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_loggers'>loggers</span> <span class='op'>&lt;&lt;</span> <span class='op'>::</span><span class='const'>Logger</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>test.log</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
 
 <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>This will be written to STDOUT as well as test.log!</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -318,7 +318,7 @@ use this library like so:
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#shift-instance_method" title="#shift (instance method)">- (Object) <strong>shift</strong>(severity, shift = 0) </a>
+      <a href="#shift-instance_method" title="#shift (instance method)">- (Object) <strong>shift</strong>(severity, shift = 0, &amp;block) </a>
     
 
     
@@ -356,7 +356,7 @@ use this library like so:
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>A new instance of Logger</p>
+    <p>Returns a new instance of Logger</p>
 
 
   </div>
@@ -540,7 +540,7 @@ use this library like so:
       <div class="method_details ">
   <h3 class="signature " id="shift-instance_method">
   
-    - (<tt>Object</tt>) <strong>shift</strong>(severity, shift = 0) 
+    - (<tt>Object</tt>) <strong>shift</strong>(severity, shift = 0, &amp;block) 
   
 
   
@@ -594,9 +594,9 @@ originated from.</p>
 </div>
 
     <div id="footer">
-  Generated on Sun Oct  5 20:35:42 2014 by
+  Generated on Mon Oct  6 08:31:45 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.2.1 (ruby-2.1.0).
+  0.8.7.4 (ruby-2.1.0).
 </div>
 
   </body>
