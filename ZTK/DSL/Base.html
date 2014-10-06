@@ -6,18 +6,18 @@
 <title>
   Class: ZTK::DSL::Base
   
-    &mdash; Documentation by YARD 0.8.7.4
+    &mdash; Documentation by YARD 0.8.2.1
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
   hasFrames = window.top.frames.main ? true : false;
   relpath = '../../';
-  framesUrl = "../../frames.html#!ZTK/DSL/Base.html";
+  framesUrl = "../../frames.html#!" + escape(window.location.href);
 </script>
 
 
@@ -136,7 +136,7 @@ fact.  That is not shown in this example.</p>
 
 <p><em>example code</em>:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='kw'>class</span> <span class='const'>Network</span> <span class='op'>&lt;</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Base</span>
+<pre class="code ruby"><code><span class='kw'>class</span> <span class='const'>Network</span> <span class='op'>&lt;</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Base</span>
   <span class='id identifier rubyid_has_many'>has_many</span> <span class='symbol'>:servers</span>
 
   <span class='id identifier rubyid_attribute'>attribute</span> <span class='symbol'>:name</span>
@@ -183,7 +183,7 @@ fact.  That is not shown in this example.</p>
 
 <p><em>pry output</em>:</p>
 
-<pre class="code ruby"><code class="ruby">[1] pry(main)&gt; class Network &lt; ZTK::DSL::Base
+<pre class="code ruby"><code>[1] pry(main)&gt; class Network &lt; ZTK::DSL::Base
 [1] pry(main)*   has_many :servers
 [1] pry(main)*
 [1] pry(main)*   attribute :name
@@ -359,7 +359,7 @@ fact.  That is not shown in this example.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#do_block-instance_method" title="#do_block (instance method)">- (Object) <strong>do_block</strong>(&amp;block) </a>
+      <a href="#do_block-instance_method" title="#do_block (instance method)">- (Object) <strong>do_block</strong> </a>
     
 
     
@@ -381,7 +381,7 @@ fact.  That is not shown in this example.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Base) <strong>initialize</strong>(id = nil, &amp;block) </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Base) <strong>initialize</strong>(id = nil) </a>
     
 
     
@@ -441,7 +441,7 @@ fact.  That is not shown in this example.</p>
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    - (<tt><span class='object_link'><a href="" title="ZTK::DSL::Base (class)">Base</a></span></tt>) <strong>initialize</strong>(id = nil, &amp;block) 
+    - (<tt><span class='object_link'><a href="" title="ZTK::DSL::Base (class)">Base</a></span></tt>) <strong>initialize</strong>(id = nil) 
   
 
   
@@ -449,7 +449,7 @@ fact.  That is not shown in this example.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of Base</p>
+    <p>A new instance of Base</p>
 
 
   </div>
@@ -635,7 +635,7 @@ fact.  That is not shown in this example.</p>
       <div class="method_details first">
   <h3 class="signature first" id="do_block-instance_method">
   
-    - (<tt>Object</tt>) <strong>do_block</strong>(&amp;block) 
+    - (<tt>Object</tt>) <strong>do_block</strong> 
   
 
   
@@ -755,9 +755,9 @@ representation of the instance.</p>
 </div>
 
     <div id="footer">
-  Generated on Sun Oct  5 08:31:37 2014 by
+  Generated on Sun Oct  5 20:22:49 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.4 (ruby-2.1.0).
+  0.8.2.1 (ruby-2.1.0).
 </div>
 
   </body>

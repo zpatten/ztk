@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: ZTK::Profiler
+  
+    &mdash; Documentation by YARD 0.8.2.1
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (P)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../ZTK.html" title="ZTK (module)">ZTK</a></span></span>
+     &raquo; 
+    <span class="title">Profiler</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: ZTK::Profiler
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">ZTK::Profiler</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+      <dt class="r2">Extended by:</dt>
+      <dd class="r2"><span class='object_link'><a href="Profiler/Core.html" title="ZTK::Profiler::Core (module)">Core</a></span>, <span class='object_link'><a href="Profiler/Private.html" title="ZTK::Profiler::Private (module)">Private</a></span></dd>
+      
+    
+  
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/ztk/profiler.rb<span class="defines">,<br />
+  lib/ztk/profiler/core.rb,<br /> lib/ztk/profiler/timer.rb,<br /> lib/ztk/profiler/private.rb,<br /> lib/ztk/profiler/timer/class_methods.rb</span>
+</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>Profiler Class</p>
+
+<p>A comprehensive timing profiler, this class functions using method_missing
+to allow the consumer to define timing profiles in an ad hoc manner using
+a block.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Author:</p>
+<ul class="author">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>Zachary Patten <zachary AT jovelabs DOT com></p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Profiler/Core.html" title="ZTK::Profiler::Core (module)">Core</a></span>, <span class='object_link'><a href="Profiler/Private.html" title="ZTK::Profiler::Private (module)">Private</a></span>
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Profiler/Timer.html" title="ZTK::Profiler::Timer (class)">Timer</a></span>
+    
+  
+</p>
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  <h2>Method Summary</h2>
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Profiler/Private.html" title="ZTK::Profiler::Private (module)">Private</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Profiler/Private.html#report_timer_totals-instance_method" title="ZTK::Profiler::Private#report_timer_totals (method)">report_timer_totals</a></span>, <span class='object_link'><a href="Profiler/Private.html#report_timers-instance_method" title="ZTK::Profiler::Private#report_timers (method)">report_timers</a></span>, <span class='object_link'><a href="Profiler/Private.html#report_totals-instance_method" title="ZTK::Profiler::Private#report_totals (method)">report_totals</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Profiler/Core.html" title="ZTK::Profiler::Core (module)">Core</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Profiler/Core.html#method_missing-instance_method" title="ZTK::Profiler::Core#method_missing (method)">method_missing</a></span>, <span class='object_link'><a href="Profiler/Core.html#report-instance_method" title="ZTK::Profiler::Core#report (method)">report</a></span>, <span class='object_link'><a href="Profiler/Core.html#reset-instance_method" title="ZTK::Profiler::Core#reset (method)">reset</a></span>, <span class='object_link'><a href="Profiler/Core.html#start-instance_method" title="ZTK::Profiler::Core#start (method)">start</a></span>, <span class='object_link'><a href="Profiler/Core.html#stop-instance_method" title="ZTK::Profiler::Core#stop (method)">stop</a></span>, <span class='object_link'><a href="Profiler/Core.html#total_time-instance_method" title="ZTK::Profiler::Core#total_time (method)">total_time</a></span></p>
+
+
+</div>
+
+    <div id="footer">
+  Generated on Sun Oct  5 20:22:49 2014 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.2.1 (ruby-2.1.0).
+</div>
+
+  </body>
+</html>
