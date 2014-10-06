@@ -44,6 +44,10 @@ Zachary's Tool Kit contains a collection of reusable classes meant to simplify d
 
   Easily turn linear iterative tasks into parallel tasks and leverage multiple cores to speed up processing of your large sets of data.  Read more at the [ZTK::Parallel](http://zpatten.github.io/ztk/ZTK/Parallel.html) documentation.
 
+- **ZTK::Profiler**
+
+  Build timing profiles easily with this class.  Allows for arbitrary nesting of profiles and provides full reporting.  Read more at the [ZTK::Profiler](http://zpatten.github.io/ztk/ZTK/Profiler.html) documentation.
+
 - **ZTK::Report**
 
   Console based reporting class which allows you to easily output either list or spreadsheet based reports from sets of data.  Read more at the [ZTK::Report](http://zpatten.github.io/ztk/ZTK/Report.html) documentation.
