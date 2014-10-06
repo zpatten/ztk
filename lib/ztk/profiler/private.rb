@@ -23,7 +23,7 @@ module ZTK
         timer_names_camelize  = timer_names.map(&:to_s).map(&:camelize)
         max_timer_name_length = (timer_names_camelize.map(&:length).max + 1)
         timer_names.each do |timer_name|
-          benchmark_nested = Timer.timers_by_name[timer_name].map(&:benchmark_nested).reduce(&:+)
+          benchmark_nested   = Timer.timers_by_name[timer_name].map(&:benchmark_nested).reduce(&:+)
           result[timer_name] = benchmark_nested
 
           options.ui.stdout.print("%#{max_timer_name_length}s: %0.4fs (%-3.1f%%)\n" % [timer_name.to_s.camelize, benchmark_nested, (benchmark_nested / Timer.benchmark_nested_total) * 100])
