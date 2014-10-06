@@ -113,6 +113,86 @@
 to allow the consumer to define timing profiles in an ad hoc manner using
 a block.</p>
 
+<p>= Example Code:</p>
+
+<pre class="code ruby"><code><span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_reset'>reset</span>
+
+<span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_alpha'>operation_alpha</span> <span class='kw'>do</span>
+  <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_one'>operation_one</span> <span class='kw'>do</span>
+    <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_a'>operation_a</span> <span class='kw'>do</span>
+      <span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='float'>0.1</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+    <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_b'>operation_b</span> <span class='kw'>do</span>
+      <span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='float'>0.1</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+    <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_c'>operation_c</span> <span class='kw'>do</span>
+      <span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='float'>0.1</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_two'>operation_two</span> <span class='kw'>do</span>
+    <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_d'>operation_d</span> <span class='kw'>do</span>
+      <span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='float'>0.1</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+    <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_e'>operation_e</span> <span class='kw'>do</span>
+      <span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='float'>0.1</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+    <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_f'>operation_f</span> <span class='kw'>do</span>
+      <span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='float'>0.1</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+<span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_beta'>operation_beta</span> <span class='kw'>do</span>
+  <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_three'>operation_three</span> <span class='kw'>do</span>
+    <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_a'>operation_a</span> <span class='kw'>do</span>
+      <span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='float'>0.1</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+    <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_b'>operation_b</span> <span class='kw'>do</span>
+      <span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='float'>0.1</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+    <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_c'>operation_c</span> <span class='kw'>do</span>
+      <span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='float'>0.1</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+
+<span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_report'>report</span>
+</code></pre>
+
+<p>= Example Output:</p>
+
+<pre class="code ruby"><code>--+ OperationAlpha 0.6070s
+  |--+ OperationOne 0.3035s
+  |  |--+ OperationA 0.1011s
+  |  |--+ OperationB 0.1011s
+  |  |--+ OperationC 0.1011s
+  |--+ OperationTwo 0.3035s
+  |  |--+ OperationD 0.1011s
+  |  |--+ OperationE 0.1011s
+  |  |--+ OperationF 0.1011s
+--+ OperationBeta 0.3034s
+  |--+ OperationThree 0.3034s
+  |  |--+ OperationA 0.1011s
+  |  |--+ OperationB 0.1011s
+  |  |--+ OperationC 0.1011s
+
+ OperationAlpha: 0.6070s (22.2%)
+   OperationOne: 0.3035s (11.1%)
+     OperationA: 0.2022s (7.4%)
+     OperationB: 0.2022s (7.4%)
+     OperationC: 0.2022s (7.4%)
+   OperationTwo: 0.3035s (11.1%)
+     OperationD: 0.1011s (3.7%)
+     OperationE: 0.1011s (3.7%)
+     OperationF: 0.1011s (3.7%)
+  OperationBeta: 0.3034s (11.1%)
+ OperationThree: 0.3034s (11.1%)
+
+   Nested Time: 2.7306s
+   Actual Time: 0.9110s
+ Profiled Time: 0.9105s
+  Missing Time: 0.0005s
+</code></pre>
+
 
   </div>
 </div>
@@ -180,7 +260,7 @@ a block.</p>
 </div>
 
     <div id="footer">
-  Generated on Sun Oct  5 20:22:49 2014 by
+  Generated on Sun Oct  5 20:33:42 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.2.1 (ruby-2.1.0).
 </div>
