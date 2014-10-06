@@ -18,7 +18,7 @@ module ZTK
   # use this library like so:
   #     LOG_LEVEL=DEBUG bin/cucumber-chef ssh
   #
-  # = Typical usage:
+  # *Typical usage*:
   #
   #     $logger = ZTK::Logger.new("/dev/null")
   #
@@ -28,7 +28,7 @@ module ZTK
   #     $logger.error { "This is a error message!" }
   #     $logger.fatal { "This is a fatal message!" }
   #
-  # = Simple logger chain:
+  # *Simple logger chain*:
   #
   #     logger = ZTK::Logger.new
   #     logger.loggers << ::Logger.new(STDOUT)
@@ -36,7 +36,7 @@ module ZTK
   #
   #     logger.debug { "This will be written to STDOUT as well as test.log!" }
   #
-  # = Alternate logger chaining:
+  # *Alternate logger chaining*:
   #
   #     logger = ZTK::Logger.new(STDOUT)
   #     logger.loggers << ::Logger.new('test.log')
