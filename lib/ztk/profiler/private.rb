@@ -5,6 +5,8 @@ module ZTK
     module Private
 
       def report_timers(options={}, parent=nil, depth=0)
+        return false if (Timer.count == 0)
+
         child_timers = Timer.timers_by_parent[parent]
         child_timers.each do |timer|
           prefix = ('  |' * (depth))
@@ -18,6 +20,8 @@ module ZTK
       end
 
       def report_timer_totals(options={})
+        return false if (Timer.count == 0)
+
         result                = Hash.new
         timer_names           = Timer.timers_by_name.keys.compact
         timer_names_camelize  = timer_names.map(&:to_s).map(&:camelize)
@@ -32,6 +36,8 @@ module ZTK
       end
 
       def report_totals(options={})
+        return false if (Timer.count == 0)
+
         times = {
           'Nested Time'   => Timer.benchmark_nested_total,
           'Actual Time'   => Profiler.total_time,
