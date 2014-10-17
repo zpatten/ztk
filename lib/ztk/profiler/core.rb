@@ -35,14 +35,20 @@ module ZTK
 
         @@start_time ||= Time.now.utc
 
-        result = nil
-        timer  = Timer.new(method_name, @@timer_stack.last)
+        result    = nil
+        exception = nil
+        timer     = Timer.new(method_name, @@timer_stack.last)
 
         @@timer_stack.push(timer)
         timer.benchmark = ::Benchmark.realtime do
-          result = yield
+          begin
+            result = yield
+          rescue Exception => exception
+          end
         end
         @@timer_stack.pop
+
+        exception.nil? or raise exception
 
         result
       end
