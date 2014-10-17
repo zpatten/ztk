@@ -53,17 +53,20 @@ module ZTK
       end
 
       def report(options={})
+        results = Array.new
         options = Base.build_config({}, options)
 
         stop
 
-        results = Array.new
-
-        report_timers(options)
-        options.ui.stdout.puts
-        results << report_timer_totals(options)
-        options.ui.stdout.puts
-        results << report_totals(options)
+        if (Timer.count > 0)
+          report_timers(options) and options.ui.stdout.puts
+          results << report_timer_totals(options)
+          results.last and options.ui.stdout.puts
+          results << report_totals(options)
+        else
+          options.ui.stderr.puts("Nothing was profiled!")
+          results = [ nil, nil ]
+        end
 
         results
       end
