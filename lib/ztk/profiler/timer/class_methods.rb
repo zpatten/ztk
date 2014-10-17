@@ -54,6 +54,10 @@ module ZTK
           result
         end
 
+        def count
+          @@timers.count
+        end
+
         def benchmark_total
           @@benchmark_total ||= @@timers.map(&:benchmark).reduce(&:+)
           @@benchmark_total
