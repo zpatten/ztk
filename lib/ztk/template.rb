@@ -70,7 +70,7 @@ module ZTK
         notice << "#{char} Generated @ #{Time.now.utc}"
         notice << char
 
-        notice.join("\n")
+        notice.join("\n") + "\n"
       end
 
 
