@@ -23,11 +23,13 @@ require 'simplecov-rcov'
 require 'coveralls'
 Coveralls.wear!
 ################################################################################
-SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
-  SimpleCov::Formatter::HTMLFormatter,
-  SimpleCov::Formatter::RcovFormatter,
-  Coveralls::SimpleCov::Formatter
-]
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new(
+  [
+    SimpleCov::Formatter::HTMLFormatter,
+    SimpleCov::Formatter::RcovFormatter,
+    Coveralls::SimpleCov::Formatter
+  ]
+)
 SimpleCov.start
 ################################################################################
 require 'yarjuf'

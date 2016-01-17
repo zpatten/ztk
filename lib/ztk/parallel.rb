@@ -145,7 +145,10 @@ module ZTK
       @results = Array.new
       GC.respond_to?(:copy_on_write_friendly=) and GC.copy_on_write_friendly = true
 
-      %w( kill term int hup ).map(&:upcase).each do |signal|
+      trapped_signals = %w( term int hup )
+      trapped_signals << "kill" if RUBY_VERSION < "2.2.0"
+
+      trapped_signals.map(&:upcase).each do |signal|
         Signal.trap(signal) do
           $stderr.puts("SIG#{signal} received by PID##{Process.pid}; signaling child processes...")
 
