@@ -26,8 +26,8 @@ Gem::Specification.new do |spec|
   spec.version               = ZTK::VERSION
   spec.authors               = %(Zachary Patten)
   spec.email                 = [ %(zachary AT jovelabs DOT com) ]
-  spec.description           = %(Zachary's Tool Kit contains a collection of reusable classes meant to simplify development of complex systems in Ruby, especially devops tooling.  These classes provide functionality I often find myself needing from project to project.  Instead of reinventing the wheel each time, I've started building a collection of reusable classes.  Easy-bake DSLs, parallel processing, complex logging, templating and many other useful design patterns, for example are all contained in simple, reusable classes with a common interface and configuration style.)
-  spec.summary               = %(Zachary's Tool Kit contains a collection of reusable classes meant to simplify development of complex systems in Ruby, especially devops tooling.)
+  spec.description           = %(Zachary's Tool Kit contains a collection of reusable classes meant to simplify development of complex systems in Ruby.  These classes provide functionality I often find myself needing from project to project.  Instead of reinventing the wheel each time, I've started building a collection of reusable classes.  Easy-bake DSLs, parallel processing, complex logging, templating and many other useful design patterns, for example are all contained in simple, reusable classes with a common interface and configuration style.)
+  spec.summary               = %(Zachary's Tool Kit contains a collection of reusable classes meant to simplify development of complex systems in Ruby.)
   spec.homepage              = "https://github.com/zpatten/ztk"
   spec.license               = "Apache 2.0"
 
@@ -36,7 +36,7 @@ Gem::Specification.new do |spec|
   spec.test_files            = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths         = ["lib"]
 
-  spec.required_ruby_version = '>= 1.9.3'
+  spec.required_ruby_version = '>= 2.0.0'
 
   spec.add_dependency("activesupport")
   spec.add_dependency("erubis")
