@@ -72,58 +72,106 @@
 <p>Zachary&#39;s Tool Kit contains a collection of reusable classes meant to simplify development of complex systems in Ruby, especially devops tooling.  These classes provide functionality I often find myself needing from project to project.  Instead of reinventing the wheel each time, I&#39;ve started building a collection of reusable classes.  Easy-bake DSLs, parallel processing, complex logging, templating and many other useful design patterns, for example are all contained in simple, reusable classes with a common interface and configuration style.</p>
 
 <ul>
-<li><p><strong>ZTK::ANSI</strong></p>
-
-<p>This mixin module gives you the ability to easily add ANSI colors to strings.  It also has a method for stripping all ANSI codes out of a string.  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/ANSI.html">ZTK::ANSI</a> documentation.</p></li>
-<li><p><strong>ZTK::Background</strong></p>
-
-<p>Easily run a processes in the background.  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/Background.html">ZTK::Background</a> documentation.</p></li>
-<li><p><strong>ZTK::Benchmark</strong></p>
-
-<p>Benchmark your code and optionally display messages and/or an &quot;activity&quot; indicator (i.e. spinning cursor).  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/Benchmark.html">ZTK::Benchmark</a> documentation.</p></li>
-<li><p><strong>ZTK::Command</strong></p>
-
-<p>Execute local commands controlling STDOUT, STDERR and STDIN as needed plus enhanced Logger support.  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/Command.html">ZTK::Command</a> documentation.</p></li>
-<li><p><strong>ZTK::Config</strong></p>
-
-<p>Use Ruby based configuration files with ease.  Inspired by Chef&#39;s mixlib-config.  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/Config.html">ZTK::Config</a> documentation.</p></li>
-<li><p><strong>ZTK::DSL</strong></p>
-
-<p>Create your own DSL in seconds by inheriting this DSL class.  Featuring ActiveRecord style associations where DSL objects can <code>belong_to</code> or <code>has_many</code> other DSL objects.  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/DSL/Base.html">ZTK::DSL::Base</a> documentation.</p></li>
-<li><p><strong>ZTK::Locator</strong></p>
-
-<p>Search for files or directories backwards up the present working directory tree.  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/Locator.html">ZTK::Locator</a> documentation.</p></li>
-<li><p><strong>ZTK::Logger</strong></p>
-
-<p>Based off the core Ruby logger, this is meant to be a drop in replacement.  Features added logging information, including PID, uSec time resolution, method and line numbers of logging statements (i.e. the caller).  One can seamlessly chain Ruby loggers using ZTK:Logger, for example to output logs to both STDOUT and a log file on disk at the same time; all while maintaining compatibility with the core Ruby logger.  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/Logger.html">ZTK::Logger</a> documentation.</p></li>
-<li><p><strong>ZTK::Parallel</strong></p>
-
-<p>Easily turn linear iterative tasks into parallel tasks and leverage multiple cores to speed up processing of your large sets of data.  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/Parallel.html">ZTK::Parallel</a> documentation.</p></li>
-<li><p><strong>ZTK::Profiler</strong></p>
-
-<p>Build timing profiles easily with this class.  Allows for arbitrary nesting of profiles and provides full reporting.  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/Profiler.html">ZTK::Profiler</a> documentation.</p></li>
-<li><p><strong>ZTK::Report</strong></p>
-
-<p>Console based reporting class which allows you to easily output either list or spreadsheet based reports from sets of data.  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/Report.html">ZTK::Report</a> documentation.</p></li>
-<li><p><strong>ZTK::RescueRetry</strong></p>
-
-<p>Certain cases warrant retries when exceptions occur.  With this class you can wrap code allowing retries in certain scenarios.  The class allows for full customization so you can fit it easily to your needs.  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/RescueRetry.html">ZTK::RescueRetry</a> documentation.</p></li>
-<li><p><strong>ZTK::Spinner</strong></p>
-
-<p>The spinner <code>ZTK::Benchmark</code> relies on.  With this class you can bend it to YOUR will!  Read more at <a href="http://zpatten.github.io/ztk/ZTK/Spinner.html">ZTK::Spinner</a> documentation.</p></li>
-<li><p><strong>ZTK::SSH</strong></p>
-
-<p>An SSH class that nicely wraps up all of the SSH gems into a nice uniform interface, complete with transfer progress callbacks and enhanced Logger support.  It is meant to function as a drop in replacement, but I admit this has not been heavily tested like in the case of the ZTK::Logger class.  It provides the ability to switch between SCP and SFTP for file transfers seamlessly.  Full SSH proxy support as well, plus methods to spawn up interactive SSH consoles via <code>Kernel.exec</code>.  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/SSH.html">ZTK::SSH</a> documentation.</p></li>
-<li><p><strong>ZTK::TCPSocketCheck</strong></p>
-
-<p>This class provides a convient way to test if something is listening on a TCP port.  One can test a varity of scenarios, including sending data across the socket and waiting for a response.  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/TCPSocketCheck.html">ZTK::TCPSocketCheck</a> documentation.</p></li>
-<li><p><strong>ZTK::Template</strong></p>
-
-<p>Easily create Erubis based content with this class.  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/Template.html">ZTK::Template</a> documentation.</p></li>
-<li><p><strong>ZTK::UI</strong></p>
-
-<p>UI management; this class encapsulates STDOUT, STDERR, STDIN and a Ruby logger; as well as some other helpful flags.  This allows you to easily present a unified UI interface and allows for easy redirection of that interface (really helpful when using StringIO&#39;s with rspec to test program output for example).  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/UI.html">ZTK::UI</a> documentation.</p></li>
+<li><strong>ZTK::ANSI</strong></li>
 </ul>
+
+<p>This mixin module gives you the ability to easily add ANSI colors to strings.  It also has a method for stripping all ANSI codes out of a string.  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/ANSI.html">ZTK::ANSI</a> documentation.</p>
+
+<ul>
+<li><strong>ZTK::Background</strong></li>
+</ul>
+
+<p>Easily run a processes in the background.  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/Background.html">ZTK::Background</a> documentation.</p>
+
+<ul>
+<li><strong>ZTK::Benchmark</strong></li>
+</ul>
+
+<p>Benchmark your code and optionally display messages and/or an &quot;activity&quot; indicator (i.e. spinning cursor).  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/Benchmark.html">ZTK::Benchmark</a> documentation.</p>
+
+<ul>
+<li><strong>ZTK::Command</strong></li>
+</ul>
+
+<p>Execute local commands controlling STDOUT, STDERR and STDIN as needed plus enhanced Logger support.  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/Command.html">ZTK::Command</a> documentation.</p>
+
+<ul>
+<li><strong>ZTK::Config</strong></li>
+</ul>
+
+<p>Use Ruby based configuration files with ease.  Inspired by Chef&#39;s mixlib-config.  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/Config.html">ZTK::Config</a> documentation.</p>
+
+<ul>
+<li><strong>ZTK::DSL</strong></li>
+</ul>
+
+<p>Create your own DSL in seconds by inheriting this DSL class.  Featuring ActiveRecord style associations where DSL objects can <code>belong_to</code> or <code>has_many</code> other DSL objects.  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/DSL/Base.html">ZTK::DSL::Base</a> documentation.</p>
+
+<ul>
+<li><strong>ZTK::Locator</strong></li>
+</ul>
+
+<p>Search for files or directories backwards up the present working directory tree.  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/Locator.html">ZTK::Locator</a> documentation.</p>
+
+<ul>
+<li><strong>ZTK::Logger</strong></li>
+</ul>
+
+<p>Based off the core Ruby logger, this is meant to be a drop in replacement.  Features added logging information, including PID, uSec time resolution, method and line numbers of logging statements (i.e. the caller).  One can seamlessly chain Ruby loggers using ZTK:Logger, for example to output logs to both STDOUT and a log file on disk at the same time; all while maintaining compatibility with the core Ruby logger.  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/Logger.html">ZTK::Logger</a> documentation.</p>
+
+<ul>
+<li><strong>ZTK::Parallel</strong></li>
+</ul>
+
+<p>Easily turn linear iterative tasks into parallel tasks and leverage multiple cores to speed up processing of your large sets of data.  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/Parallel.html">ZTK::Parallel</a> documentation.</p>
+
+<ul>
+<li><strong>ZTK::Profiler</strong></li>
+</ul>
+
+<p>Build timing profiles easily with this class.  Allows for arbitrary nesting of profiles and provides full reporting.  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/Profiler.html">ZTK::Profiler</a> documentation.</p>
+
+<ul>
+<li><strong>ZTK::Report</strong></li>
+</ul>
+
+<p>Console based reporting class which allows you to easily output either list or spreadsheet based reports from sets of data.  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/Report.html">ZTK::Report</a> documentation.</p>
+
+<ul>
+<li><strong>ZTK::RescueRetry</strong></li>
+</ul>
+
+<p>Certain cases warrant retries when exceptions occur.  With this class you can wrap code allowing retries in certain scenarios.  The class allows for full customization so you can fit it easily to your needs.  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/RescueRetry.html">ZTK::RescueRetry</a> documentation.</p>
+
+<ul>
+<li><strong>ZTK::Spinner</strong></li>
+</ul>
+
+<p>The spinner <code>ZTK::Benchmark</code> relies on.  With this class you can bend it to YOUR will!  Read more at <a href="http://zpatten.github.io/ztk/ZTK/Spinner.html">ZTK::Spinner</a> documentation.</p>
+
+<ul>
+<li><strong>ZTK::SSH</strong></li>
+</ul>
+
+<p>An SSH class that nicely wraps up all of the SSH gems into a nice uniform interface, complete with transfer progress callbacks and enhanced Logger support.  It is meant to function as a drop in replacement, but I admit this has not been heavily tested like in the case of the ZTK::Logger class.  It provides the ability to switch between SCP and SFTP for file transfers seamlessly.  Full SSH proxy support as well, plus methods to spawn up interactive SSH consoles via <code>Kernel.exec</code>.  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/SSH.html">ZTK::SSH</a> documentation.</p>
+
+<ul>
+<li><strong>ZTK::TCPSocketCheck</strong></li>
+</ul>
+
+<p>This class provides a convient way to test if something is listening on a TCP port.  One can test a varity of scenarios, including sending data across the socket and waiting for a response.  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/TCPSocketCheck.html">ZTK::TCPSocketCheck</a> documentation.</p>
+
+<ul>
+<li><strong>ZTK::Template</strong></li>
+</ul>
+
+<p>Easily create Erubis based content with this class.  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/Template.html">ZTK::Template</a> documentation.</p>
+
+<ul>
+<li><strong>ZTK::UI</strong></li>
+</ul>
+
+<p>UI management; this class encapsulates STDOUT, STDERR, STDIN and a Ruby logger; as well as some other helpful flags.  This allows you to easily present a unified UI interface and allows for easy redirection of that interface (really helpful when using StringIO&#39;s with rspec to test program output for example).  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/UI.html">ZTK::UI</a> documentation.</p>
 
 <h1>RUBIES TESTED AGAINST</h1>
 
@@ -184,7 +232,7 @@ limitations under the License.</p>
 </div></div>
 
     <div id="footer">
-  Generated on Sun Jan 17 18:23:53 2016 by
+  Generated on Sun Jan 17 18:36:22 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.3.0).
 </div>
