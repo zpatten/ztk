@@ -55,6 +55,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency("simplecov-rcov")
 
   spec.add_development_dependency("travis")
-  spec.add_development_dependency("typhoeus")
   spec.add_development_dependency("websocket-native")
 end
