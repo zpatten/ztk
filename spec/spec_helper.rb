@@ -20,6 +20,10 @@
 require 'simplecov'
 require 'simplecov-rcov'
 ################################################################################
+ENV['CODECLIMATE_REPO_TOKEN'] = "7311cce1cee596c6a6c725fb086228a1901f2ba2d3592061842d24b40d2e40e8"
+require "codeclimate-test-reporter"
+CodeClimate::TestReporter.start
+################################################################################
 require 'coveralls'
 Coveralls.wear!
 ################################################################################
