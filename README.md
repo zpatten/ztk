@@ -6,7 +6,7 @@
 
 # ZTK
 
-Zachary's Tool Kit contains a collection of reusable classes meant to simplify development of complex systems in Ruby, especially devops tooling.  These classes provide functionality I often find myself needing from project to project.  Instead of reinventing the wheel each time, I've started building a collection of reusable classes.  Easy-bake DSLs, parallel processing, complex logging, templating and many other useful design patterns, for example are all contained in simple, reusable classes with a common interface and configuration style.
+Zachary's Tool Kit contains a collection of reusable classes meant to simplify development of complex systems in Ruby.  These classes provide functionality I often find myself needing from project to project.  Instead of reinventing the wheel each time, I've started building a collection of reusable classes.  Easy-bake DSLs, parallel processing, complex logging, templating and many other useful design patterns, for example are all contained in simple, reusable classes with a common interface and configuration style.
 
 - **ZTK::ANSI**
 
