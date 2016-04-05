@@ -98,10 +98,10 @@ describe ZTK::TCPSocketCheck do
 
       describe "read check" do
 
-        it "should return false on a read check to 127.0.0.1:0" do
+        it "should return false on a read check to 127.0.0.1:1" do
           subject.config do |config|
             config.host = "127.0.0.1"
-            config.port = 0
+            config.port = 1
             config.wait = WAIT_SMALL
           end
           subject.wait.should == false
