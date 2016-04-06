@@ -174,7 +174,7 @@ EOBOOTSTRAP
           end
           data = "Hello World @ #{Time.now.utc}"
 
-          subject.exec(%Q{echo "#{data}" -f >&1})
+          subject.exec(%Q{echo "#{data}" >&1})
 
           @ui.stdout.rewind
           @ui.stdout.read.match(data).should_not be nil
@@ -199,7 +199,7 @@ EOBOOTSTRAP
           end
           data = "Hello World @ #{Time.now.utc}"
 
-          subject.exec(%Q{echo "#{data}" -f >&1})
+          subject.exec(%Q{echo "#{data}" >&1})
 
           @ui.stdout.rewind
           @ui.stdout.read.match(data).should_not be nil
@@ -226,7 +226,7 @@ EOBOOTSTRAP
           end
           data = "Hello World @ #{Time.now.utc}"
 
-          subject.exec(%Q{echo "#{data}" -f >&2})
+          subject.exec(%Q{echo "#{data}" >&2})
 
           @ui.stdout.rewind
           @ui.stdout.read.match(data).should_not be nil
@@ -251,7 +251,7 @@ EOBOOTSTRAP
           end
           data = "Hello World @ #{Time.now.utc}"
 
-          subject.exec(%Q{echo "#{data}" -f >&2})
+          subject.exec(%Q{echo "#{data}" >&2})
 
           @ui.stdout.rewind
           @ui.stdout.read.match(data).should be nil
@@ -504,7 +504,7 @@ EOBOOTSTRAP
           end
           data = "Hello World @ #{Time.now.utc}"
 
-          subject.exec(%Q{echo "#{data}" -f >&1})
+          subject.exec(%Q{echo "#{data}" >&1})
 
           @ui.stdout.rewind
           @ui.stdout.read.match(data).should_not be nil
@@ -531,7 +531,7 @@ EOBOOTSTRAP
           end
           data = "Hello World @ #{Time.now.utc}"
 
-          subject.exec(%Q{echo "#{data}" -f >&1})
+          subject.exec(%Q{echo "#{data}" >&1})
 
           @ui.stdout.rewind
           @ui.stdout.read.match(data).should_not be nil
@@ -560,7 +560,7 @@ EOBOOTSTRAP
           end
           data = "Hello World @ #{Time.now.utc}"
 
-          subject.exec(%Q{echo "#{data}" -f >&2})
+          subject.exec(%Q{echo "#{data}" >&2})
 
           @ui.stdout.rewind
           @ui.stdout.read.match(data).should_not be nil
@@ -587,7 +587,7 @@ EOBOOTSTRAP
           end
           data = "Hello World @ #{Time.now.utc}"
 
-          subject.exec(%Q{echo "#{data}" -f >&2})
+          subject.exec(%Q{echo "#{data}" >&2})
 
           @ui.stdout.rewind
           @ui.stdout.read.match(data).should be nil
