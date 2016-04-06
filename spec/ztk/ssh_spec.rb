@@ -49,6 +49,16 @@ describe ZTK::SSH do
       end
     end
 
+    describe "#console (#{connection_type})" do
+
+      it "should execute a console" do
+        expect(Kernel).to receive(:exec)
+
+        subject.console
+      end
+
+    end
+
     describe "#execute (#{connection_type})" do
 
       it "should be able to connect to 127.0.0.1 as the current user and execute a command (your key must be in ssh-agent)" do
