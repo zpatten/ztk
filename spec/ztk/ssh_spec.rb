@@ -145,6 +145,24 @@ describe ZTK::SSH do
         expect(subject.close).to be true
       end
 
+      it "should allow us to execute a bootstrap script" do
+        subject.config do |config|
+          config.ui = @ui
+
+          config.user = ENV["USER"]
+          config.host_name = "127.0.0.1"
+        end
+        data = "Hello World @ #{Time.now.utc}"
+
+        result = subject.bootstrap(<<-EOBOOTSTRAP)
+echo "#{data}" >&1
+EOBOOTSTRAP
+
+        expect(result.output).to match(/#{data}/)
+
+        expect(subject.close).to be true
+      end
+
       describe "stdout" do
 
         it "should capture STDOUT (with PTY) and send it to the STDOUT pipe" do
@@ -451,6 +469,24 @@ describe ZTK::SSH do
         end
         data = 32
         result = subject.exec(%Q{/bin/bash -c 'exit #{data}'}, :exit_code => data)
+
+        expect(subject.close).to be true
+      end
+
+      it "should allow us to execute a bootstrap script" do
+        subject.config do |config|
+          config.ui = @ui
+
+          config.user = ENV["USER"]
+          config.host_name = "127.0.0.1"
+        end
+        data = "Hello World @ #{Time.now.utc}"
+
+        result = subject.bootstrap(<<-EOBOOTSTRAP)
+echo "#{data}" >&1
+EOBOOTSTRAP
+
+        expect(result.output).to match(/#{data}/)
 
         expect(subject.close).to be true
       end
