@@ -131,6 +131,17 @@ describe ZTK::SSH do
         result = subject.exec(%Q{/bin/bash -c 'exit #{data}'}, :exit_code => data)
       end
 
+      it "should allow us to close the connection" do
+        subject.config do |config|
+          config.ui = @ui
+
+          config.user = ENV["USER"]
+          config.host_name = "127.0.0.1"
+        end
+
+        result = subject.ssh.close
+      end
+
       describe "stdout" do
 
         it "should capture STDOUT (with PTY) and send it to the STDOUT pipe" do
@@ -238,6 +249,7 @@ describe ZTK::SSH do
 
             config.user = ENV["USER"]
             config.host_name = "127.0.0.1"
+            config.use_scp = use_scp
           end
 
           data = "Hello World @ #{Time.now.utc}"
@@ -414,6 +426,19 @@ describe ZTK::SSH do
         end
         data = 32
         result = subject.exec(%Q{/bin/bash -c 'exit #{data}'}, :exit_code => data)
+      end
+
+      it "should allow us to close the connection" do
+        subject.config do |config|
+          config.ui = @ui
+
+          config.user = ENV["USER"]
+          config.host_name = "127.0.0.1"
+          config.proxy_user = ENV["USER"]
+          config.proxy_host_name = "127.0.0.1"
+        end
+
+        result = subject.ssh.close
       end
 
       describe "stdout" do
