@@ -17,8 +17,7 @@
 #   limitations under the License.
 #
 ################################################################################
-#!/bin/bash
-set -x
+#!/bin/bash -eux
 
 sudo apt-get -qy update
 
