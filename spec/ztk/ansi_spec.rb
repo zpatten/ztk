@@ -34,7 +34,7 @@ describe "ZTK::ANSI Module" do
 
 end
 
-describe "ZTK::ANSI Singleton Class" do
+describe "ZTK::ANSI Monkey-Patch String Class" do
 
   subject {
     class String
