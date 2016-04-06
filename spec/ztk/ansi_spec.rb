@@ -27,7 +27,7 @@ describe "ZTK::ANSI Module" do
   describe "module" do
 
     it "should be ZTK::ANSI" do
-      subject.should be ZTK::ANSI
+      expect(subject).to be ZTK::ANSI
     end
 
   end
@@ -36,11 +36,11 @@ end
 
 describe "ZTK::ANSI Monkey-Patch String Class" do
 
-  subject {
+  subject do
     class String
       include ZTK::ANSI
     end
-  }
+  end
 
   describe "class" do
 

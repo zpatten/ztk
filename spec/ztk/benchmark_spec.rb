@@ -22,20 +22,14 @@ require "spec_helper"
 
 describe ZTK::Benchmark do
 
-  before(:each) do
-    @ui = ZTK::UI.new(
-      :stdout => StringIO.new,
-      :stderr => StringIO.new,
-      :stdin => StringIO.new
-    )
-  end
+  let(:ui) { ZTK::UI.new(:stdout => StringIO.new, :stderr => StringIO.new, :stdin => StringIO.new) }
 
   subject { ZTK::Benchmark }
 
   describe "class" do
 
     it "should be ZTK::Benchmark" do
-      subject.should be ZTK::Benchmark
+      expect(subject).to be ZTK::Benchmark
     end
 
   end
@@ -43,44 +37,43 @@ describe ZTK::Benchmark do
   describe "behaviour" do
 
     it "should throw an exception if executed without a block" do
-      lambda {
-        ZTK::Benchmark.bench
-      }.should raise_error ZTK::BenchmarkError, "You must supply a block!"
+      expect { ZTK::Benchmark.bench }.to raise_error ZTK::BenchmarkError
     end
 
     it "should return the benchmark of the given block" do
       mark = ZTK::Benchmark.bench do
         sleep(0.1)
       end
-      mark.should be_an_instance_of Float
+      expect(mark).to be_an_instance_of Float
     end
 
     it "should not throw an exception if executed with a message but without a mark" do
       expect {
-        ZTK::Benchmark.bench(:ui => @ui, :message => "Hello World") do
+        ZTK::Benchmark.bench(:ui => ui, :message => "Hello World") do
+          sleep(0.1)
         end
       }.not_to raise_error
     end
 
     it "should not throw an exception if executed without a message but with a mark" do
       expect {
-        ZTK::Benchmark.bench(:ui => @ui, :mark => "%0.4f") do
+        ZTK::Benchmark.bench(:ui => ui, :mark => "%0.4f") do
         end
       }.not_to raise_error
     end
 
     it "should not write to STDOUT if not given a message or mark" do
-      ZTK::Benchmark.bench(:ui => @ui, :use_spinner => false) do
+      ZTK::Benchmark.bench(:ui => ui, :use_spinner => false) do
         sleep(0.1)
       end
-      @ui.stdout.size.should == 0
+      expect(ui.stdout.size).to be == 0
     end
 
     it "should write to STDOUT if given a message and mark" do
-      ZTK::Benchmark.bench(:ui => @ui, :message => "Hello World", :mark => "%0.4f") do
+      ZTK::Benchmark.bench(:ui => ui, :message => "Hello World", :mark => "%0.4f") do
         sleep(0.1)
       end
-      @ui.stdout.size.should > 0
+      expect(ui.stdout.size).to be > 0
     end
 
   end

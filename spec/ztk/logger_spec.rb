@@ -24,26 +24,26 @@ describe ZTK::Logger do
 
   before(:all) do
     ENV["LOG_LEVEL"] = "DEBUG"
-    @messages = {
+  end
+
+  let(:messages) do
+    {
       :debug => "This is a test debug message",
       :info => "This is a test info message",
       :warn => "This is a test warn message",
       :error => "This is a test error message",
       :fatal => "This is a test fatal message"
     }
-    @logfile = File.join(ZTK::Locator.root, "tmp", "logger.log")
   end
 
-  before(:each) do
-    File.exists?(@logfile) && File.delete(@logfile)
-  end
+  let(:logfile) { Tempfile.new('logger').path }
 
-  subject { ZTK::Logger.new(@logfile) }
+  subject { ZTK::Logger.new(logfile) }
 
   describe "class" do
 
     it "should be an instance of ZTK::Logger" do
-      subject.should be_an_instance_of ZTK::Logger
+      expect(subject).to be_an_instance_of ZTK::Logger
     end
 
   end
@@ -51,28 +51,28 @@ describe ZTK::Logger do
   describe "general logging functionality" do
 
     it "should accept debug log messages" do
-      subject.debug { @messages[:debug] }
-      IO.read(@logfile).match(@messages[:debug]).should_not be nil
+      subject.debug { messages[:debug] }
+      expect(IO.read(logfile)).to match(messages[:debug])
     end
 
     it "should accept info log messages" do
-      subject.info { @messages[:info] }
-      IO.read(@logfile).match(@messages[:info]).should_not be nil
+      subject.info { messages[:info] }
+      expect(IO.read(logfile)).to match(messages[:info])
     end
 
     it "should accept warn log messages" do
-      subject.warn { @messages[:warn] }
-      IO.read(@logfile).match(@messages[:warn]).should_not be nil
+      subject.warn { messages[:warn] }
+      expect(IO.read(logfile)).to match(messages[:warn])
     end
 
     it "should accept error log messages" do
-      subject.error { @messages[:error] }
-      IO.read(@logfile).match(@messages[:error]).should_not be nil
+      subject.error { messages[:error] }
+      expect(IO.read(logfile)).to match(messages[:error])
     end
 
     it "should accept fatal log messages" do
-      subject.fatal { @messages[:fatal] }
-      IO.read(@logfile).match(@messages[:fatal]).should_not be nil
+      subject.fatal { messages[:fatal] }
+      expect(IO.read(logfile)).to match(messages[:fatal])
     end
 
   end
@@ -82,7 +82,7 @@ describe ZTK::Logger do
     it "should allow writing directly to the log device" do
       data = "Hello World"
       subject << data
-      IO.read(@logfile).match(data).should_not be nil
+      expect(IO.read(logfile)).to match(data)
     end
 
     it "should allow us to echo log statements to STDOUT" do
@@ -94,7 +94,7 @@ describe ZTK::Logger do
       subject.debug { data }
 
       stdout.rewind
-      stdout.read.match(data).should_not be nil
+      expect(stdout.read).to match(data)
     end
 
   end
@@ -102,31 +102,31 @@ describe ZTK::Logger do
   describe "log message" do
 
     before(:each) do
-      subject.debug { @messages[:debug] }
+      subject.debug { messages[:debug] }
     end
 
     it "should contain the date (YYYY-MM-DD)" do
-      IO.read(@logfile).match(Time.now.utc.strftime("%Y-%m-%d")).should_not be nil
+      expect(IO.read(logfile)).to match(Time.now.utc.strftime("%Y-%m-%d"))
     end
 
     it "should contain the time (HH:MM)" do
-      IO.read(@logfile).match(Time.now.utc.strftime("%H:%M")).should_not be nil
+      expect(IO.read(logfile)).to match(Time.now.utc.strftime("%H:%M"))
     end
 
     it "should contain the current process ID" do
-      IO.read(@logfile).match(Process.pid.to_s).should_not be nil
+      expect(IO.read(logfile)).to match(Process.pid.to_s)
     end
 
     it "should contain the current log level" do
-      IO.read(@logfile).match("DEBUG").should_not be nil
+      expect(IO.read(logfile)).to match("DEBUG")
     end
 
     it "should contain the basename of the file containing the method call" do
-      IO.read(@logfile).match(File.basename(__FILE__)).should_not be nil
+      expect(IO.read(logfile)).to match(File.basename(__FILE__))
     end
 
     it "should contain the log message itself" do
-      IO.read(@logfile).match(@messages[:debug]).should_not be nil
+      expect(IO.read(logfile)).to match(messages[:debug])
     end
 
   end
@@ -140,17 +140,17 @@ describe ZTK::Logger do
       it "should allow setting log level to #{current_log_level_step.to_s.upcase} via ENV[\"#{current_log_level_step.to_s.upcase}\"]" do
 
         ENV["LOG_LEVEL"] = current_log_level_step.to_s.upcase
-        File.exists?(@logfile) && File.delete(@logfile)
-        subject = ZTK::Logger.new(@logfile)
+        File.exists?(logfile) && File.delete(logfile)
+        subject = ZTK::Logger.new(logfile)
 
         LOG_LEVEL_STEPS.each do |log_level_step|
-          subject.send(log_level_step) { @messages[log_level_step] }
+          subject.send(log_level_step) { messages[log_level_step] }
           if LOG_LEVEL_STEPS.index(log_level_step) >= LOG_LEVEL_STEPS.index(current_log_level_step)
-            IO.read(@logfile).match(@messages[log_level_step]).should_not be nil
-            IO.read(@logfile).match(log_level_step.to_s.upcase).should_not be nil
+            expect(IO.read(logfile)).to match(messages[log_level_step])
+            expect(IO.read(logfile)).to match(log_level_step.to_s.upcase)
           else
-            IO.read(@logfile).match(@messages[log_level_step]).should be nil
-            IO.read(@logfile).match(log_level_step.to_s.upcase).should be nil
+            expect(IO.read(logfile)).not_to match(messages[log_level_step])
+            expect(IO.read(logfile)).not_to match(log_level_step.to_s.upcase)
           end
         end
 

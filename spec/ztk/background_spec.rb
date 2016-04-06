@@ -27,7 +27,7 @@ describe ZTK::Background do
   describe "class" do
 
     it "should be an instance of ZTK::Background" do
-      subject.should be_an_instance_of ZTK::Background
+      expect(subject).to be_an_instance_of ZTK::Background
     end
 
   end
@@ -35,7 +35,7 @@ describe ZTK::Background do
   describe "behaviour" do
 
     it "should throw an exception if the process method is called without a block" do
-      lambda{ subject.process }.should raise_error ZTK::BackgroundError, "You must supply a block to the process method!"
+      expect { subject.process }.to raise_error ZTK::BackgroundError, "You must supply a block to the process method!"
     end
 
     describe "process" do
@@ -46,9 +46,9 @@ describe ZTK::Background do
         end
 
         subject.wait
-        subject.result.should be_kind_of Integer
-        subject.result.should > 0
-        subject.result.should_not == Process.pid
+        expect(subject.result).to be_kind_of Integer
+        expect(subject.result).to be > 0
+        expect(subject.result).not_to be == Process.pid
       end
 
     end
@@ -59,11 +59,11 @@ describe ZTK::Background do
         subject.process do
           sleep(WAIT_SMALL)
         end
-        subject.alive?.should be true
+        expect(subject.alive?).to be == true
 
         subject.wait
-        subject.result.should be_kind_of Integer
-        subject.result.should > 0
+        expect(subject.result).to be_kind_of Integer
+        expect(subject.result).to be > 0
       end
 
       it "should respond false when the process is no longer running" do
@@ -73,11 +73,11 @@ describe ZTK::Background do
         subject.wait
         sleep(WAIT_SMALL)
 
-        subject.alive?.should be false
+        expect(subject.alive?).to be == false
 
-        subject.result.should be_kind_of Integer
-        subject.result.should > 0
-        subject.result.should_not == Process.pid
+        expect(subject.result).to be_kind_of Integer
+        expect(subject.result).to be > 0
+        expect(subject.result).not_to be == Process.pid
       end
 
     end
@@ -89,12 +89,12 @@ describe ZTK::Background do
           sleep(WAIT_SMALL)
           WAIT_SMALL
         end
-        subject.dead?.should be false
+        expect(subject.dead?).to be false
 
         subject.wait
-        subject.result.should be_kind_of Integer
-        subject.result.should > 0
-        subject.result.should == WAIT_SMALL
+        expect(subject.result).to be_kind_of Integer
+        expect(subject.result).to be > 0
+        expect(subject.result).to be == WAIT_SMALL
       end
 
       it "should respond true when the process is no longer running" do
@@ -104,11 +104,11 @@ describe ZTK::Background do
         subject.wait
         sleep(WAIT_SMALL)
 
-        subject.dead?.should be true
+        expect(subject.dead?).to be true
 
-        subject.result.should be_kind_of Integer
-        subject.result.should > 0
-        subject.result.should_not == Process.pid
+        expect(subject.result).to be_kind_of Integer
+        expect(subject.result).to be > 0
+        expect(subject.result).not_to be == Process.pid
       end
 
     end
@@ -127,8 +127,8 @@ describe ZTK::Background do
         end
         subject.wait
 
-        subject.result.should be_kind_of BackgroundMarshalTest
-        subject.result.hello_world.should == "Hello World"
+        expect(subject.result).to be_kind_of BackgroundMarshalTest
+        expect(subject.result.hello_world).to be == "Hello World"
       end
 
     end

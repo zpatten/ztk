@@ -27,7 +27,7 @@ describe ZTK::Base do
   describe "class" do
 
     it "should be ZTK::Base" do
-      subject.should be ZTK::Base
+      expect(subject).to be ZTK::Base
     end
 
   end

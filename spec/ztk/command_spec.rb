@@ -22,20 +22,14 @@ require "spec_helper"
 
 describe ZTK::Command do
 
-  before(:each) do
-    @ui = ZTK::UI.new(
-      :stdout => StringIO.new,
-      :stderr => StringIO.new,
-      :stdin => StringIO.new
-    )
-  end
+  let(:ui) { ZTK::UI.new(:stdout => StringIO.new, :stderr => StringIO.new, :stdin => StringIO.new) }
 
-  subject { ZTK::Command.new(:ui => @ui) }
+  subject { ZTK::Command.new }
 
   describe "class" do
 
     it "should be an instance of ZTK::Command" do
-      subject.should be_an_instance_of ZTK::Command
+      expect(subject).to be_an_instance_of ZTK::Command
     end
 
   end
@@ -45,86 +39,80 @@ describe ZTK::Command do
     describe "execute" do
 
       it "should be able to execute the command \"hostname\"" do
-        subject.config do |config|
-          config.ui = @ui
-        end
+        subject.config.ui = ui
+
         hostname = %x(hostname).chomp
         status = subject.exec("hostname")
-        status.exit_code.should == 0
-        @ui.stdout.rewind
-        @ui.stdout.read.chomp.should == hostname
+        expect(status.exit_code).to be == 0
+        ui.stdout.rewind
+        expect(ui.stdout.read.chomp).to match(hostname)
       end
 
       it "should timeout after the period specified" do
         subject.config do |config|
-          config.ui = @ui
+          config.ui = ui
           config.timeout = WAIT_SMALL
         end
         hostname = %x(hostname).chomp
-        lambda { subject.exec("hostname ; sleep 10") }.should raise_error ZTK::CommandError
+        expect { subject.exec("hostname ; sleep 10") }.to raise_error ZTK::CommandError
       end
 
       it "should throw an exception if the exit status is not as expected" do
-        subject.config do |config|
-          config.ui = @ui
-        end
-        lambda { subject.exec("/bin/bash -c 'exit 64'") }.should raise_error ZTK::CommandError
+        subject.config.ui = ui
+
+        expect { subject.exec("/bin/bash -c 'exit 64'") }.to raise_error ZTK::CommandError
       end
 
       it "should return a instance of an OpenStruct object" do
-        subject.config do |config|
-          config.ui = @ui
-        end
+        subject.config.ui = ui
+
         result = subject.exec(%q{echo "Hello World"})
-        result.should be_an_instance_of OpenStruct
+        expect(result).to be_an_instance_of OpenStruct
       end
 
       it "should return the exit code" do
-        subject.config do |config|
-          config.ui = @ui
-        end
+        subject.config.ui = ui
+
         data = 64
 
-        result = subject.exec(%Q{/bin/bash -c 'exit #{data}'}, :exit_code => data)
-        result.exit_code.should == data
+        result = subject.exec(%{exit #{data}}, :exit_code => data)
+        expect(result.exit_code).to be == data
       end
 
       it "should return the output" do
-        subject.config do |config|
-          config.ui = @ui
-        end
+        subject.config.ui = ui
+
         data = "Hello World @ #{Time.now.utc}"
 
-        result = subject.exec(%Q{echo "#{data}"})
-        result.output.match(data).should_not be nil
+        result = subject.exec(%{echo "#{data}"})
+        expect(result.output).to match(data)
       end
 
       it "should allow us to change the expected exit code" do
-        subject.config do |config|
-          config.ui = @ui
-        end
+        subject.config.ui = ui
+
         data = 32
-        result = subject.exec(%Q{/bin/bash -c 'exit #{data}'}, :exit_code => data)
+        result = subject.exec(%{exit #{data}}, :exit_code => data)
+        expect(result.exit_code).to be == data
       end
 
       describe "stdout" do
 
         it "should capture STDOUT and send it to the appropriate pipe" do
-          subject.config do |config|
-            config.ui = @ui
-          end
+          subject.config.ui = ui
+
           data = "Hello World @ #{Time.now.utc}"
 
-          subject.exec(%Q{echo "#{data}" >&1})
+          subject.exec(%{echo "#{data}" >&1})
 
-          @ui.stdout.rewind
-          @ui.stdout.read.match(data).should_not be nil
+          ui.stdout.rewind
+          expect(ui.stdout.read).to match(data)
 
-          @ui.stderr.rewind
-          @ui.stderr.read.match(data).should be nil
+          ui.stderr.rewind
+          expect(ui.stderr.read).to be_empty
 
-          @ui.stdin.rewind
-          @ui.stdin.read.match(data).should be nil
+          ui.stdin.rewind
+          expect(ui.stdin.read).to be_empty
         end
 
       end
@@ -132,21 +120,20 @@ describe ZTK::Command do
       describe "stderr" do
 
         it "should capture STDERR and send it to the appropriate pipe" do
-          subject.config do |config|
-            config.ui = @ui
-          end
+          subject.config.ui = ui
+
           data = "Hello World @ #{Time.now.utc}"
 
-          subject.exec(%Q{echo "#{data}" >&2})
+          subject.exec(%{echo "#{data}" >&2})
 
-          @ui.stdout.rewind
-          @ui.stdout.read.match(data).should be nil
+          ui.stdout.rewind
+          expect(ui.stdout.read).to be_empty
 
-          @ui.stderr.rewind
-          @ui.stderr.read.match(data).should_not be nil
+          ui.stderr.rewind
+          expect(ui.stderr.read).to match(data)
 
-          @ui.stdin.rewind
-          @ui.stdin.read.match(data).should be nil
+          ui.stdin.rewind
+          expect(ui.stdin.read).to be_empty
         end
       end
 
@@ -155,7 +142,7 @@ describe ZTK::Command do
     describe "upload" do
 
       it "should raise a 'Not Supported' exception when attempting to upload" do
-        lambda { subject.upload("abc", "123") }.should raise_error
+        expect { subject.upload("abc", "123") }.to raise_error ZTK::CommandError
       end
 
     end
@@ -163,7 +150,7 @@ describe ZTK::Command do
     describe "download" do
 
       it "should raise a 'Not Supported' exception when attempting to download" do
-        lambda { subject.download("abc", "123") }.should raise_error
+        expect { subject.download("abc", "123") }.to raise_error ZTK::CommandError
       end
 
     end

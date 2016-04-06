@@ -65,12 +65,12 @@ describe ZTK::SSH do
         data = %x(hostname).chomp
 
         status = subject.exec("hostname")
-        expect(status.exit_code).to equal 0
+        expect(status.exit_code).to be == 0
 
         ui.stdout.rewind
-        expect(ui.stdout.read.chomp).to match data
+        expect(ui.stdout.read.chomp).to match(data)
 
-        expect(subject.close).to be true
+        expect(subject.close).to be == true
       end
 
       it "should timeout after the period specified" do
@@ -78,47 +78,47 @@ describe ZTK::SSH do
 
         expect { subject.exec("sleep 10") }.to raise_error ZTK::SSHError
 
-        expect(subject.close).to be true
+        expect(subject.close).to be == true
       end
 
       it "should throw an exception if the exit status is not as expected" do
         expect { subject.exec("exit 42") }.to raise_error ZTK::SSHError
 
-        expect(subject.close).to be true
+        expect(subject.close).to be == true
       end
 
       it "should return a instance of an OpenStruct object" do
         result = subject.exec(%{echo "Hello World"})
         expect(result).to be_an_instance_of OpenStruct
 
-        expect(subject.close).to be true
+        expect(subject.close).to be == true
       end
 
       it "should return the exit code" do
         data = 64
 
         result = subject.exec(%{exit #{data}}, :exit_code => data)
-        expect(result.exit_code).to equal data
+        expect(result.exit_code).to be == data
 
-        expect(subject.close).to be true
+        expect(subject.close).to be == true
       end
 
       it "should return the output" do
         data = "Hello World @ #{Time.now.utc}"
 
         result = subject.exec(%Q{echo "#{data}"})
-        expect(result.output).to match data
+        expect(result.output).to match(data)
 
-        expect(subject.close).to be true
+        expect(subject.close).to be == true
       end
 
       it "should allow us to change the expected exit code" do
         data = 32
 
         result = subject.exec(%{exit #{data}}, :exit_code => data)
-        expect(result.exit_code).to equal data
+        expect(result.exit_code).to be == data
 
-        expect(subject.close).to be true
+        expect(subject.close).to be == true
       end
 
       it "should allow us to execute a bootstrap script" do
@@ -127,9 +127,9 @@ describe ZTK::SSH do
         result = subject.bootstrap(<<-EOBOOTSTRAP)
 echo "#{data}" >&1
 EOBOOTSTRAP
-        expect(result.output.chomp).to match data
+        expect(result.output.chomp).to match(data)
 
-        expect(subject.close).to be true
+        expect(subject.close).to be == true
       end
 
       it "should allow us to write a file" do
@@ -141,9 +141,9 @@ EOBOOTSTRAP
         end
 
         result = subject.exec(%{cat #{test_filename}})
-        expect(result.output.chomp).to match data
+        expect(result.output.chomp).to match(data)
 
-        expect(subject.close).to be true
+        expect(subject.close).to be == true
       end
 
     end #execute
@@ -161,7 +161,7 @@ EOBOOTSTRAP
             subject.exec(%{echo "#{data}" >&1})
 
             ui.stdout.rewind
-            expect(ui.stdout.read).to match data
+            expect(ui.stdout.read).to match(data)
 
             ui.stderr.rewind
             expect(ui.stderr.read).to be_empty
@@ -169,7 +169,7 @@ EOBOOTSTRAP
             ui.stdin.rewind
             expect(ui.stdin.read).to be_empty
 
-            expect(subject.close).to be true
+            expect(subject.close).to be == true
           end
 
         end
@@ -195,7 +195,7 @@ EOBOOTSTRAP
             ui.stdin.rewind
             expect(ui.stdin.read).to be_empty
 
-            expect(subject.close).to be true
+            expect(subject.close).to be == true
           end
 
         end
@@ -228,12 +228,12 @@ EOBOOTSTRAP
 
           expect(File.exists?(remote_file)).to be false
           subject.upload(local_file, remote_file, :use_scp => use_scp)
-          expect(File.exists?(remote_file)).to be true
+          expect(File.exists?(remote_file)).to be == true
 
           File.exists?(remote_file) && File.delete(remote_file)
           File.exists?(local_file) && File.delete(local_file)
 
-          expect(subject.close).to be true
+          expect(subject.close).to be == true
         end
       end
 
@@ -263,12 +263,12 @@ EOBOOTSTRAP
 
           expect(File.exists?(local_file)).to be false
           subject.download(remote_file, local_file, :use_scp => use_scp)
-          expect(File.exists?(local_file)).to be true
+          expect(File.exists?(local_file)).to be == true
 
           File.exists?(local_file) && File.delete(local_file)
           File.exists?(remote_file) && File.delete(remote_file)
 
-          expect(subject.close).to be true
+          expect(subject.close).to be == true
         end
       end
 

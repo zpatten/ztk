@@ -22,19 +22,23 @@ require "spec_helper"
 
 describe ZTK::Config do
 
-  subject { class C; extend(ZTK::Config); end; C }
+  subject do
+    class C
+      extend(ZTK::Config)
+    end
+  end
 
   describe "class" do
 
     it "should be a kind of ZTK::Config" do
-      subject.should be_a_kind_of ZTK::Config
+      expect(subject).to be_a_kind_of ZTK::Config
     end
 
     describe "default config" do
 
       it "should have an OpenStruct object for holding the configuration" do
-        subject.configuration.should be_an_instance_of OpenStruct
-        subject.keys.length.should == 0
+        expect(subject.configuration).to be_an_instance_of OpenStruct
+        expect(subject.keys.length).to be == 0
       end
 
     end
@@ -45,20 +49,23 @@ describe ZTK::Config do
 
     it "should allow setting of arbratary configuration keys" do
       subject.thing = "something"
-      subject.thing.should == "something"
-      subject[:thing].should == "something"
+
+      expect(subject.thing).to be == "something"
+      expect(subject[:thing]).to be == "something"
     end
 
     it "should allow hash bracket style access to configuration keys" do
       subject[:thing] = "nothing"
-      subject[:thing].should == "nothing"
+
+      expect(subject[:thing]).to be == "nothing"
     end
 
     it "should allow loading of configurations from disk" do
       config_file = File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "test-config.rb"))
       subject.from_file(config_file)
-      subject.message.should == "Hello World"
-      subject.thing.should == 2
+
+      expect(subject.message).to be == "Hello World"
+      expect(subject.thing).to be == 2
     end
 
   end

@@ -27,7 +27,7 @@ describe ZTK::Locator do
   describe "class" do
 
     it "should be ZTK::Locator" do
-      subject.should be ZTK::Locator
+      expect(subject).to be ZTK::Locator
     end
 
     describe "methods" do
@@ -35,11 +35,11 @@ describe ZTK::Locator do
       describe "#find" do
 
         it "should find home" do
-          subject.find("home").should == "/home"
+          expect(subject.find("home")).to be == "/home"
         end
 
         it "should not find funkytown_123_abc" do
-          lambda { subject.find("funkytown_123_abc") }.should raise_error ZTK::LocatorError
+          expect { subject.find("funkytown_123_abc") }.to raise_error ZTK::LocatorError
         end
 
       end

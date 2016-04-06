@@ -27,7 +27,7 @@ describe ZTK::Parallel do
   describe "class" do
 
     it "should be an instance of ZTK::Parallel" do
-      subject.should be_an_instance_of ZTK::Parallel
+      expect(subject).to be_an_instance_of ZTK::Parallel
     end
 
   end
@@ -38,7 +38,7 @@ describe ZTK::Parallel do
     describe "#process" do
 
       it "should throw an exception if the process method is called without a block" do
-        lambda{ subject.process }.should raise_error ZTK::ParallelError, "You must supply a block to the process method!"
+        expect { subject.process }.to raise_error ZTK::ParallelError
       end
 
       it "should spawn multiple processes to handle each iteration" do
@@ -50,14 +50,14 @@ describe ZTK::Parallel do
 
         subject.waitall
 
-        subject.results.all?{ |r| r.should be_kind_of Integer }
-        subject.results.all?{ |r| r.should > 0 }
-        subject.results.uniq.count.should == 3
-        subject.results.include?(Process.pid).should be false
+        subject.results.each{ |r| expect(r).to be_kind_of Integer }
+        subject.results.each{ |r| expect(r).to be > 0 }
+        expect(subject.results.uniq.count).to be == 3
+        expect(subject.results.include?(Process.pid)).to be == false
       end
 
       it "should stop all execution when the ZTK::Parallel::Break exception is raised" do
-        lambda {
+        expect do
 
           3.times do |x|
             subject.process do
@@ -67,11 +67,11 @@ describe ZTK::Parallel do
 
           subject.waitall
 
-          }.should raise_error
+        end.to raise_error ZTK::Parallel::Break
       end
 
       it "should stop all execution when any exception is raised" do
-        lambda {
+        expect do
           3.times do |x|
             subject.process do
               raise "SomeException"
@@ -79,13 +79,13 @@ describe ZTK::Parallel do
           end
 
           subject.waitall
-        }.should raise_error
+        end.to raise_error Exception
       end
 
       it "should allow us to ignore exceptions" do
         subject = ZTK::Parallel.new(:raise_exceptions => false)
 
-        lambda {
+        expect do
           3.times do |x|
             subject.process do
               raise "SomeException"
@@ -93,13 +93,13 @@ describe ZTK::Parallel do
           end
 
           subject.waitall
-        }.should_not raise_error
+        end.not_to raise_error Exception
       end
 
       it "should not ignore ZTK::Parallel::Break exceptions" do
         subject = ZTK::Parallel.new(:raise_exceptions => false)
 
-        lambda {
+        expect do
           3.times do |x|
             subject.process do
               raise ZTK::Parallel::Break
@@ -107,7 +107,7 @@ describe ZTK::Parallel do
           end
 
           subject.waitall
-        }.should raise_error
+        end.to raise_error ZTK::Parallel::Break
       end
 
     end
@@ -125,10 +125,10 @@ describe ZTK::Parallel do
           subject.wait
         end
 
-        subject.results.all?{ |r| r.should be_kind_of Integer }
-        subject.results.all?{ |r| r.should > 0 }
-        subject.results.uniq.count.should == 3
-        subject.results.include?(Process.pid).should be false
+        subject.results.each{ |r| expect(r).to be_kind_of Integer }
+        subject.results.each{ |r| expect(r).to be > 0 }
+        expect(subject.results.uniq.count).to be == 3
+        expect(subject.results.include?(Process.pid)).to be == false
       end
 
     end
@@ -143,7 +143,7 @@ describe ZTK::Parallel do
         end
 
         subject.waitall
-        subject.count.should == 0
+        expect(subject.count).to be == 0
       end
 
     end
@@ -159,7 +159,7 @@ describe ZTK::Parallel do
 
         expected_count = ((3 > ZTK::Parallel::MAX_FORKS) ? ZTK::Parallel::MAX_FORKS : 3)
 
-        subject.count.should == expected_count
+        expect(subject.count).to be == expected_count
         subject.waitall
       end
 
