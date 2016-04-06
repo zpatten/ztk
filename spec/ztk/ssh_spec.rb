@@ -163,6 +163,27 @@ EOBOOTSTRAP
         expect(subject.close).to be true
       end
 
+      it "should allow us to write a file" do
+        subject.config do |config|
+          config.ui = @ui
+
+          config.user = ENV["USER"]
+          config.host_name = "127.0.0.1"
+        end
+        data = "Hello World @ #{Time.now.utc}"
+        test_filename = File.join("", "tmp", "test_file.txt")
+
+        subject.file(:target => test_filename) do |f|
+          f.write(data)
+        end
+
+        result = subject.exec(%Q{cat #{test_filename}})
+
+        expect(result.output).to match(/#{data}/)
+
+        expect(subject.close).to be true
+      end
+
       describe "stdout" do
 
         it "should capture STDOUT (with PTY) and send it to the STDOUT pipe" do
@@ -485,6 +506,27 @@ EOBOOTSTRAP
         result = subject.bootstrap(<<-EOBOOTSTRAP)
 echo "#{data}" >&1
 EOBOOTSTRAP
+
+        expect(result.output).to match(/#{data}/)
+
+        expect(subject.close).to be true
+      end
+
+      it "should allow us to write a file" do
+        subject.config do |config|
+          config.ui = @ui
+
+          config.user = ENV["USER"]
+          config.host_name = "127.0.0.1"
+        end
+        data = "Hello World @ #{Time.now.utc}"
+        test_filename = File.join("", "tmp", "test_file.txt")
+
+        subject.file(:target => test_filename) do |f|
+          f.write(data)
+        end
+
+        result = subject.exec(%Q{cat #{test_filename}})
 
         expect(result.output).to match(/#{data}/)
 
