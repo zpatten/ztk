@@ -20,11 +20,9 @@
 
 require "spec_helper"
 
-describe ZTK::Logger do
+LOG_LEVEL_STEPS = [:debug, :info, :warn, :error, :fatal]
 
-  before(:all) do
-    ENV["LOG_LEVEL"] = "DEBUG"
-  end
+describe ZTK::Logger do
 
   let(:messages) do
     {
@@ -39,6 +37,14 @@ describe ZTK::Logger do
   let(:logfile) { Tempfile.new('logger').path }
 
   subject { ZTK::Logger.new(logfile) }
+
+  before(:each) do
+    ENV["LOG_LEVEL"] = "DEBUG"
+  end
+
+  after(:each) do
+    File.exists?(logfile) && File.delete(logfile)
+  end
 
   describe "class" do
 
@@ -133,15 +139,11 @@ describe ZTK::Logger do
 
   describe "log level" do
 
-    LOG_LEVEL_STEPS = [:debug, :info, :warn, :error, :fatal]
-
     LOG_LEVEL_STEPS.each do |current_log_level_step|
 
       it "should allow setting log level to #{current_log_level_step.to_s.upcase} via ENV[\"#{current_log_level_step.to_s.upcase}\"]" do
 
         ENV["LOG_LEVEL"] = current_log_level_step.to_s.upcase
-        File.exists?(logfile) && File.delete(logfile)
-        subject = ZTK::Logger.new(logfile)
 
         LOG_LEVEL_STEPS.each do |log_level_step|
           subject.send(log_level_step) { messages[log_level_step] }
