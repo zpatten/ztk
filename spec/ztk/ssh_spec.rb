@@ -59,6 +59,8 @@ describe ZTK::SSH do
         status.exit_code.should == 0
         @ui.stdout.rewind
         @ui.stdout.read.chomp.should == data
+
+        expect(subject.close).to be true
       end
 
       it "should timeout after the period specified" do
@@ -71,6 +73,8 @@ describe ZTK::SSH do
         end
         hostname = %x(hostname).chomp
         lambda { subject.exec("hostname ; sleep 10") }.should raise_error ZTK::SSHError
+
+        expect(subject.close).to be true
       end
 
       it "should throw an exception if the exit status is not as expected" do
@@ -81,6 +85,8 @@ describe ZTK::SSH do
           config.host_name = "127.0.0.1"
         end
         lambda { subject.exec("/bin/bash -c 'exit 64'") }.should raise_error ZTK::SSHError
+
+        expect(subject.close).to be true
       end
 
       it "should return a instance of an OpenStruct object" do
@@ -92,6 +98,8 @@ describe ZTK::SSH do
         end
         result = subject.exec(%q{echo "Hello World"})
         result.should be_an_instance_of OpenStruct
+
+        expect(subject.close).to be true
       end
 
       it "should return the exit code" do
@@ -105,6 +113,8 @@ describe ZTK::SSH do
 
         result = subject.exec(%Q{/bin/bash -c 'exit #{data}'}, :exit_code => data)
         result.exit_code.should == data
+
+        expect(subject.close).to be true
       end
 
       it "should return the output" do
@@ -118,6 +128,8 @@ describe ZTK::SSH do
 
         result = subject.exec(%Q{echo "#{data}"})
         result.output.match(data).should_not be nil
+
+        expect(subject.close).to be true
       end
 
       it "should allow us to change the expected exit code" do
@@ -129,17 +141,8 @@ describe ZTK::SSH do
         end
         data = 32
         result = subject.exec(%Q{/bin/bash -c 'exit #{data}'}, :exit_code => data)
-      end
 
-      it "should allow us to close the connection" do
-        subject.config do |config|
-          config.ui = @ui
-
-          config.user = ENV["USER"]
-          config.host_name = "127.0.0.1"
-        end
-
-        result = subject.ssh.close
+        expect(subject.close).to be true
       end
 
       describe "stdout" do
@@ -163,6 +166,8 @@ describe ZTK::SSH do
 
           @ui.stdin.rewind
           @ui.stdin.read.match(data).should be nil
+
+          expect(subject.close).to be true
         end
 
         it "should capture STDOUT (without PTY) and send it to the STDOUT pipe" do
@@ -186,6 +191,8 @@ describe ZTK::SSH do
 
           @ui.stdin.rewind
           @ui.stdin.read.match(data).should be nil
+
+          expect(subject.close).to be true
         end
 
       end
@@ -211,6 +218,8 @@ describe ZTK::SSH do
 
           @ui.stdin.rewind
           @ui.stdin.read.match(data).should be nil
+
+          expect(subject.close).to be true
         end
 
         it "should capture STDERR (without PTY) and send it to the STDERR pipe" do
@@ -234,6 +243,8 @@ describe ZTK::SSH do
 
           @ui.stdin.rewind
           @ui.stdin.read.match(data).should be nil
+
+          expect(subject.close).to be true
         end
 
       end
@@ -276,6 +287,8 @@ describe ZTK::SSH do
 
           File.exists?(remote_file) && File.delete(remote_file)
           File.exists?(local_file) && File.delete(local_file)
+
+          expect(subject.close).to be true
         end
       end
 
@@ -317,6 +330,8 @@ describe ZTK::SSH do
 
           File.exists?(local_file) && File.delete(local_file)
           File.exists?(remote_file) && File.delete(remote_file)
+
+          expect(subject.close).to be true
         end
       end
 
@@ -344,6 +359,8 @@ describe ZTK::SSH do
         status.exit_code.should == 0
         @ui.stdout.rewind
         @ui.stdout.read.chomp.should == data
+
+        expect(subject.close).to be true
       end
 
       it "should timeout after the period specified" do
@@ -358,6 +375,8 @@ describe ZTK::SSH do
         end
         hostname = %x(hostname).chomp
         lambda { subject.exec("hostname ; sleep 10") }.should raise_error ZTK::SSHError
+
+        expect(subject.close).to be true
       end
 
       it "should throw an exception if the exit status is not as expected" do
@@ -370,6 +389,8 @@ describe ZTK::SSH do
           config.proxy_host_name = "127.0.0.1"
         end
         lambda { subject.exec("/bin/bash -c 'exit 64'") }.should raise_error ZTK::SSHError
+
+        expect(subject.close).to be true
       end
 
       it "should return a instance of an OpenStruct object" do
@@ -383,6 +404,8 @@ describe ZTK::SSH do
         end
         result = subject.exec(%q{echo "Hello World"})
         result.should be_an_instance_of OpenStruct
+
+        expect(subject.close).to be true
       end
 
       it "should return the exit code" do
@@ -398,6 +421,8 @@ describe ZTK::SSH do
 
         result = subject.exec(%Q{/bin/bash -c 'exit #{data}'}, :exit_code => data)
         result.exit_code.should == data
+
+        expect(subject.close).to be true
       end
 
       it "should return the output" do
@@ -413,6 +438,8 @@ describe ZTK::SSH do
 
         result = subject.exec(%Q{echo "#{data}"})
         result.output.match(data).should_not be nil
+
+        expect(subject.close).to be true
       end
 
       it "should allow us to change the expected exit code" do
@@ -426,19 +453,8 @@ describe ZTK::SSH do
         end
         data = 32
         result = subject.exec(%Q{/bin/bash -c 'exit #{data}'}, :exit_code => data)
-      end
 
-      it "should allow us to close the connection" do
-        subject.config do |config|
-          config.ui = @ui
-
-          config.user = ENV["USER"]
-          config.host_name = "127.0.0.1"
-          config.proxy_user = ENV["USER"]
-          config.proxy_host_name = "127.0.0.1"
-        end
-
-        result = subject.ssh.close
+        expect(subject.close).to be true
       end
 
       describe "stdout" do
@@ -464,6 +480,8 @@ describe ZTK::SSH do
 
           @ui.stdin.rewind
           @ui.stdin.read.match(data).should be nil
+
+          expect(subject.close).to be true
         end
 
         it "should capture STDOUT (without PTY) and send it to the STDOUT pipe" do
@@ -489,6 +507,8 @@ describe ZTK::SSH do
 
           @ui.stdin.rewind
           @ui.stdin.read.match(data).should be nil
+
+          expect(subject.close).to be true
         end
 
       end
@@ -516,6 +536,8 @@ describe ZTK::SSH do
 
           @ui.stdin.rewind
           @ui.stdin.read.match(data).should be nil
+
+          expect(subject.close).to be true
         end
 
         it "should capture STDERR (without PTY) and send it to the STDERR pipe" do
@@ -541,6 +563,8 @@ describe ZTK::SSH do
 
           @ui.stdin.rewind
           @ui.stdin.read.match(data).should be nil
+
+          expect(subject.close).to be true
         end
 
       end
@@ -585,6 +609,8 @@ describe ZTK::SSH do
 
           File.exists?(remote_file) && File.delete(remote_file)
           File.exists?(local_file) && File.delete(local_file)
+
+          expect(subject.close).to be true
         end
       end
 
@@ -628,6 +654,8 @@ describe ZTK::SSH do
 
           File.exists?(local_file) && File.delete(local_file)
           File.exists?(remote_file) && File.delete(remote_file)
+
+          expect(subject.close).to be true
         end
       end
 
