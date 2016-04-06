@@ -260,7 +260,6 @@ describe ZTK::SSH do
 
             config.user = ENV["USER"]
             config.host_name = "127.0.0.1"
-            config.use_scp = use_scp
           end
 
           data = "Hello World @ #{Time.now.utc}"
@@ -282,7 +281,7 @@ describe ZTK::SSH do
           end
 
           File.exists?(remote_file).should == false
-          subject.upload(local_file, remote_file)
+          subject.upload(local_file, remote_file, :use_scp => use_scp)
           File.exists?(remote_file).should == true
 
           File.exists?(remote_file) && File.delete(remote_file)
@@ -303,7 +302,6 @@ describe ZTK::SSH do
 
             config.user = ENV["USER"]
             config.host_name = "127.0.0.1"
-            config.use_scp = use_scp
           end
 
           data = "Hello World @ #{Time.now.utc}"
@@ -325,7 +323,7 @@ describe ZTK::SSH do
           end
 
           File.exists?(local_file).should == false
-          subject.download(remote_file, local_file)
+          subject.download(remote_file, local_file, :use_scp => use_scp)
           File.exists?(local_file).should == true
 
           File.exists?(local_file) && File.delete(local_file)
@@ -582,7 +580,6 @@ describe ZTK::SSH do
             config.host_name = "127.0.0.1"
             config.proxy_user = ENV["USER"]
             config.proxy_host_name = "127.0.0.1"
-            config.use_scp = use_scp
           end
 
           data = "Hello World @ #{Time.now.utc}"
@@ -604,7 +601,7 @@ describe ZTK::SSH do
           end
 
           File.exists?(remote_file).should == false
-          subject.upload(local_file, remote_file)
+          subject.upload(local_file, remote_file, :use_scp => use_scp)
           File.exists?(remote_file).should == true
 
           File.exists?(remote_file) && File.delete(remote_file)
@@ -627,7 +624,6 @@ describe ZTK::SSH do
             config.host_name = "127.0.0.1"
             config.proxy_user = ENV["USER"]
             config.proxy_host_name = "127.0.0.1"
-            config.use_scp = use_scp
           end
 
           data = "Hello World @ #{Time.now.utc}"
@@ -649,7 +645,7 @@ describe ZTK::SSH do
           end
 
           File.exists?(local_file).should == false
-          subject.download(remote_file, local_file)
+          subject.download(remote_file, local_file, :use_scp => use_scp)
           File.exists?(local_file).should == true
 
           File.exists?(local_file) && File.delete(local_file)
