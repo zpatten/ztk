@@ -35,7 +35,7 @@ describe ZTK::SSH do
   describe "class" do
 
     it "should be an instance of ZTK::SSH" do
-      subject.should be_an_instance_of ZTK::SSH
+      expect(subject).to be_an_instance_of ZTK::SSH
     end
 
   end
@@ -177,13 +177,13 @@ EOBOOTSTRAP
           subject.exec(%Q{echo "#{data}" >&1})
 
           @ui.stdout.rewind
-          @ui.stdout.read.match(data).should_not be nil
+          expect(@ui.stdout.read).to match(/#{data}/)
 
           @ui.stderr.rewind
-          @ui.stderr.read.match(data).should be nil
+          expect(@ui.stderr.read).to be_empty
 
           @ui.stdin.rewind
-          @ui.stdin.read.match(data).should be nil
+          expect(@ui.stdin.read).to be_empty
 
           expect(subject.close).to be true
         end
@@ -202,13 +202,13 @@ EOBOOTSTRAP
           subject.exec(%Q{echo "#{data}" >&1})
 
           @ui.stdout.rewind
-          @ui.stdout.read.match(data).should_not be nil
+          expect(@ui.stdout.read).to match(/#{data}/)
 
           @ui.stderr.rewind
-          @ui.stderr.read.match(data).should be nil
+          expect(@ui.stderr.read).to be_empty
 
           @ui.stdin.rewind
-          @ui.stdin.read.match(data).should be nil
+          expect(@ui.stdin.read).to be_empty
 
           expect(subject.close).to be true
         end
@@ -229,13 +229,13 @@ EOBOOTSTRAP
           subject.exec(%Q{echo "#{data}" >&2})
 
           @ui.stdout.rewind
-          @ui.stdout.read.match(data).should_not be nil
+          expect(@ui.stdout.read).to match(/#{data}/)
 
           @ui.stderr.rewind
-          @ui.stderr.read.match(data).should be nil
+          expect(@ui.stderr.read).to be_empty
 
           @ui.stdin.rewind
-          @ui.stdin.read.match(data).should be nil
+          expect(@ui.stdin.read).to be_empty
 
           expect(subject.close).to be true
         end
@@ -254,13 +254,13 @@ EOBOOTSTRAP
           subject.exec(%Q{echo "#{data}" >&2})
 
           @ui.stdout.rewind
-          @ui.stdout.read.match(data).should be nil
+          expect(@ui.stdout.read).to be_empty
 
           @ui.stderr.rewind
-          @ui.stderr.read.match(data).should_not be nil
+          expect(@ui.stderr.read).to match(/#{data}/)
 
           @ui.stdin.rewind
-          @ui.stdin.read.match(data).should be nil
+          expect(@ui.stdin.read).to be_empty
 
           expect(subject.close).to be true
         end
@@ -507,13 +507,13 @@ EOBOOTSTRAP
           subject.exec(%Q{echo "#{data}" >&1})
 
           @ui.stdout.rewind
-          @ui.stdout.read.match(data).should_not be nil
+          expect(@ui.stdout.read).to match(/#{data}/)
 
           @ui.stderr.rewind
-          @ui.stderr.read.match(data).should be nil
+          expect(@ui.stderr.read).to be_empty
 
           @ui.stdin.rewind
-          @ui.stdin.read.match(data).should be nil
+          expect(@ui.stdin.read).to be_empty
 
           expect(subject.close).to be true
         end
@@ -534,13 +534,13 @@ EOBOOTSTRAP
           subject.exec(%Q{echo "#{data}" >&1})
 
           @ui.stdout.rewind
-          @ui.stdout.read.match(data).should_not be nil
+          expect(@ui.stdout.read).to match(/#{data}/)
 
           @ui.stderr.rewind
-          @ui.stderr.read.match(data).should be nil
+          expect(@ui.stderr.read).to be_empty
 
           @ui.stdin.rewind
-          @ui.stdin.read.match(data).should be nil
+          expect(@ui.stdin.read).to be_empty
 
           expect(subject.close).to be true
         end
@@ -563,13 +563,13 @@ EOBOOTSTRAP
           subject.exec(%Q{echo "#{data}" >&2})
 
           @ui.stdout.rewind
-          @ui.stdout.read.match(data).should_not be nil
+          expect(@ui.stdout.read).to match(/#{data}/)
 
           @ui.stderr.rewind
-          @ui.stderr.read.match(data).should be nil
+          expect(@ui.stderr.read).to be_empty
 
           @ui.stdin.rewind
-          @ui.stdin.read.match(data).should be nil
+          expect(@ui.stdin.read).to be_empty
 
           expect(subject.close).to be true
         end
@@ -590,13 +590,13 @@ EOBOOTSTRAP
           subject.exec(%Q{echo "#{data}" >&2})
 
           @ui.stdout.rewind
-          @ui.stdout.read.match(data).should be nil
+          expect(@ui.stdout.read).to be_empty
 
           @ui.stderr.rewind
-          @ui.stderr.read.match(data).should_not be nil
+          expect(@ui.stderr.read).to match(/#{data}/)
 
           @ui.stdin.rewind
-          @ui.stdin.read.match(data).should be nil
+          expect(@ui.stdin.read).to be_empty
 
           expect(subject.close).to be true
         end
