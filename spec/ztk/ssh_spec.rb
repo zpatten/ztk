@@ -533,6 +533,7 @@ describe ZTK::SSH do
             config.host_name = "127.0.0.1"
             config.proxy_user = ENV["USER"]
             config.proxy_host_name = "127.0.0.1"
+            config.use_scp = use_scp
           end
 
           data = "Hello World @ #{Time.now.utc}"
@@ -575,6 +576,7 @@ describe ZTK::SSH do
             config.host_name = "127.0.0.1"
             config.proxy_user = ENV["USER"]
             config.proxy_host_name = "127.0.0.1"
+            config.use_scp = use_scp
           end
 
           data = "Hello World @ #{Time.now.utc}"
