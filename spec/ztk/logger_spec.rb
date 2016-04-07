@@ -34,7 +34,7 @@ describe ZTK::Logger do
     }
   end
 
-  let(:logfile) { Tempfile.new('logger').path }
+  let(:logfile) { Tempfile.new('logger').path.dup }
 
   subject { ZTK::Logger.new(logfile) }
 
@@ -147,12 +147,15 @@ describe ZTK::Logger do
 
         LOG_LEVEL_STEPS.each do |log_level_step|
           subject.send(log_level_step) { messages[log_level_step] }
+
+          logdata = IO.read(logfile)
+
           if LOG_LEVEL_STEPS.index(log_level_step) >= LOG_LEVEL_STEPS.index(current_log_level_step)
-            expect(IO.read(logfile)).to match(messages[log_level_step])
-            expect(IO.read(logfile)).to match(log_level_step.to_s.upcase)
+            expect(logdata).to match(messages[log_level_step])
+            expect(logdata).to match(log_level_step.to_s.upcase)
           else
-            expect(IO.read(logfile)).not_to match(messages[log_level_step])
-            expect(IO.read(logfile)).not_to match(log_level_step.to_s.upcase)
+            expect(logdata).not_to match(messages[log_level_step])
+            expect(logdata).not_to match(log_level_step.to_s.upcase)
           end
         end
 
