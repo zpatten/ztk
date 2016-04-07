@@ -27,7 +27,7 @@ describe ZTK::Spinner do
   describe "class" do
 
     it "should be ZTK::Spinner" do
-      subject.should be ZTK::Spinner
+      expect(subject).to be ZTK::Spinner
     end
 
   end
@@ -35,9 +35,9 @@ describe ZTK::Spinner do
   describe "behaviour" do
 
     it "should throw an exception if executed without a block" do
-      lambda {
+      expect do
         ZTK::Spinner.spin
-      }.should raise_error ZTK::SpinnerError, "You must supply a block!"
+      end.to raise_error ZTK::SpinnerError
     end
 
   end

@@ -37,7 +37,7 @@ describe ZTK::Benchmark do
   describe "behaviour" do
 
     it "should throw an exception if executed without a block" do
-      expect { ZTK::Benchmark.bench }.to raise_error ZTK::BenchmarkError
+      expect{ ZTK::Benchmark.bench }.to raise_error ZTK::BenchmarkError
     end
 
     it "should return the benchmark of the given block" do
@@ -48,7 +48,7 @@ describe ZTK::Benchmark do
     end
 
     it "should not throw an exception if executed with a message but without a mark" do
-      expect {
+      expect{
         ZTK::Benchmark.bench(:ui => ui, :message => "Hello World") do
           sleep(0.1)
         end
@@ -56,7 +56,7 @@ describe ZTK::Benchmark do
     end
 
     it "should not throw an exception if executed without a message but with a mark" do
-      expect {
+      expect{
         ZTK::Benchmark.bench(:ui => ui, :mark => "%0.4f") do
         end
       }.not_to raise_error

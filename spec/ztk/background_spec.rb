@@ -35,7 +35,7 @@ describe ZTK::Background do
   describe "behaviour" do
 
     it "should throw an exception if the process method is called without a block" do
-      expect { subject.process }.to raise_error ZTK::BackgroundError, "You must supply a block to the process method!"
+      expect{ subject.process }.to raise_error ZTK::BackgroundError, "You must supply a block to the process method!"
     end
 
     describe "process" do

@@ -38,7 +38,7 @@ describe ZTK::Parallel do
     describe "#process" do
 
       it "should throw an exception if the process method is called without a block" do
-        expect { subject.process }.to raise_error ZTK::ParallelError
+        expect{ subject.process }.to raise_error ZTK::ParallelError
       end
 
       it "should spawn multiple processes to handle each iteration" do
@@ -79,7 +79,7 @@ describe ZTK::Parallel do
           end
 
           subject.waitall
-        end.to raise_error Exception
+        end.to raise_error "SomeException"
       end
 
       it "should allow us to ignore exceptions" do
@@ -93,7 +93,7 @@ describe ZTK::Parallel do
           end
 
           subject.waitall
-        end.not_to raise_error Exception
+        end.not_to raise_error "SomeException"
       end
 
       it "should not ignore ZTK::Parallel::Break exceptions" do

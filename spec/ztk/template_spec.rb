@@ -27,7 +27,7 @@ describe ZTK::Template do
   describe "class" do
 
     it "should be ZTK::Template" do
-      subject.should be ZTK::Template
+      expect(subject).to be ZTK::Template
     end
 
   end
@@ -38,28 +38,28 @@ describe ZTK::Template do
 
       it "should render the notice with no options" do
         result = subject.do_not_edit_notice
-        result.should =~ /WARNING: AUTOMATICALLY GENERATED FILE; DO NOT EDIT!/
-        result.should =~ /Generated @/
-        result.should =~ /#/
+        expect(result).to be =~ /WARNING: AUTOMATICALLY GENERATED FILE; DO NOT EDIT!/
+        expect(result).to be =~ /Generated @/
+        expect(result).to be =~ /#/
       end
 
       it "should render the notice with our message inside" do
         message = "Hello World"
         result = subject.do_not_edit_notice(:message => message)
-        result.should =~ /WARNING: AUTOMATICALLY GENERATED FILE; DO NOT EDIT!/
-        result.should =~ /Generated @/
-        result.should =~ /#/
-        result.should =~ /#{message}/
+        expect(result).to be =~ /WARNING: AUTOMATICALLY GENERATED FILE; DO NOT EDIT!/
+        expect(result).to be =~ /Generated @/
+        expect(result).to be =~ /#/
+        expect(result).to be =~ /#{message}/
       end
 
       it "should allow us to change the comment character" do
         message = "Hello World"
         char = "ZZ"
         result = subject.do_not_edit_notice(:message => message, :char => char)
-        result.should =~ /WARNING: AUTOMATICALLY GENERATED FILE; DO NOT EDIT!/
-        result.should =~ /Generated @/
-        result.should =~ /#{message}/
-        result.should =~ /#{char}/
+        expect(result).to be =~ /WARNING: AUTOMATICALLY GENERATED FILE; DO NOT EDIT!/
+        expect(result).to be =~ /Generated @/
+        expect(result).to be =~ /#{message}/
+        expect(result).to be =~ /#{char}/
       end
 
     end
@@ -70,7 +70,8 @@ describe ZTK::Template do
         template_file = File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "test-template.txt.erb"))
         context = { :test_variable => "Hello World" }
         output = subject.render(template_file, context)
-        output.should == "Hello World"
+
+        expect(output).to be == "Hello World"
       end
 
     end

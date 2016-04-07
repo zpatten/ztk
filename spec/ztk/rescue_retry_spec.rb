@@ -27,7 +27,7 @@ describe ZTK::RescueRetry do
   describe "class" do
 
     it "should be ZTK::RescueRetry" do
-      subject.should be ZTK::RescueRetry
+      expect(subject).to be ZTK::RescueRetry
     end
 
   end
@@ -35,42 +35,42 @@ describe ZTK::RescueRetry do
   describe "behaviour" do
 
     it "should throw an exception if executed without a block" do
-      lambda {
+      expect do
         ZTK::RescueRetry.try(:tries => 5)
-      }.should raise_error ZTK::RescueRetryError, "You must supply a block!"
+      end.to raise_error ZTK::RescueRetryError
     end
 
     it "should retry on all exceptions by default if one is not supplied" do
       $counter = 0
-      lambda {
+      expect do
         ZTK::RescueRetry.try(:tries => 3) do
           $counter += 1
           raise "TestException"
         end
-      }.should raise_error "TestException"
-      $counter.should == 3
+      end.to raise_error "TestException"
+      expect($counter).to be == 3
     end
 
     it "should retry on supplied exception" do
       $counter = 0
-      lambda {
+      expect do
         ZTK::RescueRetry.try(:tries => 3, :on => EOFError) do
           $counter += 1
           raise EOFError
         end
-      }.should raise_error EOFError
-      $counter.should == 3
+      end.to raise_error EOFError
+      expect($counter).to be == 3
     end
 
     it "should not retry on exception if it does not match the supplied exception" do
       $counter = 0
-      lambda {
+      expect do
         ZTK::RescueRetry.try(:tries => 3, :on => EOFError) do
           $counter += 1
           raise "TestException"
         end
-      }.should raise_error "TestException"
-      $counter.should == 1
+      end.to raise_error "TestException"
+      expect($counter).to be == 1
     end
 
     it "should call our lambda when it catches an exception and retries" do
@@ -78,25 +78,25 @@ describe ZTK::RescueRetry do
       on_retry_m = lambda { |exception|
         $counter += 1
       }
-      lambda {
+      expect do
         ZTK::RescueRetry.try(:tries => 3, :on => EOFError, :on_retry => on_retry_m) do
           raise EOFError
         end
-      }.should raise_error EOFError
-      $counter.should == 2
+      end.to raise_error EOFError
+      expect($counter).to be == 2
     end
 
     it "should not retry exceptions that are ignored" do
       $counter = 0
 
-      lambda {
+      expect do
         ZTK::RescueRetry.try(:tries => 3, :raise => EOFError) do
           $counter += 1
           raise EOFError
         end
-      }.should raise_error EOFError
+      end.to raise_error EOFError
 
-      $counter.should == 1
+      expect($counter).to be == 1
     end
 
   end

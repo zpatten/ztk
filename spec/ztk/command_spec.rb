@@ -54,13 +54,13 @@ describe ZTK::Command do
           config.timeout = WAIT_SMALL
         end
         hostname = %x(hostname).chomp
-        expect { subject.exec("hostname ; sleep 10") }.to raise_error ZTK::CommandError
+        expect{ subject.exec("hostname ; sleep 10") }.to raise_error ZTK::CommandError
       end
 
       it "should throw an exception if the exit status is not as expected" do
         subject.config.ui = ui
 
-        expect { subject.exec("/bin/bash -c 'exit 64'") }.to raise_error ZTK::CommandError
+        expect{ subject.exec("/bin/bash -c 'exit 64'") }.to raise_error ZTK::CommandError
       end
 
       it "should return a instance of an OpenStruct object" do
@@ -142,7 +142,7 @@ describe ZTK::Command do
     describe "upload" do
 
       it "should raise a 'Not Supported' exception when attempting to upload" do
-        expect { subject.upload("abc", "123") }.to raise_error ZTK::CommandError
+        expect{ subject.upload("abc", "123") }.to raise_error ZTK::CommandError
       end
 
     end
@@ -150,7 +150,7 @@ describe ZTK::Command do
     describe "download" do
 
       it "should raise a 'Not Supported' exception when attempting to download" do
-        expect { subject.download("abc", "123") }.to raise_error ZTK::CommandError
+        expect{ subject.download("abc", "123") }.to raise_error ZTK::CommandError
       end
 
     end

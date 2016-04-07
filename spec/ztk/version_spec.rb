@@ -27,11 +27,11 @@ describe "ZTK::VERSION" do
   describe "object" do
 
     it "should be defined as a constant" do
-      defined?(ZTK::VERSION).should == "constant"
+      expect(defined?(ZTK::VERSION)).to be == "constant"
     end
 
     it "should be a string" do
-      subject.is_a?(String).should == true
+      expect(subject).to be_kind_of String
     end
 
   end

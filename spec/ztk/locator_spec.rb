@@ -39,7 +39,7 @@ describe ZTK::Locator do
         end
 
         it "should not find funkytown_123_abc" do
-          expect { subject.find("funkytown_123_abc") }.to raise_error ZTK::LocatorError
+          expect{ subject.find("funkytown_123_abc") }.to raise_error ZTK::LocatorError
         end
 
       end

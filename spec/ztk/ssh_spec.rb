@@ -76,13 +76,13 @@ describe ZTK::SSH do
       it "should timeout after the period specified" do
         subject.config.timeout = WAIT_SMALL
 
-        expect { subject.exec("sleep 10") }.to raise_error ZTK::SSHError
+        expect{ subject.exec("sleep 10") }.to raise_error ZTK::SSHError
 
         expect(subject.close).to be == true
       end
 
       it "should throw an exception if the exit status is not as expected" do
-        expect { subject.exec("exit 42") }.to raise_error ZTK::SSHError
+        expect{ subject.exec("exit 42") }.to raise_error ZTK::SSHError
 
         expect(subject.close).to be == true
       end

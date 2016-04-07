@@ -27,19 +27,19 @@ describe ZTK::TCPSocketCheck do
   describe "class" do
 
     it "should be an instance of ZTK::TCPSocketCheck" do
-      subject.should be_an_instance_of ZTK::TCPSocketCheck
+      expect(subject).to be_an_instance_of ZTK::TCPSocketCheck
     end
 
     describe "config" do
 
       it "should throw an exception if the host is not specified" do
         subject.config.port = 22
-        lambda{ subject.ready? }.should raise_error ZTK::TCPSocketCheckError, "You must supply a host!"
+        expect{ subject.ready? }.to raise_error ZTK::TCPSocketCheckError
       end
 
       it "should throw an exception if the port is not specified" do
         subject.config.host = "127.0.0.1"
-        lambda{ subject.ready? }.should raise_error ZTK::TCPSocketCheckError, "You must supply a port!"
+        expect{ subject.ready? }.to raise_error ZTK::TCPSocketCheckError
       end
 
     end
@@ -57,7 +57,7 @@ describe ZTK::TCPSocketCheck do
             config.host = "github.com"
             config.port = 22
           end
-          subject.ready?.should == true
+          expect(subject.ready?).to be == true
         end
 
         it "should return false on a remote read check to 127.0.0.1:1" do
@@ -65,7 +65,7 @@ describe ZTK::TCPSocketCheck do
             config.host = "127.0.0.1"
             config.port = 1
           end
-          subject.ready?.should == false
+          expect(subject.ready?).to be == false
         end
 
       end
@@ -78,7 +78,7 @@ describe ZTK::TCPSocketCheck do
             config.port = 80
             config.data = "GET"
           end
-          subject.ready?.should == true
+          expect(subject.ready?).to be == true
         end
 
         it "should return false on a remote write check to 127.0.0.1:1" do
@@ -87,7 +87,7 @@ describe ZTK::TCPSocketCheck do
             config.port = 1
             config.data = "GET"
           end
-          subject.ready?.should == false
+          expect(subject.ready?).to be == false
         end
 
       end
@@ -104,7 +104,7 @@ describe ZTK::TCPSocketCheck do
             config.port = 1
             config.wait = WAIT_SMALL
           end
-          subject.wait.should == false
+          expect(subject.wait).to be == false
         end
 
         it "should return true on a read check to github.com:22" do
@@ -113,7 +113,7 @@ describe ZTK::TCPSocketCheck do
             config.port = 22
             config.wait = WAIT_SMALL
           end
-          subject.wait.should == true
+          expect(subject.wait).to be == true
         end
 
       end
@@ -127,7 +127,7 @@ describe ZTK::TCPSocketCheck do
             config.data = "GET"
             config.wait = WAIT_SMALL
           end
-          subject.wait.should == false
+          expect(subject.wait).to be == false
         end
 
         it "should return true on a write check to www.google.com:80" do
@@ -137,7 +137,7 @@ describe ZTK::TCPSocketCheck do
             config.data = "GET"
             config.wait = WAIT_SMALL
           end
-          subject.wait.should == true
+          expect(subject.wait).to be == true
         end
 
       end

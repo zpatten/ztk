@@ -27,7 +27,7 @@ describe ZTK::UI do
   describe "class" do
 
     it "should be ZTK::UI" do
-      subject.should be_an_instance_of ZTK::UI
+      expect(subject).to be_an_instance_of ZTK::UI
     end
 
   end
@@ -35,34 +35,34 @@ describe ZTK::UI do
   describe "behaviour" do
 
     it "should return a class with accessors for stdout, stderr, stdin and a logger" do
-      subject.stdout.should == $stdout
-      subject.stderr.should == $stderr
-      subject.stdin.should == $stdin
-      subject.logger.should be_an_instance_of ZTK::Logger
+      expect(subject.stdout).to be == $stdout
+      expect(subject.stderr).to be == $stderr
+      expect(subject.stdin).to be == $stdin
+      expect(subject.logger).to be_an_instance_of ZTK::Logger
     end
 
     it "should allow us to set a custom STDOUT" do
       stdout = StringIO.new
       ui = ZTK::UI.new(:stdout => stdout)
-      ui.stdout.should == stdout
+      expect(ui.stdout).to be == stdout
     end
 
     it "should allow us to set a custom STDERR" do
       stderr = StringIO.new
       ui = ZTK::UI.new(:stderr => stderr)
-      ui.stderr.should == stderr
+      expect(ui.stderr).to be == stderr
     end
 
     it "should allow us to set a custom STDIN" do
       stdin = StringIO.new
       ui = ZTK::UI.new(:stdin => stdin)
-      ui.stdin.should == stdin
+      expect(ui.stdin).to be == stdin
     end
 
     it "should allow us to set a custom LOGGER" do
       logger = StringIO.new
       ui = ZTK::UI.new(:logger => logger)
-      ui.logger.should == logger
+      expect(ui.logger).to be == logger
     end
 
   end
