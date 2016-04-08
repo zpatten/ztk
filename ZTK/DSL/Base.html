@@ -134,9 +134,20 @@ class initializers.</p>
 <p>You can also instantiate classes separately and associate them after the
 fact.  That is not shown in this example.</p>
 
-<p><em>example code</em>:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='kw'>class</span> <span class='const'>Network</span> <span class='op'>&lt;</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Base</span>
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Building infrastructure DSL objects</p>
+</div></p>
+      
+      <pre class="example code"><code>
+<span class='kw'>class</span> <span class='const'>Network</span> <span class='op'>&lt;</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Base</span>
   <span class='id identifier rubyid_has_many'>has_many</span> <span class='symbol'>:servers</span>
 
   <span class='id identifier rubyid_attribute'>attribute</span> <span class='symbol'>:name</span>
@@ -178,68 +189,10 @@ fact.  That is not shown in this example.</p>
 
 <span class='const'>Server</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span>
 <span class='const'>Server</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span>
-<span class='const'>Server</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='symbol'>:my_server</span><span class='rparen'>)</span>
-</code></pre>
-
-<p><em>pry output</em>:</p>
-
-<pre class="code ruby"><code class="ruby">[1] pry(main)&gt; class Network &lt; ZTK::DSL::Base
-[1] pry(main)*   has_many :servers
-[1] pry(main)*
-[1] pry(main)*   attribute :name
-[1] pry(main)*   attribute :gw
-[1] pry(main)*   attribute :network
-[1] pry(main)*   attribute :netmask
-[1] pry(main)* end
-=&gt; #&lt;Proc:0x0000000121f498@/home/zpatten/Dropbox/code/chef-repo/vendor/checkouts/ztk/lib/ztk/dsl/core/attributes.rb:45 (lambda)&gt;
-[2] pry(main)&gt; class Server &lt; ZTK::DSL::Base
-[2] pry(main)*   belongs_to :network
-[2] pry(main)*
-[2] pry(main)*   attribute :name
-[2] pry(main)* end
-=&gt; #&lt;Proc:0x00000001983108@/home/zpatten/Dropbox/code/chef-repo/vendor/checkouts/ztk/lib/ztk/dsl/core/attributes.rb:45 (lambda)&gt;
-[3] pry(main)&gt; Network.new do
-[3] pry(main)*   id :leet_net
-[3] pry(main)*   name &quot;leet-net&quot;
-[3] pry(main)*   gw &quot;7.3.3.1&quot;
-[3] pry(main)*   network &quot;7.3.3.0&quot;
-[3] pry(main)*   netmask &quot;255.255.255.0&quot;
-[3] pry(main)*
-[3] pry(main)*   server do
-[3] pry(main)*     name &quot;leet-server&quot;
-[3] pry(main)*   end
-[3] pry(main)*
-[3] pry(main)*   server do
-[3] pry(main)*     id :my_server
-[3] pry(main)*     name &quot;my-server&quot;
-[3] pry(main)*   end
-[3] pry(main)*
-[3] pry(main)*   server do
-[3] pry(main)*     name &quot;dev-server&quot;
-[3] pry(main)*   end
-[3] pry(main)* end
-=&gt; #&lt;Network id=:leet_net attributes={:id=&gt;:leet_net, :name=&gt;&quot;leet-net&quot;, :gw=&gt;&quot;7.3.3.1&quot;, :network=&gt;&quot;7.3.3.0&quot;, :netmask=&gt;&quot;255.255.255.0&quot;}, has_many_references=1&gt;
-[4] pry(main)&gt; Network.count
-=&gt; 1
-[5] pry(main)&gt; Network.all
-=&gt; [#&lt;Network id=:leet_net attributes={:id=&gt;:leet_net, :name=&gt;&quot;leet-net&quot;, :gw=&gt;&quot;7.3.3.1&quot;, :network=&gt;&quot;7.3.3.0&quot;, :netmask=&gt;&quot;255.255.255.0&quot;}, has_many_references=1&gt;]
-[6] pry(main)&gt; Network.find(:leet_net)
-=&gt; [#&lt;Network id=:leet_net attributes={:id=&gt;:leet_net, :name=&gt;&quot;leet-net&quot;, :gw=&gt;&quot;7.3.3.1&quot;, :network=&gt;&quot;7.3.3.0&quot;, :netmask=&gt;&quot;255.255.255.0&quot;}, has_many_references=1&gt;]
-[7] pry(main)&gt; Server.count
-=&gt; 3
-[8] pry(main)&gt; Server.all
-=&gt; [#&lt;Server id=2 attributes={:id=&gt;2, :name=&gt;&quot;leet-server&quot;, :network_id=&gt;:leet_net}, belongs_to_references=1&gt;,
- #&lt;Server id=:my_server attributes={:id=&gt;:my_server, :name=&gt;&quot;my-server&quot;, :network_id=&gt;:leet_net}, belongs_to_references=1&gt;,
- #&lt;Server id=4 attributes={:id=&gt;4, :name=&gt;&quot;dev-server&quot;, :network_id=&gt;:leet_net}, belongs_to_references=1&gt;]
-[9] pry(main)&gt; Server.find(:my_server)
-=&gt; [#&lt;Server id=:my_server attributes={:id=&gt;:my_server, :name=&gt;&quot;my-server&quot;, :network_id=&gt;:leet_net}, belongs_to_references=1&gt;]
-</code></pre>
-
-
+<span class='const'>Server</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='symbol'>:my_server</span><span class='rparen'>)</span></code></pre>
+    
   </div>
-</div>
-<div class="tags">
-  
+
 <p class="tag_title">Author:</p>
 <ul class="author">
   
@@ -463,15 +416,15 @@ fact.  That is not shown in this example.</p>
       <pre class="lines">
 
 
-153
-154
-155
-156
-157
-158</pre>
+100
+101
+102
+103
+104
+105</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/base.rb', line 153</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/base.rb', line 100</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='op'>=</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span> <span class='op'>||</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_next_id'>next_id</span><span class='rparen'>)</span>
@@ -519,12 +472,12 @@ fact.  That is not shown in this example.</p>
       <pre class="lines">
 
 
-149
-150
-151</pre>
+96
+97
+98</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/base.rb', line 149</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/base.rb', line 96</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_extended'>extended</span><span class='lparen'>(</span><span class='id identifier rubyid_base'>base</span><span class='rparen'>)</span>
   <span class='comment'># NOOP
@@ -562,12 +515,12 @@ fact.  That is not shown in this example.</p>
       <pre class="lines">
 
 
-144
-145
-146</pre>
+91
+92
+93</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/base.rb', line 144</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/base.rb', line 91</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_included'>included</span><span class='lparen'>(</span><span class='id identifier rubyid_base'>base</span><span class='rparen'>)</span>
   <span class='comment'># NOOP
@@ -605,15 +558,15 @@ fact.  That is not shown in this example.</p>
       <pre class="lines">
 
 
-136
-137
-138
-139
-140
-141</pre>
+83
+84
+85
+86
+87
+88</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/base.rb', line 136</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/base.rb', line 83</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_inherited'>inherited</span><span class='lparen'>(</span><span class='id identifier rubyid_base'>base</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:extend</span><span class='comma'>,</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>DSL</span><span class='op'>::</span><span class='const'>Base</span><span class='op'>::</span><span class='const'>ClassMethods</span><span class='rparen'>)</span>
@@ -647,22 +600,22 @@ fact.  That is not shown in this example.</p>
       <pre class="lines">
 
 
-160
-161
-162
-163
-164
-165
-166
-167
-168
-169
-170
-171
-172</pre>
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/base.rb', line 160</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/base.rb', line 107</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_do_block'>do_block</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
@@ -727,16 +680,16 @@ representation of the instance.</p>
       <pre class="lines">
 
 
-180
-181
-182
-183
-184
-185
-186</pre>
+127
+128
+129
+130
+131
+132
+133</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/base.rb', line 180</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/dsl/base.rb', line 127</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
   <span class='id identifier rubyid_details'>details</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -755,7 +708,7 @@ representation of the instance.</p>
 </div>
 
     <div id="footer">
-  Generated on Fri Apr  8 00:27:04 2016 by
+  Generated on Fri Apr  8 12:29:41 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.3.0).
 </div>
