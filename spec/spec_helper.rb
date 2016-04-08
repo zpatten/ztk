@@ -17,26 +17,24 @@
 #   limitations under the License.
 #
 ################################################################################
+
+require 'codeclimate-test-reporter'
+require 'coveralls'
 require 'simplecov'
 require 'simplecov-rcov'
-################################################################################
-ENV['CODECLIMATE_REPO_TOKEN'] = "7311cce1cee596c6a6c725fb086228a1901f2ba2d3592061842d24b40d2e40e8"
-require "codeclimate-test-reporter"
-CodeClimate::TestReporter.start
-################################################################################
-require 'coveralls'
-Coveralls.wear!
-################################################################################
+require 'yarjuf'
+
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new(
   [
+    CodeClimate::TestReporter::Formatter,
+    Coveralls::SimpleCov::Formatter,
     SimpleCov::Formatter::HTMLFormatter,
-    SimpleCov::Formatter::RcovFormatter,
-    Coveralls::SimpleCov::Formatter
+    SimpleCov::Formatter::RcovFormatter
   ]
 )
+
 SimpleCov.start
-################################################################################
-require 'yarjuf'
+
 ################################################################################
 
 require 'tempfile'
