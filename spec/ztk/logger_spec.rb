@@ -34,7 +34,7 @@ describe ZTK::Logger do
     }
   end
 
-  let(:logfile) { File.join(File.dirname(Tempfile.new), "logger-#{Time.now.to_i}") }
+  let(:logfile) { File.join(File.dirname(Tempfile.new('logger')), "logger-#{Time.now.to_i}") }
 
   subject { ZTK::Logger.new(logfile) }
 
