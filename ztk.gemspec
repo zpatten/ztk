@@ -22,19 +22,19 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'ztk/version'
 
 Gem::Specification.new do |spec|
-  spec.name                  = "ztk"
-  spec.version               = ZTK::VERSION
-  spec.authors               = %(Zachary Patten)
-  spec.email                 = [ %(zpatten AT jovelabs DOT io) ]
-  spec.description           = %(Zachary's Tool Kit contains a collection of reusable classes meant to simplify development of complex systems in Ruby.  These classes provide functionality I often find myself needing from project to project.  Instead of reinventing the wheel each time, I've started building a collection of reusable classes.  Easy-bake DSLs, parallel processing, complex logging, templating and many other useful design patterns, for example are all contained in simple, reusable classes with a common interface and configuration style.)
-  spec.summary               = %(Zachary's Tool Kit contains a collection of reusable classes meant to simplify development of complex systems in Ruby.)
-  spec.homepage              = "https://github.com/zpatten/ztk"
-  spec.license               = "Apache 2.0"
+  spec.name          = "ztk"
+  spec.version       = ZTK::VERSION
+  spec.authors       = %(Zachary Patten)
+  spec.email         = [ %(zpatten AT jovelabs DOT io) ]
+  spec.description   = %(Zachary's Tool Kit contains a collection of reusable classes meant to simplify development of complex systems in Ruby.  These classes provide functionality I often find myself needing from project to project.  Instead of reinventing the wheel each time, I've started building a collection of reusable classes.  Easy-bake DSLs, parallel processing, complex logging, templating and many other useful design patterns, for example are all contained in simple, reusable classes with a common interface and configuration style.)
+  spec.summary       = %(Zachary's Tool Kit contains a collection of reusable classes meant to simplify development of complex systems in Ruby.)
+  spec.homepage      = "https://github.com/zpatten/ztk"
+  spec.license       = "Apache 2.0"
 
-  spec.files                 = `git ls-files`.split($\)
-  spec.executables           = spec.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
-  spec.test_files            = spec.files.grep(%r{^(test|spec|features)/})
-  spec.require_paths         = ["lib"]
+  spec.files         = `git ls-files`.split($\)
+  spec.executables   = spec.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
+  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.require_paths = ["lib"]
 
   spec.required_ruby_version = '>= 2.0.0'
 
