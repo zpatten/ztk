@@ -41,7 +41,7 @@ namespace :docs do
 
       Dir.chdir(DOC_PATH) do
         system(%(git add -Av))
-        system(%(git commit -m"#{commit_message.join}"))
+        system(%(git commit -S -m"#{commit_message.join}"))
         system(%(git push origin gh-pages))
       end
     end
