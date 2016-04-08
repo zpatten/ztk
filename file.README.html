@@ -63,13 +63,37 @@
 
     <div id="content"><div id='filecontents'><p><a href="http://badge.fury.io/rb/ztk"><img src="https://badge.fury.io/rb/ztk.png" alt="Gem Version"></a>
 <a href="http://travis-ci.org/zpatten/ztk"><img src="https://secure.travis-ci.org/zpatten/ztk.png" alt="Build Status"></a>
-<a href="https://coveralls.io/r/zpatten/ztk"><img src="https://coveralls.io/repos/zpatten/ztk/badge.png?branch=master" alt="Coverage Status"></a>
+<a href="https://coveralls.io/github/zpatten/ztk?branch=master"><img src="https://coveralls.io/repos/github/zpatten/ztk/badge.png?branch=master" alt="Coverage Status"></a>
 <a href="https://gemnasium.com/zpatten/ztk"><img src="https://gemnasium.com/zpatten/ztk.png" alt="Dependency Status"></a>
 <a href="https://codeclimate.com/github/zpatten/ztk"><img src="https://codeclimate.com/github/zpatten/ztk.png" alt="Code Climate"></a></p>
 
 <h1>ZTK</h1>
 
 <p>Zachary&#39;s Tool Kit contains a collection of reusable classes meant to simplify development of complex systems in Ruby.  These classes provide functionality I often find myself needing from project to project.  Instead of reinventing the wheel each time, I&#39;ve started building a collection of reusable classes.  Easy-bake DSLs, parallel processing, complex logging, templating and many other useful design patterns, for example are all contained in simple, reusable classes with a common interface and configuration style.</p>
+
+<h2>INSTALLATION</h2>
+
+<p>Add this line to your application&#39;s Gemfile:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_gem'>gem</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ztk</span><span class='tstring_end'>&#39;</span></span>
+</code></pre>
+
+<p>And then execute:</p>
+
+<pre class="code ruby"><code class="ruby">$ bundle
+</code></pre>
+
+<p>Or install it yourself as:</p>
+
+<pre class="code ruby"><code class="ruby">$ gem install ztk
+</code></pre>
+
+<p>Then run the pry console to play with it:</p>
+
+<pre class="code ruby"><code class="ruby">$ bundle exec ztk
+</code></pre>
+
+<h2>USAGE</h2>
 
 <ul>
 <li><strong>ZTK::ANSI</strong></li>
@@ -173,6 +197,10 @@
 
 <p>UI management; this class encapsulates STDOUT, STDERR, STDIN and a Ruby logger; as well as some other helpful flags.  This allows you to easily present a unified UI interface and allows for easy redirection of that interface (really helpful when using StringIO&#39;s with rspec to test program output for example).  Read more at the <a href="http://zpatten.github.io/ztk/ZTK/UI.html">ZTK::UI</a> documentation.</p>
 
+<h2>CONTRIBUTING</h2>
+
+<p>I await your pull request.</p>
+
 <h1>RUBIES TESTED AGAINST</h1>
 
 <ul>
@@ -232,7 +260,7 @@ limitations under the License.</p>
 </div></div>
 
     <div id="footer">
-  Generated on Thu Apr  7 23:59:11 2016 by
+  Generated on Fri Apr  8 00:27:02 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.3.0).
 </div>
