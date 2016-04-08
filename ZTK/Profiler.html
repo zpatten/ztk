@@ -113,41 +113,6 @@
 to allow the consumer to define timing profiles in an ad hoc manner using
 a block.</p>
 
-<p><em>Example Output</em>:</p>
-
-<pre class="code ruby"><code class="ruby">--+ OperationAlpha 0.6070s
-  |--+ OperationOne 0.3035s
-  |  |--+ OperationA 0.1011s
-  |  |--+ OperationB 0.1011s
-  |  |--+ OperationC 0.1011s
-  |--+ OperationTwo 0.3035s
-  |  |--+ OperationD 0.1011s
-  |  |--+ OperationE 0.1011s
-  |  |--+ OperationF 0.1011s
---+ OperationBeta 0.3034s
-  |--+ OperationThree 0.3034s
-  |  |--+ OperationA 0.1011s
-  |  |--+ OperationB 0.1011s
-  |  |--+ OperationC 0.1011s
-
- OperationAlpha: 0.6070s (22.2%)
-   OperationOne: 0.3035s (11.1%)
-     OperationA: 0.2022s (7.4%)
-     OperationB: 0.2022s (7.4%)
-     OperationC: 0.2022s (7.4%)
-   OperationTwo: 0.3035s (11.1%)
-     OperationD: 0.1011s (3.7%)
-     OperationE: 0.1011s (3.7%)
-     OperationF: 0.1011s (3.7%)
-  OperationBeta: 0.3034s (11.1%)
- OperationThree: 0.3034s (11.1%)
-
-   Nested Time: 2.7306s
-   Actual Time: 0.9110s
- Profiled Time: 0.9105s
-  Missing Time: 0.0005s
-</code></pre>
-
 
   </div>
 </div>
@@ -157,7 +122,7 @@ a block.</p>
     <p class="tag_title">Examples:</p>
     
       
-        <p class="example_title"><div class='inline'><p>Example of nested profiling:</p>
+        <p class="example_title"><div class='inline'><p>Nested profiling</p>
 </div></p>
       
       <pre class="example code"><code>
@@ -202,6 +167,43 @@ a block.</p>
 <span class='kw'>end</span>
 
 <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_report'>report</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Report output</p>
+</div></p>
+      
+      <pre class="example code"><code>
+--+ OperationAlpha 0.6070s
+  |--+ OperationOne 0.3035s
+  |  |--+ OperationA 0.1011s
+  |  |--+ OperationB 0.1011s
+  |  |--+ OperationC 0.1011s
+  |--+ OperationTwo 0.3035s
+  |  |--+ OperationD 0.1011s
+  |  |--+ OperationE 0.1011s
+  |  |--+ OperationF 0.1011s
+--+ OperationBeta 0.3034s
+  |--+ OperationThree 0.3034s
+  |  |--+ OperationA 0.1011s
+  |  |--+ OperationB 0.1011s
+  |  |--+ OperationC 0.1011s
+
+ OperationAlpha: 0.6070s (22.2%)
+   OperationOne: 0.3035s (11.1%)
+     OperationA: 0.2022s (7.4%)
+     OperationB: 0.2022s (7.4%)
+     OperationC: 0.2022s (7.4%)
+   OperationTwo: 0.3035s (11.1%)
+     OperationD: 0.1011s (3.7%)
+     OperationE: 0.1011s (3.7%)
+     OperationF: 0.1011s (3.7%)
+  OperationBeta: 0.3034s (11.1%)
+ OperationThree: 0.3034s (11.1%)
+
+   Nested Time: 2.7306s
+   Actual Time: 0.9110s
+ Profiled Time: 0.9105s
+  Missing Time: 0.0005s</code></pre>
     
   </div>
 
@@ -267,7 +269,7 @@ a block.</p>
 </div>
 
     <div id="footer">
-  Generated on Thu Apr  7 23:39:29 2016 by
+  Generated on Thu Apr  7 23:55:21 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.3.0).
 </div>

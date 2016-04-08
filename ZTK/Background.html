@@ -121,32 +121,31 @@ in the child process.</p>
     <p class="tag_title">Examples:</p>
     
       
-        <p class="example_title"><div class='inline'><p>Run a background process which simply sleeps illustrating the</p>
+        <p class="example_title"><div class='inline'><p>Run a background process which simply sleeps illustrating the callback hooks:</p>
 </div></p>
       
-      <pre class="example code"><code><span class='id identifier rubyid_callback'>callback</span> <span class='label'>hooks:</span>
+      <pre class="example code"><code>
+<span class='id identifier rubyid_a_callback'>a_callback</span> <span class='op'>=</span> <span class='const'>Proc</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_pid'>pid</span><span class='op'>|</span>
+  <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hello from After Callback - PID </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_pid'>pid</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span>
 
-  <span class='id identifier rubyid_a_callback'>a_callback</span> <span class='op'>=</span> <span class='const'>Proc</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_pid'>pid</span><span class='op'>|</span>
-    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hello from After Callback - PID </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_pid'>pid</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>end</span>
+<span class='id identifier rubyid_b_callback'>b_callback</span> <span class='op'>=</span> <span class='const'>Proc</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_pid'>pid</span><span class='op'>|</span>
+  <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hello from Before Callback - PID </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_pid'>pid</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span>
 
-  <span class='id identifier rubyid_b_callback'>b_callback</span> <span class='op'>=</span> <span class='const'>Proc</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_pid'>pid</span><span class='op'>|</span>
-    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hello from Before Callback - PID </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_pid'>pid</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>end</span>
+<span class='id identifier rubyid_background'>background</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Background</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+<span class='id identifier rubyid_background'>background</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_config'>config</span><span class='op'>|</span>
+  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_before_fork'>before_fork</span> <span class='op'>=</span> <span class='id identifier rubyid_b_callback'>b_callback</span>
+  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_after_fork'>after_fork</span> <span class='op'>=</span> <span class='id identifier rubyid_a_callback'>a_callback</span>
+<span class='kw'>end</span>
 
-  <span class='id identifier rubyid_background'>background</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Background</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
-  <span class='id identifier rubyid_background'>background</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_config'>config</span><span class='op'>|</span>
-    <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_before_fork'>before_fork</span> <span class='op'>=</span> <span class='id identifier rubyid_b_callback'>b_callback</span>
-    <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_after_fork'>after_fork</span> <span class='op'>=</span> <span class='id identifier rubyid_a_callback'>a_callback</span>
-  <span class='kw'>end</span>
+<span class='id identifier rubyid_pid'>pid</span> <span class='op'>=</span> <span class='id identifier rubyid_background'>background</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='int'>1</span><span class='rparen'>)</span>
+<span class='kw'>end</span>
+<span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_pid'>pid</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span>
 
-  <span class='id identifier rubyid_pid'>pid</span> <span class='op'>=</span> <span class='id identifier rubyid_background'>background</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='int'>1</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-  <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_pid'>pid</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span>
-
-  <span class='id identifier rubyid_background'>background</span><span class='period'>.</span><span class='id identifier rubyid_wait'>wait</span>
-  <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_background'>background</span><span class='period'>.</span><span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span></code></pre>
+<span class='id identifier rubyid_background'>background</span><span class='period'>.</span><span class='id identifier rubyid_wait'>wait</span>
+<span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_background'>background</span><span class='period'>.</span><span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span></code></pre>
     
   </div>
 
@@ -416,15 +415,15 @@ in the child process.</p>
       <pre class="lines">
 
 
+51
 52
 53
 54
 55
-56
-57</pre>
+56</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/background.rb', line 52</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/background.rb', line 51</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_configuration'>configuration</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_configuration'>configuration</span><span class='rparen'>)</span>
@@ -469,12 +468,12 @@ in the child process.</p>
       <pre class="lines">
 
 
+47
 48
-49
-50</pre>
+49</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/background.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/background.rb', line 47</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pid'>pid</span>
   <span class='ivar'>@pid</span>
@@ -511,12 +510,12 @@ in the child process.</p>
       <pre class="lines">
 
 
+47
 48
-49
-50</pre>
+49</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/background.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/background.rb', line 47</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_result'>result</span>
   <span class='ivar'>@result</span>
@@ -570,12 +569,12 @@ in the child process.</p>
       <pre class="lines">
 
 
+128
 129
-130
-131</pre>
+130</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/background.rb', line 129</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/background.rb', line 128</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_alive?'>alive?</span>
   <span class='lparen'>(</span><span class='const'>Process</span><span class='period'>.</span><span class='id identifier rubyid_getpgid'>getpgid</span><span class='lparen'>(</span><span class='ivar'>@pid</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Integer</span><span class='rparen'>)</span> <span class='kw'>rescue</span> <span class='kw'>false</span><span class='rparen'>)</span>
@@ -622,12 +621,12 @@ in the child process.</p>
       <pre class="lines">
 
 
+132
 133
-134
-135</pre>
+134</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/background.rb', line 133</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/background.rb', line 132</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_dead?'>dead?</span>
   <span class='op'>!</span><span class='id identifier rubyid_alive?'>alive?</span>
@@ -714,6 +713,7 @@ the parent processes.</p>
       <pre class="lines">
 
 
+65
 66
 67
 68
@@ -745,11 +745,10 @@ the parent processes.</p>
 94
 95
 96
-97
-98</pre>
+97</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/background.rb', line 66</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/background.rb', line 65</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='op'>!</span><span class='id identifier rubyid_block_given?'>block_given?</span> <span class='kw'>and</span> <span class='id identifier rubyid_log_and_raise'>log_and_raise</span><span class='lparen'>(</span><span class='const'>BackgroundError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>You must supply a block to the process method!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -840,6 +839,7 @@ is returned.</p>
       <pre class="lines">
 
 
+112
 113
 114
 115
@@ -853,11 +853,10 @@ is returned.</p>
 123
 124
 125
-126
-127</pre>
+126</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/background.rb', line 113</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/background.rb', line 112</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_wait'>wait</span>
   <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>wait</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -884,7 +883,7 @@ is returned.</p>
 </div>
 
     <div id="footer">
-  Generated on Thu Apr  7 23:39:30 2016 by
+  Generated on Thu Apr  7 23:55:21 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.3.0).
 </div>
