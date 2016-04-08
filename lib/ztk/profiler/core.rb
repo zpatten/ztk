@@ -54,8 +54,12 @@ module ZTK
       end
 
       def total_time
-        stop
-        @@end_time - @@start_time
+        if @@start_time.nil?
+          raise ProfilerError, "You must start the profiler in order to calculate a total time!"
+        else
+          stop
+          @@end_time - @@start_time
+        end
       end
 
       def report(options={})
