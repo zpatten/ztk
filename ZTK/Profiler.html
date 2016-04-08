@@ -113,51 +113,6 @@
 to allow the consumer to define timing profiles in an ad hoc manner using
 a block.</p>
 
-<p><em>Example Code</em>:</p>
-
-<pre class="code ruby"><code class="ruby"><span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_reset'>reset</span>
-
-<span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_alpha'>operation_alpha</span> <span class='kw'>do</span>
-  <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_one'>operation_one</span> <span class='kw'>do</span>
-    <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_a'>operation_a</span> <span class='kw'>do</span>
-      <span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='float'>0.1</span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
-    <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_b'>operation_b</span> <span class='kw'>do</span>
-      <span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='float'>0.1</span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
-    <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_c'>operation_c</span> <span class='kw'>do</span>
-      <span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='float'>0.1</span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
-  <span class='kw'>end</span>
-  <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_two'>operation_two</span> <span class='kw'>do</span>
-    <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_d'>operation_d</span> <span class='kw'>do</span>
-      <span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='float'>0.1</span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
-    <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_e'>operation_e</span> <span class='kw'>do</span>
-      <span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='float'>0.1</span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
-    <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_f'>operation_f</span> <span class='kw'>do</span>
-      <span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='float'>0.1</span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span>
-<span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_beta'>operation_beta</span> <span class='kw'>do</span>
-  <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_three'>operation_three</span> <span class='kw'>do</span>
-    <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_a'>operation_a</span> <span class='kw'>do</span>
-      <span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='float'>0.1</span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
-    <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_b'>operation_b</span> <span class='kw'>do</span>
-      <span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='float'>0.1</span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
-    <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_c'>operation_c</span> <span class='kw'>do</span>
-      <span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='float'>0.1</span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span>
-
-<span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_report'>report</span>
-</code></pre>
-
 <p><em>Example Output</em>:</p>
 
 <pre class="code ruby"><code class="ruby">--+ OperationAlpha 0.6070s
@@ -198,6 +153,58 @@ a block.</p>
 </div>
 <div class="tags">
   
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Example of nested profiling:</p>
+</div></p>
+      
+      <pre class="example code"><code>
+<span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_reset'>reset</span>
+
+<span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_alpha'>operation_alpha</span> <span class='kw'>do</span>
+  <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_one'>operation_one</span> <span class='kw'>do</span>
+    <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_a'>operation_a</span> <span class='kw'>do</span>
+      <span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='float'>0.1</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+    <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_b'>operation_b</span> <span class='kw'>do</span>
+      <span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='float'>0.1</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+    <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_c'>operation_c</span> <span class='kw'>do</span>
+      <span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='float'>0.1</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_two'>operation_two</span> <span class='kw'>do</span>
+    <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_d'>operation_d</span> <span class='kw'>do</span>
+      <span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='float'>0.1</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+    <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_e'>operation_e</span> <span class='kw'>do</span>
+      <span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='float'>0.1</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+    <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_f'>operation_f</span> <span class='kw'>do</span>
+      <span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='float'>0.1</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+<span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_beta'>operation_beta</span> <span class='kw'>do</span>
+  <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_three'>operation_three</span> <span class='kw'>do</span>
+    <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_a'>operation_a</span> <span class='kw'>do</span>
+      <span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='float'>0.1</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+    <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_b'>operation_b</span> <span class='kw'>do</span>
+      <span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='float'>0.1</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+    <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_operation_c'>operation_c</span> <span class='kw'>do</span>
+      <span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='float'>0.1</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+
+<span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Profiler</span><span class='period'>.</span><span class='id identifier rubyid_report'>report</span></code></pre>
+    
+  </div>
+
 <p class="tag_title">Author:</p>
 <ul class="author">
   
@@ -260,7 +267,7 @@ a block.</p>
 </div>
 
     <div id="footer">
-  Generated on Thu Apr  7 22:57:32 2016 by
+  Generated on Thu Apr  7 23:00:10 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.3.0).
 </div>
