@@ -11,6 +11,7 @@ module ZTK
 
       def start
         reset
+        @@start_time  = Time.now.utc
 
         true
       end
@@ -22,7 +23,7 @@ module ZTK
       end
 
       def reset
-        @@start_time  = Time.now.utc
+        @@start_time  = nil
         @@end_time    = nil
         @@timer_stack = Array.new
         Timer.reset
