@@ -7,7 +7,7 @@ branches:
   only:
     - master
 before_install:
-- "./spec/support/before_install.sh"
+  - "./spec/support/before_install.sh"
 notifications:
   irc:
     channels:
