@@ -270,7 +270,6 @@
       <pre class="lines">
 
 
-33
 34
 35
 36
@@ -291,10 +290,11 @@
 51
 52
 53
-54</pre>
+54
+55</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/profiler/core.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/profiler/core.rb', line 34</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_method_missing'>method_missing</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_method_args'>method_args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>You must supply a block to the profiler method </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_method_name'>method_name</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>!</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
@@ -345,11 +345,6 @@
       <pre class="lines">
 
 
-61
-62
-63
-64
-65
 66
 67
 68
@@ -362,10 +357,15 @@
 75
 76
 77
-78</pre>
+78
+79
+80
+81
+82
+83</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/profiler/core.rb', line 61</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/profiler/core.rb', line 66</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_report'>report</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -405,20 +405,20 @@
       <pre class="lines">
 
 
-24
 25
 26
 27
 28
 29
 30
-31</pre>
+31
+32</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/profiler/core.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/profiler/core.rb', line 25</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_reset'>reset</span>
-  <span class='cvar'>@@start_time</span>  <span class='op'>=</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='period'>.</span><span class='id identifier rubyid_utc'>utc</span>
+  <span class='cvar'>@@start_time</span>  <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='cvar'>@@end_time</span>    <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='cvar'>@@timer_stack</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
   <span class='const'>Timer</span><span class='period'>.</span><span class='id identifier rubyid_reset'>reset</span>
@@ -449,13 +449,15 @@
 13
 14
 15
-16</pre>
+16
+17</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/ztk/profiler/core.rb', line 12</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_start'>start</span>
   <span class='id identifier rubyid_reset'>reset</span>
+  <span class='cvar'>@@start_time</span>  <span class='op'>=</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='period'>.</span><span class='id identifier rubyid_utc'>utc</span>
 
   <span class='kw'>true</span>
 <span class='kw'>end</span></pre>
@@ -479,14 +481,14 @@
       <pre class="lines">
 
 
-18
 19
 20
 21
-22</pre>
+22
+23</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/profiler/core.rb', line 18</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/profiler/core.rb', line 19</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_stop'>stop</span>
   <span class='cvar'>@@end_time</span> <span class='op'>||=</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='period'>.</span><span class='id identifier rubyid_utc'>utc</span>
@@ -513,17 +515,25 @@
       <pre class="lines">
 
 
-56
 57
 58
-59</pre>
+59
+60
+61
+62
+63
+64</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ztk/profiler/core.rb', line 56</span>
+      <pre class="code"><span class="info file"># File 'lib/ztk/profiler/core.rb', line 57</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_total_time'>total_time</span>
-  <span class='id identifier rubyid_stop'>stop</span>
-  <span class='cvar'>@@end_time</span> <span class='op'>-</span> <span class='cvar'>@@start_time</span>
+  <span class='kw'>if</span> <span class='cvar'>@@start_time</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ProfilerError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>You must start the profiler in order to calculate a total time!</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_stop'>stop</span>
+    <span class='cvar'>@@end_time</span> <span class='op'>-</span> <span class='cvar'>@@start_time</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -535,7 +545,7 @@
 </div>
 
     <div id="footer">
-  Generated on Thu Apr  7 10:12:04 2016 by
+  Generated on Thu Apr  7 22:57:31 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.3.0).
 </div>
