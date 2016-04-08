@@ -1,12 +1,32 @@
 [![Gem Version](https://badge.fury.io/rb/ztk.png)](http://badge.fury.io/rb/ztk)
 [![Build Status](https://secure.travis-ci.org/zpatten/ztk.png)](http://travis-ci.org/zpatten/ztk)
-[![Coverage Status](https://coveralls.io/repos/zpatten/ztk/badge.png?branch=master)](https://coveralls.io/r/zpatten/ztk)
+[![Coverage Status](https://coveralls.io/repos/github/zpatten/ztk/badge.png?branch=master)](https://coveralls.io/github/zpatten/ztk?branch=master)
 [![Dependency Status](https://gemnasium.com/zpatten/ztk.png)](https://gemnasium.com/zpatten/ztk)
 [![Code Climate](https://codeclimate.com/github/zpatten/ztk.png)](https://codeclimate.com/github/zpatten/ztk)
 
 # ZTK
 
 Zachary's Tool Kit contains a collection of reusable classes meant to simplify development of complex systems in Ruby.  These classes provide functionality I often find myself needing from project to project.  Instead of reinventing the wheel each time, I've started building a collection of reusable classes.  Easy-bake DSLs, parallel processing, complex logging, templating and many other useful design patterns, for example are all contained in simple, reusable classes with a common interface and configuration style.
+
+## INSTALLATION
+
+Add this line to your application's Gemfile:
+
+    gem 'ztk'
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install ztk
+
+Then run the pry console to play with it:
+
+    $ bundle exec ztk
+
+## USAGE
 
 - **ZTK::ANSI**
 
@@ -75,6 +95,10 @@ Zachary's Tool Kit contains a collection of reusable classes meant to simplify d
 - **ZTK::UI**
 
   UI management; this class encapsulates STDOUT, STDERR, STDIN and a Ruby logger; as well as some other helpful flags.  This allows you to easily present a unified UI interface and allows for easy redirection of that interface (really helpful when using StringIO's with rspec to test program output for example).  Read more at the [ZTK::UI](http://zpatten.github.io/ztk/ZTK/UI.html) documentation.
+
+## CONTRIBUTING
+
+I await your pull request.
 
 # RUBIES TESTED AGAINST
 
