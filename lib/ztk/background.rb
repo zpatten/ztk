@@ -4,7 +4,7 @@ module ZTK
 
   # Background Error Class
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   class BackgroundError < Error; end
 
   # Background Processing Class
@@ -16,7 +16,7 @@ module ZTK
   # The after fork callback is called twice, once in the parent process and once
   # in the child process.
   #
-  # *example code*:
+  # @example Run a background process which simply sleeps illustrating the callback hooks:
   #
   #     a_callback = Proc.new do |pid|
   #       puts "Hello from After Callback - PID #{pid}"
@@ -40,47 +40,7 @@ module ZTK
   #     background.wait
   #     puts background.result.inspect
   #
-  # *pry output*:
-  #
-  #     [1] pry(main)> a_callback = Proc.new do |pid|
-  #     [1] pry(main)*   puts "Hello from After Callback - PID #{pid}"
-  #     [1] pry(main)* end
-  #     => #<Proc:0x00000001368a98@(pry):1>
-  #     [2] pry(main)>
-  #     [3] pry(main)> b_callback = Proc.new do |pid|
-  #     [3] pry(main)*   puts "Hello from Before Callback - PID #{pid}"
-  #     [3] pry(main)* end
-  #     => #<Proc:0x00000001060418@(pry):4>
-  #     [4] pry(main)>
-  #     [5] pry(main)> background = ZTK::Background.new
-  #     => #<ZTK::Background:0x00000001379118
-  #      @config=
-  #       #<OpenStruct stdout=#<IO:<STDOUT>>, stderr=#<IO:<STDERR>>, stdin=#<IO:<STDIN>>, logger=#<ZTK::Logger filename="/dev/null">>,
-  #      @result=nil>
-  #     [6] pry(main)> background.config do |config|
-  #     [6] pry(main)*   config.before_fork = b_callback
-  #     [6] pry(main)*   config.after_fork = a_callback
-  #     [6] pry(main)* end
-  #     => #<Proc:0x00000001368a98@(pry):1>
-  #     [7] pry(main)>
-  #     [8] pry(main)> pid = background.process do
-  #     [8] pry(main)*   sleep(1)
-  #     [8] pry(main)* end
-  #     Hello from Before Callback - PID 23564
-  #     Hello from After Callback - PID 23564
-  #     Hello from After Callback - PID 23578
-  #     => 23578
-  #     [9] pry(main)> puts pid.inspect
-  #     23578
-  #     => nil
-  #     [10] pry(main)>
-  #     [11] pry(main)> background.wait
-  #     => [23578, #<Process::Status: pid 23578 exit 0>, 1]
-  #     [12] pry(main)> puts background.result.inspect
-  #     1
-  #     => nil
-  #
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   class Background < ZTK::Base
 
     # Result Set

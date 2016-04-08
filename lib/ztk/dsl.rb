@@ -5,10 +5,10 @@ module ZTK
   # Generic Domain-specific Language Interface
   #
   # @see ZTK::DSL::Base
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   module DSL
 
-    # @author Zachary Patten <zachary AT jovelabs DOT com>
+    # @author Zachary Patten <zpatten AT jovelabs DOT io>
     class DSLError < Error; end
 
     require 'ztk/dsl/core'

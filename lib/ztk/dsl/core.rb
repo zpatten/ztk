@@ -2,7 +2,7 @@ module ZTK::DSL
 
   # DSL Core
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   # @api private
   module Core
     require 'ztk/dsl/core/attributes'
@@ -28,7 +28,7 @@ module ZTK::DSL
       end
     end
 
-    # @author Zachary Patten <zachary AT jovelabs DOT com>
+    # @author Zachary Patten <zpatten AT jovelabs DOT io>
     # module DualMethods
 
     #   def logger
@@ -43,7 +43,7 @@ module ZTK::DSL
 
     # end
 
-    # @author Zachary Patten <zachary AT jovelabs DOT com>
+    # @author Zachary Patten <zpatten AT jovelabs DOT io>
     module ClassMethods
 
       def cattr_accessor(*args)

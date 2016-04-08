@@ -1,6 +1,6 @@
 module ZTK::DSL::Core
 
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   # @api private
   module Options
 
@@ -10,7 +10,7 @@ module ZTK::DSL::Core
       end
     end
 
-    # @author Zachary Patten <zachary AT jovelabs DOT com>
+    # @author Zachary Patten <zpatten AT jovelabs DOT io>
     module ClassMethods
 
       def add_option(key)

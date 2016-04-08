@@ -1,3 +1,4 @@
+require 'redcarpet'
 require 'yard'
 require 'yard/rake/yardoc_task'
 
@@ -8,7 +9,7 @@ DOC_PATH    = File.join(VENDOR_PATH, "docs")
 namespace :docs do
 
   YARD::Rake::YardocTask.new(:generate) do |t|
-    t.options = ['--verbose', '-o', DOC_PATH]
+    t.options = ['--markup-provider=redcarpet', '--markup=markdown', '--verbose', '-o', DOC_PATH]
   end
 
   namespace :ghpages do
@@ -40,6 +41,7 @@ namespace :docs do
       commit_message << stats
 
       Dir.chdir(DOC_PATH) do
+        FileUtils.touch('.nojekyll')
         system(%(git add -Av))
         system(%(git commit -S -m"#{commit_message.join}"))
         system(%(git push origin gh-pages))

@@ -2,7 +2,7 @@ module ZTK
 
   # Report Error Class
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   class ReportError < Error; end
 
   # Report Class
@@ -14,7 +14,7 @@ module ZTK
   #
   # The idea here is that everything is auto-sized and simply displayed.
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   class Report < ZTK::Base
     require 'socket'
     require 'timeout'

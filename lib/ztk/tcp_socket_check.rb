@@ -5,7 +5,7 @@ module ZTK
 
   # TCPSocketCheck Error Class
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   class TCPSocketCheckError < Error; end
 
   # TCP Socket Checking Class
@@ -60,7 +60,7 @@ module ZTK
   #
   # The wait methods timeout is bound to the configuration option *wait*.
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   class TCPSocketCheck < ZTK::Base
 
     # @param [Hash] configuration Configuration options hash.

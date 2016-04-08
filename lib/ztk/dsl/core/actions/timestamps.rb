@@ -1,6 +1,6 @@
 module ZTK::DSL::Core::Actions
 
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   # @api private
   module Timestamps
 
@@ -14,7 +14,7 @@ module ZTK::DSL::Core::Actions
       end
     end
 
-    # @author Zachary Patten <zachary AT jovelabs DOT com>
+    # @author Zachary Patten <zpatten AT jovelabs DOT io>
     module ClassMethods
 
       def updated_at_timestamp

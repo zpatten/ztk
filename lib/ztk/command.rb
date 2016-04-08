@@ -2,21 +2,23 @@ module ZTK
 
   # Command Error Class
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   class CommandError < Error; end
 
   # Command Execution Class
   #
   # @example We can get a new instance of Command like so:
+  #
   #     cmd = ZTK::Command.new
   #
-  # @example If we wanted to redirect STDOUT and STDERR to a StringIO we can do this:
+  # @example Run a command and redirect STDOUT and STDERR to a StringIO
+  #
   #     std_combo = StringIO.new
   #     ui = ZTK::UI.new(:stdout => std_combo, :stderr => std_combo)
   #     cmd = ZTK::Command.new(:ui => ui, :silence => true)
   #     puts cmd.exec("hostname", :silence => false).inspect
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   class Command < ZTK::Base
     require 'ostruct'
     require 'timeout'

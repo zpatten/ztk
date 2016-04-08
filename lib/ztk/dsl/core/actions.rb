@@ -1,6 +1,6 @@
 module ZTK::DSL::Core
 
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   # @api private
   module Actions
     require 'ztk/dsl/core/actions/find'

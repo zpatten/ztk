@@ -2,10 +2,10 @@ module ZTK
 
   # Locator Error Class
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   class LocatorError < Error; end
 
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   class Locator
 
     class << self

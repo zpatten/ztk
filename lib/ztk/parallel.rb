@@ -4,7 +4,7 @@ module ZTK
 
   # Parallel Error Class
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   class ParallelError < Error; end
 
   # Parallel Processing Class
@@ -16,7 +16,7 @@ module ZTK
   # The after fork callback is called twice, once in the parent process and once
   # in the child process.
   #
-  # *example code*:
+  # @example Parallel processing with callbacks
   #
   #     a_callback = Proc.new do |pid|
   #       puts "Hello from After Callback - PID #{pid}"
@@ -43,57 +43,7 @@ module ZTK
   #     parallel.waitall
   #     puts parallel.results.inspect
   #
-  # *pry output*:
-  #
-  #     [1] pry(main)> a_callback = Proc.new do |pid|
-  #     [1] pry(main)*   puts "Hello from After Callback - PID #{pid}"
-  #     [1] pry(main)* end
-  #     => #<Proc:0x000000015a8768@(pry):1>
-  #     [2] pry(main)>
-  #     [3] pry(main)> b_callback = Proc.new do |pid|
-  #     [3] pry(main)*   puts "Hello from Before Callback - PID #{pid}"
-  #     [3] pry(main)* end
-  #     => #<Proc:0x000000012910e8@(pry):4>
-  #     [4] pry(main)>
-  #     [5] pry(main)> parallel = ZTK::Parallel.new
-  #     => #<ZTK::Parallel:0x000000015a9d48
-  #      @config=
-  #       #<OpenStruct stdout=#<IO:<STDOUT>>, stderr=#<IO:<STDERR>>, stdin=#<IO:<STDIN>>, logger=#<ZTK::Logger filename="/dev/null">, max_forks=12>,
-  #      @forks=[],
-  #      @results=[]>
-  #     [6] pry(main)> parallel.config do |config|
-  #     [6] pry(main)*   config.before_fork = b_callback
-  #     [6] pry(main)*   config.after_fork = a_callback
-  #     [6] pry(main)* end
-  #     => #<Proc:0x000000015a8768@(pry):1>
-  #     [7] pry(main)>
-  #     [8] pry(main)> puts Process.pid.inspect
-  #     24761
-  #     => nil
-  #     [9] pry(main)>
-  #     [10] pry(main)> 3.times do |x|
-  #     [10] pry(main)*   parallel.process do
-  #     [10] pry(main)*     x
-  #     [10] pry(main)*   end
-  #     [10] pry(main)* end
-  #     Hello from Before Callback - PID 24761
-  #     Hello from After Callback - PID 24761
-  #     Hello from Before Callback - PID 24761
-  #     Hello from After Callback - PID 24776
-  #     Hello from After Callback - PID 24761
-  #     Hello from Before Callback - PID 24761
-  #     Hello from After Callback - PID 24779
-  #     Hello from After Callback - PID 24761
-  #     Hello from After Callback - PID 24782
-  #     => 3
-  #     [11] pry(main)>
-  #     [12] pry(main)> parallel.waitall
-  #     => [0, 1, 2]
-  #     [13] pry(main)> puts parallel.results.inspect
-  #     [0, 1, 2]
-  #     => nil
-  #
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   class Parallel < ZTK::Base
 
     class Break < ParallelError; end

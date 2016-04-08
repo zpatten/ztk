@@ -1,6 +1,6 @@
 module ZTK::DSL::Core
 
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   # @api private
   module Attributes
 
@@ -16,7 +16,7 @@ module ZTK::DSL::Core
       @attributes ||= Hash.new
     end
 
-    # @author Zachary Patten <zachary AT jovelabs DOT com>
+    # @author Zachary Patten <zpatten AT jovelabs DOT io>
     module ClassMethods
 
       def attribute(key, options={})

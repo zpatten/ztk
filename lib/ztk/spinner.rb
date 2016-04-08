@@ -4,7 +4,7 @@ module ZTK
 
   # Spinner Error Class
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   class SpinnerError < Error; end
 
   # Spinner Class
@@ -13,7 +13,7 @@ module ZTK
   # a task is executed in the supplied block.  This indicator takes the form
   # of a spinner.
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   class Spinner
 
     class << self
@@ -35,7 +35,7 @@ module ZTK
       #   taking place "behind the scenes".
       # @return [Object] The return value of the block.
       #
-      # @author Zachary Patten <zachary AT jovelabs DOT com>
+      # @author Zachary Patten <zpatten AT jovelabs DOT io>
       # @author Stephen Nelson-Smith <stephen@atalanta-systems.com>
       def spin(options={}, &block)
         options = Base.build_config({

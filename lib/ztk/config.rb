@@ -4,7 +4,7 @@ module ZTK
 
   # Config Error Class
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   class ConfigError < Error; end
 
   # Configuration Module
@@ -43,7 +43,7 @@ module ZTK
   #
   #     puts C.message
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   module Config
 
     # Extend base class with this module.

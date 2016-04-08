@@ -4,7 +4,7 @@ module ZTK
 
   # Benchmark Error Class
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   class BenchmarkError < Error; end
 
   # Benchmark Class
@@ -16,7 +16,7 @@ module ZTK
   # the appropriate options it will display output to the user while
   # benchmarking the supplied block.
   #
-  # *example code*:
+  # @example Benchmark a simple sleep statement
   #
   #     message = "I wonder how long this will take?"
   #     mark = " ...looks like it took %0.4f seconds!"
@@ -24,19 +24,7 @@ module ZTK
   #       sleep(1.5)
   #     end
   #
-  # *pry output*:
-  #
-  #     [1] pry(main)> message = "I wonder how long this will take?"
-  #     => "I wonder how long this will take?"
-  #     [2] pry(main)> mark = " ...looks like it took %0.4f seconds!"
-  #     => " ...looks like it took %0.4f seconds!"
-  #     [3] pry(main)> ZTK::Benchmark.bench(:message => message, :mark => mark) do
-  #     [3] pry(main)*   sleep(1.5)
-  #     [3] pry(main)* end
-  #     I wonder how long this will take?  ...looks like it took 1.5229 seconds!
-  #     => 1.522871547
-  #
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   class Benchmark
 
     class << self

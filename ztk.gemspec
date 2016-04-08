@@ -1,6 +1,6 @@
 ################################################################################
 #
-#      Author: Zachary Patten <zachary AT jovelabs DOT com>
+#      Author: Zachary Patten <zpatten AT jovelabs DOT io>
 #   Copyright: Copyright (c) Zachary Patten
 #     License: Apache License, Version 2.0
 #
@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
   spec.name                  = "ztk"
   spec.version               = ZTK::VERSION
   spec.authors               = %(Zachary Patten)
-  spec.email                 = [ %(zachary AT jovelabs DOT com) ]
+  spec.email                 = [ %(zpatten AT jovelabs DOT io) ]
   spec.description           = %(Zachary's Tool Kit contains a collection of reusable classes meant to simplify development of complex systems in Ruby.  These classes provide functionality I often find myself needing from project to project.  Instead of reinventing the wheel each time, I've started building a collection of reusable classes.  Easy-bake DSLs, parallel processing, complex logging, templating and many other useful design patterns, for example are all contained in simple, reusable classes with a common interface and configuration style.)
   spec.summary               = %(Zachary's Tool Kit contains a collection of reusable classes meant to simplify development of complex systems in Ruby.)
   spec.homepage              = "https://github.com/zpatten/ztk"

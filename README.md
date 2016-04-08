@@ -104,7 +104,7 @@ Issues:
 
 ZTK - Zachary's Tool Kit
 
-* Author: Zachary Patten <zachary AT jovelabs DOT com> [![endorse](http://api.coderwall.com/zpatten/endorsecount.png)](http://coderwall.com/zpatten)
+* Author: Zachary Patten <zpatten AT jovelabs DOT io>
 * Copyright: Copyright (c) Zachary Patten
 * License: Apache License, Version 2.0
 

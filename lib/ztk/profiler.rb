@@ -4,7 +4,7 @@ module ZTK
 
   # Profiler Error Class
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   class ProfilerError < Error; end
 
   # Profiler Class
@@ -13,7 +13,7 @@ module ZTK
   # to allow the consumer to define timing profiles in an ad hoc manner using
   # a block.
   #
-  # *Example Code*:
+  # @example Nested profiling
   #
   #     ZTK::Profiler.reset
   #
@@ -57,7 +57,7 @@ module ZTK
   #
   #     ZTK::Profiler.report
   #
-  # *Example Output*:
+  # @example Report output
   #
   #     --+ OperationAlpha 0.6070s
   #       |--+ OperationOne 0.3035s
@@ -91,7 +91,7 @@ module ZTK
   #      Profiled Time: 0.9105s
   #       Missing Time: 0.0005s
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   class Profiler
 
     require 'ztk/profiler/core'

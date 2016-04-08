@@ -2,7 +2,7 @@ module ZTK
 
   # RescueRetry Error Class
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   class RescueRetryError < Error; end
 
   # RescueRetry Class
@@ -13,7 +13,7 @@ module ZTK
   # The block is yielded and if a valid exception occurs the block will be
   # re-executed for the set number of attempts.
   #
-  # *example code*:
+  # @example Retry specific exceptions
   #
   #     counter = 0
   #     ZTK::RescueRetry.try(:tries => 3, :on => EOFError) do
@@ -22,12 +22,16 @@ module ZTK
   #     end
   #     puts counter.inspect
   #
+  # @example Retry all exceptions
+  #
   #     counter = 0
   #     ZTK::RescueRetry.try(:tries => 3) do
   #       counter += 1
   #       raise "OMGWTFBBQ"
   #     end
   #     puts counter.inspect
+  #
+  # @example Retry exception is skipped because it does not match conditions
   #
   #     counter = 0
   #     ZTK::RescueRetry.try(:tries => 3, :on => EOFError) do
@@ -36,45 +40,7 @@ module ZTK
   #     end
   #     puts counter.inspect
   #
-  # *pry output*:
-  #
-  #     [1] pry(main)> counter = 0
-  #     => 0
-  #     [2] pry(main)> ZTK::RescueRetry.try(:tries => 3, :on => EOFError) do
-  #     [2] pry(main)*   counter += 1
-  #     [2] pry(main)*   raise EOFError
-  #     [2] pry(main)* end
-  #     EOFError: EOFError
-  #     from (pry):4:in `block in <main>'
-  #     [3] pry(main)> puts counter.inspect
-  #     3
-  #     => nil
-  #     [4] pry(main)>
-  #     [5] pry(main)> counter = 0
-  #     => 0
-  #     [6] pry(main)> ZTK::RescueRetry.try(:tries => 3) do
-  #     [6] pry(main)*   counter += 1
-  #     [6] pry(main)*   raise "OMGWTFBBQ"
-  #     [6] pry(main)* end
-  #     RuntimeError: OMGWTFBBQ
-  #     from (pry):10:in `block in <main>'
-  #     [7] pry(main)> puts counter.inspect
-  #     3
-  #     => nil
-  #     [8] pry(main)>
-  #     [9] pry(main)> counter = 0
-  #     => 0
-  #     [10] pry(main)> ZTK::RescueRetry.try(:tries => 3, :on => EOFError) do
-  #     [10] pry(main)*   counter += 1
-  #     [10] pry(main)*   raise "OMGWTFBBQ"
-  #     [10] pry(main)* end
-  #     RuntimeError: OMGWTFBBQ
-  #     from (pry):16:in `block in <main>'
-  #     [11] pry(main)> puts counter.inspect
-  #     1
-  #     => nil
-  #
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   class RescueRetry
 
     class << self

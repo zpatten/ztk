@@ -4,7 +4,7 @@ module ZTK
 
   # Base Error Class
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   class BaseError < Error; end
 
   # Base Class
@@ -16,7 +16,7 @@ module ZTK
   # You should never interact with this class directly; you should inherit it
   # and extend functionality as appropriate.
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   class Base
 
     class << self

@@ -2,12 +2,12 @@ module ZTK
 
   # GoogleChart Class
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   module GoogleChart
 
     # GoogleChart Error Class
     #
-    # @author Zachary Patten <zachary AT jovelabs DOT com>
+    # @author Zachary Patten <zpatten AT jovelabs DOT io>
     class GoogleChartError < Error; end
 
     require 'ztk/google_chart/base'

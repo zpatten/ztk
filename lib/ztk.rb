@@ -6,12 +6,12 @@ require 'ztk/version'
 # in mind.  It provides several classes that ease SSH and SFTP, templating,
 # and a myraid of other activities.
 #
-# @author Zachary Patten <zachary AT jovelabs DOT com>
+# @author Zachary Patten <zpatten AT jovelabs DOT io>
 module ZTK
 
   # ZTK error class
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   class Error < StandardError; end
 
   require 'ztk/base'

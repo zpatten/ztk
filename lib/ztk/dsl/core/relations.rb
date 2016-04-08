@@ -1,6 +1,6 @@
 module ZTK::DSL::Core
 
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   # @api private
   module Relations
     require 'ztk/dsl/core/relations/belongs_to'
@@ -14,7 +14,7 @@ module ZTK::DSL::Core
       end
     end
 
-    # @author Zachary Patten <zachary AT jovelabs DOT com>
+    # @author Zachary Patten <zpatten AT jovelabs DOT io>
     module ClassMethods
 
       def add_relation(key)

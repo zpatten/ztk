@@ -1,6 +1,6 @@
 module ZTK::DSL::Core::Relations
 
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   # @api private
   module BelongsTo
 
@@ -44,7 +44,7 @@ module ZTK::DSL::Core::Relations
       end
     end
 
-    # @author Zachary Patten <zachary AT jovelabs DOT com>
+    # @author Zachary Patten <zpatten AT jovelabs DOT io>
     module ClassMethods
 
       def belongs_to(key, options={})

@@ -128,7 +128,7 @@ module ZTK::DSL
   #     [9] pry(main)> Server.find(:my_server)
   #     => [#<Server id=:my_server attributes={:id=>:my_server, :name=>"my-server", :network_id=>:leet_net}, belongs_to_references=1>]
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   class Base
     include(ZTK::DSL::Core)
 
@@ -185,7 +185,7 @@ module ZTK::DSL
       "#<#{self.class.to_s} id=#{self.id.inspect} #{details.join(', ')}>"
     end
 
-    # @author Zachary Patten <zachary AT jovelabs DOT com>
+    # @author Zachary Patten <zpatten AT jovelabs DOT io>
     module ClassMethods
 
       # Class Inspect

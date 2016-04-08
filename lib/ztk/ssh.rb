@@ -2,7 +2,7 @@ module ZTK
 
   # SSH Error Class
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   class SSHError < Error; end
 
   # SSH Multi-function Class
@@ -58,7 +58,7 @@ module ZTK
   #       config.host_key_verify = true
   #     end
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   class SSH < ZTK::Base
     require 'ostruct'
     require 'tempfile'

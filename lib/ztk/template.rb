@@ -4,7 +4,7 @@ module ZTK
 
   # Template Error Class
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   class TemplateError < Error; end
 
   # Erubis Templating Class
@@ -23,7 +23,7 @@ module ZTK
   #     This is a test template!
   #     Hello World
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   class Template
 
     class << self

@@ -4,7 +4,7 @@ module ZTK
 
   # UI Error Class
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   class UIError < Error; end
 
   # UI Class
@@ -12,7 +12,7 @@ module ZTK
   # This class encapsulates a STDOUT, STDERR, STDIN
   # and logging device.
   #
-  # @author Zachary Patten <zachary AT jovelabs DOT com>
+  # @author Zachary Patten <zpatten AT jovelabs DOT io>
   class UI < ZTK::Base
 
     attr_accessor :stdout, :stderr, :stdin, :logger
