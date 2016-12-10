@@ -103,6 +103,8 @@ module ZTK
           $stderr.puts("SIG#{signal} received by PID##{Process.pid}; signaling child processes...")
 
           signal_all(signal)
+
+          exit!(1)
         end
       end
     end
