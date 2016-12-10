@@ -63,9 +63,9 @@ module ZTK
     # Default Maximum Number of Forks
     MAX_FORKS = case RUBY_PLATFORM
     when /darwin/ then
-      %x( sysctl hw.ncpu ).strip.split(':').last.strip.to_i
+      (%x( sysctl hw.ncpu ).strip.split(':').last.strip.to_i - 1)
     when /linux/ then
-      %x( grep -c processor /proc/cpuinfo ).strip.strip.to_i
+      (%x( grep -c processor /proc/cpuinfo ).strip.strip.to_i - 1)
     end
 
     # Platforms memory capacity in bytes
