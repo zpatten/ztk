@@ -149,7 +149,11 @@ module ZTK
 
         if !data.nil?
           config.ui.logger.debug { "write(#{data.inspect})" }
-          child_writer.write(Base64.encode64(Marshal.dump(data)))
+          begin
+            child_writer.write(Base64.encode64(Marshal.dump(data)))
+          rescue Exception => e
+            config.ui.logger.warn { "Exception while writing data to child_writer! - #{e.inspect}" }
+          end
         end
 
         child_reader.close
