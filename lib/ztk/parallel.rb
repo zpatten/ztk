@@ -1,4 +1,5 @@
 require 'base64'
+require 'timeout'
 
 module ZTK
 
@@ -47,6 +48,7 @@ module ZTK
   class Parallel < ZTK::Base
 
     class Break < ParallelError; end
+    class Timeout < ParallelError; end
 
     # Tests if we can marshal an exception via the results; otherwise creates
     # an exception we can marshal.
@@ -65,7 +67,7 @@ module ZTK
     when /darwin/ then
       (%x( sysctl hw.ncpu ).strip.split(':').last.strip.to_i - 1)
     when /linux/ then
-      (%x( grep -c processor /proc/cpuinfo ).strip.strip.to_i - 1)
+      (%x( grep -c processor /proc/cpuinfo ).strip.to_i - 1)
     end
 
     # Platforms memory capacity in bytes
@@ -75,6 +77,14 @@ module ZTK
     when /linux/ then
       (%x( grep MemTotal /proc/meminfo ).strip.split[1].to_i * 1024)
     end
+
+    # Child process timeout in seconds; <= 0 to disable
+    DEFAULT_CHILD_TIMEOUT = 0
+
+    # Which signals we want to trap for child signaling
+    trapped_signals = %w( term int hup )
+    trapped_signals << "kill" if RUBY_VERSION < "2.2.0"
+    TRAPPED_SIGNALS = trapped_signals.map(&:upcase)
 
     # Result Set
     attr_accessor :results
@@ -86,7 +96,8 @@ module ZTK
     def initialize(configuration={})
       super({
         :max_forks        => MAX_FORKS,
-        :raise_exceptions => true
+        :raise_exceptions => true,
+        :child_timeout    => DEFAULT_CHILD_TIMEOUT
       }, configuration)
 
       (config.max_forks < 1) and log_and_raise(ParallelError, "max_forks must be equal to or greater than one!")
@@ -95,16 +106,13 @@ module ZTK
       @results = Array.new
       GC.respond_to?(:copy_on_write_friendly=) and GC.copy_on_write_friendly = true
 
-      trapped_signals = %w( term int hup )
-      trapped_signals << "kill" if RUBY_VERSION < "2.2.0"
-
-      trapped_signals.map(&:upcase).each do |signal|
+      TRAPPED_SIGNALS.each do |signal|
         Signal.trap(signal) do
           $stderr.puts("SIG#{signal} received by PID##{Process.pid}; signaling child processes...")
 
           signal_all(signal)
 
-          exit!(1)
+          (signal == "INT") or exit!(1)
         end
       end
     end
@@ -129,37 +137,45 @@ module ZTK
 
       config.before_fork and config.before_fork.call(Process.pid)
       pid = Process.fork do
-
-        config.after_fork and config.after_fork.call(Process.pid)
-
-        parent_writer.close
-        parent_reader.close
-
-        data = nil
         begin
-          data = block.call
+          TRAPPED_SIGNALS.each { |signal| Signal.trap(signal) { } }
+
+          parent_writer.close
+          parent_reader.close
+
+          ::Timeout.timeout(config.child_timeout, ZTK::Parallel::Timeout) do
+            config.after_fork and config.after_fork.call(Process.pid)
+
+            data = nil
+            begin
+              data = block.call
+            rescue Exception => e
+              config.ui.logger.fatal { e.message }
+              e.backtrace.each do |line|
+                config.ui.logger << "#{line}\n"
+              end
+              data = ExceptionWrapper.new(e)
+            end
+
+            if !data.nil?
+              config.ui.logger.debug { "write(#{data.inspect})" }
+              begin
+                child_writer.write(Base64.encode64(Marshal.dump(data)))
+              rescue Exception => e
+                config.ui.logger.warn { "Exception while writing data to child_writer! - #{e.inspect}" }
+              end
+            end
+          end
+
         rescue Exception => e
-          config.ui.logger.fatal { e.message }
-          e.backtrace.each do |line|
-            config.ui.logger << line
-            config.ui.logger << "\n"
-          end
-          data = ExceptionWrapper.new(e)
+          config.ui.logger.fatal { "Exception in Child Process Handler: #{e.inspect}" }
+
+        ensure
+          child_reader.close rescue nil
+          child_writer.close rescue nil
+
+          Process.exit!(0)
         end
-
-        if !data.nil?
-          config.ui.logger.debug { "write(#{data.inspect})" }
-          begin
-            child_writer.write(Base64.encode64(Marshal.dump(data)))
-          rescue Exception => e
-            config.ui.logger.warn { "Exception while writing data to child_writer! - #{e.inspect}" }
-          end
-        end
-
-        child_reader.close
-        child_writer.close
-
-        Process.exit!(0)
       end
       config.after_fork and config.after_fork.call(Process.pid)
 
