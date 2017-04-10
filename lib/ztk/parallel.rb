@@ -143,27 +143,27 @@ module ZTK
           parent_writer.close
           parent_reader.close
 
-          ::Timeout.timeout(config.child_timeout, ZTK::Parallel::Timeout) do
-            config.after_fork and config.after_fork.call(Process.pid)
+          config.after_fork and config.after_fork.call(Process.pid)
 
-            data = nil
-            begin
+          data = nil
+          begin
+            ::Timeout.timeout(config.child_timeout, ZTK::Parallel::Timeout) do
               data = block.call
-            rescue Exception => e
-              config.ui.logger.fatal { e.message }
-              e.backtrace.each do |line|
-                config.ui.logger << "#{line}\n"
-              end
-              data = ExceptionWrapper.new(e)
             end
+          rescue Exception => e
+            config.ui.logger.fatal { e.message }
+            e.backtrace.each do |line|
+              config.ui.logger << "#{line}\n"
+            end
+            data = ExceptionWrapper.new(e)
+          end
 
-            if !data.nil?
-              config.ui.logger.debug { "write(#{data.inspect})" }
-              begin
-                child_writer.write(Base64.encode64(Marshal.dump(data)))
-              rescue Exception => e
-                config.ui.logger.warn { "Exception while writing data to child_writer! - #{e.inspect}" }
-              end
+          if !data.nil?
+            config.ui.logger.debug { "write(#{data.inspect})" }
+            begin
+              child_writer.write(Base64.encode64(Marshal.dump(data)))
+            rescue Exception => e
+              config.ui.logger.warn { "Exception while writing data to child_writer! - #{e.inspect}" }
             end
           end
 
@@ -267,7 +267,7 @@ module ZTK
     def process_data(data)
       return data if !(ZTK::Parallel::ExceptionWrapper === data)
 
-      if ((config.raise_exceptions == true) || (ZTK::Parallel::Break === data.exception))
+      if ((config.raise_exceptions == true) || (ZTK::Parallel::Break === data.exception) || (ZTK::Parallel::Timeout === data.exception))
         config.ui.logger.fatal { "exception(#{data.exception.inspect})" }
         signal_all
         raise data.exception

@@ -110,6 +110,18 @@ describe ZTK::Parallel do
         end.to raise_error ZTK::Parallel::Break
       end
 
+      it "should raise ZTK::Parallel::Timeout if execution is longer than the limit set" do
+        subject = ZTK::Parallel.new(:raise_exceptions => false, :child_timeout => 3)
+
+        expect do
+          subject.process do
+            sleep 10
+          end
+
+          subject.waitall
+        end.to raise_error ZTK::Parallel::Timeout
+      end
+
     end
 
     describe "#wait" do
