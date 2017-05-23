@@ -199,6 +199,9 @@ module ZTK
     def wait(flags=0)
       config.ui.logger.debug { "wait" }
       config.ui.logger.debug { "forks(#{@forks.inspect})" }
+
+      return nil if @forks.count <= 0
+
       pid, status = (Process.wait2(-1, flags) rescue nil)
 
       if !pid.nil? && !status.nil? && !(fork = @forks.select{ |f| f[:pid] == pid }.first).nil?
