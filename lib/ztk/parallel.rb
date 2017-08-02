@@ -115,6 +115,10 @@ module ZTK
           (signal == "INT") or exit!(1)
         end
       end
+
+      Kernel.at_exit do
+        signal_all('TERM')
+      end
     end
 
     # Process in parallel.
