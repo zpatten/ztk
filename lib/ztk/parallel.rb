@@ -211,7 +211,12 @@ module ZTK
       pid, status = (Process.wait2(-1, Process::WUNTRACED) rescue nil)
 
       if !pid.nil? && !status.nil? && !(fork = @forks.select{ |f| f[:pid] == pid }.first).nil?
-        data = Marshal.load(Zlib::Inflate.inflate(Base64.decode64(fork[:reader].read).to_s))
+        data = nil
+        begin
+          data = Marshal.load(Zlib::Inflate.inflate(Base64.decode64(fork[:reader].read).to_s))
+        rescue Zlib::BufError
+          config.ui.logger.fatal { "Encountered Zlib::BufError when reading child pipe." }
+        end
         config.ui.logger.debug { "read(#{data.inspect})" }
 
         data = process_data(data)
