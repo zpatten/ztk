@@ -1,5 +1,6 @@
 require 'base64'
 require 'timeout'
+require 'zlib'
 
 module ZTK
 
@@ -163,9 +164,10 @@ module ZTK
           end
 
           if !data.nil?
-            config.ui.logger.debug { "write(#{data.inspect})" }
             begin
-              child_writer.write(Base64.encode64(Marshal.dump(data)))
+              encoded_data = Base64.encode64(Zlib::Deflate.deflate(Marshal.dump(data)))
+              config.ui.logger.debug { "write(#{encoded_data.length}B: #{data.inspect})" }
+              child_writer.write(encoded_data)
             rescue Exception => e
               config.ui.logger.warn { "Exception while writing data to child_writer! - #{e.inspect}" }
             end
@@ -209,7 +211,7 @@ module ZTK
       pid, status = (Process.wait2(-1, flags) rescue nil)
 
       if !pid.nil? && !status.nil? && !(fork = @forks.select{ |f| f[:pid] == pid }.first).nil?
-        data = (Marshal.load(Base64.decode64(fork[:reader].read.to_s)) rescue nil)
+        data = Marshal.load(Zlib::Inflate.inflate(Base64.decode64(fork[:reader].read).to_s))
         config.ui.logger.debug { "read(#{data.inspect})" }
 
         data = process_data(data)
