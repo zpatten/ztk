@@ -208,7 +208,7 @@ module ZTK
 
       return nil if @forks.count <= 0
 
-      pid, status = (Process.wait2(-1, flags) rescue nil)
+      pid, status = (Process.wait2(-1, Process::WUNTRACED) rescue nil)
 
       if !pid.nil? && !status.nil? && !(fork = @forks.select{ |f| f[:pid] == pid }.first).nil?
         data = Marshal.load(Zlib::Inflate.inflate(Base64.decode64(fork[:reader].read).to_s))
