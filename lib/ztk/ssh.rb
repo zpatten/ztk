@@ -49,7 +49,7 @@ module ZTK
   # Specify a password:
   #
   #     ssh.config do |config|
-  #       config.password = 'p@$$w0rd'
+  #       config.password = 'password'
   #     end
   #
   # Check host keys, the default is false (off):
@@ -58,7 +58,7 @@ module ZTK
   #       config.host_key_verify = true
   #     end
   #
-  # @author Zachary Patten <zpatten AT jovelabs DOT io>
+  # @author Zachary Patten <zpatten AT jovelabs.io>
   class SSH < ZTK::Base
     require 'ostruct'
     require 'tempfile'
